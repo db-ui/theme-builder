@@ -26,10 +26,6 @@ export const generateColors = (
   const shading1 = darkMode ? "#000" : "#fff";
   const shading2 = darkMode ? "#fff" : "#000";
 
-  const backgroundColor = darkMode
-    ? defaultColorMapping.onBgNeutral
-    : defaultColorMapping.bgNeutral1;
-
   colorKeys
     .filter((key) => !key.startsWith("on"))
     .forEach((key) => {
@@ -39,18 +35,18 @@ export const generateColors = (
       const onBG = chroma(color).mix(shading2, mixValue7).hex();
       const element =
         getContrastSuggestion(
-          backgroundColor,
+          defaultColorMapping.bgNeutral1,
           color,
           3.0,
-          getLuminance(backgroundColor) >= 0.4,
+          getLuminance(defaultColorMapping.bgNeutral1) >= 0.4,
           true,
         ) || color;
       const text =
         getContrastSuggestion(
-          backgroundColor,
+          defaultColorMapping.bgNeutral1,
           color,
           4.5,
-          getLuminance(backgroundColor) < 0.4,
+          getLuminance(defaultColorMapping.bgNeutral1) < 0.4,
         ) || color;
 
       let colorResult: ColorType = {

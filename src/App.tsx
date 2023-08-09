@@ -45,7 +45,23 @@ const App = () => {
   const [colors, setColors] = useState<ColorType[]>();
 
   useEffect(() => {
-    setColors(generateColors(defaultColors, darkMode));
+    setColors(
+      generateColors(
+        {
+          ...defaultColors,
+          bgNeutral0: darkMode
+            ? defaultColors.onBgNeutral
+            : defaultColors.bgNeutral0,
+          bgNeutral1: darkMode
+            ? getNeutral1(defaultColors.onBgNeutral)
+            : defaultColors.bgNeutral1,
+          onBgNeutral: darkMode
+            ? defaultColors.bgNeutral0
+            : defaultColors.onBgNeutral,
+        },
+        darkMode,
+      ),
+    );
   }, [defaultColors, darkMode]);
 
   return (
