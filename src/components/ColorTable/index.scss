@@ -1,0 +1,23 @@
+@use "@db-ui/foundations/build/scss/variables" as *;
+@use "@db-ui/foundations/build/scss/variables.global" as *;
+
+.color-box {
+  width: 100%;
+  height: $db-sizing-sm;
+  border: black 1px solid;
+}
+
+.variable-header {
+  text-align: inherit;
+}
+
+.table-scroll-container {
+  overflow-x: auto;
+
+  @media screen and (min-width: $db-screens-m) {
+    overflow-x: unset;
+    table {
+      width: 100%;
+    }
+  }
+}

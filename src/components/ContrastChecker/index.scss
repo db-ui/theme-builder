@@ -1,0 +1,18 @@
+@use "@db-ui/foundations/build/scss/variables.global" as *;
+
+.contrast-checker-container {
+  display: flex;
+  gap: $db-spacing-fixed-xs;
+
+  .db-input {
+    width: 100%;
+  }
+
+  .db-drawer-content{
+    display: flex;
+    flex-direction: column;
+    gap: $db-spacing-fixed-xs;
+  }
+}
+
+

@@ -1,0 +1,61 @@
+@forward "@db-ui/components/build/styles/db-ui-42-rollup";
+@use "@db-ui/foundations/build/scss/variables" as *;
+@use "@db-ui/foundations/build/scss/variables.global" as *;
+
+.content {
+  --db-drawer-max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  padding: $db-spacing-fixed-md;
+  gap: $db-spacing-fixed-md;
+
+  @media screen and (min-width: $db-screens-m) {
+    --db-drawer-max-width: 33%;
+  }
+}
+
+.download-button {
+  @media screen and (min-width: $db-screens-m) {
+    width: fit-content !important;
+    margin-inline-start: auto;
+  }
+}
+
+.checkbox {
+  display: flex;
+  margin-block: auto;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.color-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: $db-spacing-fixed-xs;
+
+  .color-picker-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $db-spacing-fixed-md;
+
+    @media screen and (min-width: $db-screens-m) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+}
+
+.component-container {
+  display: flex;
+  flex-direction: column;
+  gap: $db-spacing-fixed-md;
+
+  .component-color-container {
+    height: 100%;
+  }
+}
+h6 {
+  margin-block: 0;
+}

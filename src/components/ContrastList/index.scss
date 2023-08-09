@@ -1,0 +1,20 @@
+@use "@db-ui/foundations/build/scss/variables.global" as *;
+
+.contrast-checker-values {
+  display: flex;
+  width: 100%;
+  gap: $db-spacing-fixed-xs;
+}
+
+.copy-color-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: $db-spacing-fixed-xs;
+
+  .color {
+    color: #ffffff;
+    width: 100%;
+    padding: $db-spacing-fixed-xs;
+  }
+}
