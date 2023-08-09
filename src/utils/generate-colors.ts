@@ -37,19 +37,21 @@ export const generateColors = (
 
       const background = chroma(color).mix(shading1, mixValue6).hex();
       const onBG = chroma(color).mix(shading2, mixValue7).hex();
-      const element = getContrastSuggestion(
-        backgroundColor,
-        color,
-        3.0,
-        getLuminance(backgroundColor) >= 0.4,
-        true,
-      );
-      const text = getContrastSuggestion(
-        backgroundColor,
-        color,
-        4.5,
-        getLuminance(backgroundColor) < 0.4,
-      );
+      const element =
+        getContrastSuggestion(
+          backgroundColor,
+          color,
+          3.0,
+          getLuminance(backgroundColor) >= 0.4,
+          true,
+        ) || color;
+      const text =
+        getContrastSuggestion(
+          backgroundColor,
+          color,
+          4.5,
+          getLuminance(backgroundColor) < 0.4,
+        ) || color;
 
       let colorResult: ColorType = {
         name: key,
