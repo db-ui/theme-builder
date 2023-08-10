@@ -27,9 +27,11 @@ export const generateColors = (
   const shading2 = darkMode ? "#fff" : "#000";
 
   colorKeys
-    .filter((key) => !key.startsWith("on"))
+    .filter((key) => !key.startsWith("on") && !key.startsWith("bg"))
     .forEach((key) => {
       const color: string = (defaultColorMapping as any)[key];
+
+      const bgLuminance = getLuminance(defaultColorMapping.bgNeutral1);
 
       const background = chroma(color).mix(shading1, mixValue6).hex();
       const onBG = chroma(color).mix(shading2, mixValue7).hex();
@@ -38,7 +40,7 @@ export const generateColors = (
           defaultColorMapping.bgNeutral1,
           color,
           3.0,
-          getLuminance(defaultColorMapping.bgNeutral1) >= 0.4,
+          bgLuminance >= 0.4,
           true,
         ) || color;
       const text =
@@ -46,14 +48,18 @@ export const generateColors = (
           defaultColorMapping.bgNeutral1,
           color,
           4.5,
-          getLuminance(defaultColorMapping.bgNeutral1) < 0.4,
+          bgLuminance < 0.4,
         ) || color;
 
       let colorResult: ColorType = {
         name: key,
         enabled: chroma(color).hex(),
-        hover: chroma(color).darken(0.16).hex(),
-        pressed: chroma(color).darken(0.32).hex(),
+        hover: chroma(color)
+          .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue9)
+          .hex(),
+        pressed: chroma(color)
+          .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue8)
+          .hex(),
         "on-enabled": chroma(shading1)
           .mix(transparent, darkMode ? mixValue2 : mixValue1)
           .hex(),
@@ -112,10 +118,10 @@ export const generateColors = (
           "border-weak-enabled": chroma(element)
             .mix(transparent, darkMode ? mixValue3 : mixValue8)
             .hex(),
-          "border-weak-hover": chroma(element)
+          "border-weak-hover": chroma(elementHover)
             .mix(transparent, darkMode ? mixValue3 : mixValue8)
             .hex(),
-          "border-weak-pressed": chroma(element)
+          "border-weak-pressed": chroma(elementPressed)
             .mix(transparent, darkMode ? mixValue3 : mixValue8)
             .hex(),
         };
@@ -139,6 +145,26 @@ export const generateColors = (
             .hex(),
           "on-pressed": chroma(defaultColorMapping.onBrand)
             .mix(transparent, mixValue3)
+            .hex(),
+        };
+      }
+
+      if (key === "neutral") {
+        colorResult = {
+          ...colorResult,
+          "bg-enabled": chroma(defaultColorMapping.bgNeutral0).hex(),
+          "bg-hover": chroma(defaultColorMapping.bgNeutral0)
+            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue9)
+            .hex(),
+          "bg-pressed": chroma(defaultColorMapping.bgNeutral0)
+            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue8)
+            .hex(),
+          "bg-strong-enabled": chroma(defaultColorMapping.bgNeutral1).hex(),
+          "bg-strong-hover": chroma(defaultColorMapping.bgNeutral1)
+            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue9)
+            .hex(),
+          "bg-strong-pressed": chroma(defaultColorMapping.bgNeutral1)
+            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue8)
             .hex(),
         };
       }

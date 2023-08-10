@@ -15,6 +15,9 @@ export type ColorType = {
   "bg-enabled"?: string;
   "bg-hover"?: string;
   "bg-pressed"?: string;
+  "bg-strong-enabled"?: string;
+  "bg-strong-hover"?: string;
+  "bg-strong-pressed"?: string;
   "bg-transparent-full-enabled"?: string;
   "bg-transparent-full-hover"?: string;
   "bg-transparent-full-pressed"?: string;
@@ -58,6 +61,9 @@ export const ALL_VARIABLES = [
   "bg-enabled",
   "bg-hover",
   "bg-pressed",
+  "bg-strong-enabled",
+  "bg-strong-hover",
+  "bg-strong-pressed",
   "on-bg-enabled",
   "on-bg-hover",
   "on-bg-pressed",
