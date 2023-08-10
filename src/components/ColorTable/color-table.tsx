@@ -9,7 +9,7 @@ const ColorTable = ({ colors }: PropsWithChildren<ColorTableType>) => {
     <DBCard spacing="small">
       {colors && colors.length > 0 ? (
         <div className="table-scroll-container">
-          <table>
+          <table className="color-table">
             <thead>
               <tr>
                 <th className="variable-header">Variable</th>
@@ -23,7 +23,11 @@ const ColorTable = ({ colors }: PropsWithChildren<ColorTableType>) => {
                 <tr key={`${varKey}-row`}>
                   <td>{varKey}</td>
                   {colors.map((color: any) => (
-                    <td data-size="small" key={`${varKey}-${color.name}-cell`}>
+                    <td
+                      data-text-align="center"
+                      data-size="small"
+                      key={`${varKey}-${color.name}-cell`}
+                    >
                       {color[varKey] ? (
                         <div
                           className="color-box"
