@@ -97,117 +97,133 @@ const App = () => {
         </footer>
       }
     >
-      <div className="content">
-        <DBCard className="color-inputs" spacing="small">
-          <div className="title-container">
-            <strong>Color-Inputs</strong>
-          </div>
+      <div className="content column-box">
+        <div className="upper-container">
+          <div className="column-box">
+            <DBCard className="color-inputs" spacing="small">
+              <div className="title-container">
+                <strong>Neutral</strong>
+              </div>
 
-          <div className="color-picker-grid">
-            <ColorPicker
-              label="Neutral-Background"
-              color={defaultColors.bgNeutral0}
-              setColor={(color) =>
-                setDefaultColors({
-                  ...defaultColors,
-                  bgNeutral0: color,
-                  bgNeutral1: getNeutral1(color),
-                })
-              }
-            >
-              <InformationButton>TODO</InformationButton>
-            </ColorPicker>
-            <ContrastChecker
-              label="On-Neutral-Background"
-              backgroundColor={defaultColors.bgNeutral1}
-              initColor={defaultColors.onBgNeutral}
-              onChange={(onBgNeutral) =>
-                setDefaultColors({
-                  ...defaultColors,
-                  onBgNeutral,
-                })
-              }
-            >
-              <InformationButton>TODO</InformationButton>
-            </ContrastChecker>
-            <ContrastChecker
-              initColor={defaultColors.neutral}
-              label="Neutral"
-              backgroundColor={defaultColors.bgNeutral1}
-              onChange={(neutral) =>
-                setDefaultColors({ ...defaultColors, neutral })
-              }
-            />
-            <ContrastChecker
-              initColor={defaultColors.brand}
-              label="Brand"
-              backgroundColor={defaultColors.bgNeutral1}
-              onChange={(brand) =>
-                setDefaultColors({ ...defaultColors, brand })
-              }
-            />
-            <ContrastChecker
-              label="On-Brand"
-              initColor={defaultColors.onBrand}
-              backgroundColor={defaultColors.brand}
-              onChange={(onBrand) =>
-                setDefaultColors({
-                  ...defaultColors,
-                  onBrand,
-                })
-              }
-            >
-              <InformationButton>TODO</InformationButton>
-            </ContrastChecker>
-            <ContrastChecker
-              initColor={defaultColors.informational}
-              label="Informational"
-              backgroundColor={defaultColors.bgNeutral1}
-              onChange={(informational) =>
-                setDefaultColors({ ...defaultColors, informational })
-              }
-            />
-            <ContrastChecker
-              initColor={defaultColors.successful}
-              label="Successful"
-              backgroundColor={defaultColors.bgNeutral1}
-              onChange={(successful) =>
-                setDefaultColors({ ...defaultColors, successful })
-              }
-            />
-            <ContrastChecker
-              initColor={defaultColors.warning}
-              label="Warning"
-              backgroundColor={defaultColors.bgNeutral1}
-              onChange={(warning) =>
-                setDefaultColors({ ...defaultColors, warning })
-              }
-            />
-            <ContrastChecker
-              initColor={defaultColors.critical}
-              label="Critical"
-              backgroundColor={defaultColors.bgNeutral1}
-              onChange={(critical) =>
-                setDefaultColors({ ...defaultColors, critical })
-              }
-            />
+              <div className="color-picker-grid">
+                <ColorPicker
+                  label="Neutral-Background"
+                  color={defaultColors.bgNeutral0}
+                  setColor={(color) =>
+                    setDefaultColors({
+                      ...defaultColors,
+                      bgNeutral0: color,
+                      bgNeutral1: getNeutral1(color),
+                    })
+                  }
+                >
+                  <InformationButton>TODO</InformationButton>
+                </ColorPicker>
+                <ContrastChecker
+                  label="On-Neutral-Background"
+                  backgroundColor={defaultColors.bgNeutral1}
+                  initColor={defaultColors.onBgNeutral}
+                  onChange={(onBgNeutral) =>
+                    setDefaultColors({
+                      ...defaultColors,
+                      onBgNeutral,
+                    })
+                  }
+                />
+                <ContrastChecker
+                  initColor={defaultColors.neutral}
+                  label="Neutral"
+                  backgroundColor={defaultColors.bgNeutral1}
+                  onChange={(neutral) =>
+                    setDefaultColors({ ...defaultColors, neutral })
+                  }
+                />
+              </div>
+            </DBCard>
+            <DBCard className="color-inputs" spacing="small">
+              <div className="title-container">
+                <strong>Brand</strong>
+              </div>
+
+              <div className="color-picker-grid">
+                <ContrastChecker
+                  initColor={defaultColors.brand}
+                  label="Brand"
+                  backgroundColor={defaultColors.bgNeutral1}
+                  onChange={(brand) =>
+                    setDefaultColors({ ...defaultColors, brand })
+                  }
+                />
+                <ContrastChecker
+                  label="On-Brand"
+                  initColor={defaultColors.onBrand}
+                  backgroundColor={defaultColors.brand}
+                  onChange={(onBrand) =>
+                    setDefaultColors({
+                      ...defaultColors,
+                      onBrand,
+                    })
+                  }
+                />
+              </div>
+            </DBCard>
+            <DBCard className="color-inputs" spacing="small">
+              <div className="title-container">
+                <strong>Semantic</strong>
+              </div>
+
+              <div className="color-picker-grid">
+                <ContrastChecker
+                  initColor={defaultColors.informational}
+                  label="Informational"
+                  backgroundColor={defaultColors.bgNeutral1}
+                  onChange={(informational) =>
+                    setDefaultColors({ ...defaultColors, informational })
+                  }
+                />
+                <ContrastChecker
+                  initColor={defaultColors.successful}
+                  label="Successful"
+                  backgroundColor={defaultColors.bgNeutral1}
+                  onChange={(successful) =>
+                    setDefaultColors({ ...defaultColors, successful })
+                  }
+                />
+                <ContrastChecker
+                  initColor={defaultColors.warning}
+                  label="Warning"
+                  backgroundColor={defaultColors.bgNeutral1}
+                  onChange={(warning) =>
+                    setDefaultColors({ ...defaultColors, warning })
+                  }
+                />
+                <ContrastChecker
+                  initColor={defaultColors.critical}
+                  label="Critical"
+                  backgroundColor={defaultColors.bgNeutral1}
+                  onChange={(critical) =>
+                    setDefaultColors({ ...defaultColors, critical })
+                  }
+                />
+              </div>
+            </DBCard>
           </div>
-        </DBCard>
-        <DBCard className="component-container" spacing="small">
-          <div className="title-container">
-            <strong>Components</strong>
-          </div>
-          <div
-            style={{
-              backgroundColor: darkMode
-                ? defaultColors.onBgNeutral
-                : defaultColors.bgNeutral0,
-            }}
-            className="component-color-container"
-          >
-            <DBButton>Test</DBButton>
-          </div>
-        </DBCard>
+          <DBCard className="component-container column-box" spacing="small">
+            <div className="title-container">
+              <strong>Components</strong>
+            </div>
+            <div
+              style={{
+                backgroundColor: darkMode
+                  ? defaultColors.onBgNeutral
+                  : defaultColors.bgNeutral0,
+              }}
+              className="component-color-container"
+            >
+              <DBButton>Test</DBButton>
+            </div>
+          </DBCard>
+        </div>
         <ColorTable colors={colors} />
       </div>
     </DBPage>

@@ -2,12 +2,25 @@
 @use "@db-ui/foundations/build/scss/variables" as *;
 @use "@db-ui/foundations/build/scss/variables.global" as *;
 
-.content {
-  --db-drawer-max-width: 90%;
+.column-box {
   display: flex;
   flex-direction: column;
-  padding: $db-spacing-fixed-md;
   gap: $db-spacing-fixed-md;
+}
+
+.upper-container {
+  display: flex;
+  gap: $db-spacing-fixed-md;
+  flex-direction: column;
+
+  @media screen and (min-width: $db-screens-m) {
+    flex-direction: row;
+  }
+}
+
+.content {
+  --db-drawer-max-width: 90%;
+  padding: $db-spacing-fixed-md;
 
   @media screen and (min-width: $db-screens-m) {
     --db-drawer-max-width: 33%;
@@ -40,18 +53,18 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: $db-spacing-fixed-md;
+  }
 
+  .db-input {
+    min-width: 200px;
     @media screen and (min-width: $db-screens-m) {
-      grid-template-columns: 1fr 1fr 1fr;
+      min-width: 250px;
     }
   }
 }
 
 .component-container {
-  display: flex;
-  flex-direction: column;
-  gap: $db-spacing-fixed-md;
-
+  width: 100%;
   .component-color-container {
     height: 100%;
   }

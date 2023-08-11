@@ -1,10 +1,28 @@
 @use "@db-ui/foundations/build/scss/variables" as *;
 @use "@db-ui/foundations/build/scss/variables.global" as *;
 
+.color-table-container {
+  gap: $db-spacing-fixed-md;
+}
+
+.color-table-header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .color-box {
   width: 100%;
   height: $db-sizing-sm;
   border: black 1px solid;
+  background-color: var(--color);
+
+  &:hover {
+    background-color: var(--color-hover, var(--color));
+  }
+
+  &:active {
+    background-color: var(--color-pressed, var(--color));
+  }
 }
 
 .variable-header {

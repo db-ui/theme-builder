@@ -16,12 +16,23 @@ const ContrastChecker = ({
   onChange,
 }: PropsWithChildren<ContrastCheckerType>) => {
   const [foregroundColor, setFourgroundColor] = useState<string>(initColor);
+  const [suggestion4, setSuggestion4] = useState<string | undefined>();
+  const [suggestion7, setSuggestion7] = useState<string | undefined>();
 
   useEffect(() => {
     if (foregroundColor) {
       onChange?.(foregroundColor);
     }
   }, [foregroundColor]);
+
+  useEffect(() => {
+    if (foregroundColor && backgroundColor) {
+      setSuggestion4(getContrastSuggestion(backgroundColor, foregroundColor));
+      setSuggestion7(
+        getContrastSuggestion(backgroundColor, foregroundColor, 7.5),
+      );
+    }
+  }, [foregroundColor, backgroundColor]);
 
   return (
     <div className="contrast-checker-container">
@@ -40,39 +51,25 @@ const ContrastChecker = ({
             backgroundColor={backgroundColor}
             foregroundColor={foregroundColor}
           />
-          <DBDivider />
-          <p>Suggestions:</p>
+          {(suggestion4 || suggestion7) && (
+            <>
+              <DBDivider />
+              <p>Suggestions:</p>
 
-          {getContrastSuggestion(backgroundColor, foregroundColor, 3) && (
-            <ContrastList
-              backgroundColor={backgroundColor}
-              foregroundColor={getContrastSuggestion(
-                backgroundColor,
-                foregroundColor,
-                3,
+              {suggestion4 && (
+                <ContrastList
+                  backgroundColor={backgroundColor}
+                  foregroundColor={suggestion4}
+                />
               )}
-            />
-          )}
 
-          {getContrastSuggestion(backgroundColor, foregroundColor) && (
-            <ContrastList
-              backgroundColor={backgroundColor}
-              foregroundColor={getContrastSuggestion(
-                backgroundColor,
-                foregroundColor,
+              {suggestion7 && (
+                <ContrastList
+                  backgroundColor={backgroundColor}
+                  foregroundColor={suggestion7}
+                />
               )}
-            />
-          )}
-
-          {getContrastSuggestion(backgroundColor, foregroundColor, 7.5) && (
-            <ContrastList
-              backgroundColor={backgroundColor}
-              foregroundColor={getContrastSuggestion(
-                backgroundColor,
-                foregroundColor,
-                7.5,
-              )}
-            />
+            </>
           )}
         </>
       </InformationButton>

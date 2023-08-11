@@ -8,11 +8,11 @@ export const getLuminance = (color: string) => chroma.hex(color).luminance();
 
 export const getWCA2Variant = (contrast?: number) => {
   if (!contrast) return "adaptive";
-  return contrast > 4.5 ? "successful" : contrast >= 3 ? "warning" : "critical";
+  return contrast > 4.5 ? "successful" : "critical";
 };
 export const getAPCAVariant = (contrast?: number) => {
   if (!contrast) return "adaptive";
-  return contrast > 75 ? "successful" : contrast >= 45 ? "warning" : "critical";
+  return contrast > 75 ? "successful" : "critical";
 };
 
 export const getContrastSuggestion = (
@@ -21,7 +21,7 @@ export const getContrastSuggestion = (
   threshold: 3 | 4.5 | 7.5 = 4.5,
   brighten?: boolean,
   greater?: boolean,
-) => {
+): undefined | string => {
   if (backgroundColor && foregroundColor) {
     let suggestion = foregroundColor;
     let currentStep = 0.01;

@@ -46,13 +46,6 @@ export const generateColors = (
           bgLuminance >= 0.4,
           true,
         ) || color;
-      const text =
-        getContrastSuggestion(
-          defaultColorMapping.bgNeutral1,
-          color,
-          4.5,
-          bgLuminance < 0.4,
-        ) || color;
 
       let colorResult: ColorType = {
         name: key,
@@ -130,16 +123,14 @@ export const generateColors = (
         };
       }
 
-      if (text) {
-        colorResult = {
-          ...colorResult,
-          "text-enabled": text,
-          "text-hover": chroma(text).mix(shading2, mixValue9).hex(),
-          "text-pressed": chroma(text).mix(shading2, mixValue8).hex(),
-        };
-      }
-
       if (key === "brand") {
+        const text =
+          getContrastSuggestion(
+            defaultColorMapping.bgNeutral1,
+            color,
+            4.5,
+            bgLuminance < 0.4,
+          ) || color;
         colorResult = {
           ...colorResult,
           "on-enabled": chroma(defaultColorMapping.onBrand).hex(),
@@ -149,6 +140,9 @@ export const generateColors = (
           "on-pressed": chroma(defaultColorMapping.onBrand)
             .mix(transparent, mixValue3)
             .hex(),
+          "text-enabled": text,
+          "text-hover": chroma(text).mix(shading2, mixValue9).hex(),
+          "text-pressed": chroma(text).mix(shading2, mixValue8).hex(),
         };
       }
 
