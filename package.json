@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@db-ui/react-components": "^0.0.29",
+    "@db-ui/react-components": "^0.0.30",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "jszip": "^3.10.1",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/apca-w3": "^0.1.0",
     "@types/chroma-js": "^2.4.0",
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.2.20",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -31,7 +31,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "prettier": "3.0.1",
-    "sass": "^1.64.2",
+    "sass": "^1.65.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   }
