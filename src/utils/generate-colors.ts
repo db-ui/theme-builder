@@ -7,7 +7,7 @@ const mixValue2 = 0.75;
 const mixValue3 = 0.5;
 const mixValue4 = 0.25;
 const mixValue5 = 0;
-const mixValue6 = 0.88;
+const mixValue6 = 0.92;
 const mixValue7 = 0.64;
 const mixValue8 = 0.32;
 const mixValue9 = 0.16;
@@ -34,7 +34,10 @@ export const generateColors = (
       const bgLuminance = getLuminance(defaultColorMapping.bgNeutral1);
 
       const background = chroma(color).mix(shading1, mixValue6).hex();
-      const onBG = chroma(color).mix(shading2, mixValue7).hex();
+      const onBG =
+        key === "neutral"
+          ? defaultColorMapping.onBgNeutral
+          : chroma(color).mix(shading2, mixValue7).hex();
       const element =
         getContrastSuggestion(
           defaultColorMapping.bgNeutral1,

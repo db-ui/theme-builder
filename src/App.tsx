@@ -25,6 +25,7 @@ import ColorPicker from "./components/ColorPicker";
 import ContrastChecker from "./components/ContrastChecker";
 import InformationButton from "./components/InformationButton";
 import { generateColors } from "./utils/generate-colors.ts";
+import { getCssProperties } from "./utils/outputs.ts";
 
 const App = () => {
   const [defaultColors, setDefaultColors] = useState<DefaultColorMappingType>({
@@ -45,23 +46,27 @@ const App = () => {
   const [colors, setColors] = useState<ColorType[]>();
 
   useEffect(() => {
-    setColors(
-      generateColors(
-        {
-          ...defaultColors,
-          bgNeutral0: darkMode
-            ? defaultColors.onBgNeutral
-            : defaultColors.bgNeutral0,
-          bgNeutral1: darkMode
-            ? getNeutral1(defaultColors.onBgNeutral)
-            : defaultColors.bgNeutral1,
-          onBgNeutral: darkMode
-            ? defaultColors.bgNeutral0
-            : defaultColors.onBgNeutral,
-        },
-        darkMode,
-      ),
+    const generatedColors = generateColors(
+      {
+        ...defaultColors,
+        bgNeutral0: darkMode
+          ? defaultColors.onBgNeutral
+          : defaultColors.bgNeutral0,
+        bgNeutral1: darkMode
+          ? getNeutral1(defaultColors.onBgNeutral)
+          : defaultColors.bgNeutral1,
+        onBgNeutral: darkMode
+          ? defaultColors.bgNeutral0
+          : defaultColors.onBgNeutral,
+      },
+      darkMode,
     );
+    setColors(generatedColors);
+
+    const cssProps = getCssProperties(generatedColors);
+    Object.keys(cssProps).forEach((key) => {
+      document.body.style.setProperty(key, cssProps[key]);
+    });
   }, [defaultColors, darkMode]);
 
   return (
@@ -112,10 +117,11 @@ const App = () => {
             >
               <InformationButton>TODO</InformationButton>
             </ColorPicker>
-            <ColorPicker
+            <ContrastChecker
               label="On-Neutral-Background"
-              color={defaultColors.onBgNeutral}
-              setColor={(onBgNeutral) =>
+              backgroundColor={defaultColors.bgNeutral1}
+              initColor={defaultColors.onBgNeutral}
+              onChange={(onBgNeutral) =>
                 setDefaultColors({
                   ...defaultColors,
                   onBgNeutral,
@@ -123,7 +129,7 @@ const App = () => {
               }
             >
               <InformationButton>TODO</InformationButton>
-            </ColorPicker>
+            </ContrastChecker>
             <ContrastChecker
               initColor={defaultColors.neutral}
               label="Neutral"
@@ -140,10 +146,11 @@ const App = () => {
                 setDefaultColors({ ...defaultColors, brand })
               }
             />
-            <ColorPicker
+            <ContrastChecker
               label="On-Brand"
-              color={defaultColors.onBrand}
-              setColor={(onBrand) =>
+              initColor={defaultColors.onBrand}
+              backgroundColor={defaultColors.brand}
+              onChange={(onBrand) =>
                 setDefaultColors({
                   ...defaultColors,
                   onBrand,
@@ -151,7 +158,7 @@ const App = () => {
               }
             >
               <InformationButton>TODO</InformationButton>
-            </ColorPicker>
+            </ContrastChecker>
             <ContrastChecker
               initColor={defaultColors.informational}
               label="Informational"

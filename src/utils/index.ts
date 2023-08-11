@@ -1,6 +1,8 @@
 import chroma from "chroma-js";
 import { ColorType, DefaultColorMappingType } from "./data.ts";
 import { generateColors } from "./generate-colors.ts";
+import { getCssPropertiesOutput } from "./outputs.ts";
+import * as JSZip from "jszip";
 
 export const getLuminance = (color: string) => chroma.hex(color).luminance();
 
@@ -49,25 +51,37 @@ const fillTheme = (theme: any, colors: ColorType[], dark: boolean) => {
     const prefix = `${dark ? "dark" : "light"}-${color.name
       ?.replace("bgNeutral0", "bg-neutral-0")
       .replace("bgNeutral1", "bg-neutral-1")}`;
-    delete color.name;
 
-    Object.keys(color).forEach((key) => {
-      theme[`${prefix}-${key}`] = (color as any)[key];
-    });
+    Object.keys(color)
+      .filter((key) => key !== "name")
+      .forEach((key) => {
+        theme[`${prefix}-${key}`] = (color as any)[key];
+      });
   });
 };
-export const downloadTheme = (colorMapping: DefaultColorMappingType) => {
-  const theme: any = {};
-  fillTheme(theme, generateColors(colorMapping), false);
-  fillTheme(theme, generateColors(colorMapping, true), true);
 
+const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
-  const file = new Blob([JSON.stringify(theme)], {
-    type: "text/plain",
-  });
   element.href = URL.createObjectURL(file);
-  element.download = `theme-${new Date().toDateString()}.json`;
+  element.download = fileName;
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
+};
+export const downloadTheme = async (colorMapping: DefaultColorMappingType) => {
+  const theme: any = {};
+  const lightColors = generateColors(colorMapping);
+  const darkColors = generateColors(colorMapping, true);
+  fillTheme(theme, lightColors, false);
+  fillTheme(theme, darkColors, true);
+
+  const fileName = `theme-${new Date().toDateString()}`;
+  const themeJsonString = JSON.stringify(theme);
+  const cssProperties = getCssPropertiesOutput(lightColors, darkColors);
+
+  const zip = new JSZip();
+  zip.file(`${fileName}.json`, themeJsonString);
+  zip.file(`${fileName}-props.css`, cssProperties);
+  const zipFile = await zip.generateAsync({ type: "blob" });
+  download(`${fileName}.zip`, zipFile);
 };
