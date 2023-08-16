@@ -12,6 +12,7 @@ const requiredCssProps = [
   "border-weak-enabled",
 ];
 
+const prefix = "db";
 export const getCssProperties = (
   colors: ColorType[],
   asString?: boolean,
@@ -22,10 +23,10 @@ export const getCssProperties = (
     requiredCssProps.forEach((prop: string) => {
       // TODO: Use brand in future
       const name = color.name === "brand" ? "primary" : color.name;
-      result[`--${name}-${prop}`] = color[prop];
+      result[`--${prefix}-${name}-${prop}`] = color[prop];
       if (name === "neutral") {
-        result[`--${name}-on-bg-hover`] = color["on-bg-hover"];
-        result[`--${name}-on-bg-pressed`] = color["on-bg-pressed"];
+        result[`--${prefix}-${name}-on-bg-hover`] = color["on-bg-hover"];
+        result[`--${prefix}-${name}-on-bg-pressed`] = color["on-bg-pressed"];
       }
     });
   });
