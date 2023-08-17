@@ -26,6 +26,7 @@ import ContrastChecker from "./components/ContrastChecker";
 import InformationButton from "./components/InformationButton";
 import { generateColors } from "./utils/generate-colors.ts";
 import { getCssProperties } from "./utils/outputs.ts";
+import ComponentPreview from "./components/ComponentPreview";
 
 const App = () => {
   const [defaultColors, setDefaultColors] = useState<DefaultColorMappingType>({
@@ -146,14 +147,15 @@ const App = () => {
               </div>
 
               <div className="color-picker-grid">
-                <ContrastChecker
-                  initColor={defaultColors.brand}
+                <ColorPicker
+                  color={defaultColors.brand}
                   label="Brand"
-                  backgroundColor={defaultColors.bgNeutral1}
-                  onChange={(brand) =>
+                  setColor={(brand) =>
                     setDefaultColors({ ...defaultColors, brand })
                   }
-                />
+                >
+                  <InformationButton>TODO</InformationButton>
+                </ColorPicker>
                 <ContrastChecker
                   label="On-Brand"
                   initColor={defaultColors.onBrand}
@@ -208,21 +210,7 @@ const App = () => {
               </div>
             </DBCard>
           </div>
-          <DBCard className="component-container column-box" spacing="small">
-            <div className="title-container">
-              <strong>Components</strong>
-            </div>
-            <div
-              style={{
-                backgroundColor: darkMode
-                  ? defaultColors.onBgNeutral
-                  : defaultColors.bgNeutral0,
-              }}
-              className="component-color-container"
-            >
-              <DBButton>Test</DBButton>
-            </div>
-          </DBCard>
+          <ComponentPreview defaultColors={defaultColors} darkMode={darkMode} />
         </div>
         <ColorTable colors={colors} />
       </div>

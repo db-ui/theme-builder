@@ -1,0 +1,14 @@
+@use "@db-ui/foundations/build/scss/variables.global" as *;
+
+.component-container {
+  width: 100%;
+  .component-color-container {
+    height: 100%;
+
+    > div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $db-spacing-fixed-md;
+    }
+  }
+}

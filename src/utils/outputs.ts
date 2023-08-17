@@ -27,6 +27,13 @@ export const getCssProperties = (
       if (name === "neutral") {
         result[`--${prefix}-${name}-on-bg-hover`] = color["on-bg-hover"];
         result[`--${prefix}-${name}-on-bg-pressed`] = color["on-bg-pressed"];
+        result[`--${prefix}-${name}-bg-strong-enabled`] =
+          color["bg-strong-enabled"];
+      }
+      if (name === "primary") {
+        result[`--${prefix}-${name}-text-enabled`] = color["text-enabled"];
+        result[`--${prefix}-${name}-text-hover`] = color["text-hover"];
+        result[`--${prefix}-${name}-text-pressed`] = color["text-pressed"];
       }
     });
   });
