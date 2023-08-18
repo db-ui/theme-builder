@@ -2,7 +2,7 @@ import chroma from "chroma-js";
 import { ColorType, DefaultColorMappingType } from "./data.ts";
 import { generateColors } from "./generate-colors.ts";
 import { getCssPropertiesOutput } from "./outputs.ts";
-import * as JSZip from "jszip";
+import JSZip from "jszip";
 
 export const getLuminance = (color: string) => chroma.hex(color).luminance();
 
