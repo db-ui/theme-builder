@@ -1,6 +1,6 @@
 import { DBButton } from "@db-ui/react-components";
 import "./index.scss";
-import { useInternalStore, useThemeBuilderStore } from "../../data";
+import { useInternalStore, useThemeBuilderStore } from "../../store";
 import { downloadTheme } from "../../utils";
 import { useEffect, useState } from "react";
 

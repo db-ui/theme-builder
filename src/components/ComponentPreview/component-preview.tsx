@@ -10,7 +10,7 @@ import {
 } from "@db-ui/react-components";
 import "./index.scss";
 import { DefaultVariantType } from "@db-ui/react-components/dist/shared/model";
-import { useThemeBuilderStore } from "../../data";
+import { useThemeBuilderStore } from "../../store";
 
 const variants: DefaultVariantType[] = [
   "adaptive",

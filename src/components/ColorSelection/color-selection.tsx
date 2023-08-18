@@ -2,7 +2,7 @@ import { DBCard } from "@db-ui/react-components";
 import ColorPicker from "./ColorPicker";
 import InformationButton from "./InformationButton";
 import ContrastChecker from "./ContrastChecker";
-import { useThemeBuilderStore } from "../../data";
+import { useThemeBuilderStore } from "../../store";
 import { DefaultColorMappingType } from "../../utils/data.ts";
 import { useEffect } from "react";
 import {

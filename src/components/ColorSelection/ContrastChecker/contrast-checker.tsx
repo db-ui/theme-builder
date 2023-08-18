@@ -11,7 +11,7 @@ import {
 } from "../../../utils";
 import ContrastList from "../ContrastList";
 import InformationButton from "../InformationButton";
-import { useInternalStore } from "../../../data";
+import { useInternalStore } from "../../../store";
 
 const ContrastChecker = ({
   id,
