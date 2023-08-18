@@ -24,14 +24,14 @@ const ColorSelection = () => {
     const generatedColors = generateColors(
       {
         ...defaultColors,
-        bgNeutral0: darkMode
+        bgNeutral: darkMode
           ? defaultColors.onBgNeutral
-          : defaultColors.bgNeutral0,
-        bgNeutral1: darkMode
+          : defaultColors.bgNeutral,
+        bgNeutralStrong: darkMode
           ? getNeutralStrong(defaultColors.onBgNeutral, darkMode)
-          : defaultColors.bgNeutral1,
+          : defaultColors.bgNeutralStrong,
         onBgNeutral: darkMode
-          ? defaultColors.bgNeutral0
+          ? defaultColors.bgNeutral
           : defaultColors.onBgNeutral,
       },
       darkMode,
@@ -53,12 +53,12 @@ const ColorSelection = () => {
         <div className="color-picker-grid">
           <ColorPicker
             label="Neutral-Background"
-            color={defaultColors.bgNeutral0}
+            color={defaultColors.bgNeutral}
             setColor={(color) =>
               setDefaultColors({
                 ...defaultColors,
-                bgNeutral0: color,
-                bgNeutral1: getNeutralStrong(color, darkMode),
+                bgNeutral: color,
+                bgNeutralStrong: getNeutralStrong(color, darkMode),
               })
             }
           >
@@ -66,7 +66,7 @@ const ColorSelection = () => {
           </ColorPicker>
           <ContrastChecker
             label="On-Neutral-Background"
-            backgroundColor={defaultColors.bgNeutral1}
+            backgroundColor={defaultColors.bgNeutralStrong}
             initColor={defaultColors.onBgNeutral}
             onChange={(onBgNeutral) =>
               setDefaultColors({
@@ -78,7 +78,7 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.neutral}
             label="Neutral"
-            backgroundColor={defaultColors.bgNeutral1}
+            backgroundColor={defaultColors.bgNeutralStrong}
             onChange={(neutral) =>
               setDefaultColors({ ...defaultColors, neutral })
             }
@@ -120,7 +120,7 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.informational}
             label="Informational"
-            backgroundColor={defaultColors.bgNeutral1}
+            backgroundColor={defaultColors.bgNeutralStrong}
             onChange={(informational) =>
               setDefaultColors({ ...defaultColors, informational })
             }
@@ -128,7 +128,7 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.successful}
             label="Successful"
-            backgroundColor={defaultColors.bgNeutral1}
+            backgroundColor={defaultColors.bgNeutralStrong}
             onChange={(successful) =>
               setDefaultColors({ ...defaultColors, successful })
             }
@@ -136,7 +136,7 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.warning}
             label="Warning"
-            backgroundColor={defaultColors.bgNeutral1}
+            backgroundColor={defaultColors.bgNeutralStrong}
             onChange={(warning) =>
               setDefaultColors({ ...defaultColors, warning })
             }
@@ -144,7 +144,7 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.critical}
             label="Critical"
-            backgroundColor={defaultColors.bgNeutral1}
+            backgroundColor={defaultColors.bgNeutralStrong}
             onChange={(critical) =>
               setDefaultColors({ ...defaultColors, critical })
             }

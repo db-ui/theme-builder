@@ -1,6 +1,6 @@
 export type DefaultColorMappingType = {
-  bgNeutral0: string;
-  bgNeutral1: string;
+  bgNeutral: string;
+  bgNeutralStrong: string;
   onBgNeutral: string;
   neutral: string;
   brand: string;

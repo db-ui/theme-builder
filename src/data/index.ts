@@ -18,8 +18,8 @@ import { DefaultColorMappingType } from "../utils/data.ts";
 const getDefaultColorMapping = (
   darkMode?: boolean,
 ): DefaultColorMappingType => ({
-  bgNeutral0: DEFAULT_BACKGROUND,
-  bgNeutral1: getNeutralStrong(DEFAULT_BACKGROUND, darkMode),
+  bgNeutral: DEFAULT_BACKGROUND,
+  bgNeutralStrong: getNeutralStrong(DEFAULT_BACKGROUND, darkMode),
   onBgNeutral: DEFAULT_BACKGROUND_DARK,
   neutral: DEFAULT_NEUTRAL,
   brand: DEFAULT_BRAND,

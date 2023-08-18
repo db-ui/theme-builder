@@ -30,7 +30,7 @@ const ComponentPreview = () => {
         style={{
           backgroundColor: darkMode
             ? defaultColors.onBgNeutral
-            : defaultColors.bgNeutral0,
+            : defaultColors.bgNeutral,
         }}
         className="component-color-container column-box"
       >
