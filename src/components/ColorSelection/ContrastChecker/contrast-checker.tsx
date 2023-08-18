@@ -4,7 +4,7 @@ import type { ContrastCheckerType } from "./data";
 import ColorPicker from "../ColorPicker";
 import "./index.scss";
 import { DBDivider } from "@db-ui/react-components";
-import { getContrastSuggestion, getWCA2Variant } from "../../utils";
+import { getContrastSuggestion, getWCA2Variant } from "../../../utils";
 import ContrastList from "../ContrastList";
 import InformationButton from "../InformationButton";
 import chroma from "chroma-js";

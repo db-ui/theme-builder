@@ -1,11 +1,11 @@
-import type { PropsWithChildren } from "react";
-import { ColorTableType } from "./data";
 import { DBCard, DBCheckbox } from "@db-ui/react-components";
 import { ALL_VARIABLES } from "../../utils/data.ts";
 import "./index.scss";
 import { useState } from "react";
+import { useThemeBuilderStore } from "../../data";
 
-const ColorTable = ({ colors }: PropsWithChildren<ColorTableType>) => {
+const ColorTable = () => {
+  const { colors } = useThemeBuilderStore((state) => state);
   const [extendenView, setExtendenView] = useState<boolean>();
   return (
     <DBCard className="color-table-container" spacing="small">

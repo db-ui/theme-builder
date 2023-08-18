@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ContrastListType } from "./data";
 import { DBButton, DBTag } from "@db-ui/react-components";
 import { calcAPCA } from "apca-w3";
-import { getAPCAVariant, getWCA2Variant } from "../../utils";
+import { getAPCAVariant, getWCA2Variant } from "../../../utils";
 import chroma from "chroma-js";
 import "./index.scss";
 

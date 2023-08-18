@@ -1,5 +1,3 @@
-import type { PropsWithChildren } from "react";
-import { ComponentPreviewType } from "./data";
 import {
   DBAlert,
   DBButton,
@@ -12,6 +10,7 @@ import {
 } from "@db-ui/react-components";
 import "./index.scss";
 import { DefaultVariantType } from "@db-ui/react-components/dist/shared/model";
+import { useThemeBuilderStore } from "../../data";
 
 const variants: DefaultVariantType[] = [
   "adaptive",
@@ -20,10 +19,8 @@ const variants: DefaultVariantType[] = [
   "warning",
   "successful",
 ];
-const ComponentPreview = ({
-  defaultColors,
-  darkMode,
-}: PropsWithChildren<ComponentPreviewType>) => {
+const ComponentPreview = () => {
+  const { darkMode, defaultColors } = useThemeBuilderStore((state) => state);
   return (
     <DBCard className="component-container column-box" spacing="small">
       <div className="title-container">

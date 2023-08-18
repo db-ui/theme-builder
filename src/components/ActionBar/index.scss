@@ -1,0 +1,6 @@
+@use "@db-ui/foundations/build/scss/variables.global" as var;
+
+.action-bar {
+  display: flex;
+  gap: var.$db-spacing-fixed-xs;
+}

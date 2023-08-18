@@ -27,13 +27,6 @@
   }
 }
 
-.download-button {
-  @media screen and (min-width: $db-screens-m) {
-    width: fit-content !important;
-    margin-inline-start: auto;
-  }
-}
-
 .checkbox {
   display: flex;
   margin-block: auto;
