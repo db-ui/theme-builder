@@ -39,10 +39,11 @@ export const getCssProperties = (
   });
 
   if (asString) {
-    const resultString = "";
-    Object.keys(result).forEach((key) => {
-      result += `${key}: ${result[key]};\n`;
-    });
+    let resultString = "";
+
+    for (const [key, value] of Object.entries(result)) {
+      resultString += `${key}: ${value};\n`;
+    }
 
     return resultString;
   }
