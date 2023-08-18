@@ -12,8 +12,14 @@ const mixValue7 = 0.64;
 const mixValue8 = 0.32;
 const mixValue9 = 0.16;
 const mixValue10 = 0.08;
+const mixValue11 = 0.04;
 
 const transparent = chroma([0, 0, 0, 0]);
+
+export const getNeutralStrong = (color: string, darkMode?: boolean): string =>
+  chroma(color)
+    .mix(darkMode ? "#fff" : "#000", mixValue11)
+    .hex();
 
 export const generateColors = (
   defaultColorMapping: DefaultColorMappingType,
@@ -32,6 +38,7 @@ export const generateColors = (
       const color: string = (defaultColorMapping as any)[key];
 
       const bgLuminance = getLuminance(defaultColorMapping.bgNeutral1);
+      const bgLuminanceShading = bgLuminance < 0.4 ? "#fff" : "#000";
 
       const background = chroma(color).mix(shading1, mixValue6).hex();
       const onBG =
@@ -50,12 +57,8 @@ export const generateColors = (
       let colorResult: ColorType = {
         name: key,
         enabled: chroma(color).hex(),
-        hover: chroma(color)
-          .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue9)
-          .hex(),
-        pressed: chroma(color)
-          .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue8)
-          .hex(),
+        hover: chroma(color).mix(bgLuminanceShading, mixValue9).hex(),
+        pressed: chroma(color).mix(bgLuminanceShading, mixValue8).hex(),
         "on-enabled": chroma(shading1)
           .mix(transparent, darkMode ? mixValue2 : mixValue1)
           .hex(),
@@ -151,17 +154,17 @@ export const generateColors = (
           ...colorResult,
           "bg-enabled": chroma(defaultColorMapping.bgNeutral0).hex(),
           "bg-hover": chroma(defaultColorMapping.bgNeutral0)
-            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue9)
+            .mix(bgLuminanceShading, mixValue9)
             .hex(),
           "bg-pressed": chroma(defaultColorMapping.bgNeutral0)
-            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue8)
+            .mix(bgLuminanceShading, mixValue8)
             .hex(),
           "bg-strong-enabled": chroma(defaultColorMapping.bgNeutral1).hex(),
           "bg-strong-hover": chroma(defaultColorMapping.bgNeutral1)
-            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue9)
+            .mix(bgLuminanceShading, mixValue9)
             .hex(),
           "bg-strong-pressed": chroma(defaultColorMapping.bgNeutral1)
-            .mix(bgLuminance < 0.4 ? "#fff" : "#000", mixValue8)
+            .mix(bgLuminanceShading, mixValue8)
             .hex(),
         };
       }

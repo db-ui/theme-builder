@@ -12,11 +12,14 @@ import {
   DEFAULT_SUCCESSFUL,
   DEFAULT_WARNING,
 } from "../utils/constants.ts";
-import { getNeutral1 } from "../utils";
+import { getNeutralStrong } from "../utils/generate-colors.ts";
+import { DefaultColorMappingType } from "../utils/data.ts";
 
-const defaultColorMapping = {
+const getDefaultColorMapping = (
+  darkMode?: boolean,
+): DefaultColorMappingType => ({
   bgNeutral0: DEFAULT_BACKGROUND,
-  bgNeutral1: getNeutral1(DEFAULT_BACKGROUND),
+  bgNeutral1: getNeutralStrong(DEFAULT_BACKGROUND, darkMode),
   onBgNeutral: DEFAULT_BACKGROUND_DARK,
   neutral: DEFAULT_NEUTRAL,
   brand: DEFAULT_BRAND,
@@ -25,7 +28,7 @@ const defaultColorMapping = {
   successful: DEFAULT_SUCCESSFUL,
   warning: DEFAULT_WARNING,
   critical: DEFAULT_CRITICAL,
-};
+});
 
 export const useThemeBuilderStore = create<ThemeBuilderState>()(
   devtools(
@@ -34,8 +37,11 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
       (set) => ({
         colors: [],
         darkMode: false,
-        defaultColors: defaultColorMapping,
-        resetDefaultColors: () => set({ defaultColors: defaultColorMapping }),
+        defaultColors: getDefaultColorMapping(false),
+        resetDefaultColors: () =>
+          set((state) => ({
+            defaultColors: getDefaultColorMapping(state.darkMode),
+          })),
       }),
       {
         name: THEME_BUILDER_STATE,

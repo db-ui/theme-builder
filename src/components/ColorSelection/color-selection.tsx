@@ -1,12 +1,14 @@
 import { DBCard } from "@db-ui/react-components";
 import ColorPicker from "./ColorPicker";
-import { getNeutral1 } from "../../utils";
 import InformationButton from "./InformationButton";
 import ContrastChecker from "./ContrastChecker";
 import { useThemeBuilderStore } from "../../data";
 import { DefaultColorMappingType } from "../../utils/data.ts";
 import { useEffect } from "react";
-import { generateColors } from "../../utils/generate-colors.ts";
+import {
+  generateColors,
+  getNeutralStrong,
+} from "../../utils/generate-colors.ts";
 import { getCssProperties } from "../../utils/outputs.ts";
 
 const ColorSelection = () => {
@@ -26,7 +28,7 @@ const ColorSelection = () => {
           ? defaultColors.onBgNeutral
           : defaultColors.bgNeutral0,
         bgNeutral1: darkMode
-          ? getNeutral1(defaultColors.onBgNeutral)
+          ? getNeutralStrong(defaultColors.onBgNeutral, darkMode)
           : defaultColors.bgNeutral1,
         onBgNeutral: darkMode
           ? defaultColors.bgNeutral0
@@ -56,7 +58,7 @@ const ColorSelection = () => {
               setDefaultColors({
                 ...defaultColors,
                 bgNeutral0: color,
-                bgNeutral1: getNeutral1(color),
+                bgNeutral1: getNeutralStrong(color, darkMode),
               })
             }
           >

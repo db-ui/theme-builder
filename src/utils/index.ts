@@ -43,9 +43,6 @@ export const getContrastSuggestion = (
   return undefined;
 };
 
-export const getNeutral1 = (color: string): string =>
-  chroma(color).mix("#000", 0.08).hex();
-
 const fillTheme = (theme: any, colors: ColorType[], dark: boolean) => {
   colors.forEach((color: ColorType) => {
     const prefix = `${dark ? "dark" : "light"}-${color.name
