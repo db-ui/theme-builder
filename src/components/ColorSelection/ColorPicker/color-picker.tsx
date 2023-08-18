@@ -47,7 +47,17 @@ const ColorPicker = ({
           label={label}
           onFocus={() => setColorPicker(false)}
           onChange={(event) => {
-            setColor(event.target.value);
+            const changedColor = event.target.value;
+            const match = changedColor.match(
+              "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+            );
+            if (match) {
+              setColor(changedColor);
+            } else if (!changedColor.includes("#")) {
+              setColor(`#${changedColor}`);
+            } else if (changedColor.startsWith("##")) {
+              setColor(changedColor.replace("##", "#"));
+            }
           }}
         />
       </div>

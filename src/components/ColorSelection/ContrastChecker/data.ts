@@ -1,4 +1,5 @@
 export type ContrastCheckerType = {
+  id: string;
   backgroundColor: string;
   label: string;
   initColor: string;

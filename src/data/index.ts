@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { THEME_BUILDER_STATE, ThemeBuilderState } from "./state.ts";
+import {
+  InternalState,
+  THEME_BUILDER_INTERNAL_STATE,
+  THEME_BUILDER_STATE,
+  ThemeBuilderState,
+} from "./state.ts";
 import {
   DEFAULT_BACKGROUND,
   DEFAULT_BACKGROUND_DARK,
@@ -33,7 +38,6 @@ const getDefaultColorMapping = (
 export const useThemeBuilderStore = create<ThemeBuilderState>()(
   devtools(
     persist(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (set) => ({
         colors: [],
         darkMode: false,
@@ -50,4 +54,17 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
   ),
 );
 
-export default { useThemeBuilderStore };
+export const useInternalStore = create<InternalState>()(
+  devtools(
+    (set) => ({
+      validColors: {},
+      changeValidColor: (validType) =>
+        set((state) => ({
+          validColors: { ...state.validColors, ...validType },
+        })),
+    }),
+    { name: THEME_BUILDER_INTERNAL_STATE },
+  ),
+);
+
+export default { useThemeBuilderStore, useInternalStore };

@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { ContrastListType } from "./data";
 import { DBButton, DBTag } from "@db-ui/react-components";
 import { calcAPCA } from "apca-w3";
-import { getAPCAVariant, getWCA2Variant } from "../../../utils";
-import chroma from "chroma-js";
+import { getAPCAVariant, getContrast, getWCA2Variant } from "../../../utils";
 import "./index.scss";
 
 const ContrastList = ({
@@ -19,7 +18,7 @@ const ContrastList = ({
 
   useEffect(() => {
     if (foregroundColor && backgroundColor) {
-      const contrastWCA2 = chroma.contrast(foregroundColor, backgroundColor);
+      const contrastWCA2 = getContrast(foregroundColor, backgroundColor);
       setContrastWCA2(contrastWCA2);
       setContrastAPCA(Number(calcAPCA(foregroundColor, backgroundColor)));
 

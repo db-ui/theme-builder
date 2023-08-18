@@ -4,12 +4,17 @@ import type { ContrastCheckerType } from "./data";
 import ColorPicker from "../ColorPicker";
 import "./index.scss";
 import { DBDivider } from "@db-ui/react-components";
-import { getContrastSuggestion, getWCA2Variant } from "../../../utils";
+import {
+  getContrast,
+  getContrastSuggestion,
+  getWCA2Variant,
+} from "../../../utils";
 import ContrastList from "../ContrastList";
 import InformationButton from "../InformationButton";
-import chroma from "chroma-js";
+import { useInternalStore } from "../../../data";
 
 const ContrastChecker = ({
+  id,
   label,
   backgroundColor,
   initColor,
@@ -19,6 +24,10 @@ const ContrastChecker = ({
   const [suggestion4, setSuggestion4] = useState<string | undefined>();
   const [suggestion7, setSuggestion7] = useState<string | undefined>();
 
+  const [contrast, setContrast] = useState<number>(-1);
+
+  const { changeValidColor } = useInternalStore((state) => state);
+
   useEffect(() => {
     if (foregroundColor) {
       onChange?.(foregroundColor);
@@ -26,7 +35,14 @@ const ContrastChecker = ({
   }, [foregroundColor]);
 
   useEffect(() => {
+    if (contrast !== -1) {
+      changeValidColor({ [id]: contrast >= 4.5 });
+    }
+  }, [contrast, id]);
+
+  useEffect(() => {
     if (foregroundColor && backgroundColor) {
+      setContrast(getContrast(foregroundColor, backgroundColor));
       setSuggestion4(getContrastSuggestion(backgroundColor, foregroundColor));
       setSuggestion7(
         getContrastSuggestion(backgroundColor, foregroundColor, 7.5),
@@ -37,9 +53,7 @@ const ContrastChecker = ({
   return (
     <div className="contrast-checker-container">
       <ColorPicker
-        variant={getWCA2Variant(
-          chroma.contrast(foregroundColor, backgroundColor),
-        )}
+        variant={getWCA2Variant(contrast)}
         label={label}
         color={foregroundColor}
         setColor={setFourgroundColor}

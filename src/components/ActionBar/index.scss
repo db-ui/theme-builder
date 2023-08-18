@@ -4,3 +4,8 @@
   display: flex;
   gap: var.$db-spacing-fixed-xs;
 }
+
+.dark-mode-button {
+  padding: 0;
+  inline-size: var.$db-sizing-md;
+}

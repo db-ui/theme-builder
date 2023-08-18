@@ -17,7 +17,7 @@ export const getCssProperties = (
   colors: ColorType[],
   asString?: boolean,
 ): any => {
-  let result: any = {};
+  const result: any = {};
 
   colors.forEach((color: any) => {
     requiredCssProps.forEach((prop: string) => {

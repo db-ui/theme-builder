@@ -65,6 +65,7 @@ const ColorSelection = () => {
             <InformationButton>TODO</InformationButton>
           </ColorPicker>
           <ContrastChecker
+            id="neutral-bg"
             label="On-Neutral-Background"
             backgroundColor={defaultColors.bgNeutralStrong}
             initColor={defaultColors.onBgNeutral}
@@ -76,6 +77,7 @@ const ColorSelection = () => {
             }
           />
           <ContrastChecker
+            id="neutral"
             initColor={defaultColors.neutral}
             label="Neutral"
             backgroundColor={defaultColors.bgNeutralStrong}
@@ -99,6 +101,7 @@ const ColorSelection = () => {
             <InformationButton>TODO</InformationButton>
           </ColorPicker>
           <ContrastChecker
+            id="brand"
             label="On-Brand"
             initColor={defaultColors.onBrand}
             backgroundColor={defaultColors.brand}
@@ -118,6 +121,7 @@ const ColorSelection = () => {
 
         <div className="color-picker-grid">
           <ContrastChecker
+            id="informational"
             initColor={defaultColors.informational}
             label="Informational"
             backgroundColor={defaultColors.bgNeutralStrong}
@@ -126,6 +130,7 @@ const ColorSelection = () => {
             }
           />
           <ContrastChecker
+            id="successful"
             initColor={defaultColors.successful}
             label="Successful"
             backgroundColor={defaultColors.bgNeutralStrong}
@@ -134,6 +139,7 @@ const ColorSelection = () => {
             }
           />
           <ContrastChecker
+            id="warning"
             initColor={defaultColors.warning}
             label="Warning"
             backgroundColor={defaultColors.bgNeutralStrong}
@@ -142,6 +148,7 @@ const ColorSelection = () => {
             }
           />
           <ContrastChecker
+            id="critical"
             initColor={defaultColors.critical}
             label="Critical"
             backgroundColor={defaultColors.bgNeutralStrong}

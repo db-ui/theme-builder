@@ -8,11 +8,20 @@ export const getLuminance = (color: string) => chroma.hex(color).luminance();
 
 export const getWCA2Variant = (contrast?: number) => {
   if (!contrast) return "adaptive";
-  return contrast > 4.5 ? "successful" : "critical";
+  return contrast >= 4.5 ? "successful" : "critical";
 };
 export const getAPCAVariant = (contrast?: number) => {
   if (!contrast) return "adaptive";
-  return contrast > 75 ? "successful" : "critical";
+  return contrast >= 75 ? "successful" : "critical";
+};
+export const getContrast = (fgColor: string, bgColor: string): number => {
+  try {
+    return chroma.contrast(fgColor, bgColor);
+  } catch (e) {
+    console.error(e);
+  }
+
+  return 0;
 };
 
 export const getContrastSuggestion = (
@@ -27,8 +36,8 @@ export const getContrastSuggestion = (
     let currentStep = 0.01;
     while (
       (greater
-        ? chroma.contrast(suggestion, backgroundColor) > threshold
-        : chroma.contrast(suggestion, backgroundColor) <= threshold) &&
+        ? getContrast(suggestion, backgroundColor) > threshold
+        : getContrast(suggestion, backgroundColor) <= threshold) &&
       currentStep <= 1
     ) {
       suggestion = brighten
@@ -45,14 +54,16 @@ export const getContrastSuggestion = (
 
 const fillTheme = (theme: any, colors: ColorType[], dark: boolean) => {
   colors.forEach((color: ColorType) => {
-    const prefix = `${dark ? "dark" : "light"}-${color.name
-      ?.replace("bgNeutral0", "bg-neutral-0")
-      .replace("bgNeutral1", "bg-neutral-1")}`;
+    const prefix = `${color.name
+      ?.replace("bgNeutral", "bg-neutral")
+      .replace("bgNeutralStrong", "bg-neutral-strong")}`;
 
     Object.keys(color)
       .filter((key) => key !== "name")
       .forEach((key) => {
-        theme[`${prefix}-${key}`] = (color as any)[key];
+        theme[dark ? "dark" : "light"][`${prefix}-${key}`] = (color as any)[
+          key
+        ];
       });
   });
 };
@@ -66,7 +77,10 @@ const download = (fileName: string, file: Blob) => {
   document.body.removeChild(element);
 };
 export const downloadTheme = async (colorMapping: DefaultColorMappingType) => {
-  const theme: any = {};
+  const theme: any = {
+    light: {},
+    dark: {},
+  };
   const lightColors = generateColors(colorMapping);
   const darkColors = generateColors(colorMapping, true);
   fillTheme(theme, lightColors, false);
