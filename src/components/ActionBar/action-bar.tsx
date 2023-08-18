@@ -1,11 +1,10 @@
 import { DBButton } from "@db-ui/react-components";
-import "./index.scss";
 import { useInternalStore, useThemeBuilderStore } from "../../store";
 import { downloadTheme } from "../../utils";
 import { useEffect, useState } from "react";
 
 const ActionBar = () => {
-  const { darkMode, defaultColors, resetDefaultColors } = useThemeBuilderStore(
+  const { defaultColors, resetDefaultColors } = useThemeBuilderStore(
     (state) => state,
   );
   const { validColors } = useInternalStore((state) => state);
@@ -20,33 +19,24 @@ const ActionBar = () => {
   }, [validColors]);
 
   return (
-    <div className="action-bar">
-      <DBButton
-        className="dark-mode-button"
-        title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
-        onClick={() => useThemeBuilderStore.setState({ darkMode: !darkMode })}
-      >
-        {darkMode ? "🌞" : "🌛"}
-      </DBButton>
+    <>
       <DBButton
         icon="undo"
-        noText
         onClick={() => resetDefaultColors()}
-        title="Default Colors"
+        title=" Reset Defaults"
       >
-        Default Colors
+        Reset
       </DBButton>
       <DBButton
         variant="primary"
         icon="download"
         disabled={disableDownload}
-        noText
         onClick={() => downloadTheme(defaultColors)}
         title="Download Theme"
       >
-        Download Theme
+        Download
       </DBButton>
-    </div>
+    </>
   );
 };
 
