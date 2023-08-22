@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ColorPickerType } from "./data";
 import { DBInput } from "@db-ui/react-components";
 import "./index.scss";
