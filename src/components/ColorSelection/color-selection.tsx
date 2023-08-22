@@ -40,7 +40,10 @@ const ColorSelection = () => {
 
     const cssProps = getCssProperties(generatedColors);
     Object.keys(cssProps).forEach((key) => {
-      document.body.style.setProperty(key, cssProps[key]);
+      document
+        .getElementsByTagName("html")
+        ?.item(0)
+        ?.style.setProperty(key, cssProps[key]);
     });
   }, [defaultColors, darkMode]);
   return (

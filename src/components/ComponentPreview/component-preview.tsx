@@ -57,7 +57,7 @@ const ComponentPreview = () => {
             <DBTag
               key={`tag-strong-${variant}`}
               variant={variant}
-              type="strong"
+              emphasis="strong"
             >
               {variant}
             </DBTag>

@@ -35,6 +35,12 @@ const ContrastChecker = ({
   }, [foregroundColor]);
 
   useEffect(() => {
+    if (initColor !== foregroundColor) {
+      setFourgroundColor(initColor);
+    }
+  }, [initColor]);
+
+  useEffect(() => {
     if (contrast !== -1) {
       changeValidColor({ [id]: contrast >= 4.5 });
     }
