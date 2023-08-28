@@ -57,13 +57,13 @@ const ColorSelection = () => {
           <ColorPicker
             label="Neutral-Background"
             color={defaultColors.bgNeutral}
-            setColor={(color) =>
+            setColor={(color) => {
               setDefaultColors({
                 ...defaultColors,
                 bgNeutral: color,
                 bgNeutralStrong: getNeutralStrong(color, darkMode),
-              })
-            }
+              });
+            }}
           >
             <InformationButton>TODO</InformationButton>
           </ColorPicker>

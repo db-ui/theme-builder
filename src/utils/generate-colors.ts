@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import { ColorType, DefaultColorMappingType } from "./data.ts";
-import { getContrastSuggestion, getLuminance } from "./index.ts";
+import { getContrastSuggestion, getLuminance, isValidColor } from "./index.ts";
 
 const mixValue1 = 1;
 const mixValue2 = 0.75;
@@ -16,10 +16,14 @@ const mixValue11 = 0.04;
 
 const transparent = chroma([0, 0, 0, 0]);
 
+const invalidColor = "#ffffff";
+
 export const getNeutralStrong = (color: string, darkMode?: boolean): string =>
-  chroma(color)
-    .mix(darkMode ? "#fff" : "#000", mixValue11)
-    .hex();
+  isValidColor(color)
+    ? chroma(color)
+        .mix(darkMode ? "#fff" : "#000", mixValue11)
+        .hex()
+    : invalidColor;
 
 export const generateColors = (
   defaultColorMapping: DefaultColorMappingType,
@@ -35,7 +39,10 @@ export const generateColors = (
   colorKeys
     .filter((key) => !key.startsWith("on") && !key.startsWith("bg"))
     .forEach((key) => {
-      const color: string = (defaultColorMapping as any)[key];
+      let color: string = (defaultColorMapping as any)[key];
+      if (!isValidColor(color)) {
+        color = invalidColor;
+      }
 
       const bgLuminance = getLuminance(defaultColorMapping.bgNeutralStrong);
       const bgLuminanceShading = bgLuminance < 0.4 ? "#fff" : "#000";
@@ -43,7 +50,9 @@ export const generateColors = (
       const background = chroma(color).mix(shading1, mixValue6).hex();
       const onBG =
         key === "neutral"
-          ? defaultColorMapping.onBgNeutral
+          ? isValidColor(defaultColorMapping.onBgNeutral)
+            ? defaultColorMapping.onBgNeutral
+            : invalidColor
           : chroma(color).mix(shading2, mixValue7).hex();
       const element =
         getContrastSuggestion(
@@ -134,15 +143,14 @@ export const generateColors = (
             4.5,
             bgLuminance < 0.4,
           ) || color;
+        const brandColor = isValidColor(defaultColorMapping.onBrand)
+          ? defaultColorMapping.onBrand
+          : invalidColor;
         colorResult = {
           ...colorResult,
-          "on-enabled": chroma(defaultColorMapping.onBrand).hex(),
-          "on-hover": chroma(defaultColorMapping.onBrand)
-            .mix(transparent, mixValue2)
-            .hex(),
-          "on-pressed": chroma(defaultColorMapping.onBrand)
-            .mix(transparent, mixValue3)
-            .hex(),
+          "on-enabled": chroma(brandColor).hex(),
+          "on-hover": chroma(brandColor).mix(transparent, mixValue2).hex(),
+          "on-pressed": chroma(brandColor).mix(transparent, mixValue3).hex(),
           "text-enabled": text,
           "text-hover": chroma(text).mix(shading2, mixValue9).hex(),
           "text-pressed": chroma(text).mix(shading2, mixValue8).hex(),
@@ -150,22 +158,28 @@ export const generateColors = (
       }
 
       if (key === "neutral") {
+        const bgNeutralColor = isValidColor(defaultColorMapping.bgNeutral)
+          ? defaultColorMapping.bgNeutral
+          : invalidColor;
+        const bgNeutralStrongColor = isValidColor(
+          defaultColorMapping.bgNeutralStrong,
+        )
+          ? defaultColorMapping.bgNeutralStrong
+          : invalidColor;
         colorResult = {
           ...colorResult,
-          "bg-enabled": chroma(defaultColorMapping.bgNeutral).hex(),
-          "bg-hover": chroma(defaultColorMapping.bgNeutral)
+          "bg-enabled": chroma(bgNeutralColor).hex(),
+          "bg-hover": chroma(bgNeutralColor)
             .mix(bgLuminanceShading, mixValue9)
             .hex(),
-          "bg-pressed": chroma(defaultColorMapping.bgNeutral)
+          "bg-pressed": chroma(bgNeutralColor)
             .mix(bgLuminanceShading, mixValue8)
             .hex(),
-          "bg-strong-enabled": chroma(
-            defaultColorMapping.bgNeutralStrong,
-          ).hex(),
-          "bg-strong-hover": chroma(defaultColorMapping.bgNeutralStrong)
+          "bg-strong-enabled": chroma(bgNeutralStrongColor).hex(),
+          "bg-strong-hover": chroma(bgNeutralStrongColor)
             .mix(bgLuminanceShading, mixValue9)
             .hex(),
-          "bg-strong-pressed": chroma(defaultColorMapping.bgNeutralStrong)
+          "bg-strong-pressed": chroma(bgNeutralStrongColor)
             .mix(bgLuminanceShading, mixValue8)
             .hex(),
         };

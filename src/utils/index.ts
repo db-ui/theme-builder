@@ -4,7 +4,10 @@ import { generateColors } from "./generate-colors.ts";
 import { getCssPropertiesOutput } from "./outputs.ts";
 import JSZip from "jszip";
 
-export const getLuminance = (color: string) => chroma.hex(color).luminance();
+export const isValidColor = (color: string): boolean => chroma.valid(color);
+
+export const getLuminance = (color: string): number =>
+  chroma.hex(color).luminance();
 
 export const getWCA2Variant = (contrast?: number) => {
   if (!contrast) return "adaptive";
@@ -31,7 +34,12 @@ export const getContrastSuggestion = (
   brighten?: boolean,
   greater?: boolean,
 ): undefined | string => {
-  if (backgroundColor && foregroundColor) {
+  if (
+    backgroundColor &&
+    foregroundColor &&
+    isValidColor(foregroundColor) &&
+    isValidColor(backgroundColor)
+  ) {
     let suggestion = foregroundColor;
     let currentStep = 0.01;
     while (

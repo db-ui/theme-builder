@@ -1,9 +1,10 @@
 import type { PropsWithChildren } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ColorPickerType } from "./data";
 import { DBInput } from "@db-ui/react-components";
 import "./index.scss";
 import { ChromePicker } from "react-color";
+import { isValidColor } from "../../../utils";
 
 const ColorPicker = ({
   label,
@@ -14,6 +15,11 @@ const ColorPicker = ({
   children,
 }: PropsWithChildren<ColorPickerType>) => {
   const [colorPicker, setColorPicker] = useState<boolean>();
+  const [error, setError] = useState<boolean>();
+
+  useEffect(() => {
+    setError(!isValidColor(color));
+  }, [color]);
 
   return (
     <div className="color-picker-container">
@@ -42,23 +48,12 @@ const ColorPicker = ({
         )}
         <DBInput
           title={title}
-          variant={variant}
+          variant={error ? "critical" : variant}
           value={color}
           label={label}
+          description={error ? "Invalid hex color" : undefined}
           onFocus={() => setColorPicker(false)}
-          onChange={(event) => {
-            const changedColor = event.target.value;
-            const match = changedColor.match(
-              "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
-            );
-            if (match) {
-              setColor(changedColor);
-            } else if (!changedColor.includes("#")) {
-              setColor(`#${changedColor}`);
-            } else if (changedColor.startsWith("##")) {
-              setColor(changedColor.replace("##", "#"));
-            }
-          }}
+          onChange={(event) => setColor(event.target.value)}
         />
       </div>
 

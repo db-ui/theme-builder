@@ -8,6 +8,7 @@ import {
   getContrast,
   getContrastSuggestion,
   getWCA2Variant,
+  isValidColor,
 } from "../../../utils";
 import ContrastList from "../ContrastList";
 import InformationButton from "../InformationButton";
@@ -47,7 +48,12 @@ const ContrastChecker = ({
   }, [contrast, id]);
 
   useEffect(() => {
-    if (foregroundColor && backgroundColor) {
+    if (
+      foregroundColor &&
+      backgroundColor &&
+      isValidColor(foregroundColor) &&
+      isValidColor(backgroundColor)
+    ) {
       setContrast(getContrast(foregroundColor, backgroundColor));
       setSuggestion4(getContrastSuggestion(backgroundColor, foregroundColor));
       setSuggestion7(
