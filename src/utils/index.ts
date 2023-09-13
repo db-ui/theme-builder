@@ -60,6 +60,36 @@ export const getContrastSuggestion = (
   return undefined;
 };
 
+export const getElementColor = (
+  backgroundColor: string,
+  foregroundColor: string,
+): undefined | string => {
+  if (
+    backgroundColor &&
+    foregroundColor &&
+    isValidColor(foregroundColor) &&
+    isValidColor(backgroundColor)
+  ) {
+    let currentLuminance = 0.5;
+    let suggestion = chroma(foregroundColor)
+      .set("hsl.l", currentLuminance)
+      .hex();
+    while (
+      getContrast(suggestion, backgroundColor) <= 3 &&
+      currentLuminance > 0
+    ) {
+      suggestion = chroma(suggestion).set("hsl.l", currentLuminance).hex();
+      currentLuminance -= 0.01;
+    }
+
+    return getContrast(suggestion, backgroundColor) <= 3
+      ? undefined
+      : suggestion;
+  }
+
+  return undefined;
+};
+
 const fillTheme = (theme: any, colors: ColorType[], dark: boolean) => {
   colors.forEach((color: ColorType) => {
     const prefix = `${color.name

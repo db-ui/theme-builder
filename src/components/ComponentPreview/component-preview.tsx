@@ -71,7 +71,7 @@ const ComponentPreview = () => {
               variant={variant}
               label={variant}
               placeholder={variant}
-              description={`${variant} Message`}
+              message={`${variant} Message`}
             />
           ))}
         </div>

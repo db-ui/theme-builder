@@ -69,6 +69,7 @@ const ContrastChecker = ({
         label={label}
         color={foregroundColor}
         setColor={setFourgroundColor}
+        contrastError={contrast < 4.5 ? "Contrast below 4.5" : undefined}
       />
       <InformationButton>
         <>

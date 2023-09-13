@@ -1,6 +1,11 @@
 import chroma from "chroma-js";
 import { ColorType, DefaultColorMappingType } from "./data.ts";
-import { getContrastSuggestion, getLuminance, isValidColor } from "./index.ts";
+import {
+  getContrastSuggestion,
+  getElementColor,
+  getLuminance,
+  isValidColor,
+} from "./index.ts";
 
 const mixValue1 = 1;
 const mixValue2 = 0.75;
@@ -16,7 +21,7 @@ const mixValue11 = 0.04;
 
 const transparent = chroma([0, 0, 0, 0]);
 
-const invalidColor = "#ffffff";
+const invalidColor = "#ff00ff";
 
 export const getNeutralStrong = (color: string, darkMode?: boolean): string =>
   isValidColor(color)
@@ -54,14 +59,9 @@ export const generateColors = (
             ? defaultColorMapping.onBgNeutral
             : invalidColor
           : chroma(color).mix(shading2, mixValue7).hex();
+
       const element =
-        getContrastSuggestion(
-          defaultColorMapping.bgNeutralStrong,
-          color,
-          3.0,
-          bgLuminance >= 0.4,
-          true,
-        ) || color;
+        getElementColor(defaultColorMapping.bgNeutralStrong, color) || color;
 
       let colorResult: ColorType = {
         name: key,

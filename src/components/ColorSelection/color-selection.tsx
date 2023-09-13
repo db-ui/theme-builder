@@ -27,9 +27,10 @@ const ColorSelection = () => {
         bgNeutral: darkMode
           ? defaultColors.onBgNeutral
           : defaultColors.bgNeutral,
-        bgNeutralStrong: darkMode
-          ? getNeutralStrong(defaultColors.onBgNeutral, darkMode)
-          : defaultColors.bgNeutralStrong,
+        bgNeutralStrong: getNeutralStrong(
+          darkMode ? defaultColors.onBgNeutral : defaultColors.bgNeutral,
+          darkMode,
+        ),
         onBgNeutral: darkMode
           ? defaultColors.bgNeutral
           : defaultColors.onBgNeutral,
