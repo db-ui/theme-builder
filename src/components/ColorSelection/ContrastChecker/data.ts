@@ -1,6 +1,6 @@
 export type ContrastCheckerType = {
-  id: string;
   backgroundColor: string;
+  backgroundColorDark?: string;
   label: string;
   initColor: string;
   onChange?: (color: string) => void;

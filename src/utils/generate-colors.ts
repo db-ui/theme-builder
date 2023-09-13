@@ -44,12 +44,22 @@ export const generateColors = (
   colorKeys
     .filter((key) => !key.startsWith("on") && !key.startsWith("bg"))
     .forEach((key) => {
+      const bgLuminance = getLuminance(defaultColorMapping.bgNeutralStrong);
       let color: string = (defaultColorMapping as any)[key];
+      if (key !== "brand") {
+        color =
+          getContrastSuggestion(
+            defaultColorMapping.bgNeutralStrong,
+            color,
+            4.5,
+            bgLuminance < 0.4,
+          ) || color;
+      }
+
       if (!isValidColor(color)) {
         color = invalidColor;
       }
 
-      const bgLuminance = getLuminance(defaultColorMapping.bgNeutralStrong);
       const bgLuminanceShading = bgLuminance < 0.4 ? "#fff" : "#000";
 
       const background = chroma(color).mix(shading1, mixValue6).hex();

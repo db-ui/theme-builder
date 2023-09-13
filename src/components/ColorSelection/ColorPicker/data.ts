@@ -9,5 +9,5 @@ export type ColorPickerType = {
     | "warning"
     | "successful";
   title?: string;
-  contrastError?: string;
+  info?: string;
 };

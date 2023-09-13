@@ -21,6 +21,8 @@ const App = () => {
           slotCallToAction={
             <DBButton
               variant="text"
+              icon={darkMode ? "day" : "night"}
+              noText
               className="dark-mode-button"
               title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
               onClick={() =>

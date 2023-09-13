@@ -70,16 +70,24 @@ export const getElementColor = (
     isValidColor(foregroundColor) &&
     isValidColor(backgroundColor)
   ) {
-    let currentLuminance = 0.5;
-    let suggestion = chroma(foregroundColor)
-      .set("hsl.l", currentLuminance)
+    const initialHsl = chroma(foregroundColor).hsl();
+    const reverse = initialHsl[2] > 0.5;
+    let currentLuminance = reverse ? 0.01 : 0.5;
+    let suggestion = chroma
+      .hsl(initialHsl[0], initialHsl[1], currentLuminance)
       .hex();
     while (
       getContrast(suggestion, backgroundColor) <= 3 &&
       currentLuminance > 0
     ) {
-      suggestion = chroma(suggestion).set("hsl.l", currentLuminance).hex();
-      currentLuminance -= 0.01;
+      suggestion = chroma
+        .hsl(initialHsl[0], initialHsl[1], currentLuminance)
+        .hex();
+      if (reverse) {
+        currentLuminance += 0.01;
+      } else {
+        currentLuminance -= 0.01;
+      }
     }
 
     return getContrast(suggestion, backgroundColor) <= 3

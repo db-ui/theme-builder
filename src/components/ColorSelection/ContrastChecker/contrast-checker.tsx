@@ -4,30 +4,45 @@ import type { ContrastCheckerType } from "./data";
 import ColorPicker from "../ColorPicker";
 import "./index.scss";
 import { DBDivider } from "@db-ui/react-components";
-import {
-  getContrast,
-  getContrastSuggestion,
-  getWCA2Variant,
-  isValidColor,
-} from "../../../utils";
+import { getContrastSuggestion, isValidColor } from "../../../utils";
 import ContrastList from "../ContrastList";
 import InformationButton from "../InformationButton";
-import { useInternalStore } from "../../../store";
+
+const colorChangedMessage = "Color changed for";
+const darkModeMessage = "dark-mode";
+const lightModeMessage = "light-mode";
+const getInfoMessage = (
+  changedLightColor: boolean,
+  changedDarkColor: boolean,
+): string | undefined => {
+  if (changedLightColor && changedDarkColor) {
+    return `${colorChangedMessage} ${lightModeMessage} & ${darkModeMessage}.`;
+  }
+
+  if (changedLightColor) {
+    return `${colorChangedMessage} ${lightModeMessage}.`;
+  }
+
+  if (changedDarkColor) {
+    return `${colorChangedMessage} ${darkModeMessage}.`;
+  }
+
+  return undefined;
+};
 
 const ContrastChecker = ({
-  id,
   label,
   backgroundColor,
+  backgroundColorDark,
   initColor,
   onChange,
 }: PropsWithChildren<ContrastCheckerType>) => {
   const [foregroundColor, setFourgroundColor] = useState<string>(initColor);
-  const [suggestion4, setSuggestion4] = useState<string | undefined>();
-  const [suggestion7, setSuggestion7] = useState<string | undefined>();
+  const [validLight, setValidLight] = useState<string | undefined>();
+  const [validDark, setValidDark] = useState<string | undefined>();
 
-  const [contrast, setContrast] = useState<number>(-1);
-
-  const { changeValidColor } = useInternalStore((state) => state);
+  const [changedLightColor, setChangedLightColor] = useState<boolean>(false);
+  const [changedDarkColor, setChangedDarkColor] = useState<boolean>(false);
 
   useEffect(() => {
     if (foregroundColor) {
@@ -42,34 +57,46 @@ const ContrastChecker = ({
   }, [initColor]);
 
   useEffect(() => {
-    if (contrast !== -1) {
-      changeValidColor({ [id]: contrast >= 4.5 });
-    }
-  }, [contrast, id]);
-
-  useEffect(() => {
     if (
       foregroundColor &&
       backgroundColor &&
       isValidColor(foregroundColor) &&
       isValidColor(backgroundColor)
     ) {
-      setContrast(getContrast(foregroundColor, backgroundColor));
-      setSuggestion4(getContrastSuggestion(backgroundColor, foregroundColor));
-      setSuggestion7(
-        getContrastSuggestion(backgroundColor, foregroundColor, 7.5),
-      );
+      const validLightColor =
+        getContrastSuggestion(backgroundColor, foregroundColor) ||
+        foregroundColor;
+      setValidLight(validLightColor);
+      setChangedLightColor(validLightColor !== foregroundColor);
     }
   }, [foregroundColor, backgroundColor]);
+
+  useEffect(() => {
+    if (
+      foregroundColor &&
+      backgroundColorDark &&
+      isValidColor(foregroundColor) &&
+      isValidColor(backgroundColorDark)
+    ) {
+      const validDarkColor =
+        getContrastSuggestion(
+          backgroundColorDark,
+          foregroundColor,
+          4.5,
+          true,
+        ) || foregroundColor;
+      setValidDark(validDarkColor);
+      setChangedDarkColor(validDarkColor !== foregroundColor);
+    }
+  }, [foregroundColor, backgroundColorDark]);
 
   return (
     <div className="contrast-checker-container">
       <ColorPicker
-        variant={getWCA2Variant(contrast)}
         label={label}
         color={foregroundColor}
         setColor={setFourgroundColor}
-        contrastError={contrast < 4.5 ? "Contrast below 4.5" : undefined}
+        info={getInfoMessage(changedLightColor, changedDarkColor)}
       />
       <InformationButton>
         <>
@@ -78,26 +105,28 @@ const ContrastChecker = ({
             backgroundColor={backgroundColor}
             foregroundColor={foregroundColor}
           />
-          {(suggestion4 || suggestion7) && (
+          {validLight && validLight !== foregroundColor && (
             <>
               <DBDivider />
-              <p>Suggestions:</p>
-
-              {suggestion4 && (
-                <ContrastList
-                  backgroundColor={backgroundColor}
-                  foregroundColor={suggestion4}
-                />
-              )}
-
-              {suggestion7 && (
-                <ContrastList
-                  backgroundColor={backgroundColor}
-                  foregroundColor={suggestion7}
-                />
-              )}
+              <p>Light-Mode:</p>
+              <ContrastList
+                backgroundColor={backgroundColor}
+                foregroundColor={validLight}
+              />
             </>
           )}
+          {validDark &&
+            backgroundColorDark &&
+            validDark !== foregroundColor && (
+              <>
+                <DBDivider />
+                <p>Dark-Mode:</p>{" "}
+                <ContrastList
+                  backgroundColor={backgroundColorDark}
+                  foregroundColor={validDark}
+                />
+              </>
+            )}
         </>
       </InformationButton>
     </div>

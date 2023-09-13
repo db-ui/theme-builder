@@ -13,20 +13,14 @@ const ColorPicker = ({
   variant,
   title,
   children,
-  contrastError,
+  info,
 }: PropsWithChildren<ColorPickerType>) => {
   const [colorPicker, setColorPicker] = useState<boolean>();
   const [error, setError] = useState<string>();
 
   useEffect(() => {
-    setError(
-      contrastError
-        ? contrastError
-        : isValidColor(color)
-        ? undefined
-        : "Invalid hex color",
-    );
-  }, [color, contrastError]);
+    setError(isValidColor(color) ? undefined : "Invalid hex color");
+  }, [color]);
 
   return (
     <div className="color-picker-container">
@@ -55,10 +49,10 @@ const ColorPicker = ({
         )}
         <DBInput
           title={title}
-          variant={error ? "critical" : variant}
+          variant={info ? "informational" : error ? "critical" : variant}
           value={color}
           label={label}
-          message={error}
+          message={error || info}
           onFocus={() => setColorPicker(false)}
           onChange={(event) => setColor(event.target.value)}
         />

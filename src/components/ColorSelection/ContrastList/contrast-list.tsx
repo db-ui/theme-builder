@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { useEffect, useState } from "react";
 import { ContrastListType } from "./data";
-import { DBButton, DBTag } from "@db-ui/react-components";
+import { DBTag } from "@db-ui/react-components";
 import { calcAPCA } from "apca-w3";
 import { getAPCAVariant, getContrast, getWCA2Variant } from "../../../utils";
 import "./index.scss";
@@ -13,8 +13,6 @@ const ContrastList = ({
   const [contrastWCA2, setContrastWCA2] = useState<number>();
   const [contrastAPCA, setContrastAPCA] = useState<number>();
   const [scoreWCA2, setScoreWCA2] = useState<string>();
-
-  const [copyClicked, setCopyClicked] = useState<boolean>();
 
   useEffect(() => {
     if (foregroundColor && backgroundColor) {
@@ -34,12 +32,6 @@ const ContrastList = ({
     }
   }, [foregroundColor, backgroundColor]);
 
-  useEffect(() => {
-    if (copyClicked) {
-      setTimeout(() => setCopyClicked(false), 2000);
-    }
-  }, [copyClicked]);
-
   return (
     <>
       <div className="copy-color-container">
@@ -51,16 +43,6 @@ const ContrastList = ({
         >
           {foregroundColor}
         </span>
-        <DBButton
-          variant="solid"
-          icon="copy"
-          onClick={() => {
-            navigator.clipboard.writeText(foregroundColor || "");
-            setCopyClicked(true);
-          }}
-        >
-          {copyClicked ? "Copied" : "Copy"}
-        </DBButton>
       </div>
       <div className="contrast-checker-values">
         <DBTag variant={getWCA2Variant(contrastWCA2)}>

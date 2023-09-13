@@ -1,11 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import {
-  InternalState,
-  THEME_BUILDER_INTERNAL_STATE,
-  THEME_BUILDER_STATE,
-  ThemeBuilderState,
-} from "./state.ts";
+import { THEME_BUILDER_STATE, ThemeBuilderState } from "./state.ts";
 import {
   DEFAULT_BACKGROUND,
   DEFAULT_BACKGROUND_DARK,
@@ -54,17 +49,4 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
   ),
 );
 
-export const useInternalStore = create<InternalState>()(
-  devtools(
-    (set) => ({
-      validColors: {},
-      changeValidColor: (validType) =>
-        set((state) => ({
-          validColors: { ...state.validColors, ...validType },
-        })),
-    }),
-    { name: THEME_BUILDER_INTERNAL_STATE },
-  ),
-);
-
-export default { useThemeBuilderStore, useInternalStore };
+export default { useThemeBuilderStore };
