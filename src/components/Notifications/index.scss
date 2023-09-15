@@ -1,0 +1,37 @@
+@use "@db-ui/foundations/build/scss/variables.global" as *;
+@use "@db-ui/foundations/build/scss/animation/animations";
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-50%) translateY(150%);
+  }
+
+  to {
+    transform: translateX(-50%) translateY(0%);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(-50%) translateY(0%);
+  }
+
+  to {
+    transform: translateX(-50%) translateY(150%);
+  }
+}
+
+.notification {
+  position: fixed;
+  z-index: 6;
+  bottom: $db-spacing-fixed-md;
+  animation: slide-out animations.$animation-show-timing;
+  left: 50%;
+
+  .db-alert-close {
+    display: none;
+  }
+}
+.show {
+  animation: slide-in animations.$animation-show-timing;
+}

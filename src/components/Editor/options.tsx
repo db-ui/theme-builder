@@ -1,5 +1,5 @@
-// TODO: Fix slots
 import { domToReact, HTMLReactParserOptions } from "html-react-parser";
+import getAttributes from "./get-attributes.ts";
 import {
   DBAccordion,
   DBAccordionItem,
@@ -25,10 +25,8 @@ import {
   DBTextarea,
   DBTag,
 } from "@db-ui/react-components";
-import getAttributes from "./get-attributes.ts";
 export const PARSER_OPTIONS: HTMLReactParserOptions = {
   transform: (reactNode: any) => {
-    console.log(reactNode);
     if (
       reactNode.type &&
       reactNode.type.endsWith &&

@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import { generateColors, getNeutralStrong } from "./utils/generate-colors.ts";
 import { getCssProperties } from "./utils/outputs.ts";
+import Notifications from "./components/Notifications";
 
 const App = () => {
   const { darkMode, defaultColors } = useThemeBuilderStore((state) => state);
@@ -41,35 +42,38 @@ const App = () => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
   return (
-    <DBPage
-      type="fixedHeaderFooter"
-      slotHeader={
-        <DBHeader
-          drawerOpen={drawerOpen}
-          onToggle={setDrawerOpen}
-          slotBrand={<DBBrand anchorChildren>Theme Builder</DBBrand>}
-          slotActionBar={<ActionBar />}
-          slotCallToAction={
-            <DBButton
-              variant="text"
-              icon={darkMode ? "day" : "night"}
-              noText
-              className="dark-mode-button"
-              title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
-              onClick={() =>
-                useThemeBuilderStore.setState({ darkMode: !darkMode })
-              }
-            >
-              {darkMode ? "🌞" : "🌛"}
-            </DBButton>
-          }
-        >
-          <Navigation />
-        </DBHeader>
-      }
-    >
-      <Outlet />
-    </DBPage>
+    <>
+      <Notifications />
+      <DBPage
+        type="fixedHeaderFooter"
+        slotHeader={
+          <DBHeader
+            drawerOpen={drawerOpen}
+            onToggle={setDrawerOpen}
+            slotBrand={<DBBrand anchorChildren>Theme Builder</DBBrand>}
+            slotActionBar={<ActionBar />}
+            slotCallToAction={
+              <DBButton
+                variant="text"
+                icon={darkMode ? "day" : "night"}
+                noText
+                className="dark-mode-button"
+                title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
+                onClick={() =>
+                  useThemeBuilderStore.setState({ darkMode: !darkMode })
+                }
+              >
+                {darkMode ? "🌞" : "🌛"}
+              </DBButton>
+            }
+          >
+            <Navigation />
+          </DBHeader>
+        }
+      >
+        <Outlet />
+      </DBPage>
+    </>
   );
 };
 
