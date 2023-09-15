@@ -26,6 +26,7 @@ const Editor = () => {
 
   return (
     <div className="split-view-container">
+      {/* TODO: Add templates here */}
       <AceEditor
         mode="html"
         theme={darkMode ? "xcode" : "dracula"}
