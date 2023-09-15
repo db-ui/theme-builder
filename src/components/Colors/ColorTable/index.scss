@@ -1,8 +1,8 @@
-@use "@db-ui/foundations/build/scss/variables" as *;
-@use "@db-ui/foundations/build/scss/variables.global" as *;
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/screen-sizes";
 
 .color-table-container {
-  gap: $db-spacing-fixed-md;
+  gap: variables.$db-spacing-fixed-md;
 }
 
 .color-table-header-container {
@@ -12,7 +12,7 @@
 
 .color-box {
   width: 100%;
-  height: $db-sizing-sm;
+  height: variables.$db-sizing-sm;
   border: black 1px solid;
   background-color: var(--color);
 
@@ -32,7 +32,7 @@
 .table-scroll-container {
   overflow-x: auto;
 
-  @media screen and (min-width: $db-screens-m) {
+  @media screen and (min-width: screen-sizes.$db-screen-md) {
     overflow-x: unset;
     table {
       width: 100%;

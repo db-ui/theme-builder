@@ -99,35 +99,31 @@ const ContrastChecker = ({
         info={getInfoMessage(changedLightColor, changedDarkColor)}
       />
       <InformationButton>
-        <>
-          <p>Original:</p>
-          <ContrastList
-            backgroundColor={backgroundColor}
-            foregroundColor={foregroundColor}
-          />
-          {validLight && validLight !== foregroundColor && (
-            <>
-              <DBDivider />
-              <p>Light-Mode:</p>
-              <ContrastList
-                backgroundColor={backgroundColor}
-                foregroundColor={validLight}
-              />
-            </>
-          )}
-          {validDark &&
-            backgroundColorDark &&
-            validDark !== foregroundColor && (
-              <>
-                <DBDivider />
-                <p>Dark-Mode:</p>{" "}
-                <ContrastList
-                  backgroundColor={backgroundColorDark}
-                  foregroundColor={validDark}
-                />
-              </>
-            )}
-        </>
+        <p>Original:</p>
+        <ContrastList
+          backgroundColor={backgroundColor}
+          foregroundColor={foregroundColor}
+        />
+        {validLight && validLight !== foregroundColor && (
+          <>
+            <DBDivider />
+            <p>Light-Mode:</p>
+            <ContrastList
+              backgroundColor={backgroundColor}
+              foregroundColor={validLight}
+            />
+          </>
+        )}
+        {validDark && backgroundColorDark && validDark !== foregroundColor && (
+          <>
+            <DBDivider />
+            <p>Dark-Mode:</p>{" "}
+            <ContrastList
+              backgroundColor={backgroundColorDark}
+              foregroundColor={validDark}
+            />
+          </>
+        )}
       </InformationButton>
     </div>
   );

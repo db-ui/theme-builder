@@ -1,9 +1,9 @@
-@use "@db-ui/foundations/build/scss/variables.global" as *;
+@use "@db-ui/foundations/build/scss/variables";
 
 .color-picker-container {
   display: flex;
   width: 100%;
-  gap: $db-spacing-fixed-xs;
+  gap: variables.$db-spacing-fixed-xs;
 
   .color-input-container {
     display: flex;
@@ -14,15 +14,15 @@
       border: 1px solid black;
       appearance: none;
       font-size: 0 !important;
-      width: $db-sizing-md;
-      height: $db-sizing-md;
+      width: variables.$db-sizing-md;
+      height: variables.$db-sizing-md;
       cursor: pointer;
       border-radius: 4px;
-      padding: $db-spacing-fixed-sm;
+      padding: variables.$db-spacing-fixed-sm;
     }
     .db-input {
       width: 100%;
-      margin-inline-start: $db-spacing-fixed-xs;
+      margin-inline-start: variables.$db-spacing-fixed-xs;
     }
 
     .color-picker {

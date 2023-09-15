@@ -1,28 +1,28 @@
 @forward "@db-ui/components/build/styles/db-ui-42-rollup";
-@use "@db-ui/foundations/build/scss/variables" as screen;
-@use "@db-ui/foundations/build/scss/variables.global" as var;
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/screen-sizes";
 
 .column-box {
   display: flex;
   flex-direction: column;
-  gap: var.$db-spacing-fixed-md;
+  gap: variables.$db-spacing-fixed-md;
 }
 
 .upper-container {
   display: flex;
-  gap: var.$db-spacing-fixed-md;
+  gap: variables.$db-spacing-fixed-md;
   flex-direction: column;
 
-  @media screen and (min-width: screen.$db-screens-m) {
+  @media screen and (min-width: screen-sizes.$db-screen-md) {
     flex-direction: row;
   }
 }
 
 .content {
   --db-drawer-max-width: 90%;
-  padding: var.$db-spacing-fixed-md;
+  padding: variables.$db-spacing-fixed-md;
 
-  @media screen and (min-width: screen.$db-screens-m) {
+  @media screen and (min-width: screen-sizes.$db-screen-md) {
     --db-drawer-max-width: 33%;
   }
 }
@@ -40,17 +40,17 @@
 .color-inputs {
   display: flex;
   flex-direction: column;
-  gap: var.$db-spacing-fixed-xs;
+  gap: variables.$db-spacing-fixed-xs;
 
   .color-picker-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var.$db-spacing-fixed-md;
+    gap: variables.$db-spacing-fixed-md;
   }
 
   .db-input {
     min-width: 200px;
-    @media screen and (min-width: screen.$db-screens-m) {
+    @media screen and (min-width: screen-sizes.$db-screen-md) {
       min-width: 250px;
     }
   }
@@ -66,5 +66,5 @@ h6 {
 
 .dark-mode-button {
   padding: 0;
-  inline-size: var.$db-sizing-md;
+  inline-size: variables.$db-sizing-md;
 }
