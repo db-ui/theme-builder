@@ -8,6 +8,7 @@ export type ThemeBuilderState = {
   colors: ColorType[];
   darkMode: boolean;
   resetDefaultColors: () => void;
+  editorMarkup: string;
 };
 
 export type ValidType = {

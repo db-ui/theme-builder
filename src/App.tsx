@@ -1,14 +1,45 @@
 import { DBBrand, DBButton, DBHeader, DBPage } from "@db-ui/react-components";
-import ColorTable from "./components/ColorTable";
-import ComponentPreview from "./components/ComponentPreview";
-import ColorSelection from "./components/ColorSelection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useThemeBuilderStore } from "./store";
 import ActionBar from "./components/ActionBar";
+import { Outlet } from "react-router-dom";
+import Navigation from "./components/Navigation";
+import { generateColors, getNeutralStrong } from "./utils/generate-colors.ts";
+import { getCssProperties } from "./utils/outputs.ts";
 
 const App = () => {
-  const { darkMode } = useThemeBuilderStore((state) => state);
+  const { darkMode, defaultColors } = useThemeBuilderStore((state) => state);
+
+  useEffect(() => {
+    const generatedColors = generateColors(
+      {
+        ...defaultColors,
+        bgNeutral: darkMode
+          ? defaultColors.onBgNeutral
+          : defaultColors.bgNeutral,
+        bgNeutralStrong: getNeutralStrong(
+          darkMode ? defaultColors.onBgNeutral : defaultColors.bgNeutral,
+          darkMode,
+        ),
+        onBgNeutral: darkMode
+          ? defaultColors.bgNeutral
+          : defaultColors.onBgNeutral,
+      },
+      darkMode,
+    );
+    useThemeBuilderStore.setState({ colors: generatedColors });
+
+    const cssProps = getCssProperties(generatedColors);
+    Object.keys(cssProps).forEach((key) => {
+      document
+        .getElementsByTagName("html")
+        ?.item(0)
+        ?.style.setProperty(key, cssProps[key]);
+    });
+  }, [defaultColors, darkMode]);
+
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
   return (
     <DBPage
       type="fixedHeaderFooter"
@@ -32,16 +63,12 @@ const App = () => {
               {darkMode ? "🌞" : "🌛"}
             </DBButton>
           }
-        ></DBHeader>
+        >
+          <Navigation />
+        </DBHeader>
       }
     >
-      <div className="content column-box">
-        <div className="upper-container">
-          <ColorSelection />
-          <ComponentPreview />
-        </div>
-        <ColorTable />
-      </div>
+      <Outlet />
     </DBPage>
   );
 };

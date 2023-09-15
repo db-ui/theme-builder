@@ -1,8 +1,8 @@
 import { DBCard, DBCheckbox } from "@db-ui/react-components";
-import { ALL_VARIABLES } from "../../utils/data.ts";
+import { ALL_VARIABLES } from "../../../utils/data.ts";
 import "./index.scss";
 import { useState } from "react";
-import { useThemeBuilderStore } from "../../store";
+import { useThemeBuilderStore } from "../../../store";
 
 const ColorTable = () => {
   const { colors } = useThemeBuilderStore((state) => state);

@@ -7,11 +7,19 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import AppRoutes from "./components/Navigation/app-routes.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
-    <Route path="/" element={<App />} />,
-    // TODO: Add a page here
+    <Route path="/" element={<App />}>
+      {AppRoutes.map((route) => (
+        <Route
+          key={`route-${route.path}`}
+          path={route.path}
+          element={route.element}
+        />
+      ))}
+    </Route>,
   ]),
   { basename: "/theme-builder" },
 );

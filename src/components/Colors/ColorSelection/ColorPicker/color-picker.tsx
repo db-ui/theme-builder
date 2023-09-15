@@ -4,7 +4,7 @@ import { ColorPickerType } from "./data";
 import { DBInput } from "@db-ui/react-components";
 import "./index.scss";
 import { ChromePicker } from "react-color";
-import { isValidColor } from "../../../utils";
+import { isValidColor } from "../../../../utils";
 
 const ColorPicker = ({
   label,

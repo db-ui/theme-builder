@@ -2,14 +2,9 @@ import { DBCard } from "@db-ui/react-components";
 import ColorPicker from "./ColorPicker";
 import InformationButton from "./InformationButton";
 import ContrastChecker from "./ContrastChecker";
-import { useThemeBuilderStore } from "../../store";
-import { DefaultColorMappingType } from "../../utils/data.ts";
-import { useEffect } from "react";
-import {
-  generateColors,
-  getNeutralStrong,
-} from "../../utils/generate-colors.ts";
-import { getCssProperties } from "../../utils/outputs.ts";
+import { useThemeBuilderStore } from "../../../store";
+import { DefaultColorMappingType } from "../../../utils/data.ts";
+import { getNeutralStrong } from "../../../utils/generate-colors.ts";
 
 const ColorSelection = () => {
   const { darkMode, defaultColors } = useThemeBuilderStore((state) => state);
@@ -20,33 +15,6 @@ const ColorSelection = () => {
     });
   };
 
-  useEffect(() => {
-    const generatedColors = generateColors(
-      {
-        ...defaultColors,
-        bgNeutral: darkMode
-          ? defaultColors.onBgNeutral
-          : defaultColors.bgNeutral,
-        bgNeutralStrong: getNeutralStrong(
-          darkMode ? defaultColors.onBgNeutral : defaultColors.bgNeutral,
-          darkMode,
-        ),
-        onBgNeutral: darkMode
-          ? defaultColors.bgNeutral
-          : defaultColors.onBgNeutral,
-      },
-      darkMode,
-    );
-    useThemeBuilderStore.setState({ colors: generatedColors });
-
-    const cssProps = getCssProperties(generatedColors);
-    Object.keys(cssProps).forEach((key) => {
-      document
-        .getElementsByTagName("html")
-        ?.item(0)
-        ?.style.setProperty(key, cssProps[key]);
-    });
-  }, [defaultColors, darkMode]);
   return (
     <div className="column-box">
       <DBCard className="color-inputs" spacing="small">

@@ -41,6 +41,7 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
           set((state) => ({
             defaultColors: getDefaultColorMapping(state.darkMode),
           })),
+        editorMarkup: "",
       }),
       {
         name: THEME_BUILDER_STATE,
