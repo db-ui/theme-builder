@@ -24,7 +24,7 @@
     "react-ace": "10.1.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
-    "react-router-dom": "6.15.0",
+    "react-router-dom": "6.16.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
@@ -34,13 +34,13 @@
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.6.0",
+    "@typescript-eslint/parser": "^6.7.0",
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.49.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "prettier": "3.0.3",
-    "sass": "^1.66.1",
+    "sass": "^1.67.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.5"
   }
