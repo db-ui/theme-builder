@@ -1,34 +1,47 @@
-import { domToReact, HTMLReactParserOptions } from "html-react-parser";import{DBAccordion,DBAccordionItem,DBButton,DBBadge,DBAlert,DBCard,DBCheckbox,DBBrand,DBDrawer,DBDivider,DBHeader,DBInfotext,DBIcon,DBLink,DBInput,DBMainNavigation,DBNavigationItem,DBRadio,DBSection,DBPage,DBSelect,DBTextarea,DBTag} from "@db-ui/react-components";export const PARSER_OPTIONS: HTMLReactParserOptions = {
-      transform: (reactNode: any) => {
-        if (
-          reactNode.type &&
-          reactNode.type.endsWith &&
-          reactNode.type.endsWith("<")
-        ) {
-          return reactNode.type;
-        }
-    
-        return reactNode;
-      },
-      replace: ({ name, attribs, children }: any) => {      
-      const attributes: any = {};
-      if (attribs) {
-        const attributeKeys = Object.keys(attribs);
-        attributeKeys.forEach((key) => {
-          if (key.startsWith("on")) {
-            try {
-              const event = key.slice(2);
-              attributes["on" + event.charAt(0).toUpperCase() + event.slice(1)] =
-                Function(attribs[key].replace(/"/g, ""));
-            } catch (e) {
-              /* empty */
-            }
-          } else {
-            attributes[key] = attribs[key];
-          }
-        });
-      }
-  
+// TODO: Fix slots
+import { domToReact, HTMLReactParserOptions } from "html-react-parser";
+import {
+  DBAccordion,
+  DBAccordionItem,
+  DBButton,
+  DBBadge,
+  DBAlert,
+  DBCard,
+  DBCheckbox,
+  DBBrand,
+  DBDrawer,
+  DBDivider,
+  DBHeader,
+  DBInfotext,
+  DBIcon,
+  DBLink,
+  DBInput,
+  DBMainNavigation,
+  DBNavigationItem,
+  DBRadio,
+  DBSection,
+  DBPage,
+  DBSelect,
+  DBTextarea,
+  DBTag,
+} from "@db-ui/react-components";
+import getAttributes from "./get-attributes.ts";
+export const PARSER_OPTIONS: HTMLReactParserOptions = {
+  transform: (reactNode: any) => {
+    console.log(reactNode);
+    if (
+      reactNode.type &&
+      reactNode.type.endsWith &&
+      reactNode.type.endsWith("<")
+    ) {
+      return reactNode.type;
+    }
+
+    return reactNode;
+  },
+  replace: ({ name, attribs, children }: any) => {
+    const attributes: any = getAttributes(attribs, PARSER_OPTIONS);
+
     if (name === "dbaccordion") {
       return (
         <DBAccordion {...attributes}>
@@ -66,9 +79,7 @@ import { domToReact, HTMLReactParserOptions } from "html-react-parser";import{DB
     }
     if (name === "dbcard") {
       return (
-        <DBCard {...attributes}>
-          {domToReact(children, PARSER_OPTIONS)}
-        </DBCard>
+        <DBCard {...attributes}>{domToReact(children, PARSER_OPTIONS)}</DBCard>
       );
     }
     if (name === "dbcheckbox") {
@@ -115,16 +126,12 @@ import { domToReact, HTMLReactParserOptions } from "html-react-parser";import{DB
     }
     if (name === "dbicon") {
       return (
-        <DBIcon {...attributes}>
-          {domToReact(children, PARSER_OPTIONS)}
-        </DBIcon>
+        <DBIcon {...attributes}>{domToReact(children, PARSER_OPTIONS)}</DBIcon>
       );
     }
     if (name === "dblink") {
       return (
-        <DBLink {...attributes}>
-          {domToReact(children, PARSER_OPTIONS)}
-        </DBLink>
+        <DBLink {...attributes}>{domToReact(children, PARSER_OPTIONS)}</DBLink>
       );
     }
     if (name === "dbinput") {
@@ -164,9 +171,7 @@ import { domToReact, HTMLReactParserOptions } from "html-react-parser";import{DB
     }
     if (name === "dbpage") {
       return (
-        <DBPage {...attributes}>
-          {domToReact(children, PARSER_OPTIONS)}
-        </DBPage>
+        <DBPage {...attributes}>{domToReact(children, PARSER_OPTIONS)}</DBPage>
       );
     }
     if (name === "dbselect") {
@@ -185,8 +190,8 @@ import { domToReact, HTMLReactParserOptions } from "html-react-parser";import{DB
     }
     if (name === "dbtag") {
       return (
-        <DBTag {...attributes}>
-          {domToReact(children, PARSER_OPTIONS)}
-        </DBTag>
+        <DBTag {...attributes}>{domToReact(children, PARSER_OPTIONS)}</DBTag>
       );
-    }}};
+    }
+  },
+};

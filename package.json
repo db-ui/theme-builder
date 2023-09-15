@@ -7,6 +7,7 @@
     "build": "tsc && vite build",
     "dev": "vite --open",
     "generate:parse-options": "node scripts/generateParseOptions.js",
+    "generate:tailwind": "tailwindcss -i ./src/components/Editor/tailwind.css -o ./src/components/Editor/tailwind.generated.css --full --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "prepare": "node -e \"try { require('husky').install() } catch (e) {}\"",
     "preview": "vite preview"
@@ -41,6 +42,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "prettier": "3.0.3",
     "sass": "^1.67.0",
+    "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.5"
   }

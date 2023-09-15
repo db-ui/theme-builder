@@ -5,6 +5,7 @@ import { writeFileSync } from "node:fs";
 const generateParseOptions = () => {
   let file =
     'import { domToReact, HTMLReactParserOptions } from "html-react-parser";' +
+    'import getAttributes from "./get-attributes.ts";' +
     `import{${components.join(",")}} from "@db-ui/react-components";` +
     `export const PARSER_OPTIONS: HTMLReactParserOptions = {
       transform: (reactNode: any) => {
@@ -18,24 +19,8 @@ const generateParseOptions = () => {
     
         return reactNode;
       },
-      replace: ({ name, attribs, children }: any) => {      
-      const attributes: any = {};
-      if (attribs) {
-        const attributeKeys = Object.keys(attribs);
-        attributeKeys.forEach((key) => {
-          if (key.startsWith("on")) {
-            try {
-              const event = key.slice(2);
-              attributes["on" + event.charAt(0).toUpperCase() + event.slice(1)] =
-                Function(attribs[key].replace(/"/g, ""));
-            } catch (e) {
-              /* empty */
-            }
-          } else {
-            attributes[key] = attribs[key];
-          }
-        });
-      }
+      replace: ({ name, attribs, children }: any) => {   
+      const attributes: any = getAttributes(attribs, PARSER_OPTIONS);
   `;
 
   components.forEach((component) => {

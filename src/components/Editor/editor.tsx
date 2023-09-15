@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import parse from "html-react-parser";
 
 import "./index.scss";
+import "@db-ui/foundations/build/css/color-classes.css";
+import "./tailwind.generated.css";
 
 import ace from "ace-builds";
 import AceEditor from "react-ace";
