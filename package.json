@@ -21,6 +21,7 @@
     "html-react-parser": "^4.2.2",
     "husky": "8.0.3",
     "jszip": "^3.10.1",
+    "prettier": "3.0.3",
     "react": "^18.2.0",
     "react-ace": "10.1.0",
     "react-color": "^2.19.3",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@types/apca-w3": "^0.1.0",
     "@types/chroma-js": "^2.4.0",
+    "@types/prettier": "^3.0.0",
     "@types/react": "^18.2.21",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.2.7",
@@ -40,7 +42,6 @@
     "eslint": "^8.49.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "prettier": "3.0.3",
     "sass": "^1.67.0",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",

@@ -9,11 +9,17 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/ext-language_tools";
+
+import { format } from "prettier/standalone";
+import babel from "prettier/plugins/babel";
+import estree from "prettier/plugins/estree";
+import html from "prettier/plugins/html";
+
 import { getAceAutocomplete } from "./autocomplete";
 import { PARSER_OPTIONS } from "./options.tsx";
 import { useThemeBuilderStore } from "../../store";
 import { TEMPLATES } from "./templates.ts";
-import { DBButton, DBCard } from "@db-ui/react-components";
+import { DBButton, DBCard, DBDivider } from "@db-ui/react-components";
 
 const Editor = () => {
   const { editorMarkup } = useThemeBuilderStore((state) => state);
@@ -23,8 +29,20 @@ const Editor = () => {
     langTools.addCompleter(getAceAutocomplete());
   }, []);
 
+  const onFormat = async () => {
+    const formatted = await format(editorMarkup, {
+      parser: "babel",
+      plugins: [babel, estree, html],
+      semi: false,
+    });
+
+    useThemeBuilderStore.setState({
+      editorMarkup: formatted.replace(/\n$/, "").replace(";", ""),
+    });
+  };
+
   return (
-    <div className="w-full h-full grid grid-cols-2 gap-fix-xs p-fix-xs">
+    <div className="editor w-full h-full grid grid-cols-2 gap-fix-xs p-fix-xs">
       <div className="flex flex-col gap-fix-xs">
         <AceEditor
           mode="html"
@@ -50,6 +68,10 @@ const Editor = () => {
           }}
         />
         <div className="flex flex-wrap db-ui-functional gap-fix-xs">
+          <DBButton icon="grid_view" onClick={() => onFormat()}>
+            Format Code
+          </DBButton>
+          <DBDivider variant="vertical" />
           {TEMPLATES.map((template) => (
             <DBButton
               icon="copy"
