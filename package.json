@@ -9,6 +9,7 @@
     "generate:parse-options": "node scripts/generateParseOptions.js",
     "generate:tailwind": "tailwindcss -i ./src/components/Editor/tailwind.css -o ./src/components/Editor/tailwind.generated.css --full --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
+    "postbuild": "ncp dist/index.html dist/404.html",
     "prepare": "node -e \"try { require('husky').install() } catch (e) {}\"",
     "preview": "vite preview"
   },
@@ -42,6 +43,7 @@
     "eslint": "^8.49.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "ncp": "^2.0.0",
     "sass": "^1.67.0",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
