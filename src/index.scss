@@ -73,4 +73,9 @@ h6 {
   .db-divider[data-variant="vertical"] {
     block-size: auto;
   }
+
+  .ace_editor,
+  .ace_editor * {
+    transition: none;
+  }
 }
