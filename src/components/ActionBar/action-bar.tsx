@@ -3,9 +3,8 @@ import { useThemeBuilderStore } from "../../store";
 import { downloadTheme } from "../../utils";
 
 const ActionBar = () => {
-  const { defaultColors, resetDefaultColors } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const { defaultColors, resetDefaultColors, defaultTheme } =
+    useThemeBuilderStore((state) => state);
 
   return (
     <>
@@ -19,7 +18,7 @@ const ActionBar = () => {
       <DBButton
         variant="primary"
         icon="download"
-        onClick={() => downloadTheme(defaultColors)}
+        onClick={() => downloadTheme(defaultTheme, defaultColors)}
         title="Download Theme"
       >
         Download

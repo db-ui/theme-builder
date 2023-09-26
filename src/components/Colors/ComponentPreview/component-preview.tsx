@@ -29,8 +29,8 @@ const ComponentPreview = () => {
       <div
         style={{
           backgroundColor: darkMode
-            ? defaultColors.onBgNeutral
-            : defaultColors.bgNeutral,
+            ? defaultColors.onBgBase
+            : defaultColors.bgBase,
         }}
         className="component-color-container column-box"
       >

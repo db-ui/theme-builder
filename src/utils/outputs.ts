@@ -1,19 +1,38 @@
-import { ColorType } from "./data.ts";
+import { ColorType, DefaultThemeType } from "./data.ts";
+import traverse from "traverse";
 
 const requiredCssProps = [
-  "enabled",
-  "hover",
-  "pressed",
+  "on-enabled",
+  "origin-enabled",
+  "origin-hover",
+  "origin-pressed",
+  "text-enabled",
+  "text-hover",
+  "text-pressed",
   "on-bg-enabled",
+  "on-bg-hover",
+  "on-bg-pressed",
   "on-bg-weak-enabled",
   "bg-enabled",
+  "bg-strong-enabled",
   "element-enabled",
   "border-enabled",
   "border-weak-enabled",
 ];
 
 const prefix = "db";
-export const getCssProperties = (
+
+const getCssPropertyAsString = (properties: any): string => {
+  let resultString = "";
+
+  for (const [key, value] of Object.entries(properties)) {
+    resultString += `${key}: ${value};\n`;
+  }
+
+  return resultString;
+};
+
+export const getColorCssProperties = (
   colors: ColorType[],
   asString?: boolean,
 ): any => {
@@ -21,47 +40,89 @@ export const getCssProperties = (
 
   colors.forEach((color: any) => {
     requiredCssProps.forEach((prop: string) => {
-      // TODO: Use brand in future
-      const name = color.name === "brand" ? "primary" : color.name;
-      result[`--${prefix}-${name}-${prop}`] = color[prop];
-      if (name === "neutral") {
-        result[`--${prefix}-${name}-on-bg-hover`] = color["on-bg-hover"];
-        result[`--${prefix}-${name}-on-bg-pressed`] = color["on-bg-pressed"];
-        result[`--${prefix}-${name}-bg-strong-enabled`] =
-          color["bg-strong-enabled"];
-      }
-      if (name === "primary") {
-        result[`--${prefix}-${name}-text-enabled`] = color["text-enabled"];
-        result[`--${prefix}-${name}-text-hover`] = color["text-hover"];
-        result[`--${prefix}-${name}-text-pressed`] = color["text-pressed"];
+      const name = color.name;
+      if (color[prop]) {
+        result[`--${prefix}-${name}-${prop}`] = color[prop];
       }
     });
   });
 
   if (asString) {
-    let resultString = "";
-
-    for (const [key, value] of Object.entries(result)) {
-      resultString += `${key}: ${value};\n`;
-    }
-
-    return resultString;
+    return getCssPropertyAsString(result);
   }
 
   return result;
 };
+
+const getRemCssProperties = (theme: DefaultThemeType, asString?: boolean) => {
+  const resolvedProperties: any = {};
+  traverse(theme).forEach(function (value) {
+    if (this.isLeaf && this.path.length > 0 && this.path[0] !== "colors") {
+      const key = `--${prefix}-${this.path
+        .map((path) => path.toLowerCase())
+        .map((path) => {
+          if (path === "lineheight") {
+            return "line-height";
+          } else if (path === "fontsize") {
+            return "font-size";
+          }
+          return path;
+        })
+        .join("-")}`;
+
+      resolvedProperties[key] =
+        typeof value === "string" || value instanceof String
+          ? `${value}rem`
+          : value;
+
+      if (this.path.includes("body") && this.path.at(-1) === "fontSize") {
+        const lineHeightPath = [...this.path];
+        lineHeightPath[lineHeightPath.length - 1] = "lineHeight";
+        const fontSizeAsNumber = Number(value);
+        const lineHeightAsNumber = Number(traverse(theme).get(lineHeightPath));
+
+        const remainingIconPath = this.path
+          .filter(
+            (path) =>
+              path !== "typography" && path !== "body" && path !== "fontSize",
+          )
+          .join("-");
+        const fontSizing = fontSizeAsNumber * lineHeightAsNumber;
+        resolvedProperties[
+          `--${prefix}-base-icon-weight-${remainingIconPath}`
+        ] = fontSizing * 16;
+        resolvedProperties[
+          `--${prefix}-base-icon-font-size-${remainingIconPath}`
+        ] = `${fontSizing}rem`;
+      }
+    }
+  });
+
+  if (asString) {
+    return getCssPropertyAsString(resolvedProperties);
+  }
+
+  return resolvedProperties;
+};
+
 export const getCssPropertiesOutput = (
+  theme: DefaultThemeType,
   lightColors: ColorType[],
   darkColors: ColorType[],
 ): string => {
-  const lightProps = getCssProperties(lightColors, true);
-  const darkProps = getCssProperties(darkColors, true);
+  const lightProps = getColorCssProperties(lightColors, true);
+  const darkProps = getColorCssProperties(darkColors, true);
+  const customTheme = getRemCssProperties(theme, true);
 
   return `:root{
+    /* COLORS */ 
     ${lightProps}
     @media (prefers-color-scheme: dark) {
       ${darkProps}
     }
+    
+    /* REST */ 
+    ${customTheme}
   }
   `;
 };

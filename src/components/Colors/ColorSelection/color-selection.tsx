@@ -4,7 +4,7 @@ import InformationButton from "./InformationButton";
 import ContrastChecker from "./ContrastChecker";
 import { useThemeBuilderStore } from "../../../store";
 import { DefaultColorMappingType } from "../../../utils/data.ts";
-import { getNeutralStrong } from "../../../utils/generate-colors.ts";
+import { getStrong } from "../../../utils/generate-colors.ts";
 
 const ColorSelection = () => {
   const { darkMode, defaultColors } = useThemeBuilderStore((state) => state);
@@ -19,44 +19,32 @@ const ColorSelection = () => {
     <div className="column-box">
       <DBCard className="color-inputs" spacing="small">
         <div className="title-container">
-          <strong>Neutral</strong>
+          <strong>Base</strong>
         </div>
 
         <div className="color-picker-grid">
           <ColorPicker
-            label="Neutral-Background"
-            color={defaultColors.bgNeutral}
+            label="Base"
+            color={defaultColors.bgBase}
             setColor={(color) => {
               setDefaultColors({
                 ...defaultColors,
-                bgNeutral: color,
-                bgNeutralStrong: getNeutralStrong(color, darkMode),
+                bgBase: color,
+                bgBaseStrong: getStrong(color, darkMode),
               });
             }}
           >
             <InformationButton>TODO</InformationButton>
           </ColorPicker>
           <ContrastChecker
-            label="On-Neutral-Background"
-            backgroundColor={defaultColors.bgNeutralStrong}
-            initColor={defaultColors.onBgNeutral}
+            label="On-Base"
+            backgroundColor={defaultColors.bgBaseStrong}
+            initColor={defaultColors.onBgBase}
             onChange={(onBgNeutral) =>
               setDefaultColors({
                 ...defaultColors,
-                onBgNeutral,
+                onBgBase: onBgNeutral,
               })
-            }
-          />
-          <ContrastChecker
-            initColor={defaultColors.neutral}
-            label="Neutral"
-            backgroundColor={defaultColors.bgNeutralStrong}
-            backgroundColorDark={getNeutralStrong(
-              defaultColors.onBgNeutral,
-              true,
-            )}
-            onChange={(neutral) =>
-              setDefaultColors({ ...defaultColors, neutral })
             }
           />
         </div>
@@ -94,13 +82,19 @@ const ColorSelection = () => {
 
         <div className="color-picker-grid">
           <ContrastChecker
+            initColor={defaultColors.neutral}
+            label="Neutral"
+            backgroundColor={defaultColors.bgBaseStrong}
+            backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
+            onChange={(neutral) =>
+              setDefaultColors({ ...defaultColors, neutral })
+            }
+          />
+          <ContrastChecker
             initColor={defaultColors.informational}
             label="Informational"
-            backgroundColor={defaultColors.bgNeutralStrong}
-            backgroundColorDark={getNeutralStrong(
-              defaultColors.onBgNeutral,
-              true,
-            )}
+            backgroundColor={defaultColors.bgBaseStrong}
+            backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
             onChange={(informational) =>
               setDefaultColors({ ...defaultColors, informational })
             }
@@ -108,11 +102,8 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.successful}
             label="Successful"
-            backgroundColor={defaultColors.bgNeutralStrong}
-            backgroundColorDark={getNeutralStrong(
-              defaultColors.onBgNeutral,
-              true,
-            )}
+            backgroundColor={defaultColors.bgBaseStrong}
+            backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
             onChange={(successful) =>
               setDefaultColors({ ...defaultColors, successful })
             }
@@ -120,11 +111,8 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.warning}
             label="Warning"
-            backgroundColor={defaultColors.bgNeutralStrong}
-            backgroundColorDark={getNeutralStrong(
-              defaultColors.onBgNeutral,
-              true,
-            )}
+            backgroundColor={defaultColors.bgBaseStrong}
+            backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
             onChange={(warning) =>
               setDefaultColors({ ...defaultColors, warning })
             }
@@ -132,11 +120,8 @@ const ColorSelection = () => {
           <ContrastChecker
             initColor={defaultColors.critical}
             label="Critical"
-            backgroundColor={defaultColors.bgNeutralStrong}
-            backgroundColorDark={getNeutralStrong(
-              defaultColors.onBgNeutral,
-              true,
-            )}
+            backgroundColor={defaultColors.bgBaseStrong}
+            backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
             onChange={(critical) =>
               setDefaultColors({ ...defaultColors, critical })
             }
