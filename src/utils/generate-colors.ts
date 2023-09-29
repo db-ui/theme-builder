@@ -104,14 +104,14 @@ export const generateColors = (
       "text-enabled": text,
       "text-hover": chroma(text).mix(onBgLuminanceShading, mixValue9).hex(),
       "text-pressed": chroma(text).mix(onBgLuminanceShading, mixValue8).hex(),
-      "on-enabled": chroma(shading1)
-        .mix(transparent, darkMode ? mixValue2 : mixValue1)
+      "on-enabled": chroma(transparent)
+        .mix(shading1, darkMode ? mixValue2 : mixValue1)
         .hex(),
-      "on-hover": chroma(shading1)
-        .mix(transparent, darkMode ? mixValue3 : mixValue2)
+      "on-hover": chroma(transparent)
+        .mix(shading1, darkMode ? mixValue3 : mixValue2)
         .hex(),
-      "on-pressed": chroma(shading1)
-        .mix(transparent, darkMode ? mixValue4 : mixValue3)
+      "on-pressed": chroma(transparent)
+        .mix(shading1, darkMode ? mixValue4 : mixValue3)
         .hex(),
       "bg-enabled": background,
       "bg-hover": chroma(background).mix(text, mixValue9).hex(),
@@ -191,15 +191,6 @@ export const generateColors = (
         "on-enabled": chroma(brandColor).hex(),
         "on-hover": chroma(brandColor).mix(transparent, mixValue2).hex(),
         "on-pressed": chroma(brandColor).mix(transparent, mixValue3).hex(),
-      };
-    }
-
-    if (key === "base") {
-      colorResult = {
-        ...colorResult,
-        "on-enabled": chroma(bgNeutralColor).hex(),
-        "on-hover": chroma(bgNeutralColor).mix(transparent, mixValue2).hex(),
-        "on-pressed": chroma(bgNeutralColor).mix(transparent, mixValue3).hex(),
       };
     }
 
