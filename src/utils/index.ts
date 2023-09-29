@@ -1,7 +1,7 @@
 import chroma from "chroma-js";
 import { DefaultColorMappingType, DefaultThemeType } from "./data.ts";
 import { generateColors } from "./generate-colors.ts";
-import { getCssPropertiesOutput } from "./outputs.ts";
+import { getCssPropertiesOutput, getDarkThemeOutput } from "./outputs.ts";
 import JSZip from "jszip";
 
 export const isValidColor = (color: string): boolean => chroma.valid(color);
@@ -113,10 +113,13 @@ export const downloadTheme = async (
 ) => {
   const theme: DefaultThemeType = { ...defaultTheme, colors: colorMapping };
 
-  const lightColors = generateColors(colorMapping);
-  const darkColors = generateColors(colorMapping, true);
+  const lightColors = generateColors(colorMapping, false, true);
+  const darkColors = generateColors(colorMapping, true, true);
 
-  const fileName = `custom-theme-${new Date().toLocaleTimeString()}`;
+  console.log(lightColors);
+  console.log(darkColors);
+
+  const fileName = `default-theme`;
   const themeJsonString = JSON.stringify(theme);
   const cssProperties = getCssPropertiesOutput(
     defaultTheme,
@@ -124,9 +127,12 @@ export const downloadTheme = async (
     darkColors,
   );
 
+  const darkThemeOutput = getDarkThemeOutput(darkColors);
+
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
   zip.file(`${fileName}.css`, cssProperties);
+  zip.file(`${fileName}-dark-theme.css`, darkThemeOutput);
   const zipFile = await zip.generateAsync({ type: "blob" });
   download(`${fileName}.zip`, zipFile);
 };

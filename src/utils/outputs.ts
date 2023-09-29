@@ -54,7 +54,10 @@ export const getColorCssProperties = (
   return result;
 };
 
-const getRemCssProperties = (theme: DefaultThemeType, asString?: boolean) => {
+export const getRemCssProperties = (
+  theme: DefaultThemeType,
+  asString?: boolean,
+) => {
   const resolvedProperties: any = {};
   traverse(theme).forEach(function (value) {
     if (this.isLeaf && this.path.length > 0 && this.path[0] !== "colors") {
@@ -123,6 +126,14 @@ export const getCssPropertiesOutput = (
     
     /* REST */ 
     ${customTheme}
+  }
+  `;
+};
+export const getDarkThemeOutput = (darkColors: ColorType[]): string => {
+  const darkProps = getColorCssProperties(darkColors, true);
+
+  return `.${prefix}-theme-dark, [data-theme="dark"]{
+      ${darkProps}
   }
   `;
 };

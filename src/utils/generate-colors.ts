@@ -33,6 +33,7 @@ export const getStrong = (color: string, darkMode?: boolean): string =>
 export const generateColors = (
   defaultColorMapping: DefaultColorMappingType,
   darkMode?: boolean,
+  auto?: boolean,
 ): ColorType[] => {
   const colors: ColorType[] = [];
 
@@ -46,32 +47,41 @@ export const generateColors = (
   const shading1 = darkMode ? "#000" : "#fff";
   const shading2 = darkMode ? "#fff" : "#000";
 
-  const bgLuminance = getLuminance(defaultColorMapping.bgBaseStrong);
-  const bgLuminanceShading = bgLuminance < 0.4 ? "#fff" : "#000";
-
-  const bgNeutralColor = isValidColor(defaultColorMapping.bgBase)
-    ? defaultColorMapping.bgBase
-    : invalidColor;
+  let bgBase = defaultColorMapping.bgBase;
+  let bgBaseStrong = defaultColorMapping.bgBaseStrong;
+  let onBgBase = defaultColorMapping.onBgBase;
+  if (auto) {
+    bgBase = darkMode
+      ? defaultColorMapping.onBgBase
+      : defaultColorMapping.bgBase;
+    bgBaseStrong = getStrong(
+      darkMode ? defaultColorMapping.onBgBase : defaultColorMapping.bgBase,
+      darkMode,
+    );
+    onBgBase = darkMode
+      ? defaultColorMapping.bgBase
+      : defaultColorMapping.onBgBase;
+  }
 
   colorKeys.forEach((key) => {
     let color: string = (defaultColorMapping as any)[key];
     if (key === "base") {
-      color = isValidColor(defaultColorMapping.onBgBase)
-        ? defaultColorMapping.onBgBase
-        : invalidColor;
+      color = isValidColor(onBgBase) ? onBgBase : invalidColor;
     }
 
     if (!isValidColor(color)) {
       color = invalidColor;
     }
 
+    const bgLuminance = getLuminance(bgBaseStrong);
+    const bgLuminanceShading = bgLuminance < 0.4 ? "#fff" : "#000";
+
+    const bgNeutralColor = isValidColor(bgBase) ? bgBase : invalidColor;
+
     const text =
-      getContrastSuggestion(
-        defaultColorMapping.bgBaseStrong,
-        color,
-        4.5,
-        bgLuminance < 0.4,
-      ) || color;
+      getContrastSuggestion(bgBaseStrong, color, 4.5, bgLuminance < 0.4) ||
+      color;
+    const element = getElementColor(bgBaseStrong, text) || text;
 
     const background =
       key === "base"
@@ -82,8 +92,9 @@ export const generateColors = (
     const onBG =
       key === "base" ? color : chroma(text).mix(shading2, mixValue7).hex();
 
-    const element =
-      getElementColor(defaultColorMapping.bgBaseStrong, text) || text;
+    const onBgLuminanceShading = getLuminance(onBgBase) < 0.4 ? "#fff" : "#000";
+    const elementLuminanceShading =
+      getLuminance(element) < 0.4 ? "#fff" : "#000";
 
     let colorResult: ColorType = {
       name: key,
@@ -91,8 +102,8 @@ export const generateColors = (
       "origin-hover": chroma(color).mix(bgLuminanceShading, mixValue9).hex(),
       "origin-pressed": chroma(color).mix(bgLuminanceShading, mixValue8).hex(),
       "text-enabled": text,
-      "text-hover": chroma(text).mix(shading2, mixValue9).hex(),
-      "text-pressed": chroma(text).mix(shading2, mixValue8).hex(),
+      "text-hover": chroma(text).mix(onBgLuminanceShading, mixValue9).hex(),
+      "text-pressed": chroma(text).mix(onBgLuminanceShading, mixValue8).hex(),
       "on-enabled": chroma(shading1)
         .mix(transparent, darkMode ? mixValue2 : mixValue1)
         .hex(),
@@ -139,8 +150,12 @@ export const generateColors = (
     };
 
     if (element) {
-      const elementHover = chroma(element).mix(shading2, mixValue9).hex();
-      const elementPressed = chroma(element).mix(shading2, mixValue8).hex();
+      const elementHover = chroma(element)
+        .mix(elementLuminanceShading, mixValue9)
+        .hex();
+      const elementPressed = chroma(element)
+        .mix(elementLuminanceShading, mixValue8)
+        .hex();
       colorResult = {
         ...colorResult,
         "element-enabled": element,
