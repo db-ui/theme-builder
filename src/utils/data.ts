@@ -1,7 +1,7 @@
 export type DefaultColorMappingType = {
-  bgBase: string;
-  bgBaseStrong: string;
-  onBgBase: string;
+  bgNeutral: string;
+  bgNeutralStrong: string;
+  onBgNeutral: string;
   neutral: string;
   brand: string;
   onBrand: string;
@@ -33,6 +33,8 @@ export type ColorType = {
   "element-enabled"?: string;
   "element-hover"?: string;
   "element-pressed"?: string;
+  enabled?: string;
+  hover?: string;
   name?: string;
   "on-bg-enabled"?: string;
   "on-bg-hover"?: string;
@@ -43,18 +45,16 @@ export type ColorType = {
   "on-enabled"?: string;
   "on-hover"?: string;
   "on-pressed"?: string;
-  "origin-enabled"?: string;
-  "origin-hover"?: string;
-  "origin-pressed"?: string;
+  pressed?: string;
   "text-enabled"?: string;
   "text-hover"?: string;
   "text-pressed"?: string;
 };
 
 export const ALL_VARIABLES = [
-  "origin-enabled",
-  "origin-hover",
-  "origin-pressed",
+  "enabled",
+  "hover",
+  "pressed",
   "text-enabled",
   "text-hover",
   "text-pressed",
@@ -89,47 +89,3 @@ export const ALL_VARIABLES = [
   "bg-transparent-semi-hover",
   "bg-transparent-semi-pressed",
 ];
-
-export type ThemeTypographyType = {
-  lineHeight: number;
-  fontSize: string;
-};
-
-export type ThemeSizing = {
-  "2xl"?: string | ThemeTypographyType;
-  "2xs"?: string | ThemeTypographyType;
-  "3xl"?: string | ThemeTypographyType;
-  "3xs"?: string | ThemeTypographyType;
-  lg?: string | ThemeTypographyType;
-  md?: string | ThemeTypographyType;
-  sm?: string | ThemeTypographyType;
-  xl?: string | ThemeTypographyType;
-  xs?: string | ThemeTypographyType;
-};
-
-export type ThemeTypography = {
-  headline: ThemeSizing;
-  body: ThemeSizing;
-};
-
-export type ThemeDevices = {
-  desktop: ThemeSizing | ThemeTypography;
-  tablet: ThemeSizing | ThemeTypography;
-  mobile: ThemeSizing | ThemeTypography;
-};
-
-export type ThemeTonalities = {
-  regular: ThemeDevices | ThemeSizing;
-  functional: ThemeDevices | ThemeSizing;
-  expressive: ThemeDevices | ThemeSizing;
-};
-
-export type DefaultThemeType = {
-  spacing: {
-    responsive: ThemeTonalities;
-    fixed: ThemeTonalities;
-  };
-  sizing: ThemeTonalities;
-  typography: ThemeTonalities;
-  colors: DefaultColorMappingType;
-};

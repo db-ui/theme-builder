@@ -22,7 +22,6 @@ const Notifications = () => {
     <DBAlert
       className={`notification ${notification ? "show" : ""}`}
       variant="informational"
-      type="inline"
     >
       {lastNotification}
     </DBAlert>

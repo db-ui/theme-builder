@@ -4,8 +4,8 @@ import { useThemeBuilderStore } from "./store";
 import ActionBar from "./components/ActionBar";
 import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import { generateColors, getStrong } from "./utils/generate-colors.ts";
-import { getColorCssProperties } from "./utils/outputs.ts";
+import { generateColors, getNeutralStrong } from "./utils/generate-colors.ts";
+import { getCssProperties } from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
 
 const App = () => {
@@ -15,18 +15,22 @@ const App = () => {
     const generatedColors = generateColors(
       {
         ...defaultColors,
-        bgBase: darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-        bgBaseStrong: getStrong(
-          darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
+        bgNeutral: darkMode
+          ? defaultColors.onBgNeutral
+          : defaultColors.bgNeutral,
+        bgNeutralStrong: getNeutralStrong(
+          darkMode ? defaultColors.onBgNeutral : defaultColors.bgNeutral,
           darkMode,
         ),
-        onBgBase: darkMode ? defaultColors.bgBase : defaultColors.onBgBase,
+        onBgNeutral: darkMode
+          ? defaultColors.bgNeutral
+          : defaultColors.onBgNeutral,
       },
       darkMode,
     );
     useThemeBuilderStore.setState({ colors: generatedColors });
 
-    const cssProps = getColorCssProperties(generatedColors);
+    const cssProps = getCssProperties(generatedColors);
     Object.keys(cssProps).forEach((key) => {
       document
         .getElementsByTagName("html")

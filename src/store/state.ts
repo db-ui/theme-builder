@@ -1,8 +1,4 @@
-import {
-  ColorType,
-  DefaultColorMappingType,
-  DefaultThemeType,
-} from "../utils/data.ts";
+import { ColorType, DefaultColorMappingType } from "../utils/data.ts";
 
 export const THEME_BUILDER_STATE = "theme-builder-state";
 
@@ -13,5 +9,13 @@ export type ThemeBuilderState = {
   resetDefaultColors: () => void;
   editorMarkup: string;
   notification?: string;
-  defaultTheme: DefaultThemeType;
+};
+
+export type ValidType = {
+  [key: string]: boolean;
+};
+
+export type InternalState = {
+  validColors: ValidType;
+  changeValidColor: (validType: ValidType) => void;
 };
