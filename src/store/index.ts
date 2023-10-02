@@ -1,11 +1,34 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { THEME_BUILDER_STATE, ThemeBuilderState } from "./state.ts";
-import { DefaultThemeType } from "../utils/data.ts";
+import {
+  DEFAULT_BACKGROUND,
+  DEFAULT_BACKGROUND_DARK,
+  DEFAULT_BRAND,
+  DEFAULT_CRITICAL,
+  DEFAULT_INFORMATIONAL,
+  DEFAULT_NEUTRAL,
+  DEFAULT_ON_BRAND,
+  DEFAULT_SUCCESSFUL,
+  DEFAULT_WARNING,
+} from "../utils/constants.ts";
+import { getNeutralStrong } from "../utils/generate-colors.ts";
+import { DefaultColorMappingType } from "../utils/data.ts";
 
-import DefaultTheme from "../data/default-theme.json";
-
-const defaultTheme = DefaultTheme as unknown as DefaultThemeType;
+const getDefaultColorMapping = (
+  darkMode?: boolean,
+): DefaultColorMappingType => ({
+  bgNeutral: DEFAULT_BACKGROUND,
+  bgNeutralStrong: getNeutralStrong(DEFAULT_BACKGROUND, darkMode),
+  onBgNeutral: DEFAULT_BACKGROUND_DARK,
+  neutral: DEFAULT_NEUTRAL,
+  brand: DEFAULT_BRAND,
+  onBrand: DEFAULT_ON_BRAND,
+  informational: DEFAULT_INFORMATIONAL,
+  successful: DEFAULT_SUCCESSFUL,
+  warning: DEFAULT_WARNING,
+  critical: DEFAULT_CRITICAL,
+});
 
 export const useThemeBuilderStore = create<ThemeBuilderState>()(
   devtools(
@@ -13,13 +36,12 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
       (set) => ({
         colors: [],
         darkMode: false,
-        defaultColors: defaultTheme.colors,
+        defaultColors: getDefaultColorMapping(false),
         resetDefaultColors: () =>
-          set(() => ({
-            defaultColors: defaultTheme.colors,
+          set((state) => ({
+            defaultColors: getDefaultColorMapping(state.darkMode),
           })),
         editorMarkup: "",
-        defaultTheme: defaultTheme,
       }),
       {
         name: THEME_BUILDER_STATE,

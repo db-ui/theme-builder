@@ -28,7 +28,6 @@
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "6.16.0",
-    "traverse": "^0.6.7",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
@@ -38,7 +37,6 @@
     "@types/react": "^18.2.23",
     "@types/react-color": "^3.0.7",
     "@types/react-dom": "^18.2.8",
-    "@types/traverse": "^0.6.33",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
     "@vitejs/plugin-react": "^4.1.0",
