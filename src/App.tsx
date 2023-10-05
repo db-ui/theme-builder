@@ -57,7 +57,7 @@ const App = () => {
                 variant="text"
                 icon={darkMode ? "day" : "night"}
                 noText
-                className="dark-mode-button"
+                className="p-0 w-siz-md"
                 title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
                 onClick={() =>
                   useThemeBuilderStore.setState({ darkMode: !darkMode })

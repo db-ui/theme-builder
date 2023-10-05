@@ -3,8 +3,8 @@ import { AppRoute } from "./data.ts";
 import Colors from "../Colors/colors.tsx";
 
 const AppRoutes: AppRoute[] = [
-  { path: "/", element: <Colors />, label: "Colors" },
-  { path: "/editor", element: <Editor />, label: "Editor" },
+  { path: "/", element: <Colors />, label: "colors" },
+  { path: "/editor", element: <Editor />, label: "editor" },
 ];
 
 export default AppRoutes;

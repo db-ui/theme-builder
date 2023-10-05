@@ -1,8 +1,10 @@
 import { DBButton } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../store";
 import { downloadTheme } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 const ActionBar = () => {
+  const { t } = useTranslation();
   const { defaultColors, resetDefaultColors } = useThemeBuilderStore(
     (state) => state,
   );
@@ -12,17 +14,17 @@ const ActionBar = () => {
       <DBButton
         icon="undo"
         onClick={() => resetDefaultColors()}
-        title=" Reset Defaults"
+        title={t("resetDesc")}
       >
-        Reset
+        {t("reset")}
       </DBButton>
       <DBButton
         variant="primary"
         icon="download"
         onClick={() => downloadTheme(defaultColors)}
-        title="Download Theme"
+        title={t("downloadDesc")}
       >
-        Download
+        {t("download")}
       </DBButton>
     </>
   );

@@ -27,10 +27,6 @@
   bottom: variables.$db-spacing-fixed-md;
   animation: slide-out animations.$animation-show-timing;
   left: 50%;
-
-  .db-alert-close {
-    display: none;
-  }
 }
 .show {
   animation: slide-in animations.$animation-show-timing;
