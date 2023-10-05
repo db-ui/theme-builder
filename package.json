@@ -23,7 +23,7 @@
     "husky": "8.0.3",
     "i18next": "21.6.16",
     "i18next-browser-languagedetector": "6.1.8",
-    "i18next-http-backend": "1.4.5",
+    "i18next-http-backend": "2.2.2",
     "jszip": "^3.10.1",
     "prettier": "3.0.3",
     "react": "^18.2.0",
