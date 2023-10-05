@@ -116,11 +116,12 @@ export const downloadTheme = async (
   const lightColors = generateColors(colorMapping, false, true);
   const darkColors = generateColors(colorMapping, true, true);
 
-  console.log(lightColors);
-  console.log(darkColors);
-
   const fileName = `default-theme`;
   const themeJsonString = JSON.stringify(theme);
+  const themeColorsJsonString = JSON.stringify({
+    light: lightColors,
+    dark: darkColors,
+  });
   const cssProperties = getCssPropertiesOutput(
     defaultTheme,
     lightColors,
@@ -130,6 +131,7 @@ export const downloadTheme = async (
   const darkThemeOutput = getDarkThemeOutput(darkColors);
 
   const zip = new JSZip();
+  zip.file(`${fileName}-colors.json`, themeColorsJsonString);
   zip.file(`${fileName}.json`, themeJsonString);
   zip.file(`${fileName}.css`, cssProperties);
   zip.file(`${fileName}-dark-theme.css`, darkThemeOutput);
