@@ -1,0 +1,58 @@
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/helpers/component";
+@use "@db-ui/foundations/build/scss/color/color-variants";
+@use "@db-ui/components/build/styles/db-puls";
+
+.navigator-image-container {
+  color: #fff;
+
+  .db-icon {
+    --db-icon-font-size: #{variables.$db-sizing-xl};
+  }
+
+  .db-button {
+    --db-current-icon-color: #fff;
+    top: calc(
+      #{variables.$db-sizing-lg}/ 2 + #{variables.$db-spacing-fixed-sm}
+    );
+  }
+
+  h2 {
+    &::after {
+      content: "";
+      position: absolute;
+      border-radius: component.$default-border-radius;
+      border-inline-start: none;
+      border-block-end: component.$default-border-radius solid
+        variables.$db-colors-primary;
+      inset-block-end: calc(-1 * #{variables.$db-spacing-fixed-xs});
+      inset-inline-start: 50%;
+      inset-block-start: calc(100% + #{variables.$db-spacing-fixed-sm});
+      transform: translate(-50%, 0);
+      block-size: auto;
+      inline-size: 100%;
+    }
+  }
+}
+
+.fake-device {
+  @extend %component-border;
+
+  .fake-device-bar {
+    padding-inline: calc(32px + #{variables.$db-spacing-fixed-sm});
+  }
+}
+
+.travel-line-container {
+  height: calc(100% + 4 * #{variables.$db-spacing-fixed-sm});
+}
+
+.travel-line {
+  width: 0.25rem;
+  opacity: 0.5;
+  background-color: var(--db-current-color);
+  border-radius: component.$default-border-radius;
+  inset-block: 0;
+  left: 50%;
+  transform: translateX(-85%);
+}

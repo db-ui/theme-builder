@@ -2,6 +2,7 @@
 import tokens from "@db-ui/foundations/build/tailwind/tailwind-tokens.json";
 
 export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   safelist: [
     {
       pattern: /./, // all but colors
@@ -12,7 +13,7 @@ export default {
     fontFamily: [],
     fontSize: [],
     screens: tokens.screens,
-    spacing: tokens.spacing,
+    spacing: { 0: 0, ...tokens.spacing },
     boxShadow: tokens.elevation,
     gap: ({ theme }) => ({
       ...theme("spacing"),

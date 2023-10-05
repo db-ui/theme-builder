@@ -1,0 +1,12 @@
+{
+  "preview": "Vorschau",
+  "colors": "Farben",
+  "editor": "Editor",
+  "addColor": "Farbe hinzufügen",
+  "createThemeHeadline": "Erstelle ein neues DB UX Theme",
+  "reset": "Zurücksetzen",
+  "resetDesc": "Setze alle Werte zurück",
+  "download": "Herunterladen",
+  "downloadDesc": "Theme Herunterladen",
+  "formatCode": "Code formatieren"
+}
