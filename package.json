@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/apca-w3": "^0.1.1",
-    "@types/chroma-js": "^2.4.1",
+    "@types/chroma-js": "^2.4.2",
     "@types/prettier": "^3.0.0",
     "@types/react": "^18.2.28",
     "@types/react-color": "^3.0.8",
