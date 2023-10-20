@@ -19,7 +19,7 @@
     "ace-builds": "1.30.0",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
-    "html-react-parser": "^4.2.6",
+    "html-react-parser": "^4.2.7",
     "husky": "8.0.3",
     "i18next": "23.6.0",
     "i18next-browser-languagedetector": "6.1.8",
