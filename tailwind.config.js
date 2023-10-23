@@ -12,7 +12,13 @@ export default {
     colors: [],
     fontFamily: [],
     fontSize: [],
-    screens: tokens.screens,
+    screens: {
+      xs: "360px",
+      sm: "720px",
+      md: "1024px",
+      lg: "1440px",
+      xl: "1920px",
+    },
     spacing: { 0: 0, ...tokens.spacing },
     boxShadow: tokens.elevation,
     gap: ({ theme }) => ({

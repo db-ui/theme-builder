@@ -33,27 +33,27 @@ const ColorTable = () => {
                       style["--color-hover"] = hoverColor;
                       style["--color-pressed"] = pressedColor;
 
-                      title += `, ${hoverColor}, ${pressedColor}`;
-                      return (
-                        <td
-                          data-text-align="center"
-                          data-size="small"
-                          key={`${varKey}-${color.name}-cell`}
-                        >
-                          {color[varKey] ? (
-                            <div
-                              className="color-box"
-                              style={style}
-                              title={title}
-                            />
-                          ) : (
-                            "---"
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ),
+                    title += `, ${hoverColor}, ${pressedColor}`;
+                    return (
+                      <td
+                        data-text-align="center"
+                        data-size="small"
+                        key={`${varKey}-${color.name}-cell`}
+                      >
+                        {color[varKey] ? (
+                          <div
+                            className="color-box"
+                            style={style}
+                            title={title}
+                          />
+                        ) : (
+                          "---"
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ),
               )}
             </tbody>
           </table>

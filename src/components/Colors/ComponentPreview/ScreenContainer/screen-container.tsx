@@ -4,7 +4,7 @@ import NavigationScreen from "./NavigationScreen";
 
 const ScreenContainer = () => {
   return (
-    <div className="flex flex-col m:flex-row mx-auto gap-res-md">
+    <div className="flex flex-col md:flex-row mx-auto gap-res-md">
       <LoginScreen />
       <NavigationScreen />
     </div>

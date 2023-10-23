@@ -21,8 +21,8 @@ const FakeDevice = ({ children }: PropsWithChildren) => {
 
   return (
     <div
-      className="fake-device rounded-[32px] w-[312px] m:w-[376px] h-[668px]
-    flex flex-col db-bg-neutral"
+      className="fake-device rounded-[32px] w-[312px] md:w-[376px] h-[668px]
+    flex flex-col db-bg-base"
     >
       <div className="fake-device-bar h-siz-md py-fix-sm flex justify-between  db-ui-functional">
         {getLocalTime(currentTime)}

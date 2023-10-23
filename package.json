@@ -14,7 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@db-ui/react-components": "^0.0.55",
+    "@db-ui/react-components": "^0.0.56",
     "@types/node": "^20.8.7",
     "ace-builds": "1.30.0",
     "apca-w3": "^0.1.9",
@@ -22,7 +22,7 @@
     "html-react-parser": "^4.2.7",
     "husky": "8.0.3",
     "i18next": "23.6.0",
-    "i18next-browser-languagedetector": "6.1.8",
+    "i18next-browser-languagedetector": "7.1.0",
     "i18next-http-backend": "2.2.2",
     "jszip": "^3.10.1",
     "prettier": "3.0.3",
@@ -32,6 +32,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "13.3.1",
     "react-router-dom": "6.17.0",
+    "traverse": "^0.6.7",
     "zustand": "^4.4.3"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "@types/react": "^18.2.31",
     "@types/react-color": "^3.0.9",
     "@types/react-dom": "^18.2.14",
+    "@types/traverse": "^0.6.33",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
     "@vitejs/plugin-react": "^4.1.0",

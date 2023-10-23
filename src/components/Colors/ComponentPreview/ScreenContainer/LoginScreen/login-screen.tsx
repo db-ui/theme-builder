@@ -15,7 +15,7 @@ const LoginScreen = () => {
   return (
     <FakeDevice>
       <div
-        className="navigator-image-container min-h-[218px]  m:min-h-[282px] relative flex flex-col
+        className="navigator-image-container min-h-[218px]  md:min-h-[282px] relative flex flex-col
         justify-between items-center p-fix-md border-none"
       >
         <img

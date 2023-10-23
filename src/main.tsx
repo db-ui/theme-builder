@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom/client";
 import "./index.scss";
 import "./tailwind.css";
-import "@db-ui/foundations/build/css/color-classes.css";
 import App from "./App.tsx";
 import {
   createBrowserRouter,
@@ -9,6 +8,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import "@db-ui/foundations/build/css/colors/classes/all.css";
 import AppRoutes from "./components/Navigation/app-routes.tsx";
 
 import "./i18n";

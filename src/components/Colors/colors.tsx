@@ -10,11 +10,11 @@ const Colors = () => {
   const [preview, setPreview] = useState<boolean>(true);
 
   return (
-    <div className="content flex flex-col m:flex-row m:h-full m:overflow-hidden">
+    <div className="content flex flex-col md:flex-row md:h-full md:overflow-hidden">
       <ColorSelection />
       <div
         className="db-bg-neutral-transparent-semi p-res-sm
-      flex flex-col gap-res-sm w-full m:h-full m:overflow-auto"
+      flex flex-col gap-res-sm w-full md:h-full md:overflow-auto"
       >
         <div className="flex gap-fix-3xs">
           <DBButton

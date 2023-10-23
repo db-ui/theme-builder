@@ -32,7 +32,7 @@
 .table-scroll-container {
   overflow-x: auto;
 
-  @media screen and (min-width: screen-sizes.$db-screen-md) {
+  @media screen and (min-width: screen-sizes.$db-breakpoint-md) {
     overflow-x: unset;
     table {
       width: 100%;

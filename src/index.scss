@@ -1,11 +1,11 @@
-@forward "@db-ui/components/build/styles/db-ui-42-rollup";
 @use "@db-ui/foundations/build/scss/variables";
 @use "@db-ui/foundations/build/scss/screen-sizes";
+@forward "@db-ui/components/build/styles/db-ui-42-rollup";
 
 .content {
   --db-drawer-max-width: 90%;
 
-  @media screen and (min-width: screen-sizes.$db-screen-md) {
+  @media screen and (min-width: screen-sizes.$db-breakpoint-md) {
     --db-drawer-max-width: 33%;
   }
 }

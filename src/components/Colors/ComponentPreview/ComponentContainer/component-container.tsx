@@ -25,8 +25,8 @@ const ComponentContainer = () => {
       <div
         style={{
           backgroundColor: darkMode
-            ? defaultColors.onBgNeutral
-            : defaultColors.bgNeutral,
+            ? defaultColors.onBgBase
+            : defaultColors.bgBase,
         }}
         className="flex flex-col gap-res-sm h-full"
       >
