@@ -1,28 +1,11 @@
-@forward "@db-ui/components/build/styles/db-ui-42-rollup";
 @use "@db-ui/foundations/build/scss/variables";
 @use "@db-ui/foundations/build/scss/screen-sizes";
-
-.column-box {
-  display: flex;
-  flex-direction: column;
-  gap: variables.$db-spacing-fixed-md;
-}
-
-.upper-container {
-  display: flex;
-  gap: variables.$db-spacing-fixed-md;
-  flex-direction: column;
-
-  @media screen and (min-width: screen-sizes.$db-screen-md) {
-    flex-direction: row;
-  }
-}
+@forward "@db-ui/components/build/styles/db-ui-42-rollup";
 
 .content {
   --db-drawer-max-width: 90%;
-  padding: variables.$db-spacing-fixed-md;
 
-  @media screen and (min-width: screen-sizes.$db-screen-md) {
+  @media screen and (min-width: screen-sizes.$db-breakpoint-md) {
     --db-drawer-max-width: 33%;
   }
 }
@@ -32,41 +15,16 @@
   margin-block: auto;
 }
 
-.title-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.color-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: variables.$db-spacing-fixed-xs;
-
-  .color-picker-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: variables.$db-spacing-fixed-md;
-  }
-
-  .db-input {
-    min-width: 200px;
-    @media screen and (min-width: screen-sizes.$db-screen-md) {
-      min-width: 250px;
-    }
-  }
-}
-
 h6 {
   margin-block: 0;
 }
 
-.db-header-meta-navigation {
-  display: none !important;
+.db-header {
+  margin-block-end: 0;
 }
 
-.dark-mode-button {
-  padding: 0;
-  inline-size: variables.$db-sizing-md;
+.db-header-meta-navigation {
+  display: none !important;
 }
 
 .editor {
@@ -78,4 +36,12 @@ h6 {
   .ace_editor * {
     transition: none;
   }
+}
+
+.db-alert-close {
+  display: none;
+}
+
+.db-infotext {
+  --db-icon-font-family: "db-ux-default";
 }

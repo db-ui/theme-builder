@@ -1,9 +1,5 @@
 import { useEffect } from "react";
 import parse from "html-react-parser";
-
-import "@db-ui/foundations/build/css/color-classes.css";
-import "./tailwind.generated.css";
-
 import ace from "ace-builds";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-html";
@@ -20,8 +16,10 @@ import { PARSER_OPTIONS } from "./options.tsx";
 import { useThemeBuilderStore } from "../../store";
 import { TEMPLATES } from "./templates.ts";
 import { DBButton, DBCard, DBDivider } from "@db-ui/react-components";
+import { useTranslation } from "react-i18next";
 
 const Editor = () => {
+  const { t } = useTranslation();
   const { editorMarkup } = useThemeBuilderStore((state) => state);
 
   useEffect(() => {
@@ -69,7 +67,7 @@ const Editor = () => {
         />
         <div className="flex flex-wrap db-ui-functional gap-fix-xs">
           <DBButton icon="grid_view" onClick={() => onFormat()}>
-            Format Code
+            {t("formatCode")}
           </DBButton>
           <DBDivider variant="vertical" />
           {TEMPLATES.map((template) => (

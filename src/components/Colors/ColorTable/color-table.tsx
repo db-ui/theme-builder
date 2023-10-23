@@ -7,9 +7,6 @@ const ColorTable = () => {
   const { colors } = useThemeBuilderStore((state) => state);
   return (
     <DBCard className="color-table-container" spacing="small">
-      <div className="color-table-header-container">
-        <strong>Color Table</strong>
-      </div>
       {colors && colors.length > 0 ? (
         <div className="table-scroll-container">
           <table className="color-table">
@@ -22,21 +19,19 @@ const ColorTable = () => {
               </tr>
             </thead>
             <tbody>
-              {ALL_VARIABLES.filter(
-                (varKey) =>
-                  !varKey.startsWith("origin") && varKey.endsWith("enabled"),
-              ).map((varKey) => (
-                <tr key={`${varKey}-row`}>
-                  <td>{varKey}</td>
-                  {colors.map((color: any) => {
-                    const style: any = { "--color": color[varKey] };
-                    let title = color[varKey];
-                    const hoverColor =
-                      color[varKey.replace("enabled", "hover")];
-                    const pressedColor =
-                      color[varKey.replace("enabled", "pressed")];
-                    style["--color-hover"] = hoverColor;
-                    style["--color-pressed"] = pressedColor;
+              {ALL_VARIABLES.filter((varKey) => varKey.endsWith("enabled")).map(
+                (varKey) => (
+                  <tr key={`${varKey}-row`}>
+                    <td>{varKey}</td>
+                    {colors.map((color: any) => {
+                      const style: any = { "--color": color[varKey] };
+                      let title = color[varKey];
+                      const hoverColor =
+                        color[varKey.replace("enabled", "hover")];
+                      const pressedColor =
+                        color[varKey.replace("enabled", "pressed")];
+                      style["--color-hover"] = hoverColor;
+                      style["--color-pressed"] = pressedColor;
 
                     title += `, ${hoverColor}, ${pressedColor}`;
                     return (
@@ -58,7 +53,8 @@ const ColorTable = () => {
                     );
                   })}
                 </tr>
-              ))}
+              ),
+              )}
             </tbody>
           </table>
         </div>
