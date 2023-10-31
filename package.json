@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@db-ui/react-components": "^0.0.57",
-    "@types/node": "^20.8.9",
+    "@types/node": "^20.8.10",
     "ace-builds": "1.31.1",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
