@@ -52,9 +52,10 @@ const ColorPicker = ({
           variant={info ? "informational" : error ? "critical" : variant}
           value={color}
           label={label}
+          labelVariant="floating"
           message={error || info}
           onFocus={() => setColorPicker(false)}
-          onChange={(event) => setColor(event.target.value)}
+          onChange={(event: any) => setColor(event.target.value)}
         />
       </div>
 

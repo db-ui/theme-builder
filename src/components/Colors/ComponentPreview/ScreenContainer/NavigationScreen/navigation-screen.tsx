@@ -29,8 +29,16 @@ const NavigationScreen = () => {
         </div>
         <div className="db-bg-neutral-transparent-semi px-fix-xl py-fix-md flex flex-col">
           <div className="flex flex-col gap-fix-md mb-fix-md">
-            <DBInput label={t("from")} value="Stuttgart Hbf" />
-            <DBInput label={t("to")} value="Frankfurt (Main) Hbf" />
+            <DBInput
+              labelVariant="floating"
+              label={t("from")}
+              value="Stuttgart Hbf"
+            />
+            <DBInput
+              labelVariant="floating"
+              label={t("to")}
+              value="Frankfurt (Main) Hbf"
+            />
           </div>
           <div className="flex gap-fix-md items-center">
             <span data-icon="schedule">{t("today")}, 00:00</span>

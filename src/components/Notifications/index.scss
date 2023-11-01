@@ -1,5 +1,5 @@
 @use "@db-ui/foundations/build/scss/variables";
-@use "@db-ui/foundations/build/scss/animation/animations";
+@use "@db-ui/foundations/build/scss/animation";
 
 @keyframes slide-in {
   from {
@@ -25,9 +25,9 @@
   position: fixed;
   z-index: 6;
   bottom: variables.$db-spacing-fixed-md;
-  animation: slide-out animations.$animation-show-timing;
+  animation: slide-out variables.$db-transition-show-straight;
   left: 50%;
 }
 .show {
-  animation: slide-in animations.$animation-show-timing;
+  animation: slide-in variables.$db-transition-show-straight;
 }

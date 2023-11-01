@@ -36,8 +36,12 @@ const LoginScreen = () => {
       </div>
       <div className="flex flex-col p-res-sm justify-between h-full">
         <div className="flex flex-col gap-fix-md">
-          <DBInput label={t("username")} />
-          <DBInput label={t("password")} type="password" />
+          <DBInput labelVariant="floating" label={t("username")} />
+          <DBInput
+            labelVariant="floating"
+            label={t("password")}
+            type="password"
+          />
           <DBLink href="">{t("forgotPassword")}</DBLink>
         </div>
         <div className="flex flex-col gap-fix-md">
