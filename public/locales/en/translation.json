@@ -1,5 +1,7 @@
 {
+  "copied": "copied",
   "preview": "Preview",
+  "color": "Color",
   "colors": "Colors",
   "editor": "Editor",
   "addColor": "Add Color",
@@ -25,5 +27,17 @@
   "later": "Later",
   "iceInformation": "Instead of ICE 1, ICE 2 is running today. Your ticket is still valid.",
   "reservationNotPossible": "Seat reservation no longer valid",
-  "stops": "Stops"
+  "stops": "Stops",
+  "origin-enabled": "Origin",
+  "text-enabled": "Text",
+  "element-enabled": "Element",
+  "border-enabled": "Border",
+  "border-weak-enabled": "Border Weak",
+  "on-enabled": "On",
+  "on-bg-enabled": "On BG",
+  "on-bg-weak-enabled": "On BG Weak",
+  "bg-enabled": "Background",
+  "bg-strong-enabled": "Background Strong",
+  "bg-transparent-full-enabled": "BG Transparent Full",
+  "bg-transparent-semi-enabled": "BG Transparent Semi"
 }

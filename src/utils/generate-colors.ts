@@ -124,11 +124,11 @@ export const generateColors = (
         .mix(bgLuminanceShading, mixValue8)
         .hex(),
       "on-bg-enabled": onBG,
-      "on-bg-hover": chroma(onBG).mix(transparent, mixValue2).hex(),
-      "on-bg-pressed": chroma(onBG).mix(transparent, mixValue3).hex(),
-      "on-bg-weak-enabled": chroma(onBG).mix(transparent, mixValue2).hex(),
-      "on-bg-weak-hover": chroma(onBG).mix(transparent, mixValue3).hex(),
-      "on-bg-weak-pressed": chroma(onBG).mix(transparent, mixValue4).hex(),
+      "on-bg-hover": chroma(transparent).mix(onBG, mixValue2).hex(),
+      "on-bg-pressed": chroma(transparent).mix(onBG, mixValue3).hex(),
+      "on-bg-weak-enabled": chroma(transparent).mix(onBG, mixValue2).hex(),
+      "on-bg-weak-hover": chroma(transparent).mix(onBG, mixValue3).hex(),
+      "on-bg-weak-pressed": chroma(transparent).mix(onBG, mixValue4).hex(),
       "bg-transparent-full-enabled": chroma(transparent)
         .mix(text, mixValue5)
         .hex(),
@@ -189,8 +189,8 @@ export const generateColors = (
       colorResult = {
         ...colorResult,
         "on-enabled": chroma(brandColor).hex(),
-        "on-hover": chroma(brandColor).mix(transparent, mixValue2).hex(),
-        "on-pressed": chroma(brandColor).mix(transparent, mixValue3).hex(),
+        "on-hover": chroma(transparent).mix(brandColor, mixValue2).hex(),
+        "on-pressed": chroma(transparent).mix(brandColor, mixValue3).hex(),
       };
     }
 

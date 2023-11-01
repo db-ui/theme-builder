@@ -20,7 +20,7 @@ const requiredCssProps = [
   "border-weak-enabled",
 ];
 
-const prefix = "db";
+export const prefix = "db";
 
 const getCssPropertyAsString = (properties: any): string => {
   let resultString = "";
