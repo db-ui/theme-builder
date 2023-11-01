@@ -40,6 +40,7 @@ const ComponentContainer = () => {
         <div className="component-container">
           {variants.map((variant) => (
             <DBInput
+              labelVariant="floating"
               key={`input-${variant}`}
               variant={variant}
               label={variant}
