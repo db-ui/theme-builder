@@ -1,49 +1,49 @@
 @use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/colors";
 @use "@db-ui/foundations/build/scss/screen-sizes";
-
-.color-table-container {
-  gap: variables.$db-spacing-fixed-md;
-}
-
-.color-table-header-container {
-  display: flex;
-  justify-content: space-between;
-}
+@use "@db-ui/components/build/styles/component";
 
 .color-box {
-  width: 100%;
-  height: variables.$db-sizing-sm;
-  border: black 1px solid;
+  display: flex;
+  height: variables.$db-sizing-md;
+  border: 1px solid colors.$db-base-border;
+  border-radius: component.$default-border-radius;
   background-color: var(--color);
+
+  .inverted {
+    color: colors.$db-base-bg;
+  }
+
+  .db-popover {
+    // temporary workaround
+    font-style: normal;
+    color: colors.$db-current-color;
+  }
+
+  .db-icon {
+    visibility: hidden;
+  }
 
   &:hover {
     background-color: var(--color-hover, var(--color));
+
+    .db-icon {
+      visibility: visible;
+    }
   }
 
   &:active {
     background-color: var(--color-pressed, var(--color));
   }
-}
 
-.variable-header {
-  text-align: inherit;
-}
-
-.table-scroll-container {
-  overflow-x: auto;
-
-  @media screen and (min-width: screen-sizes.$db-breakpoint-md) {
-    overflow-x: unset;
-    table {
-      width: 100%;
-    }
+  .color-preview {
+    height: variables.$db-sizing-md;
+    width: variables.$db-sizing-md;
+    border: 1px solid colors.$db-base-border;
+    border-radius: component.$default-border-radius;
   }
 }
 
-.color-table {
-  td {
-    &[data-text-align="center"] {
-      text-align: center;
-    }
-  }
+.grid-rows {
+  grid-template-rows: repeat(13, minmax(0, 1fr));
 }
