@@ -5,14 +5,15 @@ import { useTranslation } from "react-i18next";
 
 const ActionBar = () => {
   const { t } = useTranslation();
-  const { defaultColors, resetDefaultColors, defaultTheme } =
-    useThemeBuilderStore((state) => state);
+  const { defaultColors, resetDefaults, defaultTheme } = useThemeBuilderStore(
+    (state) => state,
+  );
 
   return (
     <>
       <DBButton
         icon="undo"
-        onClick={() => resetDefaultColors()}
+        onClick={() => resetDefaults()}
         title={t("resetDesc")}
       >
         {t("reset")}

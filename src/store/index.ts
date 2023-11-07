@@ -13,17 +13,21 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
   // @ts-ignore
   devtools(
     persist(
-      (set) => ({
-        colors: [],
-        darkMode: false,
-        defaultColors: defaultTheme.colors,
-        resetDefaultColors: () =>
-          set(() => ({
-            defaultColors: defaultTheme.colors,
-          })),
-        editorMarkup: "",
-        defaultTheme: defaultTheme,
-      }),
+      (set) => {
+        return {
+          colors: [],
+          darkMode: false,
+          defaultColors: defaultTheme.colors,
+          resetDefaults: () => {
+            set(() => ({
+              defaultColors: defaultTheme.colors,
+              defaultTheme,
+            }));
+          },
+          editorMarkup: "",
+          defaultTheme: defaultTheme,
+        };
+      },
       {
         name: THEME_BUILDER_STATE,
       },

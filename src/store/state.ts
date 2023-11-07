@@ -10,7 +10,7 @@ export type ThemeBuilderState = {
   defaultColors: DefaultColorMappingType;
   colors: ColorType[];
   darkMode: boolean;
-  resetDefaultColors: () => void;
+  resetDefaults: () => void;
   editorMarkup: string;
   notification?: string;
   defaultTheme: DefaultThemeType;
