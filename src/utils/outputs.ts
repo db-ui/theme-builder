@@ -54,7 +54,9 @@ export const getColorCssProperties = (
   return result;
 };
 
-export const getRemCssProperties = (
+const nonRemProperties = ["opacity", "elevation"];
+
+export const getNonColorCssProperties = (
   theme: DefaultThemeType,
   asString?: boolean,
 ) => {
@@ -74,7 +76,8 @@ export const getRemCssProperties = (
         .join("-")}`;
 
       resolvedProperties[key] =
-        typeof value === "string" || value instanceof String
+        !nonRemProperties.includes(this.path[0]) &&
+        (typeof value === "string" || value instanceof String)
           ? `${value}rem`
           : value;
 
@@ -115,7 +118,7 @@ export const getCssPropertiesOutput = (
 ): string => {
   const lightProps = getColorCssProperties(lightColors, true);
   const darkProps = getColorCssProperties(darkColors, true);
-  const customTheme = getRemCssProperties(theme, true);
+  const customTheme = getNonColorCssProperties(theme, true);
 
   return `:root{
     /* COLORS */ 

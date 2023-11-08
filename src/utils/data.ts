@@ -124,12 +124,28 @@ export type ThemeTonalities = {
   expressive: ThemeDevices | ThemeSizing;
 };
 
+export type ThemeBorder = {
+  radius: ThemeSizing;
+  height: string;
+};
+
+export type SizingFixedType = {
+  fixed: {
+    mobile: {
+      header: string;
+    };
+  };
+};
+
 export type DefaultThemeType = {
   spacing: {
     responsive: ThemeTonalities;
     fixed: ThemeTonalities;
   };
-  sizing: ThemeTonalities;
+  sizing: ThemeTonalities & SizingFixedType;
   typography: ThemeTonalities;
+  opacity: ThemeSizing;
+  elevation: ThemeSizing;
+  border: ThemeBorder;
   colors: DefaultColorMappingType;
 };
