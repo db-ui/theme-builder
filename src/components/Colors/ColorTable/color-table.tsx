@@ -65,7 +65,7 @@ const ColorTable = () => {
             <Fragment key={`${color.name}-header`}>
               <span className="font-bold pb-fix-sm">{color.name}</span>
 
-              {enabledVariables.map((varKey) => {
+              {enabledVariables.map((varKey, variableIndex) => {
                 const style: any = {
                   "--color": color[varKey],
                 };
@@ -98,7 +98,15 @@ const ColorTable = () => {
                         delay="slow"
                         animation="disabled"
                         gap
-                        placement={colorIndex < 3 ? "right" : "left"}
+                        placement={
+                          colorIndex < colors.length / 2
+                            ? variableIndex > 6
+                              ? "right-end"
+                              : "right"
+                            : variableIndex > 6
+                            ? "left-end"
+                            : "left"
+                        }
                       >
                         {states.map((state, index) => (
                           <div
