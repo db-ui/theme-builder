@@ -1,5 +1,9 @@
 import chroma from "chroma-js";
-import { ColorType, DefaultColorMappingType } from "./data.ts";
+import {
+  ColorType,
+  CustomColorMappingType,
+  DefaultColorMappingType,
+} from "./data.ts";
 import {
   getContrastSuggestion,
   getElementColor,
@@ -34,15 +38,22 @@ export const generateColors = (
   defaultColorMapping: DefaultColorMappingType,
   darkMode?: boolean,
   auto?: boolean,
+  customColorMapping?: CustomColorMappingType,
 ): ColorType[] => {
   const colors: ColorType[] = [];
 
-  const colorKeys = [
+  let colorKeys = [
     "base",
     ...Object.keys(defaultColorMapping).filter(
       (key) => !key.startsWith("on") && !key.startsWith("bg"),
     ),
   ];
+
+  let allColors: any = { ...defaultColorMapping };
+  if (customColorMapping) {
+    colorKeys = colorKeys.concat(Object.keys(customColorMapping));
+    allColors = { ...allColors, ...customColorMapping };
+  }
 
   const shading1 = darkMode ? "#000" : "#fff";
   const shading2 = darkMode ? "#fff" : "#000";
@@ -64,7 +75,7 @@ export const generateColors = (
   }
 
   colorKeys.forEach((key) => {
-    let color: string = (defaultColorMapping as any)[key];
+    let color: string = allColors[key];
     if (key === "base") {
       color = isValidColor(onBgBase) ? onBgBase : invalidColor;
     }

@@ -4,4 +4,5 @@ export type ContrastCheckerType = {
   label: string;
   initColor: string;
   onChange?: (color: string) => void;
+  isCustom?: boolean;
 };

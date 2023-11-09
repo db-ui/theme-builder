@@ -9,6 +9,11 @@ export type DefaultColorMappingType = {
   successful: string;
   warning: string;
   critical: string;
+  [key: string]: string;
+};
+
+export type CustomColorMappingType = {
+  [key: string]: string;
 };
 
 export type ColorType = {
