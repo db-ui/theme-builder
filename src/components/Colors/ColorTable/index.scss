@@ -7,7 +7,7 @@
   display: flex;
   height: variables.$db-sizing-md;
   border: 1px solid colors.$db-base-border;
-  border-radius: component.$default-border-radius;
+  border-radius: variables.$db-border-radius-md;
   background-color: var(--color);
 
   .inverted {
@@ -40,7 +40,7 @@
     height: variables.$db-sizing-md;
     width: variables.$db-sizing-md;
     border: 1px solid colors.$db-base-border;
-    border-radius: component.$default-border-radius;
+    border-radius: variables.$db-border-radius-md;
   }
 }
 

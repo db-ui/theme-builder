@@ -21,9 +21,9 @@
     &::after {
       content: "";
       position: absolute;
-      border-radius: component.$default-border-radius;
+      border-radius: variables.$db-border-radius-md;
       border-inline-start: none;
-      border-block-end: component.$default-border-radius solid
+      border-block-end: variables.$db-border-radius-md solid
         colors.$db-brand;
       inset-block-end: calc(-1 * #{variables.$db-spacing-fixed-xs});
       inset-inline-start: 50%;
@@ -51,7 +51,7 @@
   width: 0.25rem;
   opacity: 0.5;
   background-color: var(--db-current-color);
-  border-radius: component.$default-border-radius;
+  border-radius: variables.$db-border-radius-md;
   inset-block: 0;
   left: 50%;
   transform: translateX(-85%);
