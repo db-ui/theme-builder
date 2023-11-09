@@ -16,6 +16,7 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
       (set) => {
         return {
           colors: [],
+          customColors: {},
           darkMode: false,
           defaultColors: defaultTheme.colors,
           resetDefaults: () => {

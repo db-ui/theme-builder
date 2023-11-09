@@ -1,15 +1,32 @@
 import ColorPicker from "./ColorPicker";
-import InformationButton from "./InformationButton";
 import ContrastChecker from "./ContrastChecker";
 import { useThemeBuilderStore } from "../../../store";
-import { DefaultColorMappingType } from "../../../utils/data.ts";
+import {
+  CustomColorMappingType,
+  DefaultColorMappingType,
+} from "../../../utils/data.ts";
 import { getStrong } from "../../../utils/generate-colors.ts";
-import { DBButton } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import AddColorButton from "./AddColorButton";
+import InformationButton from "./InformationButton";
 
 const ColorSelection = () => {
   const { t } = useTranslation();
-  const { darkMode, defaultColors } = useThemeBuilderStore((state) => state);
+  const [customColorArray, setCustomColorArray] = useState<string[]>([]);
+
+  const { darkMode, defaultColors, customColors } = useThemeBuilderStore(
+    (state) => state,
+  );
+
+  useEffect(() => {
+    if (customColors) {
+      const colorKeys = Object.keys(customColors);
+      if (colorKeys.length > 0) {
+        setCustomColorArray(colorKeys);
+      }
+    }
+  }, [customColors]);
 
   const setDefaultColors = (colorMappingType: DefaultColorMappingType) => {
     useThemeBuilderStore.setState({
@@ -17,11 +34,17 @@ const ColorSelection = () => {
     });
   };
 
+  const setCustomColors = (colorMappingType: CustomColorMappingType) => {
+    useThemeBuilderStore.setState({
+      customColors: colorMappingType,
+    });
+  };
+
   return (
     <div className="flex flex-col gap-fix-sm p-res-xs w-full md:w-2/5 md:h-full md:overflow-auto">
       <h2 data-variant="light">{t("createThemeHeadline")}</h2>
 
-      <span>Base</span>
+      <span>{t("base")}</span>
 
       <ColorPicker
         label="Base"
@@ -47,7 +70,7 @@ const ColorSelection = () => {
           })
         }
       />
-      <span>Brand</span>
+      <span>{t("brand")}</span>
 
       <ColorPicker
         color={defaultColors.brand}
@@ -67,7 +90,7 @@ const ColorSelection = () => {
           })
         }
       />
-      <span>Semantic</span>
+      <span>{t("semantic")}</span>
 
       <ContrastChecker
         initColor={defaultColors.neutral}
@@ -111,9 +134,26 @@ const ColorSelection = () => {
         }
       />
 
-      <DBButton className="mx-auto my-fix-md" icon="add">
-        {t("addColor")}
-      </DBButton>
+      {customColorArray?.length > 0 && (
+        <>
+          <span>{t("custom")}</span>
+          {customColorArray.map((color) => (
+            <ContrastChecker
+              key={color}
+              isCustom
+              initColor={customColors[color]}
+              label={color}
+              backgroundColor={defaultColors.bgBaseStrong}
+              backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
+              onChange={(changedColor) =>
+                setCustomColors({ ...customColors, [color]: changedColor })
+              }
+            />
+          ))}
+        </>
+      )}
+
+      <AddColorButton />
     </div>
   );
 };

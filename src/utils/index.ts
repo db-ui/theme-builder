@@ -1,5 +1,9 @@
 import chroma from "chroma-js";
-import { DefaultColorMappingType, DefaultThemeType } from "./data.ts";
+import {
+  CustomColorMappingType,
+  DefaultColorMappingType,
+  DefaultThemeType,
+} from "./data.ts";
 import { generateColors } from "./generate-colors.ts";
 import { getCssPropertiesOutput, getDarkThemeOutput } from "./outputs.ts";
 import JSZip from "jszip";
@@ -110,11 +114,22 @@ const download = (fileName: string, file: Blob) => {
 export const downloadTheme = async (
   defaultTheme: DefaultThemeType,
   colorMapping: DefaultColorMappingType,
+  customColorMapping?: CustomColorMappingType,
 ) => {
   const theme: DefaultThemeType = { ...defaultTheme, colors: colorMapping };
 
-  const lightColors = generateColors(colorMapping, false, true);
-  const darkColors = generateColors(colorMapping, true, true);
+  const lightColors = generateColors(
+    colorMapping,
+    false,
+    true,
+    customColorMapping,
+  );
+  const darkColors = generateColors(
+    colorMapping,
+    true,
+    true,
+    customColorMapping,
+  );
 
   const fileName = `default-theme`;
   const themeJsonString = JSON.stringify(theme);

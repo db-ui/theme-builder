@@ -9,7 +9,9 @@ import { getColorCssProperties } from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
 
 const App = () => {
-  const { darkMode, defaultColors } = useThemeBuilderStore((state) => state);
+  const { darkMode, defaultColors, customColors } = useThemeBuilderStore(
+    (state) => state,
+  );
 
   useEffect(() => {
     const generatedColors = generateColors(
@@ -23,6 +25,8 @@ const App = () => {
         onBgBase: darkMode ? defaultColors.bgBase : defaultColors.onBgBase,
       },
       darkMode,
+      undefined,
+      customColors,
     );
     useThemeBuilderStore.setState({ colors: generatedColors });
 
@@ -33,7 +37,7 @@ const App = () => {
         ?.item(0)
         ?.style.setProperty(key, cssProps[key]);
     });
-  }, [defaultColors, darkMode]);
+  }, [defaultColors, darkMode, customColors]);
 
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
