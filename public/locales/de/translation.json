@@ -13,6 +13,7 @@
   "brand": "Marke",
   "semantic": "Semantische",
   "custom": "Eigene",
+  "shirtSizeDescription": "in rem (1/16 px)",
   "createThemeHeadline": "Erstelle ein neues DB UX Theme",
   "reset": "Zurücksetzen",
   "resetDesc": "Setze alle Werte zurück",

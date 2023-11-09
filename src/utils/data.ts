@@ -131,7 +131,7 @@ export type ThemeTonalities = {
 
 export type ThemeBorder = {
   radius: ThemeSizing;
-  height: string;
+  height: ThemeSizing;
 };
 
 export type SizingFixedType = {

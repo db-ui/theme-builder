@@ -41,9 +41,7 @@ const ColorSelection = () => {
   };
 
   return (
-    <div className="flex flex-col gap-fix-sm p-res-xs w-full md:w-2/5 md:h-full md:overflow-auto">
-      <h2 data-variant="light">{t("createThemeHeadline")}</h2>
-
+    <div className="flex flex-col gap-fix-sm ">
       <span>{t("base")}</span>
 
       <ColorPicker

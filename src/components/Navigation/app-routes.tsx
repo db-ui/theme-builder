@@ -1,9 +1,9 @@
 import Editor from "../Editor/editor.tsx";
 import { AppRoute } from "./data.ts";
-import Colors from "../Colors/colors.tsx";
+import ThemeBuilder from "../ThemeBuilder";
 
 const AppRoutes: AppRoute[] = [
-  { path: "/", element: <Colors />, label: "colors" },
+  { path: "/", element: <ThemeBuilder />, label: "themeBuilder" },
   { path: "/editor", element: <Editor />, label: "editor" },
 ];
 
