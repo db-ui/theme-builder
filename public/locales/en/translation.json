@@ -1,4 +1,5 @@
 {
+  "themeBuilder": "Theme Builder",
   "copied": "copied",
   "preview": "Preview",
   "color": "Color",
@@ -13,6 +14,9 @@
   "brand": "Brand",
   "semantic": "Semantic",
   "custom": "Custom",
+  "elevation": "Elevation",
+  "borderRadius": "Border Radius",
+  "shirtSizeDescription": "in rem (1/16 px)",
   "createThemeHeadline": "Create a new DB UX Theme",
   "reset": "Reset",
   "resetDesc": "Reset to defaults",

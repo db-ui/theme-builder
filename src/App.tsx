@@ -5,13 +5,15 @@ import ActionBar from "./components/ActionBar";
 import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import { generateColors, getStrong } from "./utils/generate-colors.ts";
-import { getColorCssProperties } from "./utils/outputs.ts";
+import {
+  getColorCssProperties,
+  getNonColorCssProperties,
+} from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
 
 const App = () => {
-  const { darkMode, defaultColors, customColors } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const { darkMode, defaultColors, customColors, defaultTheme } =
+    useThemeBuilderStore((state) => state);
 
   useEffect(() => {
     const generatedColors = generateColors(
@@ -30,14 +32,17 @@ const App = () => {
     );
     useThemeBuilderStore.setState({ colors: generatedColors });
 
-    const cssProps = getColorCssProperties(generatedColors);
+    const cssProps: any = {
+      ...getColorCssProperties(generatedColors),
+      ...getNonColorCssProperties(defaultTheme),
+    };
     Object.keys(cssProps).forEach((key) => {
       document
         .getElementsByTagName("html")
         ?.item(0)
         ?.style.setProperty(key, cssProps[key]);
     });
-  }, [defaultColors, darkMode, customColors]);
+  }, [defaultColors, darkMode, customColors, defaultTheme]);
 
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
