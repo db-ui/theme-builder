@@ -24,6 +24,8 @@ const ColorSelection = () => {
       const colorKeys = Object.keys(customColors);
       if (colorKeys.length > 0) {
         setCustomColorArray(colorKeys);
+      } else {
+        setCustomColorArray([]);
       }
     }
   }, [customColors]);
