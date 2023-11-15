@@ -119,6 +119,7 @@ const ContrastChecker = ({
               id={`input-${colorName}`}
               labelVariant="floating"
               label={t("colorName")}
+              required
               value={colorName}
               variant={
                 customColors[colorName] && label !== colorName
