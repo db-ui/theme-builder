@@ -17,7 +17,7 @@
     "@db-ui/react-components": "^0.0.59",
     "@redux-devtools/extension": "^3.2.6",
     "@types/node": "^20.9.0",
-    "ace-builds": "1.31.1",
+    "ace-builds": "1.31.2",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "html-react-parser": "^5.0.6",
