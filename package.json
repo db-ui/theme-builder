@@ -16,7 +16,7 @@
   "dependencies": {
     "@db-ui/react-components": "^0.0.59",
     "@redux-devtools/extension": "^3.2.6",
-    "@types/node": "^20.9.1",
+    "@types/node": "^20.9.2",
     "ace-builds": "1.31.2",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
