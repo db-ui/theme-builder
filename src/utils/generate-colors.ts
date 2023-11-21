@@ -3,6 +3,8 @@ import {
   ColorType,
   CustomColorMappingType,
   DefaultColorMappingType,
+  defaultLuminances,
+  HeisslufType,
 } from "./data.ts";
 import {
   getContrastSuggestion,
@@ -10,6 +12,7 @@ import {
   getLuminance,
   isValidColor,
 } from "./index.ts";
+import { Hsluv } from "hsluv";
 
 const mixValue1 = 1;
 const mixValue2 = 0.75;
@@ -26,6 +29,40 @@ const mixValue11 = 0.04;
 const transparent = chroma([0, 0, 0, 0]);
 
 const invalidColor = "#ff00ff";
+
+export const getHeissluftColors = (color: string): HeisslufType[] => {
+  const platte: HeisslufType[] = [];
+
+  const hsluv = new Hsluv();
+  hsluv.hex = color;
+  hsluv.hexToHsluv();
+  const hue = hsluv.hsluv_h;
+  const saturation = hsluv.hsluv_s;
+
+  defaultLuminances.forEach((currentLuminance) => {
+    const paletteColor: HeisslufType = {
+      name: currentLuminance.name,
+      hex: "",
+      saturation,
+      hue,
+      luminance: Math.pow(currentLuminance.value, 0.33) * 10,
+    };
+    hsluv.hsluv_l = paletteColor.luminance;
+    hsluv.hsluvToHex();
+    paletteColor.hex = hsluv.hex;
+    platte.push(paletteColor);
+    hsluv.hexToHsluv();
+  });
+
+  return platte.sort((a, b) => {
+    if (a.luminance > b.luminance) {
+      return 1;
+    } else if (a.luminance < b.luminance) {
+      return -1;
+    }
+    return 0;
+  });
+};
 
 export const getStrong = (color: string, darkMode?: boolean): string =>
   isValidColor(color)

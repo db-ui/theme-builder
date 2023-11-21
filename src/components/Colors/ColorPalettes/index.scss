@@ -1,0 +1,17 @@
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/colors";
+@use "@db-ui/foundations/build/scss/screen-sizes";
+@use "@db-ui/components/build/styles/component";
+
+.palette-box {
+  display: flex;
+  height: variables.$db-sizing-md;
+  border: 1px solid colors.$db-base-border;
+  border-radius: variables.$db-border-radius-md;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-color-palettes {
+  grid-template-rows: repeat(15, minmax(0, 1fr));
+}

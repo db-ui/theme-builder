@@ -154,3 +154,31 @@ export type DefaultThemeType = {
   border: ThemeBorder;
   colors: DefaultColorMappingType;
 };
+
+export type LuminanceType = {
+  name: string;
+  value: number;
+};
+export const defaultLuminances: LuminanceType[] = [
+  { name: "999", value: 1 },
+  { name: "990", value: 10 },
+  { name: "975", value: 25 },
+  { name: "950", value: 50 },
+  { name: "900", value: 100 },
+  { name: "800", value: 200 },
+  { name: "700", value: 300 },
+  { name: "600", value: 400 },
+  { name: "500", value: 500 },
+  { name: "400", value: 600 },
+  { name: "300", value: 700 },
+  { name: "200", value: 800 },
+  { name: "100", value: 900 },
+  { name: "50", value: 1000 },
+];
+export type HeisslufType = {
+  name: string;
+  hex: string;
+  hue: number;
+  saturation: number;
+  luminance: number;
+};

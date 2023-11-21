@@ -5,6 +5,7 @@ import { DBAccordionItem, DBButton } from "@db-ui/react-components";
 import ComponentPreview from "../Colors/ComponentPreview";
 import ColorTable from "../Colors/ColorTable";
 import ShirtSelection from "./ShirtSelection";
+import ColorPalettes from "../Colors/ColorPalettes";
 
 type AccordionItemType = {
   title: string;
@@ -38,7 +39,7 @@ const accordion: AccordionItemType[] = [
 
 const ThemeBuilder = () => {
   const { t } = useTranslation();
-  const [preview, setPreview] = useState<boolean>(true);
+  const [tab, setTab] = useState<number>(0);
 
   const [openAccordion, setOpenAccordion] = useState<number>(0);
 
@@ -71,19 +72,31 @@ const ThemeBuilder = () => {
       >
         <div className="flex gap-fix-3xs">
           <DBButton
-            variant={preview ? "outlined" : "text"}
-            onClick={() => setPreview(true)}
+            variant={tab === 0 ? "outlined" : "text"}
+            onClick={() => setTab(0)}
           >
             {t("preview")}
           </DBButton>
           <DBButton
-            variant={!preview ? "outlined" : "text"}
-            onClick={() => setPreview(false)}
+            variant={tab === 1 ? "outlined" : "text"}
+            onClick={() => setTab(1)}
           >
             {t("colors")}
           </DBButton>
+          <DBButton
+            variant={tab === 2 ? "outlined" : "text"}
+            onClick={() => setTab(2)}
+          >
+            {t("colorPalettes")}
+          </DBButton>
         </div>
-        {preview ? <ComponentPreview /> : <ColorTable />}
+        {tab === 0 ? (
+          <ComponentPreview />
+        ) : tab === 1 ? (
+          <ColorTable />
+        ) : (
+          <ColorPalettes />
+        )}
       </div>
     </div>
   );
