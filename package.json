@@ -44,7 +44,7 @@
     "@types/react-color": "^3.0.10",
     "@types/react-dom": "^18.2.16",
     "@types/traverse": "^0.6.35",
-    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
