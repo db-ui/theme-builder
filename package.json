@@ -42,7 +42,7 @@
     "@types/prettier": "^3.0.0",
     "@types/react": "^18.2.38",
     "@types/react-color": "^3.0.10",
-    "@types/react-dom": "^18.2.15",
+    "@types/react-dom": "^18.2.16",
     "@types/traverse": "^0.6.35",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.12.0",
