@@ -10,6 +10,7 @@
   "addColor": "Farbe hinzufügen",
   "changeColor": "Name ändern",
   "deleteColor": "Farbe löschen",
+  "luminanceSteps": "Leuchtmengen Schritte",
   "base": "Basis",
   "brand": "Marke",
   "semantic": "Semantische",

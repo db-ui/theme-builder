@@ -11,6 +11,7 @@
   "addColor": "Add Color",
   "changeColor": "Change Name",
   "deleteColor": "Delete Color",
+  "luminanceSteps": "Luminance Steps",
   "base": "Base",
   "brand": "Brand",
   "semantic": "Semantic",

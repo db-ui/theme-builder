@@ -5,13 +5,16 @@
 
 .palette-box {
   display: flex;
-  height: variables.$db-sizing-md;
+  flex-direction: column;
+  width: 100%;
+  min-width: variables.$db-sizing-xl;
   border: 1px solid colors.$db-base-border;
   border-radius: variables.$db-border-radius-md;
-  align-items: center;
-  justify-content: center;
+  padding: variables.$db-spacing-fixed-xs;
 }
 
 .grid-color-palettes {
-  grid-template-rows: repeat(15, minmax(0, 1fr));
+  & > *:not(:first-child) {
+    height: variables.$db-sizing-lg;
+  }
 }

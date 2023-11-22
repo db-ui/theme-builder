@@ -3,7 +3,6 @@ import {
   ColorType,
   CustomColorMappingType,
   DefaultColorMappingType,
-  defaultLuminances,
   HeisslufType,
 } from "./data.ts";
 import {
@@ -30,7 +29,10 @@ const transparent = chroma([0, 0, 0, 0]);
 
 const invalidColor = "#ff00ff";
 
-export const getHeissluftColors = (color: string): HeisslufType[] => {
+export const getHeissluftColors = (
+  color: string,
+  luminanceSteps: number[],
+): HeisslufType[] => {
   const platte: HeisslufType[] = [];
 
   const hsluv = new Hsluv();
@@ -38,14 +40,15 @@ export const getHeissluftColors = (color: string): HeisslufType[] => {
   hsluv.hexToHsluv();
   const hue = hsluv.hsluv_h;
   const saturation = hsluv.hsluv_s;
+  const luminance = hsluv.hsluv_l;
 
-  defaultLuminances.forEach((currentLuminance) => {
+  luminanceSteps.forEach((currentLuminance) => {
     const paletteColor: HeisslufType = {
-      name: currentLuminance.name,
+      name: currentLuminance.toString(),
       hex: "",
       saturation,
       hue,
-      luminance: Math.pow(currentLuminance.value, 0.33) * 10,
+      luminance: Math.pow(1000 - currentLuminance, 0.33) * 10,
     };
     hsluv.hsluv_l = paletteColor.luminance;
     hsluv.hsluvToHex();
@@ -54,14 +57,17 @@ export const getHeissluftColors = (color: string): HeisslufType[] => {
     hsluv.hexToHsluv();
   });
 
-  return platte.sort((a, b) => {
-    if (a.luminance > b.luminance) {
-      return 1;
-    } else if (a.luminance < b.luminance) {
-      return -1;
-    }
-    return 0;
-  });
+  return [
+    ...platte.sort((a, b) => {
+      if (a.luminance > b.luminance) {
+        return 1;
+      } else if (a.luminance < b.luminance) {
+        return -1;
+      }
+      return 0;
+    }),
+    { name: origin, hex: color, hue, saturation, luminance },
+  ];
 };
 
 export const getStrong = (color: string, darkMode?: boolean): string =>
