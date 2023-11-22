@@ -154,3 +154,14 @@ export type DefaultThemeType = {
   border: ThemeBorder;
   colors: DefaultColorMappingType;
 };
+
+export const defaultLuminances: number[] = [
+  999, 975, 950, 900, 800, 700, 600, 500, 400, 300, 200, 100, 0,
+];
+export type HeisslufType = {
+  name: string;
+  hex: string;
+  hue: number;
+  saturation: number;
+  luminance: number;
+};

@@ -16,16 +16,17 @@ const App = () => {
     useThemeBuilderStore((state) => state);
 
   useEffect(() => {
+    const defaultColorMapping = {
+      ...defaultColors,
+      bgBase: darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
+      bgBaseStrong: getStrong(
+        darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
+        darkMode,
+      ),
+      onBgBase: darkMode ? defaultColors.bgBase : defaultColors.onBgBase,
+    };
     const generatedColors = generateColors(
-      {
-        ...defaultColors,
-        bgBase: darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-        bgBaseStrong: getStrong(
-          darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-          darkMode,
-        ),
-        onBgBase: darkMode ? defaultColors.bgBase : defaultColors.onBgBase,
-      },
+      defaultColorMapping,
       darkMode,
       undefined,
       customColors,

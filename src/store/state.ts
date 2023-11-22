@@ -15,5 +15,6 @@ export type ThemeBuilderState = {
   resetDefaults: () => void;
   editorMarkup: string;
   notification?: string;
+  luminanceSteps: number[];
   defaultTheme: DefaultThemeType;
 };
