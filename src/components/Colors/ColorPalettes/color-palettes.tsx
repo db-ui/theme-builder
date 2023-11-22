@@ -47,6 +47,7 @@ const ColorPalettes = () => {
         className="w-full"
         value={stepsInput}
         label={t("luminanceSteps")}
+        message={t("luminanceMessage")}
         invalid={invalidSteps}
         onChange={(event) => {
           setStepsInput(event.target.value);
