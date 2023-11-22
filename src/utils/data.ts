@@ -156,7 +156,7 @@ export type DefaultThemeType = {
 };
 
 export const defaultLuminances: number[] = [
-  999, 975, 950, 900, 800, 700, 600, 500, 400, 300, 200, 100, 0,
+  999, 992, 973, 935, 820, 710, 580, 450, 230, 90, 0,
 ];
 export type HeisslufType = {
   name: string;
