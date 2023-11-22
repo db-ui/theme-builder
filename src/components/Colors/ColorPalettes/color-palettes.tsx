@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getHeissluftColors } from "../../../utils/generate-colors.ts";
 import { getLuminance } from "../../../utils";
 import "./index.scss";
-import { DBInput } from "@db-ui/react-components";
+import { DBInfotext, DBInput, DBLink } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 
 const ColorPalettes = () => {
@@ -42,7 +42,21 @@ const ColorPalettes = () => {
   }, [stepsInput]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-fix-2xs">
+      <DBInfotext variant="informational">
+        {t("powerLawLabelStart")}
+        <DBLink
+          className="mx-fix-2xs"
+          target="_blank"
+          referrerpolicy="no-referrer"
+          content="external"
+          variant="inline"
+          href="https://en.wikipedia.org/wiki/Stevens%27s_power_law"
+        >
+          {t("powerLawLinkLabel")}
+        </DBLink>
+        {t("powerLawLabelEnd")}
+      </DBInfotext>
       <DBInput
         className="w-full"
         value={stepsInput}
