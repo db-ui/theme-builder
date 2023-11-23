@@ -23,8 +23,7 @@
       position: absolute;
       border-radius: variables.$db-border-radius-md;
       border-inline-start: none;
-      border-block-end: variables.$db-border-radius-md solid
-        colors.$db-brand;
+      border-block-end: variables.$db-border-radius-md solid colors.$db-brand;
       inset-block-end: calc(-1 * #{variables.$db-spacing-fixed-xs});
       inset-inline-start: 50%;
       inset-block-start: calc(100% + #{variables.$db-spacing-fixed-sm});
@@ -37,6 +36,8 @@
 
 .fake-device {
   @extend %component-border;
+
+  overflow-y: auto;
 
   .fake-device-bar {
     padding-inline: calc(32px + #{variables.$db-spacing-fixed-sm});
