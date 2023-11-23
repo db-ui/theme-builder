@@ -10,7 +10,7 @@ import { useThemeBuilderStore } from "./store";
 import ActionBar from "./components/ActionBar";
 import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import { generateColors, getStrong } from "./utils/generate-colors.ts";
+import { generateColors } from "./utils/generate-colors.ts";
 import {
   getColorCssProperties,
   getNonColorCssProperties,
@@ -26,19 +26,9 @@ const App = () => {
   const [tonality, setTonality] = useState<string>("regular");
 
   useEffect(() => {
-    const defaultColorMapping = {
-      ...defaultColors,
-      bgBase: darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-      bgBaseStrong: getStrong(
-        darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-        darkMode,
-      ),
-      onBgBase: darkMode ? defaultColors.bgBase : defaultColors.onBgBase,
-    };
     const generatedColors = generateColors(
-      defaultColorMapping,
+      defaultColors,
       darkMode,
-      undefined,
       customColors,
     );
     useThemeBuilderStore.setState({ colors: generatedColors });

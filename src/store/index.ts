@@ -27,7 +27,6 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
             }));
           },
           editorMarkup: "",
-          luminanceSteps: defaultLuminances,
           defaultTheme: defaultTheme,
         };
       },

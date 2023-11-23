@@ -10,6 +10,7 @@
   "colorPalettes": "Color Palettes",
   "editor": "Editor",
   "addColor": "Add Color",
+  "editColor": "Edit Color {{colorName}}",
   "changeColor": "Change Name",
   "deleteColor": "Delete Color",
   "powerLawLinkLabel": "Stevens's power law",

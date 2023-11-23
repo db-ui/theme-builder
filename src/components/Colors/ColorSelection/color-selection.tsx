@@ -1,21 +1,19 @@
 import ColorPicker from "./ColorPicker";
-import ContrastChecker from "./ContrastChecker";
 import { useThemeBuilderStore } from "../../../store";
 import {
   CustomColorMappingType,
   DefaultColorMappingType,
 } from "../../../utils/data.ts";
-import { getStrong } from "../../../utils/generate-colors.ts";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import AddColorButton from "./AddColorButton";
-import InformationButton from "./InformationButton";
+import CustomColorPicker from "./CustomColorPicker";
 
 const ColorSelection = () => {
   const { t } = useTranslation();
   const [customColorArray, setCustomColorArray] = useState<string[]>([]);
 
-  const { darkMode, defaultColors, customColors } = useThemeBuilderStore(
+  const { defaultColors, customColors } = useThemeBuilderStore(
     (state) => state,
   );
 
@@ -44,92 +42,55 @@ const ColorSelection = () => {
 
   return (
     <div className="flex flex-col gap-fix-sm ">
-      <span>{t("base")}</span>
-
       <ColorPicker
         label="Base"
-        color={defaultColors.bgBase}
+        color={defaultColors.base}
         setColor={(color) => {
           setDefaultColors({
             ...defaultColors,
-            bgBase: color,
-            bgBaseStrong: getStrong(color, darkMode),
+            base: color,
           });
         }}
-      >
-        <InformationButton>TODO</InformationButton>
-      </ColorPicker>
-      <ContrastChecker
-        label="On-Base"
-        backgroundColor={defaultColors.bgBaseStrong}
-        initColor={defaultColors.onBgBase}
-        onChange={(onBgBase) =>
-          setDefaultColors({
-            ...defaultColors,
-            onBgBase,
-          })
-        }
       />
-      <span>{t("brand")}</span>
 
       <ColorPicker
         color={defaultColors.brand}
         label="Brand"
         setColor={(brand) => setDefaultColors({ ...defaultColors, brand })}
-      >
-        <InformationButton>TODO</InformationButton>
-      </ColorPicker>
-      <ContrastChecker
-        label="On-Brand"
-        initColor={defaultColors.onBrand}
-        backgroundColor={defaultColors.brand}
-        onChange={(onBrand) =>
-          setDefaultColors({
-            ...defaultColors,
-            onBrand,
-          })
-        }
       />
-      <span>{t("semantic")}</span>
 
-      <ContrastChecker
-        initColor={defaultColors.neutral}
+      <ColorPicker
+        color={defaultColors.neutral}
         label="Neutral"
-        backgroundColor={defaultColors.bgBaseStrong}
-        backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
-        onChange={(neutral) => setDefaultColors({ ...defaultColors, neutral })}
+        setColor={(neutral) => setDefaultColors({ ...defaultColors, neutral })}
       />
-      <ContrastChecker
-        initColor={defaultColors.informational}
+
+      <ColorPicker
+        color={defaultColors.informational}
         label="Informational"
-        backgroundColor={defaultColors.bgBaseStrong}
-        backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
-        onChange={(informational) =>
+        setColor={(informational) =>
           setDefaultColors({ ...defaultColors, informational })
         }
       />
-      <ContrastChecker
-        initColor={defaultColors.successful}
+
+      <ColorPicker
+        color={defaultColors.successful}
         label="Successful"
-        backgroundColor={defaultColors.bgBaseStrong}
-        backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
-        onChange={(successful) =>
+        setColor={(successful) =>
           setDefaultColors({ ...defaultColors, successful })
         }
       />
-      <ContrastChecker
-        initColor={defaultColors.warning}
+
+      <ColorPicker
+        color={defaultColors.warning}
         label="Warning"
-        backgroundColor={defaultColors.bgBaseStrong}
-        backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
-        onChange={(warning) => setDefaultColors({ ...defaultColors, warning })}
+        setColor={(warning) => setDefaultColors({ ...defaultColors, warning })}
       />
-      <ContrastChecker
-        initColor={defaultColors.critical}
+
+      <ColorPicker
+        color={defaultColors.critical}
         label="Critical"
-        backgroundColor={defaultColors.bgBaseStrong}
-        backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
-        onChange={(critical) =>
+        setColor={(critical) =>
           setDefaultColors({ ...defaultColors, critical })
         }
       />
@@ -138,14 +99,11 @@ const ColorSelection = () => {
         <>
           <span>{t("custom")}</span>
           {customColorArray.map((color) => (
-            <ContrastChecker
+            <CustomColorPicker
               key={color}
-              isCustom
-              initColor={customColors[color]}
+              color={customColors[color]}
               label={color}
-              backgroundColor={defaultColors.bgBaseStrong}
-              backgroundColorDark={getStrong(defaultColors.onBgBase, true)}
-              onChange={(changedColor) =>
+              setColor={(changedColor) =>
                 setCustomColors({ ...customColors, [color]: changedColor })
               }
             />
