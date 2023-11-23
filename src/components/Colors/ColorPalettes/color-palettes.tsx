@@ -72,7 +72,7 @@ const ColorPalettes = () => {
           <div className="py-fix-sm">
             <span className="font-bold invisible">Palette</span>
           </div>
-          {luminanceSteps.map((luminance) => (
+          {[...luminanceSteps, "white"].map((luminance) => (
             <div
               className="flex items-center"
               key={`luminance-step-${luminance}`}
@@ -90,7 +90,7 @@ const ColorPalettes = () => {
         </div>
 
         {Object.keys(allColors)
-          .filter((key) => !key.startsWith("on") && !key.startsWith("bg"))
+          .filter((key) => !key.startsWith("onBrand") && !key.startsWith("bg"))
           .map((key: any) => {
             const heissluftColors = getHeissluftColors(
               allColors[key],

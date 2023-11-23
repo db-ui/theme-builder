@@ -3,9 +3,12 @@ import {
   ColorType,
   CustomColorMappingType,
   DefaultColorMappingType,
+  defaultLuminances,
   HeisslufType,
 } from "./data.ts";
 import {
+  getContrast,
+  getContrastHslSuggestion,
   getContrastSuggestion,
   getElementColor,
   getLuminance,
@@ -57,6 +60,16 @@ export const getHeissluftColors = (
     hsluv.hexToHsluv();
   });
 
+  hsluv.hsluv_l = 1000;
+  hsluv.hsluvToHex();
+  platte.push({
+    name: "-1",
+    hex: hsluv.hex,
+    saturation,
+    hue,
+    luminance: 100,
+  });
+
   return [
     ...platte.sort((a, b) => {
       if (a.luminance > b.luminance) {
@@ -66,7 +79,7 @@ export const getHeissluftColors = (
       }
       return 0;
     }),
-    { name: origin, hex: color, hue, saturation, luminance },
+    { name: "origin", hex: color, hue, saturation, luminance },
   ];
 };
 
@@ -77,14 +90,12 @@ export const getStrong = (color: string, darkMode?: boolean): string =>
         .hex()
     : invalidColor;
 
-export const generateColors = (
+const getInitColors = (
   defaultColorMapping: DefaultColorMappingType,
   darkMode?: boolean,
   auto?: boolean,
   customColorMapping?: CustomColorMappingType,
-): ColorType[] => {
-  const colors: ColorType[] = [];
-
+) => {
   let colorKeys = [
     "base",
     ...Object.keys(defaultColorMapping).filter(
@@ -117,6 +128,45 @@ export const generateColors = (
       : defaultColorMapping.onBgBase;
   }
 
+  const bgLuminance = getLuminance(bgBaseStrong);
+  const bgLuminanceShading = bgLuminance < 0.4 ? "#fff" : "#000";
+
+  const bgNeutralColor = isValidColor(bgBase) ? bgBase : invalidColor;
+
+  return {
+    shading1,
+    shading2,
+    colorKeys,
+    allColors,
+    bgBaseStrong,
+    onBgBase,
+    bgLuminance,
+    bgLuminanceShading,
+    bgNeutralColor,
+  };
+};
+
+export const generateColors = (
+  defaultColorMapping: DefaultColorMappingType,
+  darkMode?: boolean,
+  auto?: boolean,
+  customColorMapping?: CustomColorMappingType,
+  luminanceSteps?: number[],
+): ColorType[] => {
+  const colors: ColorType[] = [];
+
+  const {
+    shading1,
+    shading2,
+    allColors,
+    colorKeys,
+    onBgBase,
+    bgBaseStrong,
+    bgLuminance,
+    bgLuminanceShading,
+    bgNeutralColor,
+  } = getInitColors(defaultColorMapping, darkMode, auto, customColorMapping);
+
   colorKeys.forEach((key) => {
     let color: string = allColors[key];
     if (key === "base") {
@@ -127,10 +177,18 @@ export const generateColors = (
       color = invalidColor;
     }
 
-    const bgLuminance = getLuminance(bgBaseStrong);
-    const bgLuminanceShading = bgLuminance < 0.4 ? "#fff" : "#000";
+    const hslColors = getHeissluftColors(
+      color,
+      luminanceSteps ?? defaultLuminances,
+    );
 
-    const bgNeutralColor = isValidColor(bgBase) ? bgBase : invalidColor;
+    const textHsl = getContrastHslSuggestion(bgBaseStrong, hslColors);
+    console.log(
+      key,
+      bgBaseStrong,
+      textHsl,
+      getContrast(textHsl?.hex || invalidColor, bgBaseStrong),
+    );
 
     const text =
       getContrastSuggestion(bgBaseStrong, color, 4.5, bgLuminance < 0.4) ||

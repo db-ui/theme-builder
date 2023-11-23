@@ -3,6 +3,7 @@ import {
   CustomColorMappingType,
   DefaultColorMappingType,
   DefaultThemeType,
+  HeisslufType,
 } from "./data.ts";
 import { generateColors } from "./generate-colors.ts";
 import { getCssPropertiesOutput, getDarkThemeOutput } from "./outputs.ts";
@@ -29,6 +30,26 @@ export const getContrast = (fgColor: string, bgColor: string): number => {
   }
 
   return 0;
+};
+
+export const getContrastHslSuggestion = (
+  backgroundColor: string,
+  hslColors: HeisslufType[],
+  threshold: 3 | 4.5 | 7.5 = 4.5,
+): undefined | HeisslufType => {
+  // if we have a dark background we sort the hslColors with the highest luminance to the lowest
+  const withDarkBackground = getLuminance(backgroundColor) < 0.4;
+  hslColors.sort((a, b) =>
+    withDarkBackground ? a.luminance - b.luminance : b.luminance - a.luminance,
+  );
+
+  for (const color of hslColors) {
+    if (getContrast(color.hex, backgroundColor) > threshold) {
+      return color;
+    }
+  }
+
+  return undefined;
 };
 
 export const getContrastSuggestion = (
