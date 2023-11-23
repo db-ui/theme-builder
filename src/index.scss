@@ -24,7 +24,15 @@ h6 {
 }
 
 .db-header-meta-navigation {
-  display: none !important;
+  @include screen-sizes.screen() {
+    display: none;
+  }
+}
+
+.tonality-select-call-to-action {
+  @include screen-sizes.screen("sm", "max") {
+    display: none;
+  }
 }
 
 .editor {

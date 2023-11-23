@@ -34,7 +34,7 @@ const LoginScreen = () => {
         </DBButton>
         <h2 className="z-10 mx-auto relative mb-fix-xl">{t("login")}</h2>
       </div>
-      <div className="flex flex-col p-res-sm justify-between h-full">
+      <div className="flex flex-col p-fix-2xl justify-between h-full">
         <div className="flex flex-col gap-fix-md">
           <DBInput labelVariant="floating" label={t("username")} />
           <DBInput
