@@ -1,4 +1,4 @@
-import { ColorType, DefaultThemeType } from "./data.ts";
+import { ColorType, DefaultThemeType, HeisslufType } from "./data.ts";
 import traverse from "traverse";
 
 const requiredCssProps = [
@@ -139,4 +139,16 @@ export const getDarkThemeOutput = (darkColors: ColorType[]): string => {
       ${darkProps}
   }
   `;
+};
+
+export const getPaletteOutput = (palette: object): string => {
+  let result = "";
+  Object.entries(palette).forEach((color) => {
+    const name = color[0];
+    const hslType: HeisslufType[] = color[1];
+    hslType.forEach((hsl) => {
+      result += `--${prefix}-${name}-${hsl.index ?? hsl.name}:${hsl.hex};\n`;
+    });
+  });
+  return result;
 };

@@ -3,10 +3,21 @@ import {
   CustomColorMappingType,
   DefaultColorMappingType,
   DefaultThemeType,
+  HeisslufType,
 } from "./data.ts";
-import { generateColors } from "./generate-colors.ts";
-import { getCssPropertiesOutput, getDarkThemeOutput } from "./outputs.ts";
+import {
+  black,
+  generateColors,
+  getHeissluftColors,
+  white,
+} from "./generate-colors.ts";
+import {
+  getCssPropertiesOutput,
+  getDarkThemeOutput,
+  getPaletteOutput,
+} from "./outputs.ts";
 import JSZip from "jszip";
+import { Hsluv } from "hsluv";
 
 export const isValidColor = (color: string): boolean => chroma.valid(color);
 
@@ -110,6 +121,105 @@ const download = (fileName: string, file: Blob) => {
   element.click();
   document.body.removeChild(element);
 };
+/**
+ * if we are in light mode and the brand color has more than 20 luminance we can darken the states
+ * this would be the best case, otherwise we go to a fallback
+ * dark-mode is the same but inverted
+ * @param color brand color
+ * @param darkMode
+ * @param hslColors
+ */
+const setExtraBrandColors = (
+  color: string,
+  darkMode: boolean,
+  hslColors: HeisslufType[],
+) => {
+  const defaultHsl = {
+    hex: color,
+    hue: 0,
+    luminance: 0,
+    saturation: 0,
+  };
+  const hsluv = new Hsluv();
+  hsluv.hex = color;
+  hsluv.hexToHsluv();
+  const brandLuminance = hsluv.hsluv_l;
+  const brandOnColor = getLuminance(color) < 0.4 ? white : black;
+  let hoverColor: string | undefined;
+  let pressedColor: string | undefined;
+
+  const bestCompareFn = darkMode
+    ? (luminance: number) => luminance > brandLuminance
+    : (luminance: number) => luminance < brandLuminance;
+  const fallbackCompareFn = darkMode
+    ? (luminance: number) => luminance < brandLuminance
+    : (luminance: number) => luminance > brandLuminance;
+
+  const foundColors = hslColors
+    .filter((hsl) => bestCompareFn(hsl.luminance))
+    .reverse();
+  if (foundColors.length > 2) {
+    hoverColor = foundColors[0].hex;
+    pressedColor = foundColors[1].hex;
+  }
+
+  if (!hoverColor || !pressedColor) {
+    const foundColors = hslColors.filter((hsl) =>
+      fallbackCompareFn(hsl.luminance),
+    );
+    if (foundColors.length > 2) {
+      hoverColor = foundColors[0].hex;
+      pressedColor = foundColors[1].hex;
+    }
+  }
+
+  hslColors.push({
+    ...defaultHsl,
+    name: "on-enabled",
+    hex: brandOnColor,
+  });
+  hslColors.push({
+    ...defaultHsl,
+    name: "origin-enabled",
+    hex: color,
+  });
+
+  hslColors.push({
+    ...defaultHsl,
+    name: "origin-hover",
+    hex: hoverColor ?? color,
+  });
+  hslColors.push({
+    ...defaultHsl,
+    name: "origin-pressed",
+    hex: pressedColor ?? color,
+  });
+};
+
+const getPalette = (allColors: object, darkMode: boolean): any =>
+  Object.entries(allColors)
+    .map((value) => {
+      const name = value[0];
+      const color = value[1];
+      const hslColors: HeisslufType[] = getHeissluftColors(color, darkMode);
+
+      if (name === "brand") {
+        setExtraBrandColors(color, darkMode, hslColors);
+      }
+
+      if (name === "base" && darkMode) {
+        // we overwrite pure black with 11 color
+        hslColors[12].hex = hslColors[11].hex;
+      }
+
+      return {
+        [name]: hslColors,
+      };
+    })
+    .reduce(
+      (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
+      {},
+    );
 
 export const downloadTheme = async (
   defaultTheme: DefaultThemeType,
@@ -120,6 +230,10 @@ export const downloadTheme = async (
 
   const lightColors = generateColors(colorMapping, false, customColorMapping);
   const darkColors = generateColors(colorMapping, true, customColorMapping);
+
+  const allColors = { ...colorMapping, ...customColorMapping };
+  const lightPalette = getPalette(allColors, false);
+  const darkPalette = getPalette(allColors, true);
 
   const fileName = `default-theme`;
   const themeJsonString = JSON.stringify(theme);
@@ -140,6 +254,8 @@ export const downloadTheme = async (
   zip.file(`${fileName}.json`, themeJsonString);
   zip.file(`${fileName}.css`, cssProperties);
   zip.file(`${fileName}-dark-theme.css`, darkThemeOutput);
+  zip.file(`${fileName}-light-palette.css`, getPaletteOutput(lightPalette));
+  zip.file(`${fileName}-dark-palette.css`, getPaletteOutput(darkPalette));
   const zipFile = await zip.generateAsync({ type: "blob" });
   download(`${fileName}.zip`, zipFile);
 };

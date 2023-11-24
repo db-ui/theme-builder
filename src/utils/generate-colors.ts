@@ -22,8 +22,8 @@ const mixValue10 = 0.08;
 const transparent = chroma([0, 0, 0, 0]);
 
 const invalidColor = "#ff00ff";
-const white = "#fff";
-const black = "#000";
+export const white = "#fff";
+export const black = "#000";
 
 export const getHeissluftColors = (
   color: string,
