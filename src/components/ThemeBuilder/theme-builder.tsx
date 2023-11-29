@@ -77,12 +77,12 @@ const ThemeBuilder = () => {
           >
             {t("preview")}
           </DBButton>
-          <DBButton
+          {/*          <DBButton
             variant={tab === 1 ? "outlined" : "text"}
             onClick={() => setTab(1)}
           >
             {t("colors")}
-          </DBButton>
+          </DBButton>*/}
           <DBButton
             variant={tab === 2 ? "outlined" : "text"}
             onClick={() => setTab(2)}

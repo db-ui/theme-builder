@@ -149,6 +149,37 @@ export const getPaletteOutput = (palette: object): string => {
     hslType.forEach((hsl) => {
       result += `--${prefix}-${name}-${hsl.index ?? hsl.name}:${hsl.hex};\n`;
     });
+
+    /* mapping for speaking names */
+
+    // backgrounds
+    result += `--${prefix}-${name}-bg: var(--${prefix}-${name}-12);\n`;
+    result += `--${prefix}-${name}-bg-weak: var(--${prefix}-${name}-11);\n`;
+    result += `--${prefix}-${name}-bg-strong: var(--${prefix}-${name}-10);\n`;
+    result += `--${prefix}-${name}-bg-hover: var(--${prefix}-${name}-9);\n`;
+    result += `--${prefix}-${name}-bg-pressed: var(--${prefix}-${name}-8);\n`;
+
+    // on-bg
+    result += `--${prefix}-${name}-on-bg: var(--${prefix}-${name}-1);\n`;
+    result += `--${prefix}-${name}-on-bg-hover: var(--${prefix}-${name}-2);\n`;
+    result += `--${prefix}-${name}-on-bg-pressed: var(--${prefix}-${name}-3);\n`;
+
+    // on-bg-weak
+    result += `--${prefix}-${name}-on-bg-weak: var(--${prefix}-${name}-3);\n`;
+    result += `--${prefix}-${name}-on-bg-weak-hover: var(--${prefix}-${name}-4);\n`;
+    result += `--${prefix}-${name}-on-bg-weak-pressed: var(--${prefix}-${name}-5);\n`;
+
+    // contrast-high
+    result += `--${prefix}-${name}-contrast-high: var(--${prefix}-${name}-4);\n`;
+    result += `--${prefix}-${name}-contrast-high-hover: var(--${prefix}-${name}-3);\n`;
+    result += `--${prefix}-${name}-contrast-high-pressed: var(--${prefix}-${name}-2);\n`;
+
+    // contrast-low
+    result += `--${prefix}-${name}-contrast-low: var(--${prefix}-${name}-5);\n`;
+
+    // border
+    result += `--${prefix}-${name}-border: var(--${prefix}-${name}-5);\n`;
+    result += `--${prefix}-${name}-border-weak: var(--${prefix}-${name}-7);\n`;
   });
   return result;
 };
