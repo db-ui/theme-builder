@@ -15,6 +15,7 @@ import {
   getCssPropertiesOutput,
   getDarkThemeOutput,
   getPaletteOutput,
+  getSpeakingNames,
 } from "./outputs.ts";
 import JSZip from "jszip";
 import { Hsluv } from "hsluv";
@@ -256,6 +257,7 @@ export const downloadTheme = async (
   zip.file(`${fileName}-dark-theme.css`, darkThemeOutput);
   zip.file(`${fileName}-light-palette.css`, getPaletteOutput(lightPalette));
   zip.file(`${fileName}-dark-palette.css`, getPaletteOutput(darkPalette));
+  zip.file(`${fileName}-speaking-names.css`, getSpeakingNames(allColors));
   const zipFile = await zip.generateAsync({ type: "blob" });
   download(`${fileName}.zip`, zipFile);
 };

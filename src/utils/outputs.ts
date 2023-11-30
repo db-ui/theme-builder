@@ -149,15 +149,30 @@ export const getPaletteOutput = (palette: object): string => {
     hslType.forEach((hsl) => {
       result += `--${prefix}-${name}-${hsl.index ?? hsl.name}:${hsl.hex};\n`;
     });
+  });
+  return result;
+};
 
-    /* mapping for speaking names */
-
+export const getSpeakingNames = (allColors: object): string => {
+  let result = "";
+  Object.entries(allColors).forEach((color) => {
+    const name = color[0];
     // backgrounds
     result += `--${prefix}-${name}-bg: var(--${prefix}-${name}-12);\n`;
+    result += `--${prefix}-${name}-bg-hover: var(--${prefix}-${name}-11);\n`;
+    result += `--${prefix}-${name}-bg-pressed: var(--${prefix}-${name}-10);\n`;
     result += `--${prefix}-${name}-bg-weak: var(--${prefix}-${name}-11);\n`;
+    result += `--${prefix}-${name}-bg-weak-hover: var(--${prefix}-${name}-10);\n`;
+    result += `--${prefix}-${name}-bg-weak-pressed: var(--${prefix}-${name}-9);\n`;
     result += `--${prefix}-${name}-bg-strong: var(--${prefix}-${name}-10);\n`;
-    result += `--${prefix}-${name}-bg-hover: var(--${prefix}-${name}-9);\n`;
-    result += `--${prefix}-${name}-bg-pressed: var(--${prefix}-${name}-8);\n`;
+    result += `--${prefix}-${name}-bg-strong-hover: var(--${prefix}-${name}-9);\n`;
+    result += `--${prefix}-${name}-bg-strong-pressed: var(--${prefix}-${name}-8);\n`;
+
+    // transparent backgrounds
+    result += `--${prefix}-${name}-bg-transparent-full: color-mix(in srgb, transparent 100%, var(--${prefix}-${name}-4));\n`;
+    result += `--${prefix}-${name}-bg-transparent-semi: color-mix(in srgb, transparent 92%, var(--${prefix}-${name}-4));\n`;
+    result += `--${prefix}-${name}-bg-transparent-hover: color-mix(in srgb, transparent 84%, var(--${prefix}-${name}-4));\n`;
+    result += `--${prefix}-${name}-bg-transparent-pressed: color-mix(in srgb, transparent 76%, var(--${prefix}-${name}-4));\n`;
 
     // on-bg
     result += `--${prefix}-${name}-on-bg: var(--${prefix}-${name}-1);\n`;
@@ -176,10 +191,11 @@ export const getPaletteOutput = (palette: object): string => {
 
     // contrast-low
     result += `--${prefix}-${name}-contrast-low: var(--${prefix}-${name}-5);\n`;
+    result += `--${prefix}-${name}-contrast-low-hover: var(--${prefix}-${name}-4);\n`;
+    result += `--${prefix}-${name}-contrast-low-pressed: var(--${prefix}-${name}-3);\n`;
 
     // border
-    result += `--${prefix}-${name}-border: var(--${prefix}-${name}-5);\n`;
-    result += `--${prefix}-${name}-border-weak: var(--${prefix}-${name}-7);\n`;
+    result += `--${prefix}-${name}-border: var(--${prefix}-${name}-7);\n`;
   });
   return result;
 };
