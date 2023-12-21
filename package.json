@@ -34,7 +34,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "14.0.0",
     "react-router-dom": "6.21.0",
-    "traverse": "^0.6.7",
+    "traverse": "^0.6.8",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
