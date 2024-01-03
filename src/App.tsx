@@ -17,6 +17,7 @@ import {
 } from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
 import { useTranslation } from "react-i18next";
+import { BASE_PATH } from "./constants.ts";
 
 const App = () => {
   const { darkMode, defaultColors, customColors, defaultTheme } =
@@ -69,9 +70,7 @@ const App = () => {
             onToggle={setDrawerOpen}
             slotBrand={
               <DBBrand
-                imgSrc={`/theme-builder${
-                  import.meta.env.VITE_FEATURE_BRANCH ?? ""
-                }/assets/images/db_logo.svg`}
+                imgSrc={`${BASE_PATH}/assets/images/db_logo.svg`}
                 anchorChildren
               >
                 Theme Builder

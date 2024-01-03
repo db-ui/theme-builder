@@ -12,6 +12,7 @@ import "@db-ui/foundations/build/css/colors/classes/all.css";
 import AppRoutes from "./components/Navigation/app-routes.tsx";
 
 import "./i18n";
+import { BASE_PATH } from "./constants.ts";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
@@ -25,7 +26,7 @@ const router = createBrowserRouter(
       ))}
     </Route>,
   ]),
-  { basename: `/theme-builder${import.meta.env.VITE_FEATURE_BRANCH ?? ""}` },
+  { basename: BASE_PATH },
 );
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
