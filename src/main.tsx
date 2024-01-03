@@ -25,7 +25,7 @@ const router = createBrowserRouter(
       ))}
     </Route>,
   ]),
-  { basename: "/theme-builder" },
+  { basename: `/theme-builder${import.meta.env.VITE_FEATURE_BRANCH ?? ""}` },
 );
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
