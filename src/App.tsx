@@ -18,6 +18,7 @@ import {
 import Notifications from "./components/Notifications";
 import { useTranslation } from "react-i18next";
 import { getPalette } from "./utils";
+import { BASE_PATH } from "./constants.ts";
 
 const App = () => {
   const { speakingNames, darkMode, defaultColors, customColors, defaultTheme } =
@@ -55,8 +56,8 @@ const App = () => {
             onToggle={setDrawerOpen}
             slotBrand={
               <DBBrand
+                imgSrc={`${BASE_PATH}/assets/images/db_logo.svg`}
                 anchorChildren
-                imgSrc="theme-builder/assets/images/db_logo.svg"
               >
                 Theme Builder
               </DBBrand>
