@@ -67,7 +67,16 @@ const App = () => {
           <DBHeader
             drawerOpen={drawerOpen}
             onToggle={setDrawerOpen}
-            slotBrand={<DBBrand anchorChildren>Theme Builder</DBBrand>}
+            slotBrand={
+              <DBBrand
+                imgSrc={`/theme-builder${
+                  import.meta.env.VITE_FEATURE_BRANCH ?? ""
+                }/assets/images/db_logo.svg`}
+                anchorChildren
+              >
+                Theme Builder
+              </DBBrand>
+            }
             slotActionBar={<ActionBar />}
             slotMetaNavigation={
               <DBSelect
