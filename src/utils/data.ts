@@ -164,3 +164,39 @@ export type HeisslufType = {
   saturation: number;
   luminance: number;
 };
+
+export type SpeakingName = {
+  name: string;
+  light: number;
+  dark: number;
+  transparency?: number;
+};
+
+export const speakingNamesDefaultMapping: SpeakingName[] = [
+  { name: "bg", dark: 2, light: 12 },
+  { name: "bg-hover", dark: 3, light: 11 },
+  { name: "bg-pressed", dark: 4, light: 10 },
+  { name: "bg-weak", dark: 1, light: 11 },
+  { name: "bg-weak-hover", dark: 2, light: 10 },
+  { name: "bg-weak-pressed", dark: 3, light: 9 },
+  { name: "bg-strong", dark: 0, light: 10 },
+  { name: "bg-strong-hover", dark: 1, light: 9 },
+  { name: "bg-strong-pressed", dark: 2, light: 8 },
+  { name: "bg-transparent-full", dark: 8, light: 4, transparency: 100 },
+  { name: "bg-transparent-semi", dark: 8, light: 4, transparency: 92 },
+  { name: "bg-transparent-hover", dark: 8, light: 4, transparency: 84 },
+  { name: "bg-transparent-pressed", dark: 8, light: 4, transparency: 76 },
+  { name: "on-bg", dark: 11, light: 1 },
+  { name: "on-bg-hover", dark: 10, light: 2 },
+  { name: "on-bg-pressed", dark: 9, light: 3 },
+  { name: "on-bg-weak", dark: 9, light: 3 },
+  { name: "on-bg-weak-hover", dark: 8, light: 4 },
+  { name: "on-bg-weak-pressed", dark: 7, light: 5 },
+  { name: "contrast-high", dark: 8, light: 4 },
+  { name: "contrast-high-hover", dark: 7, light: 3 },
+  { name: "contrast-high-pressed", dark: 6, light: 2 },
+  { name: "contrast-low", dark: 7, light: 5 },
+  { name: "contrast-low-hover", dark: 6, light: 4 },
+  { name: "contrast-low-pressed", dark: 5, light: 3 },
+  { name: "border", dark: 4, light: 7 },
+];

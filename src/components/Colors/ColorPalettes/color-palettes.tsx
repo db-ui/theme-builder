@@ -6,7 +6,7 @@ import "./index.scss";
 import { defaultLuminances } from "../../../utils/data.ts";
 
 const ColorPalettes = () => {
-  const { defaultColors, customColors, darkMode } = useThemeBuilderStore(
+  const { defaultColors, customColors } = useThemeBuilderStore(
     (state) => state,
   );
 
@@ -36,7 +36,7 @@ const ColorPalettes = () => {
         </div>
 
         {Object.keys(allColors).map((key: any) => {
-          const heissluftColors = getHeissluftColors(allColors[key], darkMode);
+          const heissluftColors = getHeissluftColors(allColors[key]);
           return (
             <div
               key={`${key}-header`}

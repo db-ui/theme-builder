@@ -3,9 +3,9 @@ import { ReactElement, useState } from "react";
 import ColorSelection from "../Colors/ColorSelection";
 import { DBAccordionItem, DBButton } from "@db-ui/react-components";
 import ComponentPreview from "../Colors/ComponentPreview";
-import ColorTable from "../Colors/ColorTable";
 import ShirtSelection from "./ShirtSelection";
 import ColorPalettes from "../Colors/ColorPalettes";
+import SpeakingColors from "../Colors/SpeakingColors";
 
 type AccordionItemType = {
   title: string;
@@ -77,25 +77,26 @@ const ThemeBuilder = () => {
           >
             {t("preview")}
           </DBButton>
-          {/*          <DBButton
+          <DBButton
             variant={tab === 1 ? "outlined" : "text"}
             onClick={() => setTab(1)}
           >
-            {t("colors")}
-          </DBButton>*/}
+            {t("colorPalettes")}
+          </DBButton>
           <DBButton
+            className="hidden"
             variant={tab === 2 ? "outlined" : "text"}
             onClick={() => setTab(2)}
           >
-            {t("colorPalettes")}
+            {t("speakingColors")}
           </DBButton>
         </div>
         {tab === 0 ? (
           <ComponentPreview />
         ) : tab === 1 ? (
-          <ColorTable />
-        ) : (
           <ColorPalettes />
+        ) : (
+          <SpeakingColors />
         )}
       </div>
     </div>

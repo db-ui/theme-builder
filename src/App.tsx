@@ -10,31 +10,27 @@ import { useThemeBuilderStore } from "./store";
 import ActionBar from "./components/ActionBar";
 import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import { generateColors } from "./utils/generate-colors.ts";
 import {
-  getColorCssProperties,
   getNonColorCssProperties,
+  getPaletteOutput,
+  getSpeakingNames,
 } from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
 import { useTranslation } from "react-i18next";
+import { getPalette } from "./utils";
 
 const App = () => {
-  const { darkMode, defaultColors, customColors, defaultTheme } =
+  const { speakingNames, darkMode, defaultColors, customColors, defaultTheme } =
     useThemeBuilderStore((state) => state);
   const { t } = useTranslation();
 
   const [tonality, setTonality] = useState<string>("regular");
 
   useEffect(() => {
-    const generatedColors = generateColors(
-      defaultColors,
-      darkMode,
-      customColors,
-    );
-    useThemeBuilderStore.setState({ colors: generatedColors });
-
+    const allColors = { ...defaultColors, ...customColors };
     const cssProps: any = {
-      ...getColorCssProperties(generatedColors),
+      ...getPaletteOutput(getPalette(allColors)),
+      ...getSpeakingNames(speakingNames, allColors, darkMode),
       ...getNonColorCssProperties(defaultTheme),
     };
     Object.keys(cssProps).forEach((key) => {
@@ -43,7 +39,7 @@ const App = () => {
         ?.item(0)
         ?.style.setProperty(key, cssProps[key]);
     });
-  }, [defaultColors, darkMode, customColors, defaultTheme]);
+  }, [speakingNames, defaultColors, darkMode, customColors, defaultTheme]);
 
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
@@ -57,7 +53,14 @@ const App = () => {
           <DBHeader
             drawerOpen={drawerOpen}
             onToggle={setDrawerOpen}
-            slotBrand={<DBBrand anchorChildren>Theme Builder</DBBrand>}
+            slotBrand={
+              <DBBrand
+                anchorChildren
+                imgSrc="theme-builder/assets/images/db_logo.svg"
+              >
+                Theme Builder
+              </DBBrand>
+            }
             slotActionBar={<ActionBar />}
             slotMetaNavigation={
               <DBSelect

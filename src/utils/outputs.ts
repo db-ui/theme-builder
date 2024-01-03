@@ -1,28 +1,12 @@
-import { ColorType, DefaultThemeType, HeisslufType } from "./data.ts";
+import { DefaultThemeType, HeisslufType, SpeakingName } from "./data.ts";
 import traverse from "traverse";
-
-const requiredCssProps = [
-  "on-enabled",
-  "origin-enabled",
-  "origin-hover",
-  "origin-pressed",
-  "text-enabled",
-  "text-hover",
-  "text-pressed",
-  "on-bg-enabled",
-  "on-bg-hover",
-  "on-bg-pressed",
-  "on-bg-weak-enabled",
-  "bg-enabled",
-  "bg-strong-enabled",
-  "element-enabled",
-  "border-enabled",
-  "border-weak-enabled",
-];
+import { Hsluv } from "hsluv";
+import { black, getHeissluftColors, white } from "./generate-colors.ts";
+import { getLuminance } from "./index.ts";
 
 export const prefix = "db";
 
-const getCssPropertyAsString = (properties: any): string => {
+export const getCssPropertyAsString = (properties: any): string => {
   let resultString = "";
 
   for (const [key, value] of Object.entries(properties)) {
@@ -30,28 +14,6 @@ const getCssPropertyAsString = (properties: any): string => {
   }
 
   return resultString;
-};
-
-export const getColorCssProperties = (
-  colors: ColorType[],
-  asString?: boolean,
-): any => {
-  const result: any = {};
-
-  colors.forEach((color: any) => {
-    requiredCssProps.forEach((prop: string) => {
-      const name = color.name;
-      if (color[prop]) {
-        result[`--${prefix}-${name}-${prop}`] = color[prop];
-      }
-    });
-  });
-
-  if (asString) {
-    return getCssPropertyAsString(result);
-  }
-
-  return result;
 };
 
 const nonRemProperties = ["opacity", "elevation"];
@@ -111,91 +73,107 @@ export const getNonColorCssProperties = (
   return resolvedProperties;
 };
 
-export const getCssPropertiesOutput = (
-  theme: DefaultThemeType,
-  lightColors: ColorType[],
-  darkColors: ColorType[],
-): string => {
-  const lightProps = getColorCssProperties(lightColors, true);
-  const darkProps = getColorCssProperties(darkColors, true);
+export const getCssThemeProperties = (theme: DefaultThemeType): string => {
   const customTheme = getNonColorCssProperties(theme, true);
 
   return `:root{
-    /* COLORS */ 
-    ${lightProps}
-    @media (prefers-color-scheme: dark) {
-      ${darkProps}
-    }
-    
-    /* REST */ 
     ${customTheme}
   }
   `;
 };
-export const getDarkThemeOutput = (darkColors: ColorType[]): string => {
-  const darkProps = getColorCssProperties(darkColors, true);
 
-  return `.${prefix}-theme-dark, [data-theme="dark"]{
-      ${darkProps}
-  }
-  `;
-};
-
-export const getPaletteOutput = (palette: object): string => {
-  let result = "";
+export const getPaletteOutput = (palette: object): any => {
+  const result: any = {};
   Object.entries(palette).forEach((color) => {
     const name = color[0];
     const hslType: HeisslufType[] = color[1];
     hslType.forEach((hsl) => {
-      result += `--${prefix}-${name}-${hsl.index ?? hsl.name}:${hsl.hex};\n`;
+      result[`--${prefix}-${name}-${hsl.index ?? hsl.name}`] = hsl.hex;
     });
   });
+
   return result;
 };
 
-export const getSpeakingNames = (allColors: object): string => {
-  let result = "";
-  Object.entries(allColors).forEach((color) => {
-    const name = color[0];
-    // backgrounds
-    result += `--${prefix}-${name}-bg: var(--${prefix}-${name}-12);\n`;
-    result += `--${prefix}-${name}-bg-hover: var(--${prefix}-${name}-11);\n`;
-    result += `--${prefix}-${name}-bg-pressed: var(--${prefix}-${name}-10);\n`;
-    result += `--${prefix}-${name}-bg-weak: var(--${prefix}-${name}-11);\n`;
-    result += `--${prefix}-${name}-bg-weak-hover: var(--${prefix}-${name}-10);\n`;
-    result += `--${prefix}-${name}-bg-weak-pressed: var(--${prefix}-${name}-9);\n`;
-    result += `--${prefix}-${name}-bg-strong: var(--${prefix}-${name}-10);\n`;
-    result += `--${prefix}-${name}-bg-strong-hover: var(--${prefix}-${name}-9);\n`;
-    result += `--${prefix}-${name}-bg-strong-pressed: var(--${prefix}-${name}-8);\n`;
+/**
+ * if we are in light mode and the brand color has more than 20 luminance we can darken the states
+ * this would be the best case, otherwise we go to a fallback
+ * dark-mode is the same but inverted
+ * @param color brand color
+ * @param darkMode
+ */
+const getExtraBrandColors = (color: string, darkMode: boolean) => {
+  const result: any = {};
+  const hslColors: HeisslufType[] = getHeissluftColors(color);
+  const hsluv = new Hsluv();
+  hsluv.hex = color;
+  hsluv.hexToHsluv();
+  const brandLuminance = hsluv.hsluv_l;
+  const brandOnColor = getLuminance(color) < 0.4 ? white : black;
+  let hoverColor: string | undefined;
+  let pressedColor: string | undefined;
 
-    // transparent backgrounds
-    result += `--${prefix}-${name}-bg-transparent-full: color-mix(in srgb, transparent 100%, var(--${prefix}-${name}-4));\n`;
-    result += `--${prefix}-${name}-bg-transparent-semi: color-mix(in srgb, transparent 92%, var(--${prefix}-${name}-4));\n`;
-    result += `--${prefix}-${name}-bg-transparent-hover: color-mix(in srgb, transparent 84%, var(--${prefix}-${name}-4));\n`;
-    result += `--${prefix}-${name}-bg-transparent-pressed: color-mix(in srgb, transparent 76%, var(--${prefix}-${name}-4));\n`;
+  const bestCompareFn = darkMode
+    ? (luminance: number) => luminance > brandLuminance
+    : (luminance: number) => luminance < brandLuminance;
+  const fallbackCompareFn = darkMode
+    ? (luminance: number) => luminance < brandLuminance
+    : (luminance: number) => luminance > brandLuminance;
 
-    // on-bg
-    result += `--${prefix}-${name}-on-bg: var(--${prefix}-${name}-1);\n`;
-    result += `--${prefix}-${name}-on-bg-hover: var(--${prefix}-${name}-2);\n`;
-    result += `--${prefix}-${name}-on-bg-pressed: var(--${prefix}-${name}-3);\n`;
+  let foundColors = hslColors.filter((hsl) => bestCompareFn(hsl.luminance));
+  foundColors = darkMode ? foundColors : foundColors.reverse();
+  if (foundColors.length > 2) {
+    hoverColor = foundColors[0].hex;
+    pressedColor = foundColors[1].hex;
+  }
 
-    // on-bg-weak
-    result += `--${prefix}-${name}-on-bg-weak: var(--${prefix}-${name}-3);\n`;
-    result += `--${prefix}-${name}-on-bg-weak-hover: var(--${prefix}-${name}-4);\n`;
-    result += `--${prefix}-${name}-on-bg-weak-pressed: var(--${prefix}-${name}-5);\n`;
+  if (!hoverColor || !pressedColor) {
+    const foundColors = hslColors.filter((hsl) =>
+      fallbackCompareFn(hsl.luminance),
+    );
+    if (foundColors.length > 2) {
+      hoverColor = foundColors[0].hex;
+      pressedColor = foundColors[1].hex;
+    }
+  }
 
-    // contrast-high
-    result += `--${prefix}-${name}-contrast-high: var(--${prefix}-${name}-4);\n`;
-    result += `--${prefix}-${name}-contrast-high-hover: var(--${prefix}-${name}-3);\n`;
-    result += `--${prefix}-${name}-contrast-high-pressed: var(--${prefix}-${name}-2);\n`;
+  result[`--${prefix}-brand-on-enabled`] = brandOnColor;
+  result[`--${prefix}-brand-origin-enabled`] = color;
+  result[`--${prefix}-brand-origin-hover`] = hoverColor;
+  result[`--${prefix}-brand-origin-pressed`] = pressedColor;
 
-    // contrast-low
-    result += `--${prefix}-${name}-contrast-low: var(--${prefix}-${name}-5);\n`;
-    result += `--${prefix}-${name}-contrast-low-hover: var(--${prefix}-${name}-4);\n`;
-    result += `--${prefix}-${name}-contrast-low-pressed: var(--${prefix}-${name}-3);\n`;
+  return result;
+};
 
-    // border
-    result += `--${prefix}-${name}-border: var(--${prefix}-${name}-7);\n`;
+export const getSpeakingNames = (
+  speakingNames: SpeakingName[],
+  allColors: object,
+  darkMode: boolean,
+): any => {
+  let result: any = {};
+  Object.entries(allColors).forEach((value) => {
+    const name = value[0];
+    const color = value[1];
+
+    if (name === "brand") {
+      result = { ...result, ...getExtraBrandColors(color, darkMode) };
+    }
+
+    speakingNames.forEach((speakingName) => {
+      if (speakingName.transparency) {
+        result[`--${prefix}-${name}-${speakingName.name}`] =
+          `color-mix(in srgb, transparent ${
+            speakingName.transparency
+          }%, var(--${prefix}-${name}-${
+            darkMode ? speakingName.dark : speakingName.light
+          }))`;
+      } else {
+        result[`--${prefix}-${name}-${speakingName.name}`] =
+          `var(--${prefix}-${name}-${
+            darkMode ? speakingName.dark : speakingName.light
+          })`;
+      }
+    });
   });
   return result;
 };
