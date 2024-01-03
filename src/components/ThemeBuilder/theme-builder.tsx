@@ -1,7 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { ReactElement, useState } from "react";
 import ColorSelection from "../Colors/ColorSelection";
-import { DBAccordionItem, DBButton } from "@db-ui/react-components";
+import {
+  DBAccordion,
+  DBAccordionItem,
+  DBButton,
+} from "@db-ui/react-components";
 import ComponentPreview from "../Colors/ComponentPreview";
 import ShirtSelection from "./ShirtSelection";
 import ColorPalettes from "../Colors/ColorPalettes";
@@ -41,30 +45,22 @@ const ThemeBuilder = () => {
   const { t } = useTranslation();
   const [tab, setTab] = useState<number>(0);
 
-  const [openAccordion, setOpenAccordion] = useState<number>(0);
-
   return (
     <div className="content flex flex-col md:flex-row md:h-full md:overflow-hidden">
       <div className="flex flex-col p-res-xs w-full md:w-2/5 md:h-full md:overflow-auto">
         <h2 className="mb-fix-sm" data-variant="light">
           {t("createThemeHeadline")}
         </h2>
-        {accordion.map((item, index) => (
-          <DBAccordionItem
-            key={`${item.title}-${index}`}
-            title={t(item.title)}
-            open={openAccordion === index}
-            onToggle={(open) => {
-              if (open) {
-                setOpenAccordion(index);
-              } else if (openAccordion === index) {
-                setOpenAccordion(-1);
-              }
-            }}
-          >
-            {item.component}
-          </DBAccordionItem>
-        ))}
+        <DBAccordion behaviour="single" initOpenIndex={[0]}>
+          {accordion.map((item, index) => (
+            <DBAccordionItem
+              key={`${item.title}-${index}`}
+              title={t(item.title)}
+            >
+              {item.component}
+            </DBAccordionItem>
+          ))}
+        </DBAccordion>
       </div>
       <div
         className="db-bg-neutral-transparent-semi p-fix-sm md:p-res-sm
