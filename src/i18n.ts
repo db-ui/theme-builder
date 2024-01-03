@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { BASE_PATH } from "./constants.ts";
 
 i18n
   .use(Backend)
@@ -9,7 +10,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "en",
-    backend: { loadPath: `/theme-builder/locales/{{lng}}/translation.json` },
+    backend: { loadPath: `${BASE_PATH}/locales/{{lng}}/translation.json` },
     debug: import.meta.env.PRODUCTION === "PRODUCTION",
     keySeparator: false, // we do not use keys in form messages.welcome
     interpolation: {

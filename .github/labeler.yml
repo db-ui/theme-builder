@@ -1,8 +1,0 @@
----
-repo:
-  - "*"
-
-cicd:
-  - .github/*
-  - .github/**/*
-
