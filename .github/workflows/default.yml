@@ -11,9 +11,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.0
-
       - name: ⬇ Checkout repo
         uses: actions/checkout@v4
 
@@ -21,7 +18,21 @@ jobs:
         if: steps.npm-cache.outputs.cache-hit != 'true'
         uses: bahmutov/npm-install@v1
 
+      - name: ⏬ Get branch name
+        uses: actions/github-script@v6
+        id: get-branch-name
+        with:
+          result-encoding: string
+          script: |
+            return (
+              context?.payload?.pull_request?.head?.ref ||
+              context?.payload?.ref || ""
+            )
+            .replace("refs/heads/","");
+
       - name: 🔨 Build
+        env:
+          VITE_FEATURE_BRANCH: /${{steps.get-branch-name.outputs.result}}
         run: npm run build
 
       - name: 🥅 Deploy to GH-Pages
