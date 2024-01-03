@@ -17,6 +17,7 @@ import {
 } from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
 import { useTranslation } from "react-i18next";
+import { BASE_PATH } from "./constants.ts";
 
 const App = () => {
   const { darkMode, defaultColors, customColors, defaultTheme } =
@@ -67,7 +68,14 @@ const App = () => {
           <DBHeader
             drawerOpen={drawerOpen}
             onToggle={setDrawerOpen}
-            slotBrand={<DBBrand anchorChildren>Theme Builder</DBBrand>}
+            slotBrand={
+              <DBBrand
+                imgSrc={`${BASE_PATH}/assets/images/db_logo.svg`}
+                anchorChildren
+              >
+                Theme Builder
+              </DBBrand>
+            }
             slotActionBar={<ActionBar />}
             slotMetaNavigation={
               <DBSelect

@@ -17,6 +17,3 @@ jobs:
 
   dependency-review:
     uses: ./.github/workflows/99-dependency-review.yml
-
-  labeler:
-    uses: ./.github/workflows/99-labeler.yml
