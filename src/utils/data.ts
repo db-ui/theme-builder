@@ -153,9 +153,8 @@ export type DefaultThemeType = {
   colors: DefaultColorMappingType;
 };
 
-export const defaultLuminances: number[] = [
-  1001, 999, 992, 973, 935, 820, 710, 580, 450, 230, 90, 0, -1,
-];
+export const defaultMinContrast = 1.28;
+
 export type HeisslufType = {
   name?: string;
   index?: number;

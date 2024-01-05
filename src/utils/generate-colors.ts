@@ -1,43 +1,48 @@
-import { defaultLuminances, HeisslufType } from "./data.ts";
+import { defaultMinContrast, HeisslufType } from "./data.ts";
 import { Hsluv } from "hsluv";
+import chroma from "chroma-js";
 
 export const white = "#fff";
 export const black = "#000";
 
-export const getHeissluftColors = (color: string): HeisslufType[] => {
-  const platte: HeisslufType[] = [];
+export const getHeissluftColors = (
+  color: string,
+  contrast: number = defaultMinContrast,
+): HeisslufType[] => {
+  if (!color) {
+    return [];
+  }
 
-  defaultLuminances.forEach((currentLuminance) => {
+  const platte: HeisslufType[] = [];
+  let currentLuminance = 0;
+
+  while (currentLuminance <= 100) {
     const hsluv = new Hsluv();
     hsluv.hex = color;
     hsluv.hexToHsluv();
+    hsluv.hsluv_l = currentLuminance;
     const paletteColor: HeisslufType = {
       hex: "",
       saturation: hsluv.hsluv_s,
       hue: hsluv.hsluv_h,
-      luminance:
-        currentLuminance === 1001
-          ? 100
-          : currentLuminance === -1
-            ? 0
-            : Math.pow(1000 - currentLuminance, 0.33) * 10,
+      luminance: currentLuminance,
     };
-    hsluv.hsluv_l = paletteColor.luminance;
     hsluv.hsluvToHex();
     paletteColor.hex = hsluv.hex;
-    platte.push(paletteColor);
-  });
 
-  return [
-    ...platte
-      .sort((a, b) => {
-        if (a.luminance > b.luminance) {
-          return 1;
-        } else if (a.luminance < b.luminance) {
-          return -1;
-        }
-        return 0;
-      })
-      .map((hsl, index) => ({ ...hsl, index })),
-  ];
+    if (
+      platte.length === 0 ||
+      currentLuminance === 100 ||
+      chroma.contrast(
+        chroma.hex(paletteColor.hex),
+        chroma.hex(platte.at(-1)!.hex),
+      ) > contrast
+    ) {
+      platte.push(paletteColor);
+    }
+
+    currentLuminance++;
+  }
+
+  return platte.map((hsl, index) => ({ ...hsl, index }));
 };

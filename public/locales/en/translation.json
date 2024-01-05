@@ -6,6 +6,7 @@
   "dark": "Dark",
   "light": "Light",
   "transparency": "Transparency",
+  "minContrast": "Min. contrast",
   "color": "Color",
   "colorName": "Color Name",
   "customColorExists": "Custom color already exists",

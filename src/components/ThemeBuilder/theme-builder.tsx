@@ -63,7 +63,7 @@ const ThemeBuilder = () => {
         </DBAccordion>
       </div>
       <div
-        className="db-bg-neutral-transparent-semi p-fix-sm md:p-res-sm
+        className="db-bg-neutral p-fix-sm md:p-res-sm
       flex flex-col gap-res-sm w-full md:h-full md:overflow-auto"
       >
         <div className="flex gap-fix-3xs">

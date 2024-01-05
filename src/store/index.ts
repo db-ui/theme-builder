@@ -3,7 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension"; // required for devtools typing
 import { THEME_BUILDER_STATE, ThemeBuilderState } from "./state.ts";
 import {
-  defaultLuminances,
+  defaultMinContrast,
   DefaultThemeType,
   speakingNamesDefaultMapping,
 } from "../utils/data.ts";
@@ -27,13 +27,14 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
             set(() => ({
               defaultColors: defaultTheme.colors,
               defaultTheme,
-              luminanceSteps: defaultLuminances,
               speakingNames: speakingNamesDefaultMapping,
+              minContrast: defaultMinContrast,
             }));
           },
           editorMarkup: "",
           defaultTheme: defaultTheme,
           speakingNames: speakingNamesDefaultMapping,
+          minContrast: defaultMinContrast,
         };
       },
       {

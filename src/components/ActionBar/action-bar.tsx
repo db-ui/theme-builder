@@ -11,6 +11,7 @@ const ActionBar = () => {
     defaultTheme,
     customColors,
     speakingNames,
+    minContrast,
   } = useThemeBuilderStore((state) => state);
 
   return (
@@ -28,6 +29,7 @@ const ActionBar = () => {
         onClick={() =>
           downloadTheme(
             speakingNames,
+            minContrast,
             defaultTheme,
             defaultColors,
             customColors,

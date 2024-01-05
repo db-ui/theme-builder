@@ -27,12 +27,12 @@ const download = (fileName: string, file: Blob) => {
   document.body.removeChild(element);
 };
 
-export const getPalette = (allColors: object): any =>
+export const getPalette = (allColors: object, minContrast: number): any =>
   Object.entries(allColors)
     .map((value) => {
       const name = value[0];
       const color = value[1];
-      const hslColors: HeisslufType[] = getHeissluftColors(color);
+      const hslColors: HeisslufType[] = getHeissluftColors(color, minContrast);
 
       return {
         [name]: hslColors,
@@ -45,6 +45,7 @@ export const getPalette = (allColors: object): any =>
 
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
+  minContrast: number,
   defaultTheme: DefaultThemeType,
   colorMapping: DefaultColorMappingType,
   customColorMapping?: CustomColorMappingType,
@@ -62,7 +63,9 @@ export const downloadTheme = async (
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
     `${fileName}-palette.css`,
-    getCssPropertyAsString(getPaletteOutput(getPalette(allColors))),
+    getCssPropertyAsString(
+      getPaletteOutput(getPalette(allColors, minContrast)),
+    ),
   );
   zip.file(
     `${fileName}-speaking-names-light.css`,
