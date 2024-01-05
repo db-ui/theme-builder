@@ -1,10 +1,11 @@
 import { useThemeBuilderStore } from "../../../store";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { getHeissluftColors } from "../../../utils/generate-colors.ts";
-import { getLuminance } from "../../../utils";
 import "./index.scss";
-import { DBInput } from "@db-ui/react-components";
+import { DBInput, DBPopover } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
+import PaletteBox from "./PaletteBox";
+import chroma from "chroma-js";
 
 const ColorPalettes = () => {
   const { defaultColors, customColors, luminanceSteps } = useThemeBuilderStore(
@@ -32,7 +33,7 @@ const ColorPalettes = () => {
           });
         }}
       />
-      <div className="flex gap-fix-2xs overflow-auto">
+      <div className="flex gap-fix-2xs">
         <div className="flex flex-col gap-fix-2xs items-center grid-color-palettes">
           <div className="py-fix-sm">
             <span className="font-bold invisible">Palette</span>
@@ -49,7 +50,7 @@ const ColorPalettes = () => {
           ))}
         </div>
 
-        {Object.keys(allColors).map((key: any) => {
+        {Object.keys(allColors).map((key: any, colorIndex: number) => {
           const heissluftColors = getHeissluftColors(
             allColors[key],
             luminanceSteps,
@@ -65,20 +66,46 @@ const ColorPalettes = () => {
 
               {heissluftColors.map(
                 ({ hex, hue, saturation, luminance }, index) => (
-                  <div
-                    key={`${key}-${hex}-${index}`}
-                    className="palette-box"
-                    style={{
-                      backgroundColor: hex,
-                      color: getLuminance(hex) < 0.4 ? "#fff" : "#000",
-                    }}
-                  >
-                    <span className="whitespace-nowrap">hex: {hex}</span>
-                    <span className="whitespace-nowrap">
-                      hsl: {Math.round(hue)}/{Math.round(saturation)}/
-                      {Math.round(luminance)}
-                    </span>
-                  </div>
+                  <Fragment key={`${key}-${hex}-${index}`}>
+                    <PaletteBox
+                      hex={hex}
+                      hue={hue}
+                      saturation={saturation}
+                      luminance={luminance}
+                      index={index}
+                    >
+                      <DBPopover
+                        placement={
+                          colorIndex > 3 ? "left-start" : "right-start"
+                        }
+                      >
+                        <div className="flex flex-col gap-fix-2xs items-center grid-color-palettes">
+                          {heissluftColors.map((popoverColor, tooltipIndex) => (
+                            <Fragment
+                              key={`popover-${key}-${popoverColor.hex}-${tooltipIndex}`}
+                            >
+                              <PaletteBox
+                                hex={popoverColor.hex}
+                                hue={popoverColor.hue}
+                                saturation={popoverColor.saturation}
+                                luminance={popoverColor.luminance}
+                                hideText
+                              >
+                                <span className="m-auto">
+                                  {chroma
+                                    .contrast(
+                                      chroma.hex(hex),
+                                      chroma.hex(popoverColor.hex),
+                                    )
+                                    .toFixed(2)}
+                                </span>
+                              </PaletteBox>
+                            </Fragment>
+                          ))}
+                        </div>
+                      </DBPopover>
+                    </PaletteBox>
+                  </Fragment>
                 ),
               )}
             </div>
