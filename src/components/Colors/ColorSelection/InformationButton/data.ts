@@ -1,3 +1,3 @@
 export type InformationButtonType = {
-  title?: string;
+  title: string;
 };

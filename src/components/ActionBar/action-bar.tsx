@@ -5,8 +5,14 @@ import { useTranslation } from "react-i18next";
 
 const ActionBar = () => {
   const { t } = useTranslation();
-  const { defaultColors, resetDefaults, defaultTheme, customColors } =
-    useThemeBuilderStore((state) => state);
+  const {
+    defaultColors,
+    resetDefaults,
+    luminanceSteps,
+    defaultTheme,
+    customColors,
+    speakingNames,
+  } = useThemeBuilderStore((state) => state);
 
   return (
     <>
@@ -20,7 +26,15 @@ const ActionBar = () => {
       <DBButton
         variant="primary"
         icon="download"
-        onClick={() => downloadTheme(defaultTheme, defaultColors, customColors)}
+        onClick={() =>
+          downloadTheme(
+            speakingNames,
+            luminanceSteps,
+            defaultTheme,
+            defaultColors,
+            customColors,
+          )
+        }
         title={t("downloadDesc")}
       >
         {t("download")}

@@ -1,10 +1,9 @@
 import type { PropsWithChildren } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ColorPickerType } from "./data";
 import { DBInput } from "@db-ui/react-components";
 import "./index.scss";
 import { ChromePicker } from "react-color";
-import { isValidColor } from "../../../../utils";
 
 const ColorPicker = ({
   label,
@@ -16,11 +15,6 @@ const ColorPicker = ({
   info,
 }: PropsWithChildren<ColorPickerType>) => {
   const [colorPicker, setColorPicker] = useState<boolean>();
-  const [error, setError] = useState<string>();
-
-  useEffect(() => {
-    setError(isValidColor(color) ? undefined : "Invalid hex color");
-  }, [color]);
 
   return (
     <div className="color-picker-container">
@@ -49,11 +43,11 @@ const ColorPicker = ({
         )}
         <DBInput
           title={title}
-          variant={info ? "informational" : error ? "critical" : variant}
+          variant={info ? "informational" : variant}
           value={color}
           label={label}
           labelVariant="floating"
-          message={error || info}
+          message={info}
           onFocus={() => setColorPicker(false)}
           onChange={(event: any) => setColor(event.target.value)}
         />
