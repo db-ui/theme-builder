@@ -10,6 +10,13 @@
   }
 }
 
+.db-accordion-item {
+  summary + div {
+    position: relative;
+    z-index: 1;
+  }
+}
+
 .checkbox {
   display: flex;
   margin-block: auto;

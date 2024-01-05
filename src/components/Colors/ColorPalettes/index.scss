@@ -5,16 +5,22 @@
 
 .palette-box {
   display: flex;
-  flex-direction: column;
   width: 100%;
   min-width: variables.$db-sizing-xl;
   border: 1px solid colors.$db-base-border;
   border-radius: variables.$db-border-radius-md;
   padding: variables.$db-spacing-fixed-xs;
+
+  .db-popover {
+    top: calc(
+      -1 * (#{variables.$db-spacing-fixed-sm} + #{variables.$db-sizing-lg} *
+            var(--color-index, 1) + var(--color-index, 1) * #{variables.$db-spacing-fixed-2xs})
+    ) !important;
+  }
 }
 
 .grid-color-palettes {
-  & > *:not(:first-child) {
+  & > * {
     height: variables.$db-sizing-lg;
   }
 }

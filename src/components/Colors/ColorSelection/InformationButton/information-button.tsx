@@ -11,14 +11,14 @@ const InformationButton = ({
 
   return (
     <>
-      <DBButton variant="text" icon="info" noText onClick={() => setOpen(true)}>
-        {title || "Additonal Information"}
+      <DBButton variant="text" icon="edit" noText onClick={() => setOpen(true)}>
+        {title}
       </DBButton>
       <DBDrawer
         backdrop="weak"
         open={open}
         onClose={() => setOpen(false)}
-        slotDrawerHeader={title || "Additonal Information"}
+        slotDrawerHeader={title}
         withCloseButton
       >
         {children}
