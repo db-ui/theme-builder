@@ -34,6 +34,7 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
           editorMarkup: "",
           defaultTheme: defaultTheme,
           speakingNames: speakingNamesDefaultMapping,
+          luminanceSteps: defaultLuminances,
         };
       },
       {

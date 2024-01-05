@@ -4,10 +4,13 @@ import { Hsluv } from "hsluv";
 export const white = "#fff";
 export const black = "#000";
 
-export const getHeissluftColors = (color: string): HeisslufType[] => {
+export const getHeissluftColors = (
+  color: string,
+  luminanceSteps: number[] = defaultLuminances,
+): HeisslufType[] => {
   const platte: HeisslufType[] = [];
 
-  defaultLuminances.forEach((currentLuminance) => {
+  luminanceSteps.forEach((currentLuminance) => {
     const hsluv = new Hsluv();
     hsluv.hex = color;
     hsluv.hexToHsluv();
@@ -15,12 +18,7 @@ export const getHeissluftColors = (color: string): HeisslufType[] => {
       hex: "",
       saturation: hsluv.hsluv_s,
       hue: hsluv.hsluv_h,
-      luminance:
-        currentLuminance === 1001
-          ? 100
-          : currentLuminance === -1
-            ? 0
-            : Math.pow(1000 - currentLuminance, 0.33) * 10,
+      luminance: currentLuminance,
     };
     hsluv.hsluv_l = paletteColor.luminance;
     hsluv.hsluvToHex();

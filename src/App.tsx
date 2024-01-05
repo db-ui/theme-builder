@@ -21,8 +21,14 @@ import { getPalette } from "./utils";
 import { BASE_PATH } from "./constants.ts";
 
 const App = () => {
-  const { speakingNames, darkMode, defaultColors, customColors, defaultTheme } =
-    useThemeBuilderStore((state) => state);
+  const {
+    speakingNames,
+    darkMode,
+    luminanceSteps,
+    defaultColors,
+    customColors,
+    defaultTheme,
+  } = useThemeBuilderStore((state) => state);
   const { t } = useTranslation();
 
   const [tonality, setTonality] = useState<string>("regular");
@@ -30,8 +36,8 @@ const App = () => {
   useEffect(() => {
     const allColors = { ...defaultColors, ...customColors };
     const cssProps: any = {
-      ...getPaletteOutput(getPalette(allColors)),
-      ...getSpeakingNames(speakingNames, allColors, darkMode),
+      ...getPaletteOutput(getPalette(allColors, luminanceSteps)),
+      ...getSpeakingNames(speakingNames, allColors, darkMode, luminanceSteps),
       ...getNonColorCssProperties(defaultTheme),
     };
     Object.keys(cssProps).forEach((key) => {
@@ -40,7 +46,14 @@ const App = () => {
         ?.item(0)
         ?.style.setProperty(key, cssProps[key]);
     });
-  }, [speakingNames, defaultColors, darkMode, customColors, defaultTheme]);
+  }, [
+    speakingNames,
+    defaultColors,
+    darkMode,
+    customColors,
+    defaultTheme,
+    luminanceSteps,
+  ]);
 
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 

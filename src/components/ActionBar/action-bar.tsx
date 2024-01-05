@@ -8,6 +8,7 @@ const ActionBar = () => {
   const {
     defaultColors,
     resetDefaults,
+    luminanceSteps,
     defaultTheme,
     customColors,
     speakingNames,
@@ -28,6 +29,7 @@ const ActionBar = () => {
         onClick={() =>
           downloadTheme(
             speakingNames,
+            luminanceSteps,
             defaultTheme,
             defaultColors,
             customColors,

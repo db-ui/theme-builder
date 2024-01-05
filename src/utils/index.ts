@@ -27,12 +27,15 @@ const download = (fileName: string, file: Blob) => {
   document.body.removeChild(element);
 };
 
-export const getPalette = (allColors: object): any =>
+export const getPalette = (allColors: object, luminanceSteps: number[]): any =>
   Object.entries(allColors)
     .map((value) => {
       const name = value[0];
       const color = value[1];
-      const hslColors: HeisslufType[] = getHeissluftColors(color);
+      const hslColors: HeisslufType[] = getHeissluftColors(
+        color,
+        luminanceSteps,
+      );
 
       return {
         [name]: hslColors,
@@ -45,6 +48,7 @@ export const getPalette = (allColors: object): any =>
 
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
+  luminanceSteps: number[],
   defaultTheme: DefaultThemeType,
   colorMapping: DefaultColorMappingType,
   customColorMapping?: CustomColorMappingType,
@@ -62,15 +66,21 @@ export const downloadTheme = async (
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
     `${fileName}-palette.css`,
-    getCssPropertyAsString(getPaletteOutput(getPalette(allColors))),
+    getCssPropertyAsString(
+      getPaletteOutput(getPalette(allColors, luminanceSteps)),
+    ),
   );
   zip.file(
     `${fileName}-speaking-names-light.css`,
-    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, false)),
+    getCssPropertyAsString(
+      getSpeakingNames(speakingNames, allColors, false, luminanceSteps),
+    ),
   );
   zip.file(
     `${fileName}-speaking-names-dark.css`,
-    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, true)),
+    getCssPropertyAsString(
+      getSpeakingNames(speakingNames, allColors, true, luminanceSteps),
+    ),
   );
   const zipFile = await zip.generateAsync({ type: "blob" });
   download(`${fileName}.zip`, zipFile);

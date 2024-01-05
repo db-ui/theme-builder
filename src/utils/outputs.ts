@@ -102,9 +102,13 @@ export const getPaletteOutput = (palette: object): any => {
  * @param color brand color
  * @param darkMode
  */
-const getExtraBrandColors = (color: string, darkMode: boolean) => {
+const getExtraBrandColors = (
+  color: string,
+  darkMode: boolean,
+  luminanceSteps: number[],
+) => {
   const result: any = {};
-  const hslColors: HeisslufType[] = getHeissluftColors(color);
+  const hslColors: HeisslufType[] = getHeissluftColors(color, luminanceSteps);
   const hsluv = new Hsluv();
   hsluv.hex = color;
   hsluv.hexToHsluv();
@@ -149,6 +153,7 @@ export const getSpeakingNames = (
   speakingNames: SpeakingName[],
   allColors: object,
   darkMode: boolean,
+  luminanceSteps: number[],
 ): any => {
   let result: any = {};
   Object.entries(allColors).forEach((value) => {
@@ -156,7 +161,10 @@ export const getSpeakingNames = (
     const color = value[1];
 
     if (name === "brand") {
-      result = { ...result, ...getExtraBrandColors(color, darkMode) };
+      result = {
+        ...result,
+        ...getExtraBrandColors(color, darkMode, luminanceSteps),
+      };
     }
 
     speakingNames.forEach((speakingName) => {

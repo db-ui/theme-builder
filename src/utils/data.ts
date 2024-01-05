@@ -154,8 +154,9 @@ export type DefaultThemeType = {
 };
 
 export const defaultLuminances: number[] = [
-  1001, 999, 992, 973, 935, 820, 710, 580, 450, 230, 90, 0, -1,
+  0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100,
 ];
+
 export type HeisslufType = {
   name?: string;
   index?: number;

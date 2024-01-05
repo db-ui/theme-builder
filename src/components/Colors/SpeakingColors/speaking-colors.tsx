@@ -1,5 +1,5 @@
 import { useThemeBuilderStore } from "../../../store";
-import { DBInput } from "@db-ui/react-components";
+import { DBButton, DBInput } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import { Fragment } from "react";
 import { SpeakingName } from "../../../utils/data.ts";
@@ -14,12 +14,67 @@ const SpeakingColors = () => {
     useThemeBuilderStore.setState({ speakingNames: copyNames });
   };
 
+  const updateAll = (light: boolean, increase: boolean) => {
+    useThemeBuilderStore.setState({
+      speakingNames: speakingNames.map((sName) => {
+        const copyName = { ...sName };
+        if (light) {
+          copyName.light = increase ? copyName.light + 1 : copyName.light - 1;
+        } else {
+          copyName.dark = increase ? copyName.dark + 1 : copyName.dark - 1;
+        }
+
+        return copyName;
+      }),
+    });
+  };
+
   return (
     <div data-tonality="functional" className="grid grid-cols-4 gap-fix-md">
-      <h6>{t("colorName")}</h6>
-      <h6>{t("dark")}</h6>
-      <h6>{t("light")}</h6>
-      <h6>{t("transparency")}</h6>
+      <div className="flex items-center">
+        <h6>{t("colorName")}</h6>
+      </div>
+      <div className="flex items-center">
+        <h6 className="mr-auto">{t("dark")}</h6>
+        <DBButton
+          icon="minus"
+          noText
+          variant="text"
+          onClick={() => updateAll(false, false)}
+        >
+          Decrease
+        </DBButton>
+        <DBButton
+          icon="add"
+          noText
+          variant="text"
+          onClick={() => updateAll(false, true)}
+        >
+          Increase
+        </DBButton>
+      </div>
+      <div className="flex items-center">
+        <h6 className="mr-auto">{t("light")}</h6>
+        <DBButton
+          icon="minus"
+          noText
+          variant="text"
+          onClick={() => updateAll(true, false)}
+        >
+          Decrease
+        </DBButton>
+        <DBButton
+          icon="add"
+          noText
+          variant="text"
+          onClick={() => updateAll(true, true)}
+        >
+          Increase
+        </DBButton>
+      </div>
+      <div className="flex items-center">
+        <h6>{t("transparency")}</h6>
+      </div>
       {speakingNames.map((speakingName: SpeakingName, index: number) => (
         <Fragment key={speakingName.name}>
           <span>{speakingName.name}</span>
@@ -29,7 +84,6 @@ const SpeakingColors = () => {
             value={speakingName.dark}
             type="number"
             min="0"
-            max="12"
             onChange={(event) =>
               updateSpeakingName(
                 { ...speakingName, dark: Number(event.target.value) },
@@ -43,7 +97,6 @@ const SpeakingColors = () => {
             value={speakingName.light}
             type="number"
             min="0"
-            max="12"
             onChange={(event) =>
               updateSpeakingName(
                 { ...speakingName, light: Number(event.target.value) },

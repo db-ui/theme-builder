@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { getHeissluftColors } from "../../../utils/generate-colors.ts";
 import { getLuminance } from "../../../utils";
 import "./index.scss";
-import { defaultLuminances } from "../../../utils/data.ts";
+import { DBInput } from "@db-ui/react-components";
+import { useTranslation } from "react-i18next";
 
 const ColorPalettes = () => {
-  const { defaultColors, customColors } = useThemeBuilderStore(
+  const { defaultColors, customColors, luminanceSteps } = useThemeBuilderStore(
     (state) => state,
   );
+  const { t } = useTranslation();
 
   const [allColors, setAllColors] = useState<any>({});
 
@@ -17,13 +19,25 @@ const ColorPalettes = () => {
   }, [defaultColors, customColors]);
 
   return (
-    <div className="flex">
+    <div className="flex flex-col">
+      <DBInput
+        label={t("luminanceSteps")}
+        value={luminanceSteps}
+        onChange={(event) => {
+          const luminanceSteps = event.target.value
+            .split(",")
+            .map((step) => Number(step || 0));
+          useThemeBuilderStore.setState({
+            luminanceSteps,
+          });
+        }}
+      />
       <div className="flex gap-fix-2xs overflow-auto">
         <div className="flex flex-col gap-fix-2xs items-center grid-color-palettes">
           <div className="py-fix-sm">
             <span className="font-bold invisible">Palette</span>
           </div>
-          {defaultLuminances.map((luminance, index) => (
+          {luminanceSteps.map((luminance, index) => (
             <div
               className="flex items-center"
               key={`luminance-step-${luminance}`}
@@ -36,7 +50,10 @@ const ColorPalettes = () => {
         </div>
 
         {Object.keys(allColors).map((key: any) => {
-          const heissluftColors = getHeissluftColors(allColors[key]);
+          const heissluftColors = getHeissluftColors(
+            allColors[key],
+            luminanceSteps,
+          );
           return (
             <div
               key={`${key}-header`}
