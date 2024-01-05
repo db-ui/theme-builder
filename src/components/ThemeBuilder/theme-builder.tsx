@@ -80,7 +80,6 @@ const ThemeBuilder = () => {
             {t("colorPalettes")}
           </DBButton>
           <DBButton
-            className="hidden"
             variant={tab === 2 ? "outlined" : "text"}
             onClick={() => setTab(2)}
           >

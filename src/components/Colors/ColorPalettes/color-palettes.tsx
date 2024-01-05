@@ -23,7 +23,7 @@ const ColorPalettes = () => {
   return (
     <div className="flex flex-col">
       <DBInput
-        className="hidden w-1/4"
+        className="w-1/4"
         type="number"
         min={1.02}
         max={5}
