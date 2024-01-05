@@ -69,11 +69,15 @@ export const downloadTheme = async (
   );
   zip.file(
     `${fileName}-speaking-names-light.css`,
-    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, false)),
+    getCssPropertyAsString(
+      getSpeakingNames(speakingNames, allColors, false, minContrast),
+    ),
   );
   zip.file(
     `${fileName}-speaking-names-dark.css`,
-    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, true)),
+    getCssPropertyAsString(
+      getSpeakingNames(speakingNames, allColors, true, minContrast),
+    ),
   );
   const zipFile = await zip.generateAsync({ type: "blob" });
   download(`${fileName}.zip`, zipFile);

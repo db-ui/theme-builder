@@ -37,7 +37,7 @@ const App = () => {
     const allColors = { ...defaultColors, ...customColors };
     const cssProps: any = {
       ...getPaletteOutput(getPalette(allColors, minContrast)),
-      ...getSpeakingNames(speakingNames, allColors, darkMode),
+      ...getSpeakingNames(speakingNames, allColors, darkMode, minContrast),
       ...getNonColorCssProperties(defaultTheme),
     };
     Object.keys(cssProps).forEach((key) => {
