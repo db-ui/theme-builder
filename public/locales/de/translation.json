@@ -1,4 +1,5 @@
 {
+  "search": "Suchen",
   "errorMessage": "Uups, da ist wohl etwas schief gegangen.",
   "copied": "kopiert",
   "tonality": "Tonalität",
@@ -6,6 +7,7 @@
   "color": "Farbe",
   "colorName": "Farbname",
   "customColorExists": "Eigene Farbe existiert bereits",
+  "components": "Komponenten",
   "colors": "Farben",
   "colorPalettes": "Farb-Paletten",
   "editor": "Editor",
