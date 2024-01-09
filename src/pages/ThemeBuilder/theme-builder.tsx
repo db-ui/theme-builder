@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { ReactElement, useState } from "react";
+import { Fragment, ReactElement, useState } from "react";
 import {
   DBAccordion,
   DBAccordionItem,
@@ -7,14 +7,21 @@ import {
 } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../store";
 import ColorSelection from "../../components/Colors/ColorSelection";
-import ComponentPreview from "../../components/Colors/ComponentPreview";
 import ShirtSelection from "../../components/ShirtSelection";
 import ColorPalettes from "../../components/Colors/ColorPalettes";
+import ScreenContainer from "../../components/ScreenContainer";
+import ComponentContainer from "../../components/ComponentContainer";
 import SpeakingColors from "../../components/Colors/SpeakingColors";
 
 type AccordionItemType = {
   title: string;
   component: ReactElement;
+};
+
+type TabItemType = {
+  text: string;
+  component: ReactElement;
+  onlyDeveloper?: boolean;
 };
 
 const accordion: AccordionItemType[] = [
@@ -42,6 +49,17 @@ const accordion: AccordionItemType[] = [
   },
 ];
 
+const tabs: TabItemType[] = [
+  { text: "preview", component: <ScreenContainer /> },
+  { text: "components", component: <ComponentContainer /> },
+  { text: "colorPalettes", component: <ColorPalettes /> },
+  {
+    text: "speakingColors",
+    component: <SpeakingColors />,
+    onlyDeveloper: true,
+  },
+];
+
 const ThemeBuilder = () => {
   const { t } = useTranslation();
   const [tab, setTab] = useState<number>(0);
@@ -66,37 +84,31 @@ const ThemeBuilder = () => {
       </div>
       <div
         className="db-bg-neutral p-fix-sm md:p-res-sm
-      flex flex-col gap-res-sm w-full md:h-full md:overflow-auto"
+      flex flex-col gap-res-sm w-full overflow-auto"
       >
-        <div className="flex gap-fix-3xs">
-          <DBButton
-            variant={tab === 0 ? "outlined" : "text"}
-            onClick={() => setTab(0)}
-          >
-            {t("preview")}
-          </DBButton>
-          <DBButton
-            variant={tab === 1 ? "outlined" : "text"}
-            onClick={() => setTab(1)}
-          >
-            {t("colorPalettes")}
-          </DBButton>
-          {developerMode && (
-            <DBButton
-              variant={tab === 2 ? "outlined" : "text"}
-              onClick={() => setTab(2)}
-            >
-              {t("speakingColors")}
-            </DBButton>
-          )}
+        <div className="flex gap-fix-3xs w-full">
+          {tabs
+            .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
+            .map((tabItem, index) => (
+              <DBButton
+                key={`tab-button-${tabItem.text}`}
+                variant={tab === index ? "outlined" : "text"}
+                onClick={() => setTab(index)}
+              >
+                {t(tabItem.text)}
+              </DBButton>
+            ))}
         </div>
-        {tab === 0 ? (
-          <ComponentPreview />
-        ) : tab === 1 ? (
-          <ColorPalettes />
-        ) : (
-          <SpeakingColors />
-        )}
+
+        {tabs.map((tabItem, index) => {
+          if (tab !== index) {
+            return null;
+          }
+
+          return (
+            <Fragment key={`tab-${tabItem.text}`}>{tabItem.component}</Fragment>
+          );
+        })}
       </div>
     </div>
   );
