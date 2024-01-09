@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import "./tailwind.css";
 import App from "./App.tsx";
+import Error from "./pages/Error";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -9,14 +10,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "@db-ui/foundations/build/css/colors/classes/all.css";
-import AppRoutes from "./components/Navigation/app-routes.tsx";
 
 import "./i18n";
 import { BASE_PATH } from "./constants.ts";
+import AppRoutes from "./utils/app-routes.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
-    <Route path="/" element={<App />}>
+    <Route path="/" element={<App />} errorElement={<Error />}>
       {AppRoutes.map((route) => (
         <Route
           key={`route-${route.path}`}

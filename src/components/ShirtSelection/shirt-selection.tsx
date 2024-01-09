@@ -1,5 +1,5 @@
 import { ShirtSelectionType } from "./data.ts";
-import { useThemeBuilderStore } from "../../../store";
+import { useThemeBuilderStore } from "../../store";
 import { DBInput, DBTextarea } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import traverse from "traverse";

@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { ReactElement, useState } from "react";
-import ColorSelection from "../Colors/ColorSelection";
+import ColorSelection from "../../components/Colors/ColorSelection";
 import { DBAccordionItem, DBButton } from "@db-ui/react-components";
-import ComponentPreview from "../Colors/ComponentPreview";
-import ColorTable from "../Colors/ColorTable";
-import ShirtSelection from "./ShirtSelection";
-import ColorPalettes from "../Colors/ColorPalettes";
+import ComponentPreview from "../../components/Colors/ComponentPreview";
+import ColorTable from "../../components/Colors/ColorTable";
+import ShirtSelection from "../../components/ShirtSelection";
+import ColorPalettes from "../../components/Colors/ColorPalettes";
 
 type AccordionItemType = {
   title: string;
