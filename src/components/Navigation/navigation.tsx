@@ -1,7 +1,7 @@
 import { DBMainNavigation, DBNavigationItem } from "@db-ui/react-components";
-import AppRoutes from "./app-routes.tsx";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import AppRoutes from "../../utils/app-routes.tsx";
 
 const Navigation = () => {
   const { t } = useTranslation();

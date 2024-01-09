@@ -1,16 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { ReactElement, useState } from "react";
-import ColorSelection from "../Colors/ColorSelection";
 import {
   DBAccordion,
   DBAccordionItem,
   DBButton,
 } from "@db-ui/react-components";
-import ComponentPreview from "../Colors/ComponentPreview";
-import ShirtSelection from "./ShirtSelection";
-import ColorPalettes from "../Colors/ColorPalettes";
-import SpeakingColors from "../Colors/SpeakingColors";
 import { useThemeBuilderStore } from "../../store";
+import ColorSelection from "../../components/Colors/ColorSelection";
+import ComponentPreview from "../../components/Colors/ComponentPreview";
+import ShirtSelection from "../../components/ShirtSelection";
+import ColorPalettes from "../../components/Colors/ColorPalettes";
+import SpeakingColors from "../../components/Colors/SpeakingColors";
 
 type AccordionItemType = {
   title: string;
