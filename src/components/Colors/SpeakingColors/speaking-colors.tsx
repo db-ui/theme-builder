@@ -30,7 +30,7 @@ const SpeakingColors = () => {
   };
 
   return (
-    <div data-tonality="functional" className="grid grid-cols-4 gap-fix-md">
+    <div data-tonality="functional" className="grid grid-cols-3 gap-fix-md">
       <div className="flex items-center">
         <h6>{t("colorName")}</h6>
       </div>
@@ -72,56 +72,81 @@ const SpeakingColors = () => {
           Increase
         </DBButton>
       </div>
-      <div className="flex items-center">
-        <h6>{t("transparency")}</h6>
-      </div>
       {speakingNames.map((speakingName: SpeakingName, index: number) => (
         <Fragment key={speakingName.name}>
           <span>{speakingName.name}</span>
-          <DBInput
-            labelVariant="floating"
-            label={t("dark")}
-            value={speakingName.dark}
-            type="number"
-            min="0"
-            onChange={(event) =>
-              updateSpeakingName(
-                { ...speakingName, dark: Number(event.target.value) },
-                index,
-              )
-            }
-          />
-          <DBInput
-            labelVariant="floating"
-            label={t("light")}
-            value={speakingName.light}
-            type="number"
-            min="0"
-            onChange={(event) =>
-              updateSpeakingName(
-                { ...speakingName, light: Number(event.target.value) },
-                index,
-              )
-            }
-          />
-          {speakingName.transparency ? (
+          <div className="flex gap-fix-md">
             <DBInput
+              className="w-full"
               labelVariant="floating"
-              label={t("transparency")}
-              value={speakingName.transparency}
+              label={t("dark")}
+              value={speakingName.dark}
               type="number"
               min="0"
-              max="100"
               onChange={(event) =>
                 updateSpeakingName(
-                  { ...speakingName, transparency: Number(event.target.value) },
+                  { ...speakingName, dark: Number(event.target.value) },
                   index,
                 )
               }
             />
-          ) : (
-            <div></div>
-          )}
+            {speakingName.transparencyDark !== undefined && (
+              <DBInput
+                className="w-full"
+                labelVariant="floating"
+                label={t("transparency")}
+                value={speakingName.transparencyDark}
+                type="number"
+                min="0"
+                max="100"
+                onChange={(event) =>
+                  updateSpeakingName(
+                    {
+                      ...speakingName,
+                      transparencyDark: Number(event.target.value),
+                    },
+                    index,
+                  )
+                }
+              />
+            )}
+          </div>
+          <div className="flex gap-fix-md">
+            <DBInput
+              className="w-full"
+              labelVariant="floating"
+              label={t("light")}
+              value={speakingName.light}
+              type="number"
+              min="0"
+              onChange={(event) =>
+                updateSpeakingName(
+                  { ...speakingName, light: Number(event.target.value) },
+                  index,
+                )
+              }
+            />
+            {speakingName.transparencyLight !== undefined && (
+              <DBInput
+                className="w-full"
+                labelVariant="floating"
+                label={t("transparency")}
+                value={speakingName.transparencyLight}
+                type="number"
+                min="0"
+                max="100"
+                onChange={(event) =>
+                  updateSpeakingName(
+                    {
+                      ...speakingName,
+                      transparencyLight: Number(event.target.value),
+                    },
+                    index,
+                  )
+                }
+              />
+            )}
+          </div>
         </Fragment>
       ))}
     </div>

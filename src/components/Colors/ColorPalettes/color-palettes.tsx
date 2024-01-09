@@ -8,9 +8,8 @@ import PaletteBox from "./PaletteBox";
 import chroma from "chroma-js";
 
 const ColorPalettes = () => {
-  const { defaultColors, customColors, luminanceSteps } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const { defaultColors, customColors, luminanceSteps, developerMode } =
+    useThemeBuilderStore((state) => state);
   const { t } = useTranslation();
 
   const [allColors, setAllColors] = useState<any>({});
@@ -21,18 +20,20 @@ const ColorPalettes = () => {
 
   return (
     <div className="flex flex-col">
-      <DBInput
-        label={t("luminanceSteps")}
-        value={luminanceSteps}
-        onChange={(event) => {
-          const luminanceSteps = event.target.value
-            .split(",")
-            .map((step) => Number(step || 0));
-          useThemeBuilderStore.setState({
-            luminanceSteps,
-          });
-        }}
-      />
+      {developerMode && (
+        <DBInput
+          label={t("luminanceSteps")}
+          value={luminanceSteps}
+          onChange={(event) => {
+            const luminanceSteps = event.target.value
+              .split(",")
+              .map((step) => Number(step || 0));
+            useThemeBuilderStore.setState({
+              luminanceSteps,
+            });
+          }}
+        />
+      )}
       <div className="flex gap-fix-2xs">
         <div className="flex flex-col gap-fix-2xs items-center grid-color-palettes">
           <div className="py-fix-sm">

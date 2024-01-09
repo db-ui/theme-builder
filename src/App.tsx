@@ -28,6 +28,7 @@ const App = () => {
     defaultColors,
     customColors,
     defaultTheme,
+    developerMode,
   } = useThemeBuilderStore((state) => state);
   const { t } = useTranslation();
 
@@ -90,6 +91,19 @@ const App = () => {
             }
             slotCallToAction={
               <div className="flex gap-fix-sm">
+                <DBButton
+                  className={!developerMode ? "opacity-0" : ""}
+                  icon="face_delighted"
+                  variant="text"
+                  noText
+                  onClick={() =>
+                    useThemeBuilderStore.setState({
+                      developerMode: !developerMode,
+                    })
+                  }
+                >
+                  Developer Mode
+                </DBButton>
                 <DBSelect
                   className="tonality-select-call-to-action"
                   label={t("tonality")}

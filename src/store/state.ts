@@ -19,4 +19,5 @@ export type ThemeBuilderState = {
   defaultTheme: DefaultThemeType;
   speakingNames: SpeakingName[];
   luminanceSteps: number[];
+  developerMode: boolean;
 };

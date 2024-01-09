@@ -10,6 +10,7 @@ import ComponentPreview from "../Colors/ComponentPreview";
 import ShirtSelection from "./ShirtSelection";
 import ColorPalettes from "../Colors/ColorPalettes";
 import SpeakingColors from "../Colors/SpeakingColors";
+import { useThemeBuilderStore } from "../../store";
 
 type AccordionItemType = {
   title: string;
@@ -44,6 +45,7 @@ const accordion: AccordionItemType[] = [
 const ThemeBuilder = () => {
   const { t } = useTranslation();
   const [tab, setTab] = useState<number>(0);
+  const { developerMode } = useThemeBuilderStore((state) => state);
 
   return (
     <div className="content flex flex-col md:flex-row md:h-full md:overflow-hidden">
@@ -79,12 +81,14 @@ const ThemeBuilder = () => {
           >
             {t("colorPalettes")}
           </DBButton>
-          <DBButton
-            variant={tab === 2 ? "outlined" : "text"}
-            onClick={() => setTab(2)}
-          >
-            {t("speakingColors")}
-          </DBButton>
+          {developerMode && (
+            <DBButton
+              variant={tab === 2 ? "outlined" : "text"}
+              onClick={() => setTab(2)}
+            >
+              {t("speakingColors")}
+            </DBButton>
+          )}
         </div>
         {tab === 0 ? (
           <ComponentPreview />

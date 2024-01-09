@@ -168,10 +168,15 @@ export const getSpeakingNames = (
     }
 
     speakingNames.forEach((speakingName) => {
-      if (speakingName.transparency) {
+      if (
+        speakingName.transparencyDark !== undefined ||
+        speakingName.transparencyLight !== undefined
+      ) {
         result[`--${prefix}-${name}-${speakingName.name}`] =
           `color-mix(in srgb, transparent ${
-            speakingName.transparency
+            darkMode
+              ? speakingName.transparencyDark
+              : speakingName.transparencyLight
           }%, var(--${prefix}-${name}-${
             darkMode ? speakingName.dark : speakingName.light
           }))`;
