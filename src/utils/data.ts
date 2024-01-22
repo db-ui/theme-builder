@@ -181,7 +181,7 @@ export const speakingNamesDefaultMapping: SpeakingName[] = [
   { name: "bg-weak", dark: 2, light: 13 },
   { name: "bg-weak-hover", dark: 3, light: 12 },
   { name: "bg-weak-pressed", dark: 4, light: 11 },
-  { name: "bg-strong", dark: 1, light: 11 },
+  { name: "bg-strong", dark: 1, light: 12 },
   { name: "bg-strong-hover", dark: 2, light: 10 },
   { name: "bg-strong-pressed", dark: 3, light: 9 },
   {
