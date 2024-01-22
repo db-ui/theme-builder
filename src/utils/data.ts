@@ -182,8 +182,8 @@ export const speakingNamesDefaultMapping: SpeakingName[] = [
   { name: "bg-weak-hover", dark: 3, light: 12 },
   { name: "bg-weak-pressed", dark: 4, light: 11 },
   { name: "bg-strong", dark: 1, light: 12 },
-  { name: "bg-strong-hover", dark: 2, light: 10 },
-  { name: "bg-strong-pressed", dark: 3, light: 9 },
+  { name: "bg-strong-hover", dark: 2, light: 11 },
+  { name: "bg-strong-pressed", dark: 3, light: 10 },
   {
     name: "bg-transparent-full",
     dark: 9,
@@ -224,5 +224,5 @@ export const speakingNamesDefaultMapping: SpeakingName[] = [
   { name: "contrast-low", dark: 8, light: 7 },
   { name: "contrast-low-hover", dark: 7, light: 6 },
   { name: "contrast-low-pressed", dark: 6, light: 5 },
-  { name: "border", dark: 5, light: 9 },
+  { name: "border", dark: 6, light: 10 },
 ];
