@@ -223,7 +223,7 @@ export const components: ComponentList[] = [
         <DBCheckbox name="checkbox" checked>
           Checkbox
         </DBCheckbox>
-        <DBCheckbox name="checkbox" checked invalid>
+        <DBCheckbox name="checkbox" invalid>
           Checkbox
         </DBCheckbox>
         <DBCheckbox name="checkbox" checked required>
@@ -240,7 +240,7 @@ export const components: ComponentList[] = [
         <DBRadio name="radio2" checked>
           Radio
         </DBRadio>
-        <DBRadio name="radio3" checked invalid>
+        <DBRadio name="radio3" invalid>
           Radio
         </DBRadio>
         <DBRadio name="radio4" checked required>
