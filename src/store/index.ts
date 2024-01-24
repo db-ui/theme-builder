@@ -2,7 +2,11 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension"; // required for devtools typing
 import { THEME_BUILDER_STATE, ThemeBuilderState } from "./state.ts";
-import { defaultLuminances, DefaultThemeType } from "../utils/data.ts";
+import {
+  defaultLuminances,
+  DefaultThemeType,
+  speakingNamesDefaultMapping,
+} from "../utils/data.ts";
 
 import DefaultTheme from "../data/default-theme.json";
 
@@ -24,11 +28,14 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
               defaultColors: defaultTheme.colors,
               defaultTheme,
               luminanceSteps: defaultLuminances,
+              speakingNames: speakingNamesDefaultMapping,
             }));
           },
           editorMarkup: "",
-          luminanceSteps: defaultLuminances,
           defaultTheme: defaultTheme,
+          speakingNames: speakingNamesDefaultMapping,
+          luminanceSteps: defaultLuminances,
+          developerMode: false,
         };
       },
       {

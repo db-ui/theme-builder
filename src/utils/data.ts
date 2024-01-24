@@ -1,7 +1,5 @@
 export type DefaultColorMappingType = {
-  bgBase: string;
-  bgBaseStrong: string;
-  onBgBase: string;
+  base: string;
   neutral: string;
   brand: string;
   onBrand: string;
@@ -156,12 +154,75 @@ export type DefaultThemeType = {
 };
 
 export const defaultLuminances: number[] = [
-  999, 992, 973, 935, 820, 710, 580, 450, 230, 90, 0,
+  0, 2, 5, 10, 20, 30, 40, 55, 65, 73, 80, 90, 95, 98, 100,
 ];
+
 export type HeisslufType = {
-  name: string;
+  name?: string;
+  index?: number;
   hex: string;
   hue: number;
   saturation: number;
   luminance: number;
 };
+
+export type SpeakingName = {
+  name: string;
+  light: number;
+  dark: number;
+  transparencyLight?: number;
+  transparencyDark?: number;
+};
+
+export const speakingNamesDefaultMapping: SpeakingName[] = [
+  { name: "bg", dark: 3, light: 14 },
+  { name: "bg-hover", dark: 4, light: 13 },
+  { name: "bg-pressed", dark: 5, light: 12 },
+  { name: "bg-weak", dark: 2, light: 13 },
+  { name: "bg-weak-hover", dark: 3, light: 12 },
+  { name: "bg-weak-pressed", dark: 4, light: 11 },
+  { name: "bg-strong", dark: 1, light: 12 },
+  { name: "bg-strong-hover", dark: 2, light: 11 },
+  { name: "bg-strong-pressed", dark: 3, light: 10 },
+  {
+    name: "bg-transparent-full",
+    dark: 9,
+    transparencyDark: 100,
+    light: 6,
+    transparencyLight: 100,
+  },
+  {
+    name: "bg-transparent-semi",
+    dark: 9,
+    transparencyDark: 84,
+    light: 6,
+    transparencyLight: 92,
+  },
+  {
+    name: "bg-transparent-hover",
+    dark: 9,
+    transparencyDark: 76,
+    light: 6,
+    transparencyLight: 84,
+  },
+  {
+    name: "bg-transparent-pressed",
+    dark: 9,
+    transparencyDark: 68,
+    light: 6,
+    transparencyLight: 76,
+  },
+  { name: "on-bg", dark: 12, light: 3 },
+  { name: "on-bg-hover", dark: 11, light: 4 },
+  { name: "on-bg-pressed", dark: 10, light: 5 },
+  { name: "on-bg-weak", dark: 10, light: 5 },
+  { name: "on-bg-weak-hover", dark: 9, light: 6 },
+  { name: "on-bg-weak-pressed", dark: 8, light: 7 },
+  { name: "contrast-high", dark: 9, light: 6 },
+  { name: "contrast-high-hover", dark: 8, light: 5 },
+  { name: "contrast-high-pressed", dark: 7, light: 4 },
+  { name: "contrast-low", dark: 8, light: 7 },
+  { name: "contrast-low-hover", dark: 7, light: 6 },
+  { name: "contrast-low-pressed", dark: 6, light: 5 },
+  { name: "border", dark: 6, light: 10 },
+];
