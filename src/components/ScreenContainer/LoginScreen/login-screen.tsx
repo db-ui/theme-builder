@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import FakeDevice from "../FakeDevice";
-import navigatorHeader from "../theme-builder-preview-navigator-header.png";
+import navigatorHeader from "../theme-builder-preview-navigator-header";
 import {
   DBButton,
   DBCheckbox,
