@@ -1,7 +1,2 @@
-#!/bin/sh
-# shellcheck disable=SC1091
-# shellcheck source=./_/husky.sh
-. "$(dirname "$0")/_/husky.sh"
-
 npm run lint
 npx tsc
