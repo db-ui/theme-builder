@@ -23,7 +23,7 @@
     "hsluv": "^1.0.1",
     "html-react-parser": "^5.1.1",
     "husky": "9.0.5",
-    "i18next": "23.7.19",
+    "i18next": "23.7.20",
     "i18next-browser-languagedetector": "7.2.0",
     "i18next-http-backend": "2.4.2",
     "jszip": "^3.10.1",
