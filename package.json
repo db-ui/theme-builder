@@ -22,7 +22,7 @@
     "chroma-js": "^2.4.2",
     "hsluv": "^1.0.1",
     "html-react-parser": "^5.1.1",
-    "husky": "9.0.6",
+    "husky": "9.0.7",
     "i18next": "23.8.1",
     "i18next-browser-languagedetector": "7.2.0",
     "i18next-http-backend": "2.4.2",
