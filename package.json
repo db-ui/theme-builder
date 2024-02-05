@@ -10,10 +10,11 @@
     "generate:tailwind": "tailwindcss -i ./src/tailwind.css -o ./src/components/Editor/tailwind.generated.css --full --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "postbuild": "ncp dist/index.html dist/404.html",
-    "prepare": "node -e \"try { require('husky').install() } catch (e) {}\"",
+    "prepare": "husky",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@craftjs/core": "^0.2.4",
     "@db-ui/react-components": "^0.0.63",
     "@redux-devtools/extension": "^3.3.0",
     "@types/node": "^20.11.15",
@@ -31,6 +32,7 @@
     "react": "^18.2.0",
     "react-ace": "10.1.0",
     "react-color": "^2.19.3",
+    "react-contenteditable": "^3.3.7",
     "react-dom": "^18.2.0",
     "react-i18next": "14.0.1",
     "react-router-dom": "6.21.3",
