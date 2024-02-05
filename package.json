@@ -14,7 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@db-ui/react-components": "0.0.62-palette-b5b2302",
+    "@db-ui/react-components": "0.0.63-palette-9588703",
     "@redux-devtools/extension": "^3.3.0",
     "@types/node": "^20.11.16",
     "ace-builds": "1.32.5",

@@ -62,6 +62,7 @@ const App = () => {
     <>
       <Notifications />
       <DBPage
+        data-color-scheme={darkMode ? "dark" : "light"}
         className={`db-ui-${tonality}`}
         type="fixedHeaderFooter"
         slotHeader={
