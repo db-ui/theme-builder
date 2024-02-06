@@ -32,7 +32,7 @@
     "react-ace": "10.1.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
-    "react-i18next": "14.0.3",
+    "react-i18next": "14.0.4",
     "react-router-dom": "6.22.0",
     "traverse": "^0.6.8",
     "zustand": "^4.5.0"
