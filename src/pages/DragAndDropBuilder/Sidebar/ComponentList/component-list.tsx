@@ -3,7 +3,8 @@ import Text from "../../components/text.tsx";
 import Button from "../../components/button.tsx";
 import Card from "../../components/card.tsx";
 import ComponentCard from "./ComponentCard";
-import Flex from "../../components/flex.tsx";
+import Link from "../../components/link.tsx";
+import Container from "../../components/container.tsx";
 
 const ComponentList = () => {
   return (
@@ -13,14 +14,19 @@ const ComponentList = () => {
       initOpenIndex={[0]}
     >
       <DBAccordionItem title="General">
+        <ComponentCard name="Container" component={<Container />} />
         <ComponentCard name="Text" component={<Text text="Edit me" />} />
-        <ComponentCard name="Flex" component={<Flex />} />
       </DBAccordionItem>
       <DBAccordionItem title="Action">
         <ComponentCard
           assetPath={"assets/components/button.svg"}
           name="Button"
           component={<Button children="Test" />}
+        />
+        <ComponentCard
+          assetPath={"assets/components/link.svg"}
+          name="Link"
+          component={<Link />}
         />
       </DBAccordionItem>
       <DBAccordionItem title="Layout">

@@ -55,10 +55,9 @@ const Customize = () => {
           onChange={(event) => {
             const name = event.target.value;
             setDisplayName(name);
-            actions.setCustom(
-              selected.id,
-              (custom) => (custom.displayName = name),
-            );
+            actions.setCustom(selected.id, (custom) => {
+              custom.displayName = name;
+            });
           }}
         />
         <DBDivider margin="none"></DBDivider>
@@ -73,7 +72,7 @@ const Customize = () => {
           variant="primary"
           icon="delete"
           width="full"
-          disabled={!selected || selected.data.name === "Canvas"}
+          disabled={!selected || selected.data.name === "Root"}
           onClick={() => {
             if (selected) {
               actions.delete(selected.id);

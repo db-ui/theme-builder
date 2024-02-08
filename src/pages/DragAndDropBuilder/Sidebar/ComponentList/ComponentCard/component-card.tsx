@@ -20,7 +20,7 @@ const ComponentCard = ({
         <img
           className="max-h-siz-md"
           alt={name}
-          src={assetPath || "assets/images/db_logo.svg"}
+          src={assetPath || "assets/components/component.svg"}
         />
         <span>{name}</span>
       </DBCard>

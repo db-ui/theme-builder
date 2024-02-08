@@ -33,7 +33,20 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
   }
 
   const { id, data } = node;
-  const childNodes = [...data.nodes, ...Object.values(data.linkedNodes)];
+  let childNodes = [...data.nodes, ...Object.values(data.linkedNodes)];
+
+  const hasDropContainer =
+    childNodes.length === 1 &&
+    allNodes[childNodes[0]].data.name === "DropContainer";
+
+  if (hasDropContainer) {
+    const dropContainerData = allNodes[childNodes[0]].data;
+
+    childNodes = [
+      ...dropContainerData.nodes,
+      ...Object.values(dropContainerData.linkedNodes),
+    ];
+  }
 
   const item = (
     <div
@@ -82,7 +95,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
           </DBButton>
           {item}
         </summary>
-        <div className="flex flex-col pl-fix-sm w-full">
+        <div className="flex flex-col pl-siz-md w-full">
           {childNodes.map((nodeId: string) => (
             <Fragment key={`tree-item-${nodeId}`}>
               <TreeItem node={allNodes[nodeId]} />
@@ -102,7 +115,7 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
   }));
 
   return (
-    <div className={`shadow-md h-full${className || ""}`}>
+    <div className={`shadow-md h-full${className ? ` ${className}` : ""}`}>
       <div className="h-siz-md flex items-center p-fix-xs">
         <h6>Component Tree</h6>
       </div>

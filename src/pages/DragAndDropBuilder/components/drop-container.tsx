@@ -38,6 +38,7 @@ DropContainer.craft = {
       incomingNodes.every(() => {
         return true;
       }),
+    canDrag: () => false,
   },
 };
 

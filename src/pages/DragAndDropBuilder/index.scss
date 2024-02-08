@@ -3,9 +3,16 @@
 
 .drop-container,
 .drag-container {
+  & > div:empty,
   &:empty {
-    height: variables.$db-sizing-md;
-    width: variables.$db-sizing-md;
+    min-height: variables.$db-sizing-md;
+    min-width: variables.$db-sizing-md;
+  }
+}
+
+.drop-container {
+  &:not(:empty) {
+    display: contents;
   }
 }
 
