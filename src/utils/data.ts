@@ -1,5 +1,4 @@
 export type DefaultColorMappingType = {
-  base: string;
   neutral: string;
   brand: string;
   onBrand: string;
@@ -175,15 +174,15 @@ export type SpeakingName = {
 };
 
 export const speakingNamesDefaultMapping: SpeakingName[] = [
-  { name: "bg", dark: 3, light: 14 },
-  { name: "bg-hover", dark: 4, light: 13 },
-  { name: "bg-pressed", dark: 5, light: 12 },
-  { name: "bg-weak", dark: 2, light: 13 },
-  { name: "bg-weak-hover", dark: 3, light: 12 },
-  { name: "bg-weak-pressed", dark: 4, light: 11 },
-  { name: "bg-strong", dark: 1, light: 12 },
-  { name: "bg-strong-hover", dark: 2, light: 11 },
-  { name: "bg-strong-pressed", dark: 3, light: 10 },
+  { name: "bg-lvl-1", dark: 3, light: 14 },
+  { name: "bg-lvl-1-hover", dark: 4, light: 13 },
+  { name: "bg-lvl-1-pressed", dark: 5, light: 12 },
+  { name: "bg-lvl-2", dark: 2, light: 13 },
+  { name: "bg-lvl-2-hover", dark: 3, light: 12 },
+  { name: "bg-lvl-2-pressed", dark: 4, light: 11 },
+  { name: "bg-lvl-3", dark: 1, light: 12 },
+  { name: "bg-lvl-3-hover", dark: 2, light: 11 },
+  { name: "bg-lvl-3-pressed", dark: 3, light: 10 },
   {
     name: "bg-transparent-full",
     dark: 9,

@@ -416,9 +416,8 @@
     "lg": "0 0 4px -3px rgba(0, 0, 0, 0.2), 0 0 16px 3px rgba(0, 0, 0, 0.12), 0 0 8px 1px rgba(0, 0, 0, 0.14)"
   },
   "colors": {
-    "base": "#242629",
+    "neutral": "#242629",
     "brand": "#ec0016",
-    "neutral": "#646973",
     "informational": "#309FD1",
     "warning": "#F39200",
     "successful": "#63A615",

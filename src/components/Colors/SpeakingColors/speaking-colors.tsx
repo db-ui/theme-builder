@@ -74,7 +74,7 @@ const SpeakingColors = () => {
       </div>
       {speakingNames.map((speakingName: SpeakingName, index: number) => (
         <Fragment key={speakingName.name}>
-          <span>{speakingName.name}</span>
+          <span>{t(speakingName.name)}</span>
           <div className="flex gap-fix-md">
             <DBInput
               className="w-full"

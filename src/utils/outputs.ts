@@ -101,6 +101,7 @@ export const getPaletteOutput = (palette: object): any => {
  * dark-mode is the same but inverted
  * @param color brand color
  * @param darkMode
+ * @param luminanceSteps
  */
 const getExtraBrandColors = (
   color: string,

@@ -43,26 +43,15 @@ const ColorSelection = () => {
   return (
     <div className="flex flex-col gap-fix-sm ">
       <ColorPicker
-        label="Base"
-        color={defaultColors.base}
-        setColor={(color) => {
-          setDefaultColors({
-            ...defaultColors,
-            base: color,
-          });
-        }}
+        color={defaultColors.neutral}
+        label="Neutral"
+        setColor={(neutral) => setDefaultColors({ ...defaultColors, neutral })}
       />
 
       <ColorPicker
         color={defaultColors.brand}
         label="Brand"
         setColor={(brand) => setDefaultColors({ ...defaultColors, brand })}
-      />
-
-      <ColorPicker
-        color={defaultColors.neutral}
-        label="Neutral"
-        setColor={(neutral) => setDefaultColors({ ...defaultColors, neutral })}
       />
 
       <ColorPicker
