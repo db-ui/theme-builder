@@ -12,6 +12,7 @@ import {
   getCssPropertyAsString,
   getPaletteOutput,
   getSpeakingNames,
+  getSpeakingNamesForJSON,
 } from "./outputs.ts";
 import JSZip from "jszip";
 
@@ -45,7 +46,22 @@ export const getPalette = (allColors: object, luminanceSteps: number[]): any =>
       (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
       {},
     );
-
+    const mergeColorsWithSpeakingNames = (
+      speakingNames: Record<string, string>,
+      colors: Record<string, string>,
+    ): Record<string, string> => {
+      const result: Record<string, string> = {};
+    
+      Object.entries(speakingNames).forEach(([speakingName, varValue]) => {
+        // Extracting the variable name from var()
+        const variableName = varValue.match(/\((.*?)\)/)?.[1];
+        if (variableName && colors.hasOwnProperty(variableName)) {
+          result[speakingName] = colors[variableName];
+        }
+      });
+    
+      return result;
+    };
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
   luminanceSteps: number[],
@@ -56,18 +72,31 @@ export const downloadTheme = async (
   const theme: DefaultThemeType = { ...defaultTheme, colors: colorMapping };
 
   const allColors = { ...colorMapping, ...customColorMapping };
+  const colors = getPaletteOutput(getPalette(allColors, luminanceSteps));
+
+  const lightSpeakingNames = getSpeakingNamesForJSON(speakingNames, allColors, true, luminanceSteps)
+  const darkSpeakingNames = getSpeakingNamesForJSON(speakingNames, allColors, false, luminanceSteps)
+
+  const lightSpeakingNamesWithHex = mergeColorsWithSpeakingNames(lightSpeakingNames, colors);
+  const darkSpeakingNamesWithHex = mergeColorsWithSpeakingNames(darkSpeakingNames, colors);
+  console.log("result light:" , lightSpeakingNamesWithHex, "result dark:" , darkSpeakingNamesWithHex);
 
   const fileName = `default-theme`;
   const themeJsonString = JSON.stringify(theme);
+  const colorsJsonString = JSON.stringify({
+    light: lightSpeakingNamesWithHex,
+    dark: darkSpeakingNamesWithHex,
+  });
   const themeProperties = getCssThemeProperties(defaultTheme);
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
+  zip.file(`${fileName}-colors.json`, colorsJsonString);
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
     `${fileName}-palette.css`,
     getCssPropertyAsString(
-      getPaletteOutput(getPalette(allColors, luminanceSteps)),
+      colors,
     ),
   );
   zip.file(

@@ -191,3 +191,91 @@ export const getSpeakingNames = (
   });
   return result;
 };
+export const getSpeakingNamesForJSON = (
+  speakingNames: SpeakingName[],
+  allColors: object,
+  darkMode: boolean,
+  luminanceSteps: number[],
+): any => {
+  let result: any = {};
+  Object.entries(allColors).forEach((value) => {
+    const name = value[0];
+    const color = value[1];
+
+    if (name === "brand") {
+      result = {
+        ...result,
+        ...getExtraBrandColors(color, darkMode, luminanceSteps),
+      };
+    }
+
+    speakingNames.forEach((speakingName) => {
+      if (
+        speakingName.transparencyDark !== undefined ||
+        speakingName.transparencyLight !== undefined
+      ) {
+        if (speakingName.name.includes("enabled") || speakingName.name.includes("hover") || speakingName.name.includes("pressed")) {          
+          const stateIndex = speakingName.name.lastIndexOf("-");
+          const nameWithoutState = speakingName.name.slice(0, stateIndex); 
+          const state = speakingName.name.slice(stateIndex + 1);
+          console.log(state);
+          const stateNumbered = (state === 'enabled') ? '01' : (state === 'hover') ? '02' : '03';
+          result[`${name}/${nameWithoutState}/${stateNumbered}-${state}`] =
+            `color-mix(in srgb, transparent ${
+              darkMode
+                ? speakingName.transparencyDark
+                : speakingName.transparencyLight
+            }%, var(--${prefix}-${name}-${
+              darkMode ? speakingName.dark : speakingName.light
+            }))`;
+        } else {
+          result[`${name}/${speakingName.name}`] =
+          `color-mix(in srgb, transparent ${
+            darkMode
+              ? speakingName.transparencyDark
+              : speakingName.transparencyLight
+          }%, var(--${prefix}-${name}-${
+            darkMode ? speakingName.dark : speakingName.light
+          }))`;
+        }
+      } else {
+        if (speakingName.name.includes("on-bg")) { 
+          const nameWithoutOnPrefix = speakingName.name.replace("on-", ""); 
+          if (speakingName.name.includes("enabled") || speakingName.name.includes("hover") || speakingName.name.includes("pressed")) {          
+            const stateIndex = nameWithoutOnPrefix.lastIndexOf("-");          
+            const nameWithoutState = nameWithoutOnPrefix.slice(0, stateIndex); 
+            const state = speakingName.name.slice(stateIndex + 1).replace(/^ak-/, "");
+            const stateNumbered = (state === 'enabled') ? '01' : (state === 'hover') ? '02' : '03';
+            result[`On/${name}/${nameWithoutState}/${stateNumbered}-${state}`] =
+              `var(--${prefix}-${name}-${
+                darkMode ? speakingName.dark : speakingName.light
+              })`;
+          } else {
+            console.log("yes");
+            result[`On/${name}/${nameWithoutOnPrefix}`] =
+            `var(--${prefix}-${name}-${
+              darkMode ? speakingName.dark : speakingName.light
+            })`;
+          }
+        } else {
+          if (speakingName.name.includes("enabled") || speakingName.name.includes("hover") || speakingName.name.includes("pressed")) {          
+            const stateIndex = speakingName.name.lastIndexOf("-");
+            const nameWithoutState = speakingName.name.slice(0, stateIndex); 
+            const state = speakingName.name.slice(stateIndex + 1);
+            const stateNumbered = (state === 'enabled') ? '01' : (state === 'hover') ? '02' : '03';
+            result[`${name}/${nameWithoutState}/${stateNumbered}-${state}`] =
+              `var(--${prefix}-${name}-${
+                darkMode ? speakingName.dark : speakingName.light
+              })`;
+            } else {
+              result[`${name}/${speakingName.name}`] =
+              `var(--${prefix}-${name}-${
+                darkMode ? speakingName.dark : speakingName.light
+              })`;
+            }
+        }
+      }
+    }); 
+  });
+  return result;
+};
