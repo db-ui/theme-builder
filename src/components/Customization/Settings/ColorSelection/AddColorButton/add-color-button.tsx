@@ -7,8 +7,8 @@ import {
 import ColorPicker from "../ColorPicker";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { CustomColorMappingType } from "../../../../utils/data.ts";
-import { useThemeBuilderStore } from "../../../../store";
+import { CustomColorMappingType } from "../../../../../utils/data.ts";
+import { useThemeBuilderStore } from "../../../../../store";
 
 const AddColorButton = () => {
   const { t } = useTranslation();

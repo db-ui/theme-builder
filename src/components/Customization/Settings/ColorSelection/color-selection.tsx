@@ -1,11 +1,11 @@
 import ColorPicker from "./ColorPicker";
 import ContrastChecker from "./ContrastChecker";
-import { useThemeBuilderStore } from "../../../store";
+import { useThemeBuilderStore } from "../../../../store";
 import {
   CustomColorMappingType,
   DefaultColorMappingType,
-} from "../../../utils/data.ts";
-import { getStrong } from "../../../utils/generate-colors.ts";
+} from "../../../../utils/data.ts";
+import { getStrong } from "../../../../utils/generate-colors.ts";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import AddColorButton from "./AddColorButton";

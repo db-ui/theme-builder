@@ -4,12 +4,12 @@ import type { ContrastCheckerType } from "./data";
 import ColorPicker from "../ColorPicker";
 import "./index.scss";
 import { DBButton, DBDivider, DBInput } from "@db-ui/react-components";
-import { getContrastSuggestion, isValidColor } from "../../../../utils";
+import { getContrastSuggestion, isValidColor } from "../../../../../utils";
 import ContrastList from "../ContrastList";
 import InformationButton from "../InformationButton";
 import { useTranslation } from "react-i18next";
-import { useThemeBuilderStore } from "../../../../store";
-import { CustomColorMappingType } from "../../../../utils/data.ts";
+import { useThemeBuilderStore } from "../../../../../store";
+import { CustomColorMappingType } from "../../../../../utils/data.ts";
 
 const colorChangedMessage = "Color changed for";
 const darkModeMessage = "dark-mode";

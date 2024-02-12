@@ -1,6 +1,6 @@
-import { ALL_VARIABLES } from "../../../utils/data.ts";
+import { ALL_VARIABLES } from "../../../../utils/data.ts";
 import "./index.scss";
-import { useThemeBuilderStore } from "../../../store";
+import { useThemeBuilderStore } from "../../../../store";
 import { useTranslation } from "react-i18next";
 import {
   DBButton,
@@ -8,7 +8,7 @@ import {
   DBIcon,
   DBPopover,
 } from "@db-ui/react-components";
-import { prefix } from "../../../utils/outputs.ts";
+import { prefix } from "../../../../utils/outputs.ts";
 import { Fragment } from "react";
 
 const hasInvertedTextColor = (key: string, darkMode: boolean): boolean => {

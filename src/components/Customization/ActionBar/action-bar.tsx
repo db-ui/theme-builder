@@ -1,6 +1,6 @@
 import { DBButton } from "@db-ui/react-components";
-import { useThemeBuilderStore } from "../../store";
-import { downloadTheme } from "../../utils";
+import { useThemeBuilderStore } from "../../../store";
+import { downloadTheme } from "../../../utils";
 import { useTranslation } from "react-i18next";
 
 const ActionBar = () => {

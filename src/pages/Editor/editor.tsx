@@ -17,6 +17,7 @@ import { useThemeBuilderStore } from "../../store";
 import { TEMPLATES } from "./templates.ts";
 import { DBButton, DBCard, DBDivider } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
+import DefaultPage from "../../components/DefaultPage";
 
 const Editor = () => {
   const { t } = useTranslation();
@@ -40,56 +41,58 @@ const Editor = () => {
   };
 
   return (
-    <div className="editor w-full h-full grid grid-cols-2 gap-fix-xs p-fix-xs">
-      <div className="flex flex-col gap-fix-xs">
-        <AceEditor
-          mode="html"
-          theme="dracula"
-          onChange={(value) =>
-            useThemeBuilderStore.setState({
-              editorMarkup: value,
-            })
-          }
-          name="ace-editor"
-          value={editorMarkup || ""}
-          fontSize={16}
-          showPrintMargin={true}
-          showGutter={true}
-          highlightActiveLine={true}
-          height={"100%"}
-          width={"100%"}
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            showLineNumbers: true,
-            useWorker: false,
-          }}
-        />
-        <div className="flex flex-wrap db-ui-functional gap-fix-xs">
-          <DBButton icon="grid_view" onClick={() => onFormat()}>
-            {t("formatCode")}
-          </DBButton>
-          <DBDivider variant="vertical" />
-          {TEMPLATES.map((template) => (
-            <DBButton
-              icon="copy"
-              key={template.key}
-              onClick={() => {
-                navigator.clipboard.writeText(template.content || "");
-                useThemeBuilderStore.setState({
-                  notification: `${template.label} Template copied`,
-                });
-              }}
-            >
-              {template.label} Template
+    <DefaultPage name={t("editor")}>
+      <div className="editor w-full h-full grid grid-cols-2 gap-fix-xs p-fix-xs">
+        <div className="flex flex-col gap-fix-xs">
+          <AceEditor
+            mode="html"
+            theme="dracula"
+            onChange={(value) =>
+              useThemeBuilderStore.setState({
+                editorMarkup: value,
+              })
+            }
+            name="ace-editor"
+            value={editorMarkup || ""}
+            fontSize={16}
+            showPrintMargin={true}
+            showGutter={true}
+            highlightActiveLine={true}
+            height={"100%"}
+            width={"100%"}
+            setOptions={{
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: true,
+              showLineNumbers: true,
+              useWorker: false,
+            }}
+          />
+          <div className="flex flex-wrap db-ui-functional gap-fix-xs">
+            <DBButton icon="grid_view" onClick={() => onFormat()}>
+              {t("formatCode")}
             </DBButton>
-          ))}
+            <DBDivider variant="vertical" />
+            {TEMPLATES.map((template) => (
+              <DBButton
+                icon="copy"
+                key={template.key}
+                onClick={() => {
+                  navigator.clipboard.writeText(template.content || "");
+                  useThemeBuilderStore.setState({
+                    notification: `${template.label} Template copied`,
+                  });
+                }}
+              >
+                {template.label} Template
+              </DBButton>
+            ))}
+          </div>
         </div>
+        <DBCard className="rounded-none h-full overflow-auto">
+          {parse(editorMarkup, PARSER_OPTIONS)}
+        </DBCard>
       </div>
-      <DBCard className="rounded-none h-full overflow-auto">
-        {parse(editorMarkup, PARSER_OPTIONS)}
-      </DBCard>
-    </div>
+    </DefaultPage>
   );
 };
 

@@ -1,7 +1,7 @@
-import { useThemeBuilderStore } from "../../../store";
+import { useThemeBuilderStore } from "../../../../store";
 import { useEffect, useState } from "react";
-import { getHeissluftColors } from "../../../utils/generate-colors.ts";
-import { getLuminance } from "../../../utils";
+import { getHeissluftColors } from "../../../../utils/generate-colors.ts";
+import { getLuminance } from "../../../../utils";
 import "./index.scss";
 import { DBInfotext, DBInput, DBLink } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";

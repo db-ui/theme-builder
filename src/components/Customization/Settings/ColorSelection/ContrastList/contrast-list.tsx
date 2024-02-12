@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ContrastListType } from "./data";
 import { DBTag } from "@db-ui/react-components";
 import { calcAPCA } from "apca-w3";
-import { getAPCAVariant, getContrast, getWCA2Variant } from "../../../../utils";
+import { getAPCAVariant, getContrast, getWCA2Variant } from "../../../../../utils";
 import "./index.scss";
 
 const ContrastList = ({

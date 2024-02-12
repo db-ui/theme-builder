@@ -1,7 +1,8 @@
 {
+  "openDemo": "Open demo",
   "search": "Search",
   "errorMessage": "Oops, something went wrong.",
-  "themeBuilder": "Theme Builder",
+  "customization": "Customization",
   "tonality": "Tonality",
   "copied": "copied",
   "preview": "Preview",
