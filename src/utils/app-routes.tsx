@@ -13,7 +13,7 @@ const AppRoutes: AppRoute[] = [
     label: "customization",
   },
   { path: "/editor", element: <Editor />, label: "editor" },
-  { path: "/dnd", element: <DragAndDropBuilder />, label: "dnd" },
+  { path: "/playground", element: <DragAndDropBuilder />, label: "playground" },
   { path: "/demo", element: <Demo />, label: "demo" },
 ];
 

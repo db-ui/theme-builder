@@ -12,31 +12,36 @@ import { DBDivider } from "@db-ui/react-components";
 import Link from "./components/link.tsx";
 import Container from "./components/container.tsx";
 import DropContainer from "./components/drop-container.tsx";
+import DefaultPage from "../../components/DefaultPage";
+import { useTranslation } from "react-i18next";
 
 export const DragAndDropBuilder = () => {
+  const { t } = useTranslation();
   return (
-    <Editor
-      resolver={{
-        Button,
-        Card,
-        Container,
-        DropContainer,
-        Text,
-        Root,
-        Link,
-      }}
-    >
-      <div className="p-fix-xs grid grid-cols-6 h-full w-full">
-        <ComponentTree />
-        <div className="flex flex-col col-span-4 h-full">
-          <Toolbar />
-          <DBDivider margin="none" />
-          <Preview />
-        </div>
+    <DefaultPage name={t("playground")}>
+      <Editor
+        resolver={{
+          Button,
+          Card,
+          Container,
+          DropContainer,
+          Text,
+          Root,
+          Link,
+        }}
+      >
+        <div className="grid grid-cols-6 h-full w-full">
+          <ComponentTree />
+          <div className="flex flex-col col-span-4 h-full">
+            <Toolbar />
+            <DBDivider margin="none" />
+            <Preview />
+          </div>
 
-        <Sidebar />
-      </div>
-    </Editor>
+          <Sidebar />
+        </div>
+      </Editor>
+    </DefaultPage>
   );
 };
 

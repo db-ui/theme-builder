@@ -5,7 +5,7 @@ import "./index.scss";
 import { DBInput, DBPopover } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import chroma from "chroma-js";
-import PaletteBox from "../../Settings/ColorPalettes/PaletteBox";
+import PaletteBox from "./PaletteBox";
 
 const ColorPalettes = () => {
   const { defaultColors, customColors, luminanceSteps, developerMode } =

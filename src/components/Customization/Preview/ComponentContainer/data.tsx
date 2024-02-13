@@ -145,6 +145,7 @@ export const components: ComponentList[] = [
       <Fragment>
         {variants.map((variant) => (
           <DBAlert
+            key={`alert-component-${variant}`}
             variant={variant}
             type="alert"
             icon="account"

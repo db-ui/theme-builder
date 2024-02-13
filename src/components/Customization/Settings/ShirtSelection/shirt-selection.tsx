@@ -1,6 +1,6 @@
-import { ShirtSelectionType } from "./data.ts";
+import { getShirtValue, ShirtSelectionType } from "./data.ts";
 import { useThemeBuilderStore } from "../../../../store";
-import { DBInput, DBTextarea } from "@db-ui/react-components";
+import { DBInput } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import traverse from "traverse";
 
@@ -15,28 +15,23 @@ const getFromJsonByArray = (params: string[], json: any): any => {
   } catch (error) {
     console.error(error);
   }
-  return undefined;
+  return 1;
 };
-const ShirtSelection = ({
-  label,
-  params,
-  shirtSizes,
-  isTextArea,
-}: ShirtSelectionType) => {
+
+const ShirtSelection = ({ label, params }: ShirtSelectionType) => {
   const { t } = useTranslation();
   const { defaultTheme } = useThemeBuilderStore((state) => state);
 
-  const setDetfaultTheme = (value: string, size: string) => {
-    const path = [...params, size];
+  const setDetfaultTheme = (scale: string) => {
+    const path = [...params];
     let copyTheme = { ...defaultTheme };
-    copyTheme = traverse(copyTheme).map(function () {
+    copyTheme = traverse(copyTheme).map(function (value) {
       if (
         this.isLeaf &&
         this.path.length > 0 &&
-        this.path.length === path.length &&
-        this.path.every((value, index) => value === path[index])
+        path.every((value, index) => value === this.path[index])
       ) {
-        this.update(value, true);
+        this.update(getShirtValue(scale, this.path) || value);
       }
     });
 
@@ -46,33 +41,17 @@ const ShirtSelection = ({
   };
 
   return (
-    <div className="flex flex-col gap-fix-sm">
-      {shirtSizes.map((size) => (
-        <div key={`${params.join("-")}-${size}`}>
-          {isTextArea ? (
-            <DBTextarea
-              label={`${t(label)}-${size}`}
-              labelVariant="floating"
-              value={getFromJsonByArray([...params, size], defaultTheme)}
-              onChange={(event) => {
-                setDetfaultTheme(event.target.value, size);
-              }}
-            />
-          ) : (
-            <DBInput
-              label={`${t(label)}-${size} ${t("shirtSizeDescription")}`}
-              labelVariant="floating"
-              type="number"
-              step={0.05}
-              value={getFromJsonByArray([...params, size], defaultTheme)}
-              onChange={(event) => {
-                setDetfaultTheme(event.target.value, size);
-              }}
-            />
-          )}
-        </div>
-      ))}
-    </div>
+    <DBInput
+      label={`${t(label)} ${t("scale")}`}
+      labelVariant="floating"
+      type="number"
+      min={1}
+      max={5}
+      value={getFromJsonByArray([...params, "_scale"], defaultTheme)}
+      onChange={(event) => {
+        setDetfaultTheme(event.target.value);
+      }}
+    />
   );
 };
 

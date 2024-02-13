@@ -25,9 +25,10 @@
   position: fixed;
   z-index: 6;
   bottom: variables.$db-spacing-fixed-md;
-  animation: slide-out variables.$db-transition-show-straight;
   left: 50%;
+  animation: slide-out variables.$db-transition-show-straight;
 }
+
 .show {
   animation: slide-in variables.$db-transition-show-straight;
 }

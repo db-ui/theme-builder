@@ -63,7 +63,7 @@ h6 {
 }
 
 .scale-down {
-  border: variables.$db-border-height-sm solid colors.$db-base-contrast-low;
+  border: variables.$db-border-height-sm solid colors.$db-neutral-contrast-low;
 
   @include screen-sizes.screen {
     transform-origin: top;
@@ -85,4 +85,12 @@ h6 {
   .db-header-action-container {
     display: none;
   }
+}
+
+.db-button {
+  text-decoration: none;
+}
+
+[class*="border"] {
+  border-color: colors.$db-current-border-color;
 }

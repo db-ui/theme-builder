@@ -24,7 +24,12 @@ export const getNonColorCssProperties = (
 ) => {
   const resolvedProperties: any = {};
   traverse(theme).forEach(function (value) {
-    if (this.isLeaf && this.path.length > 0 && this.path[0] !== "colors") {
+    if (
+      this.isLeaf &&
+      this.path.length > 0 &&
+      this.path[0] !== "colors" &&
+      !this.path.includes("_scale")
+    ) {
       const key = `--${prefix}-${this.path
         .map((path) => path.toLowerCase())
         .map((path) => {
@@ -82,7 +87,36 @@ export const getCssThemeProperties = (theme: DefaultThemeType): string => {
   `;
 };
 
-export const getPaletteOutput = (palette: object): any => {
+const getPalette = (
+  allColors: object,
+  luminanceSteps: number[],
+): Record<string, HeisslufType[]> =>
+  Object.entries(allColors)
+    .map((value) => {
+      const name = value[0];
+      const color = value[1];
+      const hslColors: HeisslufType[] = getHeissluftColors(
+        color,
+        luminanceSteps,
+      );
+
+      return {
+        [name]: hslColors,
+      };
+    })
+    .reduce(
+      (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
+      {},
+    );
+
+export const getPaletteOutput = (
+  allColors: Record<string, string>,
+  luminanceSteps: number[],
+): any => {
+  const palette: Record<string, HeisslufType[]> = getPalette(
+    allColors,
+    luminanceSteps,
+  );
   const result: any = {};
   Object.entries(palette).forEach((color) => {
     const name = color[0];
@@ -90,6 +124,18 @@ export const getPaletteOutput = (palette: object): any => {
     hslType.forEach((hsl) => {
       result[`--${prefix}-${name}-${hsl.index ?? hsl.name}`] = hsl.hex;
     });
+
+    if (name === "brand") {
+      const brandColor = allColors["brand"];
+      const lightBrand = getExtraBrandColors(brandColor, false, luminanceSteps);
+      const darkBrand = getExtraBrandColors(brandColor, true, luminanceSteps);
+      result[`--${prefix}-${name}-on`] = lightBrand.brandOnColor;
+      result[`--${prefix}-${name}-origin`] = brandColor;
+      result[`--${prefix}-${name}-hover-light`] = lightBrand.hoverColor;
+      result[`--${prefix}-${name}-pressed-light`] = lightBrand.pressedColor;
+      result[`--${prefix}-${name}-hover-dark`] = darkBrand.hoverColor;
+      result[`--${prefix}-${name}-pressed-dark`] = darkBrand.pressedColor;
+    }
   });
 
   return result;
@@ -107,8 +153,12 @@ const getExtraBrandColors = (
   color: string,
   darkMode: boolean,
   luminanceSteps: number[],
-) => {
-  const result: any = {};
+): {
+  color: string;
+  brandOnColor: string;
+  hoverColor: string;
+  pressedColor: string;
+} => {
   const hslColors: HeisslufType[] = getHeissluftColors(color, luminanceSteps);
   const hsluv = new Hsluv();
   hsluv.hex = color;
@@ -139,32 +189,31 @@ const getExtraBrandColors = (
     if (foundColors.length > 2) {
       hoverColor = foundColors[0].hex;
       pressedColor = foundColors[1].hex;
+    } else {
+      hoverColor = "hotpink";
+      pressedColor = "hotpink";
     }
   }
 
-  result[`--${prefix}-brand-on-enabled`] = brandOnColor;
-  result[`--${prefix}-brand-origin-enabled`] = color;
-  result[`--${prefix}-brand-origin-hover`] = hoverColor;
-  result[`--${prefix}-brand-origin-pressed`] = pressedColor;
-
-  return result;
+  return { color, brandOnColor, hoverColor, pressedColor };
 };
 
 export const getSpeakingNames = (
   speakingNames: SpeakingName[],
   allColors: object,
   darkMode: boolean,
-  luminanceSteps: number[],
 ): any => {
   let result: any = {};
   Object.entries(allColors).forEach((value) => {
     const name = value[0];
-    const color = value[1];
 
     if (name === "brand") {
       result = {
         ...result,
-        ...getExtraBrandColors(color, darkMode, luminanceSteps),
+        "--db-brand-on-enabled": "var(--db-brand-on)",
+        "--db-brand-origin-enabled": "var(--db-brand-origin)",
+        "--db-brand-origin-hover": `var(--db-brand-hover-${darkMode ? "dark" : "light"})`,
+        "--db-brand-origin-pressed": `var(--db-brand-pressed-${darkMode ? "dark" : "light"})`,
       };
     }
 
