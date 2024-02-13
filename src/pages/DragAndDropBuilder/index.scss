@@ -1,0 +1,35 @@
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/colors";
+
+.drop-container,
+.drag-container {
+  & > div:empty,
+  &:empty {
+    min-height: variables.$db-sizing-md;
+    min-width: variables.$db-sizing-md;
+  }
+}
+
+.drop-container {
+  &:not(:empty) {
+    display: contents;
+  }
+}
+
+.selected {
+  outline: 4px colors.$db-informational-contrast-high dashed;
+}
+
+.shadow-md {
+  box-shadow: variables.$db-elevation-md;
+}
+
+.sidebar-components {
+  .db-accordion-item {
+    & > div {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: variables.$db-spacing-fixed-sm;
+    }
+  }
+}

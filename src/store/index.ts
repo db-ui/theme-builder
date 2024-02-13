@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension"; // required for devtools typing
-import { THEME_BUILDER_STATE, ThemeBuilderState } from "./state.ts";
+import {
+  DRAG_AND_DROP_STATE,
+  DragAndDropState,
+  THEME_BUILDER_STATE,
+  ThemeBuilderState,
+} from "./state.ts";
 import {
   defaultLuminances,
   DefaultThemeType,
@@ -40,6 +45,23 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
       },
       {
         name: THEME_BUILDER_STATE,
+      },
+    ),
+  ),
+);
+
+export const useDragAndDropStore = create<DragAndDropState>()(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  devtools(
+    persist(
+      () => {
+        return {
+          serializedJson: "",
+        };
+      },
+      {
+        name: DRAG_AND_DROP_STATE,
       },
     ),
   ),

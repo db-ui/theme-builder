@@ -21,3 +21,9 @@ export type ThemeBuilderState = {
   luminanceSteps: number[];
   developerMode: boolean;
 };
+
+export const DRAG_AND_DROP_STATE = "drag-and-drop-state";
+
+export type DragAndDropState = {
+  serializedJson: string;
+};
