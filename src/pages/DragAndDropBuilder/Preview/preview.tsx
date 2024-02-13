@@ -3,7 +3,12 @@ import { Element, Frame, useEditor } from "@craftjs/core";
 import Root from "../components/root.tsx";
 import { useEffect, useState } from "react";
 import { useDragAndDropStore } from "../../../store";
-import lz from "lzutf8";
+import {
+  compress,
+  compressToBase64,
+  decompressFromBase64,
+  decompress,
+} from "lz-string";
 
 const Preview = ({ className }: PreviewType) => {
   const { serializedJson } = useDragAndDropStore();
@@ -15,7 +20,7 @@ const Preview = ({ className }: PreviewType) => {
     if (query) {
       const timer = setTimeout(() => {
         useDragAndDropStore.setState({
-          serializedJson: lz.encodeBase64(lz.compress(query.serialize())),
+          serializedJson: compressToBase64(compress(query.serialize())),
         });
         setTick(!tick);
       }, 5000);
@@ -29,8 +34,10 @@ const Preview = ({ className }: PreviewType) => {
       const json =
         serializedJson.length === 0
           ? undefined
-          : lz.decompress(lz.decodeBase64(serializedJson));
-      actions.deserialize(json);
+          : decompress(decompressFromBase64(serializedJson));
+      if (json) {
+        actions.deserialize(json);
+      }
     }
   }, [actions, serializedJson, init]);
 
