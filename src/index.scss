@@ -11,6 +11,13 @@
   }
 }
 
+.db-accordion-item {
+  summary + div {
+    position: relative;
+    z-index: 1;
+  }
+}
+
 .checkbox {
   display: flex;
   margin-block: auto;
@@ -56,7 +63,7 @@ h6 {
 }
 
 .scale-down {
-  border: variables.$db-border-height-sm solid colors.$db-base-border-weak;
+  border: variables.$db-border-height-sm solid colors.$db-base-contrast-low;
 
   @include screen-sizes.screen {
     transform-origin: top;

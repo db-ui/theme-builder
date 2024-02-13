@@ -36,7 +36,7 @@ const Landing = () => {
             <div className="grid grid-cols-3 gap-fix-md">
               <button onClick={() => setSelectedTheme("default-theme")}>
                 <DBCard
-                  className={`h-full min-h-siz-xl${selectedTheme === "default-theme" ? " db-bg-neutral" : ""}`}
+                  className={`h-full min-h-siz-xl${selectedTheme === "default-theme" ? " db-neutral-bg-3" : ""}`}
                   spacing="small"
                   variant="interactive"
                 >
@@ -45,7 +45,7 @@ const Landing = () => {
               </button>
               <button onClick={() => setSelectedTheme("theme-2")}>
                 <DBCard
-                  className={`h-full min-h-siz-xl${selectedTheme === "theme-2" ? " db-bg-neutral" : ""}`}
+                  className={`h-full min-h-siz-xl${selectedTheme === "theme-2" ? " db-neutral-bg-3" : ""}`}
                   spacing="small"
                   variant="interactive"
                 >
@@ -76,7 +76,7 @@ const Landing = () => {
             </div>
           </div>
         </div>
-        <div id="feature-2" className="db-bg-neutral">
+        <div id="feature-2" className="db-neutral-bg-3">
           <div className="flex flex-col gap-fix-md items-center p-res-md">
             <h2>Feature 2</h2>
             <p>
@@ -94,7 +94,7 @@ const Landing = () => {
             </p>
           </div>
         </div>
-        <div id="feature-4" className="db-bg-neutral">
+        <div id="feature-4" className="db-neutral-bg-3">
           <div className="flex flex-col gap-fix-md items-center p-res-md">
             <h2>Feature 4</h2>
             <p>

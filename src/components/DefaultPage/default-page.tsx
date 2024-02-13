@@ -1,4 +1,4 @@
-import { DBBrand, DBButton, DBHeader, DBPage } from "@db-ui/react-components";
+import { DBButton, DBHeader, DBPage } from "@db-ui/react-components";
 import { BASE_PATH } from "../../constants.ts";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
@@ -10,24 +10,41 @@ const DefaultPage = ({
   actionBar,
   className,
 }: PropsWithChildren<DefaultPagePropsType>) => {
-  const { darkMode } = useThemeBuilderStore((state) => state);
+  const { darkMode, developerMode } = useThemeBuilderStore((state) => state);
   return (
     <DBPage
+      data-color-scheme={darkMode ? "dark" : "light"}
       className={className}
       type="fixedHeaderFooter"
       slotHeader={
         <DBHeader
           slotBrand={
-            <DBBrand
-              imgSrc={`${BASE_PATH}/assets/images/db_logo.svg`}
-              anchorChildren
-            >
+            <div className="db-brand">
+              <img
+                src={`${BASE_PATH}/assets/images/db_logo.svg`}
+                alt="brand"
+                height="24"
+                width="34"
+              />
               {name}
-            </DBBrand>
+            </div>
           }
           slotActionBar={actionBar}
           slotCallToAction={
             <div className="flex gap-fix-sm">
+              <DBButton
+                className={!developerMode ? "opacity-0" : ""}
+                icon="face_delighted"
+                variant="text"
+                noText
+                onClick={() =>
+                  useThemeBuilderStore.setState({
+                    developerMode: !developerMode,
+                  })
+                }
+              >
+                Developer Mode
+              </DBButton>
               <DBButton
                 variant="text"
                 icon={darkMode ? "day" : "night"}

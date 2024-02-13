@@ -10,11 +10,12 @@
     "generate:tailwind": "tailwindcss -i ./src/tailwind.css -o ./src/components/Editor/tailwind.generated.css --full --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "postbuild": "ncp dist/index.html dist/404.html",
-    "prepare": "node -e \"try { require('husky').install() } catch (e) {}\"",
+    "prepare": "husky",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@db-ui/react-components": "^0.0.64",
+    "@craftjs/core": "^0.2.4",
+    "@db-ui/react-components": "0.0.63-palette-9588703",
     "@redux-devtools/extension": "^3.3.0",
     "@types/node": "^20.11.17",
     "ace-builds": "1.32.6",
@@ -27,6 +28,7 @@
     "i18next-browser-languagedetector": "7.2.0",
     "i18next-http-backend": "2.4.3",
     "jszip": "^3.10.1",
+    "lzutf8": "0.6.3",
     "prettier": "3.2.5",
     "react": "^18.2.0",
     "react-ace": "10.1.0",

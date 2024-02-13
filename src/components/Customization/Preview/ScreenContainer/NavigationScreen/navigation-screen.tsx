@@ -27,7 +27,7 @@ const NavigationScreen = () => {
           </DBButton>
           <h3 className="mx-auto">{t("connections")}</h3>
         </div>
-        <div className="db-bg-neutral-transparent-semi px-fix-xl py-fix-md flex flex-col">
+        <div className="db-neutral-bg-transparent-semi px-fix-xl py-fix-md flex flex-col">
           <div className="flex flex-col gap-fix-md mb-fix-md">
             <DBInput
               labelVariant="floating"

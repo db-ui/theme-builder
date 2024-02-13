@@ -1,37 +1,28 @@
 import { useEffect } from "react";
 import { useThemeBuilderStore } from "./store";
 import { Outlet } from "react-router-dom";
-import { generateColors, getStrong } from "./utils/generate-colors.ts";
 import {
-  getColorCssProperties,
   getNonColorCssProperties,
+  getPaletteOutput,
+  getSpeakingNames,
 } from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
+import { getPalette } from "./utils";
 
 const App = () => {
-  const { darkMode, defaultColors, customColors, defaultTheme } =
-    useThemeBuilderStore((state) => state);
+  const {
+    speakingNames,
+    luminanceSteps,
+    defaultColors,
+    customColors,
+    defaultTheme,
+  } = useThemeBuilderStore((state) => state);
 
   useEffect(() => {
-    const defaultColorMapping = {
-      ...defaultColors,
-      bgBase: darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-      bgBaseStrong: getStrong(
-        darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-        darkMode,
-      ),
-      onBgBase: darkMode ? defaultColors.bgBase : defaultColors.onBgBase,
-    };
-    const generatedColors = generateColors(
-      defaultColorMapping,
-      darkMode,
-      undefined,
-      customColors,
-    );
-    useThemeBuilderStore.setState({ colors: generatedColors });
-
+    const allColors = { ...defaultColors, ...customColors };
     const cssProps: any = {
-      ...getColorCssProperties(generatedColors),
+      ...getPaletteOutput(getPalette(allColors, luminanceSteps)),
+      ...getSpeakingNames(speakingNames, allColors, false, luminanceSteps),
       ...getNonColorCssProperties(defaultTheme),
     };
     Object.keys(cssProps).forEach((key) => {
@@ -40,7 +31,13 @@ const App = () => {
         ?.item(0)
         ?.style.setProperty(key, cssProps[key]);
     });
-  }, [defaultColors, darkMode, customColors, defaultTheme]);
+  }, [
+    speakingNames,
+    defaultColors,
+    customColors,
+    defaultTheme,
+    luminanceSteps,
+  ]);
 
   return (
     <>
