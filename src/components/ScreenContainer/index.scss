@@ -4,14 +4,13 @@
 @use "@db-ui/components/build/styles/db-puls";
 
 .navigator-image-container {
-  color: #fff;
+  @extend %db-base-component;
 
   .db-icon {
     --db-icon-font-size: #{variables.$db-sizing-xl};
   }
 
   .db-button {
-    --db-current-icon-color: #fff;
     top: calc(
       #{variables.$db-sizing-lg}/ 2 + #{variables.$db-spacing-fixed-sm}
     );
