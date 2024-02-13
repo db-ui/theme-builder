@@ -10,42 +10,35 @@ import { useThemeBuilderStore } from "./store";
 import ActionBar from "./components/ActionBar";
 import { Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import { generateColors, getStrong } from "./utils/generate-colors.ts";
 import {
-  getColorCssProperties,
   getNonColorCssProperties,
+  getPaletteOutput,
+  getSpeakingNames,
 } from "./utils/outputs.ts";
 import Notifications from "./components/Notifications";
 import { useTranslation } from "react-i18next";
+import { getPalette } from "./utils";
 import { BASE_PATH } from "./constants.ts";
 
 const App = () => {
-  const { darkMode, defaultColors, customColors, defaultTheme } =
-    useThemeBuilderStore((state) => state);
+  const {
+    speakingNames,
+    darkMode,
+    luminanceSteps,
+    defaultColors,
+    customColors,
+    defaultTheme,
+    developerMode,
+  } = useThemeBuilderStore((state) => state);
   const { t } = useTranslation();
 
   const [tonality, setTonality] = useState<string>("regular");
 
   useEffect(() => {
-    const defaultColorMapping = {
-      ...defaultColors,
-      bgBase: darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-      bgBaseStrong: getStrong(
-        darkMode ? defaultColors.onBgBase : defaultColors.bgBase,
-        darkMode,
-      ),
-      onBgBase: darkMode ? defaultColors.bgBase : defaultColors.onBgBase,
-    };
-    const generatedColors = generateColors(
-      defaultColorMapping,
-      darkMode,
-      undefined,
-      customColors,
-    );
-    useThemeBuilderStore.setState({ colors: generatedColors });
-
+    const allColors = { ...defaultColors, ...customColors };
     const cssProps: any = {
-      ...getColorCssProperties(generatedColors),
+      ...getPaletteOutput(getPalette(allColors, luminanceSteps)),
+      ...getSpeakingNames(speakingNames, allColors, darkMode, luminanceSteps),
       ...getNonColorCssProperties(defaultTheme),
     };
     Object.keys(cssProps).forEach((key) => {
@@ -54,7 +47,14 @@ const App = () => {
         ?.item(0)
         ?.style.setProperty(key, cssProps[key]);
     });
-  }, [defaultColors, darkMode, customColors, defaultTheme]);
+  }, [
+    speakingNames,
+    defaultColors,
+    darkMode,
+    customColors,
+    defaultTheme,
+    luminanceSteps,
+  ]);
 
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
@@ -62,6 +62,7 @@ const App = () => {
     <>
       <Notifications />
       <DBPage
+        data-color-scheme={darkMode ? "dark" : "light"}
         className={`db-ui-${tonality}`}
         type="fixedHeaderFooter"
         slotHeader={
@@ -91,6 +92,19 @@ const App = () => {
             }
             slotCallToAction={
               <div className="flex gap-fix-sm">
+                <DBButton
+                  className={!developerMode ? "opacity-0" : ""}
+                  icon="face_delighted"
+                  variant="text"
+                  noText
+                  onClick={() =>
+                    useThemeBuilderStore.setState({
+                      developerMode: !developerMode,
+                    })
+                  }
+                >
+                  Developer Mode
+                </DBButton>
                 <DBSelect
                   className="tonality-select-call-to-action"
                   label={t("tonality")}
