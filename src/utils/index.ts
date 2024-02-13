@@ -3,20 +3,18 @@ import {
   CustomColorMappingType,
   DefaultColorMappingType,
   DefaultThemeType,
-  HeisslufType,
   SpeakingName,
 } from "./data.ts";
-import { getHeissluftColors } from "./generate-colors.ts";
 import {
-  getCssThemeProperties,
   getCssPropertyAsString,
+  getCssThemeProperties,
   getPaletteOutput,
   getSpeakingNames,
 } from "./outputs.ts";
 import JSZip from "jszip";
 
 export const getLuminance = (color: string): number =>
-  chroma.hex(color).luminance();
+  chroma.valid(color) ? chroma.hex(color).luminance() : -1;
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -26,25 +24,6 @@ const download = (fileName: string, file: Blob) => {
   element.click();
   document.body.removeChild(element);
 };
-
-export const getPalette = (allColors: object, luminanceSteps: number[]): any =>
-  Object.entries(allColors)
-    .map((value) => {
-      const name = value[0];
-      const color = value[1];
-      const hslColors: HeisslufType[] = getHeissluftColors(
-        color,
-        luminanceSteps,
-      );
-
-      return {
-        [name]: hslColors,
-      };
-    })
-    .reduce(
-      (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
-      {},
-    );
 
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
@@ -66,21 +45,15 @@ export const downloadTheme = async (
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
     `${fileName}-palette.css`,
-    getCssPropertyAsString(
-      getPaletteOutput(getPalette(allColors, luminanceSteps)),
-    ),
+    getCssPropertyAsString(getPaletteOutput(allColors, luminanceSteps)),
   );
   zip.file(
     `${fileName}-speaking-names-light.css`,
-    getCssPropertyAsString(
-      getSpeakingNames(speakingNames, allColors, false, luminanceSteps),
-    ),
+    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, false)),
   );
   zip.file(
     `${fileName}-speaking-names-dark.css`,
-    getCssPropertyAsString(
-      getSpeakingNames(speakingNames, allColors, true, luminanceSteps),
-    ),
+    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, true)),
   );
   const zipFile = await zip.generateAsync({ type: "blob" });
   download(`${fileName}.zip`, zipFile);

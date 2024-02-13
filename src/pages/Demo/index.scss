@@ -1,0 +1,19 @@
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/colors";
+
+.demo-headline {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    border-radius: variables.$db-border-radius-md;
+    border-inline-start: none;
+    border-block-end: variables.$db-border-height-lg solid colors.$db-brand;
+    inset-block-end: calc(-1 * #{variables.$db-spacing-fixed-xs});
+    inline-size: variables.$db-sizing-lg;
+    block-size: auto;
+    inset-inline-start: 50%;
+    inset-block-start: auto;
+    transform: translate(-50%, 0);
+  }
+}

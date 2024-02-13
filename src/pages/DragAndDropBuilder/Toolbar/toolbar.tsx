@@ -26,7 +26,7 @@ const Toolbar = ({ className }: ToolbarType) => {
 
   return (
     <div
-      className={`flex justify-between h-siz-md db-bg-neutral-transparent-semi px-fix-sm ${className || ""}`}
+      className={`flex justify-between h-siz-md db-neutral-bg-transparent-semi px-fix-sm ${className || ""}`}
     >
       <div className="flex gap-fix-sm">
         <DBButton

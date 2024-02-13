@@ -1,0 +1,16 @@
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/components/build/components/tag/tag";
+
+.color-picker-container {
+  display: flex;
+  gap: variables.$db-spacing-fixed-xs;
+
+  .color-input-container {
+    display: flex;
+    position: relative;
+
+    .color-tag {
+      @extend %db-tag;
+    }
+  }
+}

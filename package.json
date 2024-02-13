@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@craftjs/core": "^0.2.4",
-    "@db-ui/react-components": "0.0.63-palette-9588703",
+    "@db-ui/react-components": "0.0.64-palette-de1f713",
     "@redux-devtools/extension": "^3.3.0",
     "@types/node": "^20.11.17",
     "ace-builds": "1.32.6",
@@ -28,15 +28,15 @@
     "i18next-browser-languagedetector": "7.2.0",
     "i18next-http-backend": "2.4.3",
     "jszip": "^3.10.1",
-    "lzutf8": "0.6.3",
+    "lz-string": "1.5.0",
     "prettier": "3.2.5",
     "react": "^18.2.0",
     "react-ace": "10.1.0",
-    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-i18next": "14.0.5",
     "react-router-dom": "6.22.0",
     "traverse": "^0.6.8",
+    "usehooks-ts": "^2.14.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {

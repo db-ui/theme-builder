@@ -51,7 +51,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
   const item = (
     <div
       className={` 
-      ${selected?.id === id ? "db-bg-neutral" : ""} 
+      ${selected?.id === id ? "db-neutral-bg-lvl-3" : ""} 
       flex items-center justify-between w-full`}
       role="button"
       onClick={() => {
@@ -115,12 +115,12 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
   }));
 
   return (
-    <div className={`shadow-md h-full${className ? ` ${className}` : ""}`}>
-      <div className="h-siz-md flex items-center p-fix-xs">
+    <div className={`h-full${className ? ` ${className}` : ""} border-r`}>
+      <div className="h-siz-md flex items-center p-fix-sm">
         <h6>Component Tree</h6>
       </div>
       <DBDivider margin="none" />
-      <div data-tonality="functional" className="flex flex-col p-fix-xs">
+      <div data-tonality="functional" className="flex flex-col p-fix-sm">
         <TreeItem node={nodes["ROOT"]} />
       </div>
     </div>

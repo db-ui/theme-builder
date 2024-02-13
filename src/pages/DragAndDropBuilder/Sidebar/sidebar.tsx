@@ -32,7 +32,7 @@ const Sidebar = ({ className }: SidebarType) => {
   }, [selected]);
 
   return (
-    <div className={`shadow-md flex flex-col ${className || ""}`}>
+    <div className={`border-l flex flex-col ${className || ""}`}>
       <div className="grid grid-cols-2 items-center justify-center min-h-siz-md px-fix-xs">
         <DBButton
           className="m-auto"

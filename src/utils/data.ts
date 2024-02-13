@@ -98,6 +98,7 @@ export type ThemeTypographyType = {
 };
 
 export type ThemeSizing = {
+  _scale?: number;
   "2xl"?: string | ThemeTypographyType;
   "2xs"?: string | ThemeTypographyType;
   "3xl"?: string | ThemeTypographyType;
@@ -140,6 +141,8 @@ export type SizingFixedType = {
 };
 
 export type DefaultThemeType = {
+  name: string;
+  image: string;
   spacing: {
     responsive: ThemeTonalities;
     fixed: ThemeTonalities;

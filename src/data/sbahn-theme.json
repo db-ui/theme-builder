@@ -1,0 +1,428 @@
+{
+  "name": "S-Bahn Theme",
+  "image": "sbahn_logo.svg",
+  "spacing": {
+    "responsive": {
+      "regular": {
+        "desktop": {
+          "3xl": "40",
+          "2xl": "30",
+          "xl": "15",
+          "lg": "7.5",
+          "md": "5",
+          "sm": "3",
+          "xs": "2",
+          "2xs": "1.5",
+          "3xs": "1.25"
+        },
+        "tablet": {
+          "3xs": "1",
+          "2xs": "1.25",
+          "xs": "1.75",
+          "sm": "2.5",
+          "md": "4",
+          "lg": "6",
+          "xl": "10",
+          "2xl": "15",
+          "3xl": "30"
+        },
+        "mobile": {
+          "3xs": "1",
+          "2xs": "1.25",
+          "xs": "1.5",
+          "sm": "2",
+          "md": "3",
+          "lg": "5",
+          "xl": "7.5",
+          "2xl": "10",
+          "3xl": "15"
+        }
+      },
+      "functional": {
+        "desktop": {
+          "3xs": "1",
+          "2xs": "1.25",
+          "xs": "1.75",
+          "sm": "2.5",
+          "md": "4",
+          "lg": "6",
+          "xl": "10",
+          "2xl": "15",
+          "3xl": "30"
+        },
+        "tablet": {
+          "3xs": "1",
+          "2xs": "1.25",
+          "xs": "1.5",
+          "sm": "2",
+          "md": "3",
+          "lg": "5",
+          "xl": "7.5",
+          "2xl": "10",
+          "3xl": "15"
+        },
+        "mobile": {
+          "3xs": "1",
+          "2xs": "1.25",
+          "xs": "1.25",
+          "sm": "1.75",
+          "md": "2.5",
+          "lg": "4",
+          "xl": "6",
+          "2xl": "7.5",
+          "3xl": "10"
+        }
+      },
+      "expressive": {
+        "desktop": {
+          "3xs": "1.75",
+          "2xs": "2",
+          "xs": "3",
+          "sm": "5",
+          "md": "7.5",
+          "lg": "15",
+          "xl": "30",
+          "2xl": "40",
+          "3xl": "50"
+        },
+        "tablet": {
+          "3xs": "1.5",
+          "2xs": "1.75",
+          "xs": "2.5",
+          "sm": "4",
+          "md": "6",
+          "lg": "10",
+          "xl": "15",
+          "2xl": "30",
+          "3xl": "40"
+        },
+        "mobile": {
+          "3xs": "1.25",
+          "2xs": "1.5",
+          "xs": "2",
+          "sm": "3",
+          "md": "5",
+          "lg": "7.5",
+          "xl": "10",
+          "2xl": "15",
+          "3xl": "30"
+        }
+      }
+    },
+    "fixed": {
+      "regular": {
+        "3xs": "0.125",
+        "2xs": "0.25",
+        "xs": "0.5",
+        "sm": "0.75",
+        "md": "1",
+        "lg": "1.5",
+        "xl": "2",
+        "2xl": "3",
+        "3xl": "5"
+      },
+      "functional": {
+        "3xs": "0.125",
+        "2xs": "0.25",
+        "xs": "0.375",
+        "sm": "0.5",
+        "md": "0.75",
+        "lg": "1",
+        "xl": "1.5",
+        "2xl": "2",
+        "3xl": "3"
+      },
+      "expressive": {
+        "3xs": "0.25",
+        "2xs": "0.5",
+        "xs": "0.75",
+        "sm": "1",
+        "md": "1.5",
+        "lg": "2",
+        "xl": "3",
+        "2xl": "5",
+        "3xl": "7.5"
+      }
+    }
+  },
+  "sizing": {
+    "fixed": {
+      "mobile": {
+        "header": "3.5"
+      }
+    },
+    "regular": {
+      "3xl": "15",
+      "2xl": "10",
+      "xl": "6",
+      "lg": "4",
+      "md": "2.5",
+      "sm": "1.5",
+      "xs": "1",
+      "2xs": "0.75",
+      "3xs": "0.5"
+    },
+    "functional": {
+      "3xs": "0.375",
+      "2xs": "0.625",
+      "xs": "0.875",
+      "sm": "1.25",
+      "md": "2",
+      "lg": "3",
+      "xl": "5",
+      "2xl": "7.5",
+      "3xl": "10"
+    },
+    "expressive": {
+      "3xs": "0.625",
+      "2xs": "0.875",
+      "xs": "1.25",
+      "sm": "1.75",
+      "md": "3",
+      "lg": "5",
+      "xl": "7.5",
+      "2xl": "15",
+      "3xl": "30"
+    }
+  },
+  "typography": {
+    "regular": {
+      "desktop": {
+        "headline": {
+          "3xl": { "lineHeight": 1.2, "fontSize": "5" },
+          "2xl": { "lineHeight": 1.25, "fontSize": "4" },
+          "xl": { "lineHeight": 1.3333333333333333, "fontSize": "3" },
+          "lg": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "md": { "lineHeight": 1.25, "fontSize": "2" },
+          "sm": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "2xs": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "3xs": { "lineHeight": 1.25, "fontSize": "1" },
+          "xs": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" }
+        },
+        "body": {
+          "lg": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "2xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
+          "md": { "lineHeight": 1.5, "fontSize": "1" },
+          "sm": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
+        }
+      },
+      "mobile": {
+        "body": {
+          "lg": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "md": { "lineHeight": 1.5, "fontSize": "1" },
+          "sm": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "xl": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "2xl": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" }
+        },
+        "headline": {
+          "lg": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "md": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "sm": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "xl": { "lineHeight": 1.25, "fontSize": "2" },
+          "xs": { "lineHeight": 1.25, "fontSize": "1" },
+          "2xl": { "lineHeight": 1.25, "fontSize": "2" },
+          "2xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" },
+          "3xl": { "lineHeight": 1.25, "fontSize": "2" },
+          "3xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" }
+        }
+      },
+      "tablet": {
+        "body": {
+          "lg": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "md": { "lineHeight": 1.5, "fontSize": "1" },
+          "sm": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "2xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" }
+        },
+        "headline": {
+          "lg": { "lineHeight": 1.25, "fontSize": "2" },
+          "md": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "sm": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "xl": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "xs": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "2xl": { "lineHeight": 1.3333333333333333, "fontSize": "3" },
+          "2xs": { "lineHeight": 1.25, "fontSize": "1" },
+          "3xl": { "lineHeight": 1.3333333333333333, "fontSize": "3" },
+          "3xs": { "lineHeight": 1.25, "fontSize": "1" }
+        }
+      }
+    },
+    "functional": {
+      "desktop": {
+        "body": {
+          "lg": { "lineHeight": 1.5, "fontSize": "1" },
+          "md": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "sm": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "xl": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "2xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "2xs": { "lineHeight": 1.5, "fontSize": "0.5" }
+        },
+        "headline": {
+          "lg": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "md": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "sm": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "xl": { "lineHeight": 1.25, "fontSize": "2" },
+          "xs": { "lineHeight": 1.25, "fontSize": "1" },
+          "2xl": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "2xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" },
+          "3xl": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "3xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" }
+        }
+      },
+      "tablet": {
+        "body": {
+          "lg": { "lineHeight": 1.5, "fontSize": "1" },
+          "md": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "sm": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "xl": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "2xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "2xs": { "lineHeight": 1.5, "fontSize": "0.5" }
+        },
+        "headline": {
+          "lg": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "md": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "sm": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "xl": { "lineHeight": 1.25, "fontSize": "2" },
+          "xs": { "lineHeight": 1.25, "fontSize": "1" },
+          "2xl": { "lineHeight": 1.25, "fontSize": "2" },
+          "2xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" },
+          "3xl": { "lineHeight": 1.25, "fontSize": "2" },
+          "3xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" }
+        }
+      },
+      "mobile": {
+        "body": {
+          "lg": { "lineHeight": 1.5, "fontSize": "1" },
+          "md": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "sm": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "xl": { "lineHeight": 1.5, "fontSize": "1" },
+          "xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "2xl": { "lineHeight": 1.5, "fontSize": "1" },
+          "2xs": { "lineHeight": 1.5, "fontSize": "0.5" }
+        },
+        "headline": {
+          "lg": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "md": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "sm": { "lineHeight": 1.25, "fontSize": "1" },
+          "xl": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" },
+          "2xl": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "2xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" },
+          "3xl": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "3xs": { "lineHeight": 1.1428571428571428, "fontSize": "0.875" }
+        }
+      }
+    },
+    "expressive": {
+      "desktop": {
+        "body": {
+          "lg": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "md": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "sm": { "lineHeight": 1.5, "fontSize": "1" },
+          "xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
+          "xs": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "2xl": { "lineHeight": 1.5, "fontSize": "2" },
+          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
+        },
+        "headline": {
+          "lg": { "lineHeight": 1.3333333333333333, "fontSize": "3" },
+          "md": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "sm": { "lineHeight": 1.25, "fontSize": "2" },
+          "xl": { "lineHeight": 1.25, "fontSize": "4" },
+          "xs": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "2xl": { "lineHeight": 1.2, "fontSize": "5" },
+          "2xs": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "3xl": { "lineHeight": 1.25, "fontSize": "6" },
+          "3xs": { "lineHeight": 1.2, "fontSize": "1.25" }
+        }
+      },
+      "tablet": {
+        "body": {
+          "lg": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "md": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "sm": { "lineHeight": 1.5, "fontSize": "1" },
+          "xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
+          "xs": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "2xl": { "lineHeight": 1.5, "fontSize": "2" },
+          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
+        },
+        "headline": {
+          "lg": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "md": { "lineHeight": 1.25, "fontSize": "2" },
+          "sm": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "xl": { "lineHeight": 1.3333333333333333, "fontSize": "3" },
+          "xs": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "2xl": { "lineHeight": 1.25, "fontSize": "4" },
+          "2xs": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "3xl": { "lineHeight": 1.2, "fontSize": "5" },
+          "3xs": { "lineHeight": 1.2, "fontSize": "1.25" }
+        }
+      },
+      "mobile": {
+        "body": {
+          "lg": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "md": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "sm": { "lineHeight": 1.5, "fontSize": "1" },
+          "xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "xs": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
+          "2xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
+        },
+        "headline": {
+          "lg": {
+            "lineHeight": 1.25,
+            "fontSize": "2"
+          },
+          "md": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
+          "sm": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
+          "xl": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "xs": { "lineHeight": 1.2, "fontSize": "1.25" },
+          "2xl": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "2xs": { "lineHeight": 1.25, "fontSize": "1" },
+          "3xl": { "lineHeight": 1.2, "fontSize": "2.5" },
+          "3xs": { "lineHeight": 1.25, "fontSize": "1" }
+        }
+      }
+    }
+  },
+  "border": {
+    "height": {
+      "sm": "0.0625",
+      "md": "0.125",
+      "lg": "0.25"
+    },
+    "radius": {
+      "sm": "0.15625",
+      "md": "0.25",
+      "lg": "0.5",
+      "3xl": "2.625"
+    }
+  },
+  "opacity": {
+    "sm": 0.25,
+    "md": 0.5,
+    "lg": 0.75
+  },
+  "elevation": {
+    "sm": "0 0 1px -1px rgba(0, 0, 0, 0.2), 0 0 4px 1px rgba(0, 0, 0, 0.12), 0 0 2px 0 rgba(0, 0, 0, 0.14)",
+    "md": "0 0 2px -1px  rgba(0, 0, 0, 0.2), 0 0 8px 1px rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.14)",
+    "lg": "0 0 4px -3px rgba(0, 0, 0, 0.2), 0 0 16px 3px rgba(0, 0, 0, 0.12), 0 0 8px 1px rgba(0, 0, 0, 0.14)"
+  },
+  "colors": {
+    "neutral": "#242629",
+    "brand": "#4D8E45",
+    "informational": "#309FD1",
+    "warning": "#F39200",
+    "successful": "#63A615",
+    "critical": "#EC0016"
+  }
+}

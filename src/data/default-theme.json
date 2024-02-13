@@ -1,5 +1,8 @@
 {
+  "name": "Default Theme",
+  "image": "peace-in-a-box.svg",
   "spacing": {
+    "_scale": 1,
     "responsive": {
       "regular": {
         "desktop": {
@@ -144,6 +147,7 @@
     }
   },
   "sizing": {
+    "_scale": 1,
     "fixed": {
       "mobile": {
         "header": "3.5"
@@ -394,11 +398,13 @@
   },
   "border": {
     "height": {
+      "_scale": 1,
       "sm": "0.0625",
       "md": "0.125",
       "lg": "0.25"
     },
     "radius": {
+      "_scale": 1,
       "sm": "0.15625",
       "md": "0.25",
       "lg": "0.5",
@@ -406,18 +412,20 @@
     }
   },
   "opacity": {
+    "_scale": 1,
     "sm": 0.25,
     "md": 0.5,
     "lg": 0.75
   },
   "elevation": {
+    "_scale": 1,
     "sm": "0 0 1px -1px rgba(0, 0, 0, 0.2), 0 0 4px 1px rgba(0, 0, 0, 0.12), 0 0 2px 0 rgba(0, 0, 0, 0.14)",
     "md": "0 0 2px -1px  rgba(0, 0, 0, 0.2), 0 0 8px 1px rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.14)",
     "lg": "0 0 4px -3px rgba(0, 0, 0, 0.2), 0 0 16px 3px rgba(0, 0, 0, 0.12), 0 0 8px 1px rgba(0, 0, 0, 0.14)"
   },
   "colors": {
     "neutral": "#242629",
-    "brand": "#ec0016",
+    "brand": "#595E67",
     "informational": "#309FD1",
     "warning": "#F39200",
     "successful": "#63A615",
