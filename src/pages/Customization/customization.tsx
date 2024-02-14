@@ -12,6 +12,7 @@ import { useThemeBuilderStore } from "../../store";
 import SpeakingColors from "../../components/Customization/Preview/SpeakingColors";
 import Demo from "../Demo";
 import HeadlineDivider from "../../components/Customization/HeadlineDivider";
+import LogoUpload from "../../components/Customization/LogoUpload";
 
 const tabs: TabItemType[] = [
   {
@@ -54,6 +55,9 @@ const Customization = () => {
               })
             }
           />
+          <HeadlineDivider headline="logo" />
+          <LogoUpload />
+
           <HeadlineDivider headline="colors" />
 
           <ColorSelection />

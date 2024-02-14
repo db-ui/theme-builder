@@ -12,6 +12,15 @@ import {
   getSpeakingNames,
 } from "./outputs.ts";
 import JSZip from "jszip";
+import { BASE_PATH } from "../constants.ts";
+
+export const getThemeImage = (image: string): string => {
+  if (image.startsWith("data:image")) {
+    return image;
+  }
+
+  return `${BASE_PATH}/assets/images/${image || "peace-in-a-box.svg"}`;
+};
 
 export const getLuminance = (color: string): number =>
   chroma.valid(color) ? chroma.hex(color).luminance() : -1;

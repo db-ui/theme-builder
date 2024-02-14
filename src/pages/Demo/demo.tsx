@@ -10,7 +10,7 @@ const cards = ["1", "2", "3", "4", "5", "6"];
 const Demo = ({ linkToDemo }: DemoPropsType) => {
   const { t } = useTranslation();
   return (
-    <DefaultPage className="hide-action-bar relative" name="Demo">
+    <DefaultPage className="hide-action-bar relative" name="Demo" themeImage>
       <main className="flex flex-col gap-fix-md py-fix-md px-res-sm">
         <h1 className="demo-headline mx-auto">Titan</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 p-fix-md gap-fix-md">
