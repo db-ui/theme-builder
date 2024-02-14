@@ -42,7 +42,7 @@ const Customize = () => {
       if (selected && currentSelected !== selected.id) {
         setCurrentSelected(selected.id);
         setDisplayName(
-          selected.data.custom.displayName || selected.data.displayName,
+          selected.data.custom.displayName || selected.data.name,
         );
       } else if (!selected) {
         setDisplayName("");

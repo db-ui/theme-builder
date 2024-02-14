@@ -48,7 +48,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
     ];
   }
 
-  const name = data.custom.displayName || data.displayName;
+  const name = data.custom.displayName || data.name;
 
   const item = (
     <div
