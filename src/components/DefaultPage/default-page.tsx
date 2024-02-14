@@ -2,7 +2,7 @@ import { DBButton, DBHeader, DBPage } from "@db-ui/react-components";
 import { BASE_PATH } from "../../constants.ts";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import {
   getNonColorCssProperties,
   getPaletteOutput,
@@ -16,6 +16,8 @@ const DefaultPage = ({
   actionBar,
   className,
   themeImage,
+  isLocalDarkMode,
+  tonality,
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const {
     speakingNames,
@@ -26,6 +28,7 @@ const DefaultPage = ({
     darkMode,
     developerMode,
   } = useThemeBuilderStore((state) => state);
+  const [localDarkMode, setLocalDarkMode] = useState<boolean>();
 
   useEffect(() => {
     const allColors: Record<string, string> = {
@@ -55,10 +58,18 @@ const DefaultPage = ({
     luminanceSteps,
   ]);
 
+  const isDark = useCallback(
+    () => (isLocalDarkMode ? localDarkMode : darkMode),
+    [isLocalDarkMode, localDarkMode, darkMode],
+  );
+
   return (
-    <div className="theme-props-container contents db-ui-regular">
+    <div
+      className="theme-props-container contents"
+      data-tonality={tonality || "regular"}
+    >
       <DBPage
-        data-color-scheme={darkMode ? "dark" : "light"}
+        data-color-scheme={isDark() ? "dark" : "light"}
         className={className}
         type="fixedHeaderFooter"
         slotHeader={
@@ -96,15 +107,19 @@ const DefaultPage = ({
                 </DBButton>
                 <DBButton
                   variant="text"
-                  icon={darkMode ? "day" : "night"}
+                  icon={isDark() ? "day" : "night"}
                   noText
                   className="p-0 w-siz-md"
-                  title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
-                  onClick={() =>
-                    useThemeBuilderStore.setState({ darkMode: !darkMode })
-                  }
+                  title={isDark() ? "Enable Light-Mode" : "Enable Dark-Mode"}
+                  onClick={() => {
+                    if (isLocalDarkMode) {
+                      setLocalDarkMode(!localDarkMode);
+                    } else {
+                      useThemeBuilderStore.setState({ darkMode: !darkMode });
+                    }
+                  }}
                 >
-                  {darkMode ? "🌞" : "🌛"}
+                  {isDark() ? "🌞" : "🌛"}
                 </DBButton>
               </div>
             }

@@ -5,4 +5,6 @@ export type DefaultPagePropsType = {
   actionBar?: ReactElement;
   className?: string;
   themeImage?: boolean;
+  isLocalDarkMode?: boolean;
+  tonality?: string;
 };

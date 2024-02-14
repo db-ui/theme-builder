@@ -10,18 +10,14 @@ import { DBButton, DBInput } from "@db-ui/react-components";
 import ActionBar from "../../components/Customization/ActionBar";
 import { useThemeBuilderStore } from "../../store";
 import SpeakingColors from "../../components/Customization/Preview/SpeakingColors";
-import Demo from "../Demo";
 import HeadlineDivider from "../../components/Customization/HeadlineDivider";
 import LogoUpload from "../../components/Customization/LogoUpload";
+import InteractiveDemo from "../../components/Customization/Preview/InteractiveDemo";
 
 const tabs: TabItemType[] = [
   {
-    text: "preview",
-    component: (
-      <div className="scale-down w-full h-full">
-        <Demo linkToDemo />
-      </div>
-    ),
+    text: "demo",
+    component: <InteractiveDemo />,
   },
   { text: "components", component: <ComponentContainer /> },
   { text: "colorPalettes", component: <ColorPalettes /> },

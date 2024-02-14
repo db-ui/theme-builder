@@ -7,10 +7,16 @@ import "./index.scss";
 
 const cards = ["1", "2", "3", "4", "5", "6"];
 
-const Demo = ({ linkToDemo }: DemoPropsType) => {
+const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
   const { t } = useTranslation();
   return (
-    <DefaultPage className="hide-action-bar relative" name="Demo" themeImage>
+    <DefaultPage
+      className="hide-action-bar relative"
+      name="Demo"
+      themeImage
+      tonality={tonality}
+      isLocalDarkMode
+    >
       <main className="flex flex-col gap-fix-md py-fix-md px-res-sm">
         <h1 className="demo-headline mx-auto">Titan</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 p-fix-md gap-fix-md">
