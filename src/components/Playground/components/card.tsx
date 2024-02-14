@@ -3,6 +3,8 @@ import { DBCardProps } from "@db-ui/react-components/dist/components/card/model"
 import { Element, useEditor, useNode } from "@craftjs/core";
 import DropContainer from "./drop-container.tsx";
 import { getDragClassNames } from "./data/utils.ts";
+import Setting from "../Sidebar/Customize/Setting";
+import DragButton from "./DragButton";
 
 const Card = (props: DBCardProps) => {
   const {
@@ -19,17 +21,43 @@ const Card = (props: DBCardProps) => {
       className={`${getDragClassNames(selected, props.className)}`}
       ref={(ref) => {
         if (ref) {
-          connect(drag(ref));
+          connect(ref);
         }
       }}
       {...props}
-      spacing="small"
     >
       <Element id="card-children" is={DropContainer} canvas>
         {props.children}
       </Element>
+
+      <DragButton drag={drag} />
     </DBCard>
   );
+};
+
+const CardSettings = () => (
+  <Setting
+    settings={[
+      {
+        key: "spacing",
+        type: "select",
+        selectOptions: [
+          { label: "none", value: "none" },
+          { label: "small", value: "small" },
+          { label: "medium", value: "medium" },
+        ],
+      },
+    ]}
+  />
+);
+
+Card.craft = {
+  props: {
+    spacing: "small",
+  },
+  related: {
+    settings: CardSettings,
+  },
 };
 
 export default Card;

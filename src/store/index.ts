@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type {} from "@redux-devtools/extension"; // required for devtools typing
 import {
-  DRAG_AND_DROP_STATE,
-  DragAndDropState,
+  PLAYGROUND_STATE,
+  PlaygroundState,
   THEME_BUILDER_STATE,
   ThemeBuilderState,
 } from "./state.ts";
@@ -50,7 +50,7 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
   ),
 );
 
-export const useDragAndDropStore = create<DragAndDropState>()(
+export const useDragAndDropStore = create<PlaygroundState>()(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   devtools(
@@ -58,13 +58,14 @@ export const useDragAndDropStore = create<DragAndDropState>()(
       () => {
         return {
           serializedJson: "",
+          showBorders: false,
         };
       },
       {
-        name: DRAG_AND_DROP_STATE,
+        name: PLAYGROUND_STATE,
       },
     ),
   ),
 );
 
-export default { useThemeBuilderStore };
+export default { useThemeBuilderStore, useDragAndDropStore };

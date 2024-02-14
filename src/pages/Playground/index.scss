@@ -1,0 +1,68 @@
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/colors";
+
+$selected-outline-height: 4px;
+
+.show-borders {
+  .drop-container,
+  .drag-container {
+    &:not(.selected) {
+      outline: 1px colors.$db-neutral-contrast-high dashed;
+    }
+  }
+}
+
+.drop-container,
+.drag-container {
+  & > div:empty,
+  &:empty {
+    min-height: variables.$db-sizing-md;
+    min-width: variables.$db-sizing-md;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.drop-container {
+  &:not(:empty) {
+    display: contents;
+  }
+}
+
+.selected {
+  outline: $selected-outline-height colors.$db-informational-contrast-low dashed;
+
+  &:has(> .drag-button) {
+    position: relative;
+
+    &:hover {
+      .drag-button {
+        opacity: 100;
+      }
+    }
+  }
+}
+
+.drag-button {
+  color: colors.$db-current-bg-color;
+  background-color: colors.$db-informational-contrast-low;
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-end: calc(-1 * #{$selected-outline-height});
+  opacity: 0;
+  cursor: grab;
+}
+
+.shadow-md {
+  box-shadow: variables.$db-elevation-md;
+}
+
+.sidebar-components {
+  .db-accordion-item {
+    & > div {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: variables.$db-spacing-fixed-sm;
+    }
+  }
+}

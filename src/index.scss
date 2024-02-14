@@ -3,6 +3,14 @@
 @use "@db-ui/foundations/build/scss/screen-sizes";
 @forward "@db-ui/components/build/styles/db-ui-42-rollup";
 
+:root {
+  --db-drawer-max-height: 100%;
+
+  @media screen and (min-width: screen-sizes.$db-breakpoint-md) {
+    --db-drawer-max-height: 50%;
+  }
+}
+
 .content {
   --db-drawer-max-width: 90%;
 
@@ -93,4 +101,16 @@ h6 {
 
 [class*="border"] {
   border-color: colors.$db-current-border-color;
+}
+
+.db-tooltip {
+  z-index: 3;
+}
+
+.select-icon-dialog {
+  .db-drawer-content {
+    height: 100%;
+    padding-block-start: variables.$db-spacing-fixed-md;
+    padding-block-end: variables.$db-spacing-fixed-2xl;
+  }
 }

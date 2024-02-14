@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
 import { getDragClassNames } from "./data/utils.ts";
 import { ClassNamePropType } from "./data";
+import DragButton from "./DragButton";
 
 export type TextPropsType = {
   text: string;
@@ -42,11 +43,12 @@ const Text = ({
       className={`${getDragClassNames(selected, className)}`}
       ref={(ref) => {
         if (ref) {
-          connect(drag(ref));
+          connect(ref);
         }
       }}
     >
       {renderedText}
+      <DragButton drag={drag} />
     </p>
   );
 };

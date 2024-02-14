@@ -3,32 +3,54 @@ import { Element, useEditor, useNode } from "@craftjs/core";
 import DropContainer from "./drop-container.tsx";
 import { getDragClassNames } from "./data/utils.ts";
 import Setting from "../Sidebar/Customize/Setting";
+import DragButton from "./DragButton";
 
 export type ContainerPropsType = {
   className?: string;
   display?: "flex" | "grid";
-  flexDirection?: "column" | "row";
+  direction?: "column" | "row";
   gap?: "xs" | "sm" | "md" | "lg" | "xl";
+  width?: "full" | "fit";
+  cells?: number;
 };
 
-const getFlexLayout = ({ display, flexDirection, gap }: ContainerPropsType) => {
+const getFlexLayout = ({
+  display,
+  direction,
+  gap,
+  width,
+  cells,
+}: ContainerPropsType) => {
   let layout = "";
 
   if (display === "grid") {
     layout += " grid";
+
+    if (direction === "column") {
+      layout += ` grid-cols-${cells || 4}`;
+    } else {
+      layout += ` grid-rows-${cells || 4}`;
+    }
   } else {
     layout += " flex";
-  }
 
-  if (flexDirection === "column") {
-    layout += " flex-col";
-  } else {
-    layout += " flex-row";
+    if (direction === "column") {
+      layout += " flex-col";
+    } else {
+      layout += " flex-row";
+    }
   }
 
   if (gap) {
     layout += ` gap-fix-${gap}`;
   }
+
+  if (width === "fit") {
+    layout += ` w-fit`;
+  } else {
+    layout += ` w-full`;
+  }
+
   return layout;
 };
 const Container = (props: PropsWithChildren<ContainerPropsType>) => {
@@ -46,13 +68,15 @@ const Container = (props: PropsWithChildren<ContainerPropsType>) => {
       className={`${getDragClassNames(selected, `${getFlexLayout(props)}${props.className || ""}`)}`}
       ref={(ref) => {
         if (ref) {
-          connect(drag(ref));
+          connect(ref);
         }
       }}
     >
       <Element id="drop-container" is={DropContainer} canvas={true}>
         {props.children}
       </Element>
+
+      <DragButton drag={drag} />
     </div>
   );
 };
@@ -61,26 +85,42 @@ const ContainerSettings = () => (
   <Setting
     settings={[
       {
+        key: "width",
+        type: "select",
+        selectOptions: [
+          { label: "full", value: "full" },
+          { label: "fit", value: "fit" },
+        ],
+      },
+      {
         key: "display",
         type: "select",
-        options: [
+        selectOptions: [
           { label: "flex", value: "flex" },
           { label: "grid", value: "grid" },
         ],
       },
       {
-        key: "flexDirection",
+        key: "direction",
         type: "select",
-        options: [
+        selectOptions: [
           { label: "row", value: "row" },
           { label: "column", value: "column" },
         ],
-        isHidden: (props) => props.display === "grid",
+      },
+      {
+        key: "cells",
+        type: "number",
+        numberOptions: {
+          min: 1,
+          max: 8,
+        },
+        isHidden: (props) => props.display === "flex",
       },
       {
         key: "gap",
         type: "select",
-        options: [
+        selectOptions: [
           { label: "xs", value: "xs" },
           { label: "sm", value: "sm" },
           { label: "md", value: "md" },
@@ -93,7 +133,13 @@ const ContainerSettings = () => (
 );
 
 Container.craft = {
-  props: { display: "flex", flexDirection: "row", gap: "md" },
+  props: {
+    display: "flex",
+    direction: "row",
+    gap: "md",
+    width: "full",
+    cells: 4,
+  },
   related: {
     settings: ContainerSettings,
   },

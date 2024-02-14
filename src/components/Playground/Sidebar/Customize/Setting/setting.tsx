@@ -2,12 +2,16 @@ import { SettingPropsType } from "./data.ts";
 import { Fragment } from "react";
 import {
   DBCheckbox,
+  DBDivider,
+  DBIcon,
+  DBInfotext,
   DBInput,
   DBSelect,
   DBTextarea,
 } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import { useNode } from "@craftjs/core";
+import SelectIconDialog from "./SelectIconDialog";
 
 const Setting = ({ settings }: SettingPropsType) => {
   const { t } = useTranslation();
@@ -39,10 +43,25 @@ const Setting = ({ settings }: SettingPropsType) => {
         .filter((setting) => !setting.isHidden || !setting.isHidden(props))
         .map((setting) => (
           <Fragment key={`setting-${setting.key}`}>
+            <DBDivider margin="none" />
             {(setting.type === "text" || setting.type === "number") && (
               <DBInput
                 type={setting.type}
+                min={
+                  (setting.type === "number" && setting.numberOptions?.min) ||
+                  undefined
+                }
+                max={
+                  (setting.type === "number" && setting.numberOptions?.max) ||
+                  undefined
+                }
+                step={
+                  (setting.type === "number" && setting.numberOptions?.step) ||
+                  undefined
+                }
+                dataList={setting.dataList}
                 label={t(setting.key)}
+                labelVariant="floating"
                 defaultValue={props[setting.key]}
                 onChange={(event) =>
                   changeValue(
@@ -57,6 +76,7 @@ const Setting = ({ settings }: SettingPropsType) => {
               <DBTextarea
                 type={setting.type}
                 label={t(setting.key)}
+                labelVariant="floating"
                 defaultValue={props[setting.key]}
                 onChange={(event) =>
                   changeValue(
@@ -71,6 +91,7 @@ const Setting = ({ settings }: SettingPropsType) => {
               <DBSelect
                 type={setting.type}
                 label={t(setting.key)}
+                labelVariant="floating"
                 defaultValue={props[setting.key]}
                 onChange={(event) =>
                   changeValue(
@@ -80,7 +101,7 @@ const Setting = ({ settings }: SettingPropsType) => {
                   )
                 }
               >
-                {setting.options?.map((option) => (
+                {setting.selectOptions?.map((option) => (
                   <option
                     value={option.value}
                     key={`select-${setting.key}-${option.label}`}
@@ -103,6 +124,24 @@ const Setting = ({ settings }: SettingPropsType) => {
                   )
                 }
               />
+            )}
+            {setting.type === "icon" && (
+              <div className="flex gap-fix-md items-center">
+                <div className="flex flex-col">
+                  <DBInfotext size="small" icon="none">
+                    {t(setting.key)}
+                  </DBInfotext>
+                  <span>{props[setting.key]}</span>
+                </div>
+                <DBIcon icon={props[setting.key]} />
+                <SelectIconDialog
+                  className="ml-auto"
+                  selectedIcon={props[setting.key]}
+                  onIconPick={(icon: string) => {
+                    changeValue(setting.key, icon, setting.changeType);
+                  }}
+                />
+              </div>
             )}
           </Fragment>
         ))}
