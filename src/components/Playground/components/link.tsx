@@ -3,6 +3,7 @@ import { DBLinkProps } from "@db-ui/react-components/dist/components/link/model"
 import { getDragClassNames } from "./data/utils.ts";
 import { useEditor, useNode } from "@craftjs/core";
 import Setting from "../Sidebar/Customize/Setting";
+import DragButton from "./DragButton";
 
 const Link = (props: DBLinkProps) => {
   const {
@@ -19,12 +20,13 @@ const Link = (props: DBLinkProps) => {
       className={`${getDragClassNames(selected, props.className)}`}
       ref={(ref) => {
         if (ref) {
-          connect(drag(ref));
+          connect(ref);
         }
       }}
       {...props}
     >
       {props.children}
+      <DragButton drag={drag} />
     </DBLink>
   );
 };

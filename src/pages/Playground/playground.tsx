@@ -14,12 +14,18 @@ import ComponentTree from "../../components/Playground/ComponentTree";
 import Toolbar from "../../components/Playground/Toolbar";
 import Preview from "../../components/Playground/Preview";
 import Sidebar from "../../components/Playground/Sidebar";
+import { useDragAndDropStore } from "../../store";
 
 export const Playground = () => {
+  const { showBorders } = useDragAndDropStore((state) => state);
   const { t } = useTranslation();
   return (
     <DefaultPage name={t("playground")}>
       <Editor
+        indicator={{
+          success: "var(--db-successful-contrast-high)",
+          error: "var(--db-critical-contrast-high)",
+        }}
         resolver={{
           Button,
           Card,
@@ -30,7 +36,9 @@ export const Playground = () => {
           Link,
         }}
       >
-        <div className="grid grid-cols-6 h-full w-full">
+        <div
+          className={`grid grid-cols-6 h-full w-full${showBorders ? " show-borders" : ""}`}
+        >
           <ComponentTree />
           <div className="flex flex-col col-span-4 h-full">
             <Toolbar />

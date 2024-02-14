@@ -14,7 +14,6 @@ const Customize = () => {
 
     if (currentNodeId) {
       const node = state.nodes[currentNodeId];
-
       selected = {
         id: currentNodeId,
         data: node.data,
@@ -31,16 +30,26 @@ const Customize = () => {
   const [displayName, setDisplayName] = useState<string>();
 
   useEffect(() => {
-    if (selected && currentSelected !== selected.id) {
-      setCurrentSelected(selected.id);
-      setDisplayName(
-        selected.data.custom.displayName || selected.data.displayName,
-      );
-    } else if (!selected) {
-      setDisplayName("");
-      setCurrentSelected(undefined);
+    if (
+      selected &&
+      selected.data.name === "DropContainer" &&
+      selected.data.parent &&
+      actions
+    ) {
+      const parent: string = selected.data.parent as string;
+      actions.selectNode(parent);
+    } else {
+      if (selected && currentSelected !== selected.id) {
+        setCurrentSelected(selected.id);
+        setDisplayName(
+          selected.data.custom.displayName || selected.data.displayName,
+        );
+      } else if (!selected) {
+        setDisplayName("");
+        setCurrentSelected(undefined);
+      }
     }
-  }, [currentSelected, selected]);
+  }, [currentSelected, selected, actions]);
 
   if (!selected) {
     return null;
@@ -62,7 +71,6 @@ const Customize = () => {
             });
           }}
         />
-        <DBDivider margin="none"></DBDivider>
         {selected.settings ? (
           createElement(selected.settings)
         ) : (

@@ -1,4 +1,8 @@
 {
+  "playgroundSelectIcon": "Select icon",
+  "playgroundShowBorders": "Show component borders",
+  "playgroundRedo": "Redo last action",
+  "playgroundUndo": "Undo last action",
   "demo": "Demo",
   "uploadLogo": "Upload logo",
   "logo": "Logo",

@@ -22,8 +22,9 @@ export type ThemeBuilderState = {
   developerMode: boolean;
 };
 
-export const DRAG_AND_DROP_STATE = "drag-and-drop-state";
+export const PLAYGROUND_STATE = "playground-state";
 
-export type DragAndDropState = {
+export type PlaygroundState = {
   serializedJson: string;
+  showBorders: boolean;
 };
