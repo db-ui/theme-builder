@@ -2,6 +2,7 @@ import { DBButton } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../../store";
 import { downloadTheme } from "../../../utils";
 import { useTranslation } from "react-i18next";
+import Upload from "../Upload";
 
 const ActionBar = () => {
   const { t } = useTranslation();
@@ -12,17 +13,36 @@ const ActionBar = () => {
     defaultTheme,
     customColors,
     speakingNames,
+    developerMode,
   } = useThemeBuilderStore((state) => state);
 
   return (
     <>
-      <DBButton
-        icon="undo"
-        onClick={() => resetDefaults()}
-        title={t("resetDesc")}
-      >
-        {t("reset")}
-      </DBButton>
+      {developerMode && (
+        <DBButton
+          icon="undo"
+          onClick={() => resetDefaults()}
+          title={t("resetDesc")}
+        >
+          {t("reset")}
+        </DBButton>
+      )}
+      <Upload
+        label="import"
+        accept="application/JSON"
+        onUpload={(result) => {
+          try {
+            const resultAsString = atob(result.split("base64,")[1]);
+            const resultAsJson = JSON.parse(resultAsString);
+            useThemeBuilderStore.setState({
+              defaultTheme: resultAsJson,
+              defaultColors: resultAsJson.colors,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        }}
+      />
       <DBButton
         variant="primary"
         icon="download"
@@ -35,9 +55,9 @@ const ActionBar = () => {
             customColors,
           )
         }
-        title={t("downloadDesc")}
+        title={t("exportDesc")}
       >
-        {t("download")}
+        {t("export")}
       </DBButton>
     </>
   );

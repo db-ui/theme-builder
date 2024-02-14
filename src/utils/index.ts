@@ -45,7 +45,7 @@ export const downloadTheme = async (
 
   const allColors = { ...colorMapping, ...customColorMapping };
 
-  const fileName = `default-theme`;
+  const fileName = theme.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
   const themeProperties = getCssThemeProperties(defaultTheme);
 
