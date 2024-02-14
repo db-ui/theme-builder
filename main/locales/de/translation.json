@@ -1,4 +1,8 @@
 {
+  "playgroundSelectIcon": "Icon auswählen",
+  "playgroundShowBorders": "Zeige Komponentenumrandung",
+  "playgroundRedo": "Letzte Aktion wiederherstellen",
+  "playgroundUndo": "Letzte Aktion rückgängig machen",
   "uploadLogo": "Logo hochladen",
   "name": "Name",
   "playground": "Playground",
