@@ -8,12 +8,14 @@ import {
   getPaletteOutput,
   getSpeakingNames,
 } from "../../utils/outputs.ts";
+import { getThemeImage } from "../../utils";
 
 const DefaultPage = ({
   name,
   children,
   actionBar,
   className,
+  themeImage,
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const {
     speakingNames,
@@ -64,7 +66,11 @@ const DefaultPage = ({
             slotBrand={
               <div className="db-brand">
                 <img
-                  src={`${BASE_PATH}/assets/images/${defaultTheme.image || "db_logo.svg"}`}
+                  src={
+                    themeImage
+                      ? getThemeImage(defaultTheme.image)
+                      : `${BASE_PATH}/assets/images/peace-in-a-box.svg`
+                  }
                   alt="brand"
                   height="24"
                   width="34"
