@@ -48,6 +48,8 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
     ];
   }
 
+  const name = data.custom.displayName || data.displayName;
+
   const item = (
     <div
       className={` 
@@ -58,7 +60,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
         actions.selectNode(id);
       }}
     >
-      <span className="break-words">{data.displayName}</span>
+      <span className="break-words">{name}</span>
 
       <DBButton
         variant="text"
@@ -68,7 +70,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
           actions.setHidden(id, !data.hidden);
         }}
       >
-        Hide {data.displayName}({id})
+        Hide {name}({id})
       </DBButton>
     </div>
   );

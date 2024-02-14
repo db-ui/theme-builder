@@ -1,10 +1,10 @@
 import { DBAccordion, DBAccordionItem } from "@db-ui/react-components";
-import Text from "../../components/text.tsx";
-import Button from "../../components/button.tsx";
-import Card from "../../components/card.tsx";
 import ComponentCard from "./ComponentCard";
-import Link from "../../components/link.tsx";
 import Container from "../../components/container.tsx";
+import Button from "../../components/button.tsx";
+import Link from "../../components/link.tsx";
+import Card from "../../components/card.tsx";
+import Text from "../../components/text.tsx";
 
 const ComponentList = () => {
   return (

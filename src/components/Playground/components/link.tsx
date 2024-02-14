@@ -1,8 +1,8 @@
 import { DBLink } from "@db-ui/react-components";
 import { DBLinkProps } from "@db-ui/react-components/dist/components/link/model";
-import Setting from "../Sidebar/Customize/Setting";
 import { getDragClassNames } from "./data/utils.ts";
 import { useEditor, useNode } from "@craftjs/core";
+import Setting from "../Sidebar/Customize/Setting";
 
 const Link = (props: DBLinkProps) => {
   const {

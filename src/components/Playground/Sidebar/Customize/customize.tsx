@@ -33,7 +33,9 @@ const Customize = () => {
   useEffect(() => {
     if (selected && currentSelected !== selected.id) {
       setCurrentSelected(selected.id);
-      setDisplayName(selected.data.displayName);
+      setDisplayName(
+        selected.data.custom.displayName || selected.data.displayName,
+      );
     } else if (!selected) {
       setDisplayName("");
       setCurrentSelected(undefined);

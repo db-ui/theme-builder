@@ -3,7 +3,7 @@ import { AppRoute } from "../components/DefaultPage/Navigation/data.ts";
 import Customization from "../pages/Customization";
 import Landing from "../pages/Landing";
 import Demo from "../pages/Demo";
-import DragAndDropBuilder from "../pages/DragAndDropBuilder";
+import Playground from "../pages/Playground";
 
 const AppRoutes: AppRoute[] = [
   { path: "/", element: <Landing />, label: "landing" },
@@ -13,7 +13,7 @@ const AppRoutes: AppRoute[] = [
     label: "customization",
   },
   { path: "/editor", element: <Editor />, label: "editor" },
-  { path: "/playground", element: <DragAndDropBuilder />, label: "playground" },
+  { path: "/playground", element: <Playground />, label: "playground" },
   { path: "/demo", element: <Demo />, label: "demo" },
 ];
 
