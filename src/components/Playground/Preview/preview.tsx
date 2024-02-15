@@ -42,7 +42,7 @@ const Preview = ({ className }: PreviewType) => {
   }, [actions, serializedJson, init]);
 
   return (
-    <div className={`${className || ""} p-fix-xs`}>
+    <div className={`${className || ""} p-fix-3xs h-full overflow-y-auto`}>
       <Frame>
         <Element id="canvas" is={Root} canvas></Element>
       </Frame>

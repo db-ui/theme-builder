@@ -12,6 +12,28 @@ $selected-outline-height: 3px;
   }
 }
 
+.show-spacings {
+  :has(> .drop-container),
+  :has(> .drag-container) {
+    background-color: colors.$db-warning-bg-lvl-3;
+  }
+
+  .drop-container,
+  .drag-container {
+    --db-current-icon-color: #{colors.$db-current-color};
+    background-image: linear-gradient(
+        #{colors.$db-current-bg-color},
+        #{colors.$db-current-bg-color}
+      ),
+      linear-gradient(
+        #{colors.$db-successful-bg-lvl-3},
+        #{colors.$db-successful-bg-lvl-3}
+      );
+    background-clip: content-box, padding-box;
+    color: colors.$db-current-color;
+  }
+}
+
 .drop-container,
 .drag-container {
   & > div:empty,
@@ -26,6 +48,13 @@ $selected-outline-height: 3px;
       content: "Drag component to me";
       margin: auto;
     }
+  }
+}
+
+[data-hint] {
+  &::before {
+    content: attr(data-hint);
+    opacity: variables.$db-opacity-md;
   }
 }
 
@@ -54,6 +83,8 @@ $selected-outline-height: 3px;
 }
 
 .drag-button {
+  --db-current-icon-color: #{colors.$db-current-bg-color};
+  --db-icon-margin-start: #{variables.$db-spacing-fixed-3xs};
   color: colors.$db-current-bg-color;
   background-color: colors.$db-informational-contrast-low;
   position: absolute;
@@ -66,10 +97,6 @@ $selected-outline-height: 3px;
   &:active {
     cursor: grabbing;
   }
-}
-
-.shadow-md {
-  box-shadow: variables.$db-elevation-md;
 }
 
 .tree-item {

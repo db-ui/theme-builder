@@ -4,9 +4,10 @@ import { useEditor, useNode } from "@craftjs/core";
 import { getDragClassNames } from "./data/utils.ts";
 import { ClassNamePropType } from "./data";
 import DragButton from "./DragButton";
+import { useTranslation } from "react-i18next";
 
 export type TextPropsType = {
-  text: string;
+  text?: string;
   inline?: boolean;
 };
 const Text = ({
@@ -14,6 +15,7 @@ const Text = ({
   inline,
   className,
 }: TextPropsType & ClassNamePropType) => {
+  const { t } = useTranslation();
   const {
     connectors: { connect, drag },
     id,
@@ -48,6 +50,7 @@ const Text = ({
   return (
     <p
       className={`${getDragClassNames(selected, hovered, className)}`}
+      data-hint={text ? undefined : t("pgEditMe")}
       ref={(ref) => {
         if (ref) {
           connect(ref);
@@ -77,7 +80,6 @@ const TextSettings = () => (
 
 Text.craft = {
   props: {
-    text: "Edit me",
     inline: false,
   },
   related: {

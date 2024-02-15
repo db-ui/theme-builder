@@ -15,7 +15,7 @@ export const Components: ComponentListType[] = [
     headline: "general",
     components: [
       { name: "container", component: <Container /> },
-      { name: "text", component: <Text text="Edit me" /> },
+      { name: "text", component: <Text  /> },
     ],
   },
   {
@@ -35,8 +35,6 @@ export const Components: ComponentListType[] = [
   },
   {
     headline: "layout",
-    components: [
-      { name: "card", component: <Card /> },
-    ],
+    components: [{ name: "card", component: <Card /> }],
   },
 ];
