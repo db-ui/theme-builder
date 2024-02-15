@@ -104,9 +104,9 @@ const Setting = ({ settings }: SettingPropsType) => {
                 {setting.selectOptions?.map((option) => (
                   <option
                     value={option.value}
-                    key={`select-${setting.key}-${option.label}`}
+                    key={`select-${setting.key}-${option.label || option.value}`}
                   >
-                    {t(option.label || "")}
+                    {t(option.label || option.value || "")}
                   </option>
                 ))}
               </DBSelect>

@@ -41,6 +41,10 @@ const ColorPicker = ({
           style={{
             backgroundColor: color,
             color: getLuminance(color) < 0.4 ? "#fff" : "#000",
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            "--db-current-icon-color":
+              getLuminance(color) < 0.4 ? "#fff" : "#000",
             borderColor: `var(--db-${label.toLowerCase()}-contrast-high)`,
           }}
           onClick={() => setOpen(true)}

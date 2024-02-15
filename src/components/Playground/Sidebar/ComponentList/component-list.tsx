@@ -25,7 +25,7 @@ const ComponentList = () => {
       ).map(({ headline, components }) => (
         <Fragment key={headline}>
           <DBDivider margin="none" />
-          <h6>{headline}</h6>
+          <h6>{t(headline)}</h6>
           <div className="grid grid-cols-3 gap-fix-sm">
             {components
               .filter(({ name }) => t(name).includes(search))

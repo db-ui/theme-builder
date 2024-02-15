@@ -27,4 +27,5 @@ export const PLAYGROUND_STATE = "playground-state";
 export type PlaygroundState = {
   serializedJson: string;
   showBorders: boolean;
+  showSpacings: boolean;
 };

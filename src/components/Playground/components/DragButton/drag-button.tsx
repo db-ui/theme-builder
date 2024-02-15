@@ -1,5 +1,3 @@
-import { BASE_PATH } from "../../../../constants.ts";
-
 const DragButton = ({
   componentName,
   drag,
@@ -8,17 +6,17 @@ const DragButton = ({
   drag: (dom: HTMLElement) => HTMLElement;
 }) => {
   return (
-    <div
+    <span
       ref={(ref) => {
         if (ref) {
           drag(ref);
         }
       }}
-      className="drag-button flex gap-fix-3xs pl-fix-xs"
+      className="drag-button flex py-fix-3xs pl-fix-3xs"
+      data-icon-after="drag_and_drop"
     >
-      <span>{componentName}</span>
-      <img alt="Move" src={`${BASE_PATH}/assets/images/move.svg`} />
-    </div>
+      {componentName}
+    </span>
   );
 };
 

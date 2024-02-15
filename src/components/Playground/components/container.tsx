@@ -12,6 +12,17 @@ export type ContainerPropsType = {
   gap?: "xs" | "sm" | "md" | "lg" | "xl";
   width?: "full" | "fit";
   cells?: number;
+  padding?:
+    | "3xs"
+    | "2xs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "none";
 };
 
 const getFlexLayout = ({
@@ -20,6 +31,7 @@ const getFlexLayout = ({
   gap,
   width,
   cells,
+  padding,
 }: ContainerPropsType) => {
   let layout = "";
 
@@ -49,6 +61,10 @@ const getFlexLayout = ({
     layout += ` w-fit`;
   } else {
     layout += ` w-full`;
+  }
+
+  if (padding !== "none") {
+    layout += ` p-fix-${padding}`;
   }
 
   return layout;
@@ -92,28 +108,35 @@ const ContainerSettings = () => (
   <Setting
     settings={[
       {
-        key: "width",
+        key: "padding",
         type: "select",
         selectOptions: [
-          { label: "full", value: "full" },
-          { label: "fit", value: "fit" },
+          { value: "none" },
+          { value: "3xs" },
+          { value: "2xs" },
+          { value: "xs" },
+          { value: "sm" },
+          { value: "md" },
+          { value: "lg" },
+          { value: "xl" },
+          { value: "2xl" },
+          { value: "3xl" },
         ],
+      },
+      {
+        key: "width",
+        type: "select",
+        selectOptions: [{ value: "full" }, { value: "fit" }],
       },
       {
         key: "display",
         type: "select",
-        selectOptions: [
-          { label: "flex", value: "flex" },
-          { label: "grid", value: "grid" },
-        ],
+        selectOptions: [{ value: "flex" }, { value: "grid" }],
       },
       {
         key: "direction",
         type: "select",
-        selectOptions: [
-          { label: "row", value: "row" },
-          { label: "column", value: "column" },
-        ],
+        selectOptions: [{ value: "row" }, { value: "column" }],
       },
       {
         key: "cells",
@@ -128,11 +151,11 @@ const ContainerSettings = () => (
         key: "gap",
         type: "select",
         selectOptions: [
-          { label: "xs", value: "xs" },
-          { label: "sm", value: "sm" },
-          { label: "md", value: "md" },
-          { label: "lg", value: "lg" },
-          { label: "xl", value: "xl" },
+          { value: "xs" },
+          { value: "sm" },
+          { value: "md" },
+          { value: "lg" },
+          { value: "xl" },
         ],
       },
     ]}
@@ -146,6 +169,7 @@ Container.craft = {
     gap: "md",
     width: "full",
     cells: 4,
+    padding: "none",
   },
   related: {
     settings: ContainerSettings,

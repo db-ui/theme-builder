@@ -59,6 +59,7 @@ export const useDragAndDropStore = create<PlaygroundState>()(
         return {
           serializedJson: "",
           showBorders: false,
+          showSpacings: false,
         };
       },
       {

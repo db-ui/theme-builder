@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const Toolbar = ({ className }: ToolbarType) => {
   const { t } = useTranslation();
-  const { showBorders } = useDragAndDropStore((state) => state);
+  const { showBorders,showSpacings } = useDragAndDropStore((state) => state);
   const { actions, canUndo, canRedo } = useEditor((state, query) => {
     const [currentNodeId] = state.events.selected;
     let selected;
@@ -63,6 +63,17 @@ const Toolbar = ({ className }: ToolbarType) => {
           </DBButton>
         </div>
         <div className="flex gap-fix-sm">
+          <DBButton
+            variant="text"
+            noText
+            icon="resize"
+            onClick={() => {
+              useDragAndDropStore.setState({ showSpacings: !showSpacings });
+            }}
+          >
+            {t("playgroundShowSpacings")}
+            <DBTooltip>{t("playgroundShowSpacings")}</DBTooltip>
+          </DBButton>
           <DBButton
             variant="text"
             noText

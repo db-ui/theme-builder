@@ -17,7 +17,7 @@ import Sidebar from "../../components/Playground/Sidebar";
 import { useDragAndDropStore } from "../../store";
 
 export const Playground = () => {
-  const { showBorders } = useDragAndDropStore((state) => state);
+  const { showBorders, showSpacings } = useDragAndDropStore((state) => state);
   const { t } = useTranslation();
   return (
     <DefaultPage name={t("playground")}>
@@ -37,10 +37,10 @@ export const Playground = () => {
         }}
       >
         <div
-          className={`grid grid-cols-6 h-full w-full${showBorders ? " show-borders" : ""}`}
+          className={`grid grid-cols-6 h-full w-full${showBorders ? " show-borders" : ""}${showSpacings ? " show-spacings" : ""}`}
         >
           <ComponentTree />
-          <div className="flex flex-col col-span-4 h-full">
+          <div className="flex flex-col col-span-4 h-full overflow-hidden">
             <Toolbar />
             <DBDivider margin="none" />
             <Preview />

@@ -1,4 +1,7 @@
-{  "general": "General",
+{
+  "playgroundShowSpacings": "Zeige Abstände",
+  "pgEditMe": "Editiere mich in der Seitenleiste",
+  "general": "General",
   "container": "Container",
   "text": "Text",
   "card": "Card",

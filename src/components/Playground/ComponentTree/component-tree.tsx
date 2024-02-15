@@ -65,7 +65,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
         <DBIcon className="w-siz-md" icon="intermediary_stop" />
       )}
       <span
-        className={`break-words w-full`}
+        className={`break-all w-full`}
         onMouseEnter={() =>
           actions.setCustom(id, (data) => {
             data.hover = true;
@@ -135,12 +135,17 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
   }));
 
   return (
-    <div className={`h-full${className ? ` ${className}` : ""} border-r`}>
+    <div
+      className={`h-full${className ? ` ${className}` : ""} border-r overflow-hidden`}
+    >
       <div className="h-siz-md flex items-center p-fix-sm">
         <h6>Component Tree</h6>
       </div>
       <DBDivider margin="none" />
-      <div data-tonality="functional" className="flex flex-col p-fix-sm">
+      <div
+        data-tonality="functional"
+        className="flex flex-col p-fix-sm h-full overflow-auto"
+      >
         <TreeItem node={nodes["ROOT"]} />
       </div>
     </div>
