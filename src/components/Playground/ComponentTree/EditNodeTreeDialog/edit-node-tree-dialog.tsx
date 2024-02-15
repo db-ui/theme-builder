@@ -9,20 +9,28 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { uuid } from "@db-ui/react-components/dist/utils";
 import { EditNodeTreePropsType } from "./data.ts";
+import { useEditor } from "@craftjs/core";
 
-const EditNodeTreeDialog = ({ create }: EditNodeTreePropsType) => {
+const EditNodeTreeDialog = ({
+  create,
+  open,
+  onClose,
+}: EditNodeTreePropsType) => {
   const { t } = useTranslation();
   const { currentId, nodeTrees } = useDragAndDropStore((state) => state);
-  const [open, setOpen] = useState<boolean>(false);
 
-  const [nodeTreeId, setNodeTreeId] = useState<string | undefined>();
-  const [nodeTreeName, setNodeTreeName] = useState<string | undefined>();
+  const [nodeTreeId, setNodeTreeId] = useState<string>("");
+  const [nodeTreeName, setNodeTreeName] = useState<string>("");
+
+  const [disabled, setDisabled] = useState<boolean>();
+
+  const { actions } = useEditor();
 
   useEffect(() => {
     if (open) {
       if (create) {
-        setNodeTreeId(undefined);
-        setNodeTreeName(undefined);
+        setNodeTreeId("");
+        setNodeTreeName("");
       } else {
         const currentNode = nodeTrees[currentId];
         if (currentNode) {
@@ -33,21 +41,28 @@ const EditNodeTreeDialog = ({ create }: EditNodeTreePropsType) => {
     }
   }, [create, currentId, nodeTrees, open]);
 
+  useEffect(() => {
+    if (nodeTreeId.length === 0) {
+      setDisabled(true);
+    } else if (create) {
+      setDisabled(
+        !!nodeTrees[nodeTreeId] ||
+          nodeTreeId.length === 0 ||
+          nodeTreeName.length === 0,
+      );
+    } else {
+      setDisabled(
+        nodeTreeId === currentId && nodeTreeName === nodeTrees[currentId].name,
+      );
+    }
+  }, [create, currentId, nodeTreeId, nodeTreeName, nodeTrees]);
+
   return (
     <>
-      <DBButton
-        data-tonality={create ? "regular" : "functional"}
-        noText={!create}
-        icon={create ? "add" : "edit"}
-        variant={create ? "primary" : "text"}
-        onClick={() => setOpen(true)}
-      >
-        {t(create ? "add" : "pgEdit")}
-      </DBButton>
       <DBDrawer
         backdrop="weak"
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={onClose}
         withCloseButton
         slotDrawerHeader={t(create ? "add" : "pgEdit")}
       >
@@ -57,6 +72,11 @@ const EditNodeTreeDialog = ({ create }: EditNodeTreePropsType) => {
             placeholder={t("id")}
             labelVariant="floating"
             value={nodeTreeId}
+            invalid={
+              nodeTreeId.length === 0 || (create && nodeTrees[nodeTreeId])
+                ? true
+                : undefined
+            }
             onChange={(event) => setNodeTreeId(event.target.value)}
           />
           <DBDivider margin="none" />
@@ -68,39 +88,65 @@ const EditNodeTreeDialog = ({ create }: EditNodeTreePropsType) => {
             onChange={(event) => setNodeTreeName(event.target.value)}
           />
         </div>
-        <DBButton
-          className="absolute bottom-fix-xs right-fix-xs"
-          variant="primary"
-          disabled={
-            (create && (!nodeTreeId || !nodeTreeName)) ||
-            (nodeTreeId === currentId &&
-              nodeTreeName === nodeTrees[currentId].name)
-          }
-          onClick={() => {
-            const tmpCopyTrees = { ...nodeTrees };
-            const newId = nodeTreeId || uuid();
-            if (create) {
-              tmpCopyTrees[newId] = {
-                isPage: true,
-                serializedJson: "",
-                name: nodeTreeName || "Unknown",
-              };
-            } else {
-              delete tmpCopyTrees[currentId];
-              tmpCopyTrees[newId] = {
-                ...nodeTrees[currentId],
-                name: nodeTreeName || "Unknown",
-              };
-            }
-            useDragAndDropStore.setState({
-              nodeTrees: tmpCopyTrees,
-              currentId: newId,
-            });
-            setOpen(false);
-          }}
-        >
-          {t(create ? "add" : "change")}
-        </DBButton>
+        <div className="flex gap-fix-md absolute bottom-fix-xs inset-x-fix-lg">
+          {!create && (
+            <DBButton
+              width="full"
+              disabled={Object.entries(nodeTrees).length < 2}
+              onClick={() => {
+                const tmpCopyTrees = { ...nodeTrees };
+                delete tmpCopyTrees[currentId];
+                useDragAndDropStore.setState({
+                  nodeTrees: tmpCopyTrees,
+                  currentId: Object.keys(nodeTrees)[0],
+                });
+                if (onClose) {
+                  onClose();
+                }
+              }}
+            >
+              {t("delete")}
+            </DBButton>
+          )}
+          <DBButton
+            width="full"
+            variant="primary"
+            disabled={disabled}
+            onClick={() => {
+              const tmpCopyTrees = { ...nodeTrees };
+              const newId = nodeTreeId || uuid();
+              if (create) {
+                tmpCopyTrees[newId] = {
+                  isPage: true,
+                  serializedJson: "",
+                  name: nodeTreeName || "Unknown",
+                };
+
+                actions.deserialize(
+                  '{"ROOT":{"type":{"resolvedName":"Root"},"isCanvas":true,"props":{"id":"canvas"},"displayName":"Root","custom":{"hover":false},"hidden":false,"nodes":[],"linkedNodes":{}}}',
+                );
+              } else {
+                delete tmpCopyTrees[currentId];
+                tmpCopyTrees[newId] = {
+                  ...nodeTrees[currentId],
+                  name: nodeTreeName || "Unknown",
+                };
+              }
+              useDragAndDropStore.setState({
+                nodeTrees: tmpCopyTrees,
+                currentId: newId,
+              });
+              // TODO: Don't copy last node tree
+              setNodeTreeName("");
+              setNodeTreeId("");
+              if (onClose) {
+                onClose();
+              }
+            }}
+          >
+            {t(create ? "add" : "change")}
+          </DBButton>
+        </div>
       </DBDrawer>
     </>
   );

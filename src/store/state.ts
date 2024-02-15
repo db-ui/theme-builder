@@ -36,4 +36,5 @@ export type PlaygroundState = {
   nodeTrees: Record<string, PlaygroundNodeTree>;
   showBorders: boolean;
   showSpacings: boolean;
+  previewContainer?: DOMRect;
 };
