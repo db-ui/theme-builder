@@ -1,4 +1,13 @@
 {
+  "general": "General",
+  "container": "Container",
+  "text": "Text",
+  "card": "Card",
+  "link": "Link",
+  "button": "Button",
+  "layout": "Layout",
+  "action": "Action",
+  "customize": "Customize",
   "playgroundSelectIcon": "Select icon",
   "playgroundShowBorders": "Show component borders",
   "playgroundRedo": "Redo last action",

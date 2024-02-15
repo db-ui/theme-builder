@@ -1,38 +1,47 @@
-import { DBAccordion, DBAccordionItem } from "@db-ui/react-components";
+import { DBDivider, DBInput } from "@db-ui/react-components";
+import { useTranslation } from "react-i18next";
+import { Components } from "./data.tsx";
+import { Fragment, useState } from "react";
 import ComponentCard from "./ComponentCard";
-import Container from "../../components/container.tsx";
-import Button from "../../components/button.tsx";
-import Link from "../../components/link.tsx";
-import Card from "../../components/card.tsx";
-import Text from "../../components/text.tsx";
 
 const ComponentList = () => {
+  const { t } = useTranslation();
+  const [search, setSearch] = useState<string>("");
+
   return (
-    <DBAccordion
-      className="sidebar-components"
-      behaviour="single"
-      initOpenIndex={[0]}
+    <div
+      className="flex flex-col gap-fix-md p-fix-md h-full overflow-y-auto"
+      data-tonality="functional"
     >
-      <DBAccordionItem title="General">
-        <ComponentCard name="Container" component={<Container />} />
-        <ComponentCard name="Text" component={<Text text="Edit me" />} />
-      </DBAccordionItem>
-      <DBAccordionItem title="Action">
-        <ComponentCard
-          assetPath={"assets/components/button.svg"}
-          name="Button"
-          component={<Button children="Test" />}
-        />
-        <ComponentCard
-          assetPath={"assets/components/link.svg"}
-          name="Link"
-          component={<Link />}
-        />
-      </DBAccordionItem>
-      <DBAccordionItem title="Layout">
-        <ComponentCard name="Card" component={<Card />} />
-      </DBAccordionItem>
-    </DBAccordion>
+      <DBInput
+        type="search"
+        labelVariant="floating"
+        label={t("search")}
+        placeholder={t("search")}
+        onChange={(event) => setSearch(event.target.value)}
+      />
+      {Components.filter(({ components }) =>
+        components.some(({ name }) => t(name).includes(search)),
+      ).map(({ headline, components }) => (
+        <Fragment key={headline}>
+          <DBDivider margin="none" />
+          <h6>{headline}</h6>
+          <div className="grid grid-cols-3 gap-fix-sm">
+            {components
+              .filter(({ name }) => t(name).includes(search))
+              .map(({ name, component, assetPath }) => (
+                <Fragment key={`${headline}-${name}`}>
+                  <ComponentCard
+                    name={t(name)}
+                    component={component}
+                    assetPath={assetPath}
+                  />
+                </Fragment>
+              ))}
+          </div>
+        </Fragment>
+      ))}
+    </div>
   );
 };
 

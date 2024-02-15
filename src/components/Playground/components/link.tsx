@@ -9,7 +9,14 @@ const Link = (props: DBLinkProps) => {
   const {
     connectors: { connect, drag },
     id,
-  } = useNode();
+    hovered,
+    name,
+  } = useNode((node) => {
+    return {
+      name: node.data.custom.displayName || node.data.name,
+      hovered: node.data.custom.hover,
+    };
+  });
 
   const { selected } = useEditor((state) => {
     const [currentNodeId] = state.events.selected;
@@ -17,7 +24,7 @@ const Link = (props: DBLinkProps) => {
   });
   return (
     <DBLink
-      className={`${getDragClassNames(selected, props.className)}`}
+      className={`${getDragClassNames(selected, hovered, props.className)}`}
       ref={(ref) => {
         if (ref) {
           connect(ref);
@@ -26,7 +33,7 @@ const Link = (props: DBLinkProps) => {
       {...props}
     >
       {props.children}
-      <DragButton drag={drag} />
+      <DragButton componentName={name} drag={drag} />
     </DBLink>
   );
 };

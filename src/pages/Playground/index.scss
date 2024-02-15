@@ -1,12 +1,12 @@
 @use "@db-ui/foundations/build/scss/variables";
 @use "@db-ui/foundations/build/scss/colors";
 
-$selected-outline-height: 4px;
+$selected-outline-height: 3px;
 
 .show-borders {
   .drop-container,
   .drag-container {
-    &:not(.selected) {
+    &:not(.selected):not(.hovered) {
       outline: 1px colors.$db-neutral-contrast-high dashed;
     }
   }
@@ -20,6 +20,12 @@ $selected-outline-height: 4px;
     min-width: variables.$db-sizing-md;
     width: 100%;
     height: 100%;
+    display: flex;
+
+    &::before {
+      content: "Drag component to me";
+      margin: auto;
+    }
   }
 }
 
@@ -29,14 +35,18 @@ $selected-outline-height: 4px;
   }
 }
 
+.hovered {
+  outline: $selected-outline-height colors.$db-neutral-contrast-low dashed;
+}
+
 .selected {
-  outline: $selected-outline-height colors.$db-informational-contrast-low dashed;
+  outline: $selected-outline-height colors.$db-informational-contrast-low solid;
 
   &:has(> .drag-button) {
     position: relative;
 
     &:hover {
-      .drag-button {
+      > .drag-button {
         opacity: 100;
       }
     }
@@ -51,18 +61,29 @@ $selected-outline-height: 4px;
   inset-inline-end: calc(-1 * #{$selected-outline-height});
   opacity: 0;
   cursor: grab;
+  width: max-content;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .shadow-md {
   box-shadow: variables.$db-elevation-md;
 }
 
-.sidebar-components {
-  .db-accordion-item {
-    & > div {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: variables.$db-spacing-fixed-sm;
-    }
+.tree-item {
+  &:hover {
+    background-color: colors.$db-current-bg-transparent-hover;
   }
+
+  &:active {
+    background-color: colors.$db-current-bg-transparent-pressed;
+  }
+}
+
+.tree-item-padding {
+  padding-inline-start: calc(
+    #{variables.$db-sizing-md} - #{variables.$db-spacing-fixed-xs}
+  );
 }

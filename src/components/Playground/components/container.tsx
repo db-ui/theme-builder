@@ -57,7 +57,14 @@ const Container = (props: PropsWithChildren<ContainerPropsType>) => {
   const {
     connectors: { connect, drag },
     id,
-  } = useNode();
+    hovered,
+    name,
+  } = useNode((node) => {
+    return {
+      name: node.data.custom.displayName || node.data.name,
+      hovered: node.data.custom.hover,
+    };
+  });
 
   const { selected } = useEditor((state) => {
     const [currentNodeId] = state.events.selected;
@@ -65,7 +72,7 @@ const Container = (props: PropsWithChildren<ContainerPropsType>) => {
   });
   return (
     <div
-      className={`${getDragClassNames(selected, `${getFlexLayout(props)}${props.className || ""}`)}`}
+      className={`${getDragClassNames(selected, hovered, `${getFlexLayout(props)}${props.className || ""}`)}`}
       ref={(ref) => {
         if (ref) {
           connect(ref);
@@ -76,7 +83,7 @@ const Container = (props: PropsWithChildren<ContainerPropsType>) => {
         {props.children}
       </Element>
 
-      <DragButton drag={drag} />
+      <DragButton componentName={name} drag={drag} />
     </div>
   );
 };
