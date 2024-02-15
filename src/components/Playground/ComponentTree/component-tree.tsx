@@ -3,6 +3,8 @@ import { EditorState, useEditor } from "@craftjs/core";
 import { DBButton, DBDivider, DBIcon } from "@db-ui/react-components";
 import { Node } from "@craftjs/core/lib/interfaces/nodes";
 import { Fragment, useState } from "react";
+import { useDragAndDropStore } from "../../../store";
+import EditNodeTreeDialog from "./EditNodeTreeDialog";
 
 type TreeItemPropsType = {
   node: Node;
@@ -130,6 +132,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
 };
 
 const ComponentTree = ({ className }: ComponentTreePropsType) => {
+  const { currentId, nodeTrees } = useDragAndDropStore((state) => state);
   const { nodes } = useEditor((state: EditorState) => ({
     nodes: state.nodes,
   }));
@@ -138,8 +141,9 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
     <div
       className={`h-full${className ? ` ${className}` : ""} border-r overflow-hidden`}
     >
-      <div className="h-siz-md flex items-center p-fix-sm">
-        <h6>Component Tree</h6>
+      <div className="h-siz-md flex items-center justify-between p-fix-sm">
+        <h6>{nodeTrees[currentId].name}</h6>
+        <EditNodeTreeDialog />
       </div>
       <DBDivider margin="none" />
       <div

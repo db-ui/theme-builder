@@ -18,6 +18,7 @@ const DefaultPage = ({
   themeImage,
   isLocalDarkMode,
   tonality,
+  navigation,
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const {
     speakingNames,
@@ -123,7 +124,9 @@ const DefaultPage = ({
                 </DBButton>
               </div>
             }
-          />
+          >
+            {navigation}
+          </DBHeader>
         }
       >
         {children}

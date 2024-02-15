@@ -3,43 +3,28 @@ import { Element, Frame, useEditor } from "@craftjs/core";
 import Root from "../components/root.tsx";
 import { useEffect, useState } from "react";
 import { useDragAndDropStore } from "../../../store";
-import {
-  compress,
-  compressToBase64,
-  decompressFromBase64,
-  decompress,
-} from "lz-string";
+import { decompress, decompressFromBase64 } from "lz-string";
 
 const Preview = ({ className }: PreviewType) => {
-  const { serializedJson } = useDragAndDropStore();
-  const { query, actions } = useEditor();
-  const [init, setInit] = useState<boolean>(false);
-  const [tick, setTick] = useState<boolean>(false);
+  const { currentId, nodeTrees } = useDragAndDropStore();
+  const { actions } = useEditor();
+  const [init, setInit] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (query) {
-      const timer = setTimeout(() => {
-        useDragAndDropStore.setState({
-          serializedJson: compressToBase64(compress(query.serialize())),
-        });
-        setTick(!tick);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [query, tick]);
-
-  useEffect(() => {
-    if (!init && serializedJson && actions) {
-      setInit(true);
-      const json =
-        serializedJson.length === 0
-          ? undefined
-          : decompress(decompressFromBase64(serializedJson));
-      if (json) {
-        actions.deserialize(json);
+    if (currentId && nodeTrees && nodeTrees[currentId] && actions) {
+      if (currentId !== init) {
+        const serializedJson = nodeTrees[currentId].serializedJson;
+        const json =
+          serializedJson.length === 0
+            ? undefined
+            : decompress(decompressFromBase64(serializedJson));
+        if (json) {
+          actions.deserialize(json);
+        }
       }
+      setInit(currentId);
     }
-  }, [actions, serializedJson, init]);
+  }, [actions, currentId, nodeTrees, init]);
 
   return (
     <div className={`${className || ""} p-fix-3xs h-full overflow-y-auto`}>

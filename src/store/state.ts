@@ -24,8 +24,16 @@ export type ThemeBuilderState = {
 
 export const PLAYGROUND_STATE = "playground-state";
 
-export type PlaygroundState = {
+export type PlaygroundNodeTree = {
+  name: string;
   serializedJson: string;
+  isPage: boolean;
+  children?: string[];
+};
+
+export type PlaygroundState = {
+  currentId: string;
+  nodeTrees: Record<string, PlaygroundNodeTree>;
   showBorders: boolean;
   showSpacings: boolean;
 };

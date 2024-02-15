@@ -15,13 +15,33 @@ import Toolbar from "../../components/Playground/Toolbar";
 import Preview from "../../components/Playground/Preview";
 import Sidebar from "../../components/Playground/Sidebar";
 import { useDragAndDropStore } from "../../store";
+import { compress, compressToBase64 } from "lz-string";
+import PageNavigation from "../../components/Playground/PageNavigation";
+import EditNodeTreeDialog from "../../components/Playground/ComponentTree/EditNodeTreeDialog";
 
 export const Playground = () => {
-  const { showBorders, showSpacings } = useDragAndDropStore((state) => state);
+  const { showBorders, showSpacings, currentId, nodeTrees } =
+    useDragAndDropStore((state) => state);
   const { t } = useTranslation();
   return (
-    <DefaultPage name={t("playground")}>
+    <DefaultPage
+      name={t("playground")}
+      navigation={<PageNavigation />}
+      actionBar={<EditNodeTreeDialog create />}
+    >
       <Editor
+        // Save the updated JSON whenever the Nodes has been changed
+        onNodesChange={(query) => {
+          useDragAndDropStore.setState({
+            nodeTrees: {
+              ...nodeTrees,
+              [currentId]: {
+                ...nodeTrees[currentId],
+                serializedJson: compressToBase64(compress(query.serialize())),
+              },
+            },
+          });
+        }}
         indicator={{
           success: "var(--db-successful-contrast-high)",
           error: "var(--db-critical-contrast-high)",

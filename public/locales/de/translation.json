@@ -1,4 +1,6 @@
 {
+  "add": "Hinzufügen",
+  "pgEdit": "Bearbeiten",
   "playgroundShowSpacings": "Zeige Abstände",
   "pgEditMe": "Editiere mich in der Seitenleiste",
   "general": "General",
@@ -33,6 +35,7 @@
   "border-enabled": "Border",
   "border-weak-enabled": "Border Weak",
   "brand": "Marke",
+  "change": "Ändern",
   "changeColor": "Name ändern",
   "color": "Farbe",
   "colorName": "Farbname",

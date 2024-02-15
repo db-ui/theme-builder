@@ -5,16 +5,10 @@
 
 :root {
   --db-drawer-max-height: 100%;
-
-  @media screen and (min-width: screen-sizes.$db-breakpoint-md) {
-    --db-drawer-max-height: 50%;
-  }
-}
-
-.content {
   --db-drawer-max-width: 90%;
 
   @media screen and (min-width: screen-sizes.$db-breakpoint-md) {
+    --db-drawer-max-height: 50%;
     --db-drawer-max-width: 33%;
   }
 }
