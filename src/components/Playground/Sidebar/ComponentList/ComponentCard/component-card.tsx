@@ -16,7 +16,7 @@ const ComponentCard = ({
         }
       }}
     >
-      <DBCard className="items-center cursor-move" spacing="small">
+      <DBCard className="items-center cursor-grab" spacing="small">
         <img
           className="max-h-siz-md"
           alt={name}

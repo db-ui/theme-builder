@@ -10,7 +10,14 @@ const Card = (props: DBCardProps) => {
   const {
     connectors: { connect, drag },
     id,
-  } = useNode();
+    hovered,
+    name,
+  } = useNode((node) => {
+    return {
+      name: node.data.custom.displayName || node.data.name,
+      hovered: node.data.custom.hover,
+    };
+  });
 
   const { selected } = useEditor((state) => {
     const [currentNodeId] = state.events.selected;
@@ -18,7 +25,7 @@ const Card = (props: DBCardProps) => {
   });
   return (
     <DBCard
-      className={`${getDragClassNames(selected, props.className)}`}
+      className={`${getDragClassNames(selected, hovered, props.className)}`}
       ref={(ref) => {
         if (ref) {
           connect(ref);
@@ -30,7 +37,7 @@ const Card = (props: DBCardProps) => {
         {props.children}
       </Element>
 
-      <DragButton drag={drag} />
+      <DragButton componentName={name} drag={drag} />
     </DBCard>
   );
 };

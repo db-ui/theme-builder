@@ -1,11 +1,13 @@
 import { SidebarType } from "./data.ts";
-import { DBButton } from "@db-ui/react-components";
+import { DBButton, DBDivider } from "@db-ui/react-components";
 import { useEditor } from "@craftjs/core";
 import { useEffect, useState } from "react";
 import Customize from "./Customize";
 import ComponentList from "./ComponentList";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = ({ className }: SidebarType) => {
+  const { t } = useTranslation();
   const { selected } = useEditor((state) => {
     const [currentNodeId] = state.events.selected;
     let selected;
@@ -32,7 +34,9 @@ const Sidebar = ({ className }: SidebarType) => {
   }, [selected]);
 
   return (
-    <div className={`border-l flex flex-col ${className || ""}`}>
+    <div
+      className={`border-l flex flex-col overflow-hidden ${className || ""}`}
+    >
       <div className="grid grid-cols-2 items-center justify-center min-h-siz-md px-fix-xs">
         <DBButton
           className="m-auto"
@@ -41,7 +45,7 @@ const Sidebar = ({ className }: SidebarType) => {
           width="full"
           variant={componentsActive ? "solid" : "text"}
         >
-          Components
+          {t("components")}
         </DBButton>
         <DBButton
           className="m-auto"
@@ -51,10 +55,11 @@ const Sidebar = ({ className }: SidebarType) => {
           width="full"
           variant={!componentsActive ? "solid" : "text"}
         >
-          Customize
+          {t("customize")}
         </DBButton>
       </div>
 
+      <DBDivider margin="none" />
       {!componentsActive && selected && <Customize />}
 
       {componentsActive && <ComponentList />}

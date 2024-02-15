@@ -17,7 +17,14 @@ const Text = ({
   const {
     connectors: { connect, drag },
     id,
-  } = useNode();
+    hovered,
+    name,
+  } = useNode((node) => {
+    return {
+      name: node.data.custom.displayName || node.data.name,
+      hovered: node.data.custom.hover,
+    };
+  });
 
   const { selected } = useEditor((state) => {
     const [currentNodeId] = state.events.selected;
@@ -40,7 +47,7 @@ const Text = ({
   }, [inline, text]);
   return (
     <p
-      className={`${getDragClassNames(selected, className)}`}
+      className={`${getDragClassNames(selected, hovered, className)}`}
       ref={(ref) => {
         if (ref) {
           connect(ref);
@@ -48,7 +55,7 @@ const Text = ({
       }}
     >
       {renderedText}
-      <DragButton drag={drag} />
+      <DragButton componentName={name} drag={drag} />
     </p>
   );
 };

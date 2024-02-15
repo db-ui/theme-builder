@@ -1,6 +1,6 @@
 import { ComponentTreePropsType } from "./data.ts";
 import { EditorState, useEditor } from "@craftjs/core";
-import { DBButton, DBDivider } from "@db-ui/react-components";
+import { DBButton, DBDivider, DBIcon } from "@db-ui/react-components";
 import { Node } from "@craftjs/core/lib/interfaces/nodes";
 import { Fragment, useState } from "react";
 
@@ -53,14 +53,32 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
   const item = (
     <div
       className={` 
-      ${selected?.id === id ? "db-neutral-bg-lvl-3" : ""} 
+      ${selected?.id === id ? "db-informational-bg-lvl-3" : ""} 
+      tree-item
       flex items-center justify-between w-full`}
       role="button"
       onClick={() => {
         actions.selectNode(id);
       }}
     >
-      <span className="break-words">{name}</span>
+      {childNodes.length === 0 && (
+        <DBIcon className="w-siz-md" icon="intermediary_stop" />
+      )}
+      <span
+        className={`break-words w-full`}
+        onMouseEnter={() =>
+          actions.setCustom(id, (data) => {
+            data.hover = true;
+          })
+        }
+        onMouseLeave={() =>
+          actions.setCustom(id, (data) => {
+            data.hover = false;
+          })
+        }
+      >
+        {name}
+      </span>
 
       <DBButton
         variant="text"
@@ -97,7 +115,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
           </DBButton>
           {item}
         </summary>
-        <div className="flex flex-col pl-siz-md w-full">
+        <div className="flex flex-col pl-fix-xs w-full">
           {childNodes.map((nodeId: string) => (
             <Fragment key={`tree-item-${nodeId}`}>
               <TreeItem node={allNodes[nodeId]} />

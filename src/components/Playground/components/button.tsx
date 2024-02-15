@@ -9,15 +9,23 @@ const Button = (props: DBButtonProps) => {
   const {
     connectors: { connect, drag },
     id,
-  } = useNode();
+    hovered,
+    name,
+  } = useNode((node) => {
+    return {
+      name: node.data.custom.displayName || node.data.name,
+      hovered: node.data.custom.hover,
+    };
+  });
 
   const { selected } = useEditor((state) => {
     const [currentNodeId] = state.events.selected;
     return { selected: id === currentNodeId };
   });
+
   return (
     <DBButton
-      className={`${getDragClassNames(selected, props.className)}`}
+      className={`${getDragClassNames(selected, hovered, props.className)}`}
       ref={(ref) => {
         if (ref) {
           connect(ref);
@@ -26,7 +34,7 @@ const Button = (props: DBButtonProps) => {
       {...props}
     >
       {props.children}
-      <DragButton drag={drag} />
+      <DragButton componentName={name} drag={drag} />
     </DBButton>
   );
 };

@@ -56,8 +56,7 @@ const Customize = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <DBDivider margin="none" />
+    <div className="flex flex-col h-full overflow-y-auto">
       <div className="flex flex-col p-fix-xs gap-fix-xs h-full">
         <DBInput
           labelVariant="floating"

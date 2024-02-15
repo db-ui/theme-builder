@@ -1,4 +1,12 @@
-{
+{  "general": "General",
+  "container": "Container",
+  "text": "Text",
+  "card": "Card",
+  "link": "Link",
+  "button": "Button",
+  "layout": "Layout",
+  "action": "Action",
+  "customize": "Anpassen",
   "playgroundSelectIcon": "Icon auswählen",
   "playgroundShowBorders": "Zeige Komponentenumrandung",
   "playgroundRedo": "Letzte Aktion wiederherstellen",
