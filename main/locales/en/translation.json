@@ -1,4 +1,8 @@
 {
+  "delete": "Delete",
+  "add": "Add",
+  "id": "ID",
+  "pgEdit": "Edit",
   "playgroundShowSpacings": "Show spacings",
   "pgEditMe": "Edit me in the sidebar",
   "action": "Action",
@@ -24,6 +28,7 @@
   "brand": "Brand",
   "button": "Button",
   "card": "Card",
+  "change": "Change",
   "changeColor": "Change Name",
   "color": "Color",
   "colorInputHex": "Color as hex-code",
