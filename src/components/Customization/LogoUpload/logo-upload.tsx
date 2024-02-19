@@ -10,6 +10,7 @@ const LogoUpload = memo(() => {
   return (
     <div className="flex gap-fix-md justify-between">
       <img
+        className="w-[34px] h-[24px]"
         src={getThemeImage(defaultTheme.image)}
         alt="logo"
         height="24"

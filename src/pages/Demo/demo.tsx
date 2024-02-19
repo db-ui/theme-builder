@@ -35,6 +35,7 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
         to={linkToDemo ? "/demo" : "/"}
         className={`db-button open-demo absolute ${linkToDemo ? "bottom-0 right-0" : "bottom-fix-xs right-fix-xs"}`}
         data-variant="primary"
+        target="_blank"
       >
         {linkToDemo ? t("openDemo") : t("openMainPage")}
       </Link>

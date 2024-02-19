@@ -1,6 +1,6 @@
 import { getShirtValue, ShirtSelectionType } from "./data.ts";
 import { useThemeBuilderStore } from "../../../../store";
-import { DBInput } from "@db-ui/react-components";
+import { DBSelect } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import traverse from "traverse";
 
@@ -18,7 +18,7 @@ const getFromJsonByArray = (params: string[], json: any): any => {
   return 1;
 };
 
-const ShirtSelection = ({ label, params }: ShirtSelectionType) => {
+const Scaling = ({ label, params }: ShirtSelectionType) => {
   const { t } = useTranslation();
   const { defaultTheme } = useThemeBuilderStore((state) => state);
 
@@ -41,18 +41,26 @@ const ShirtSelection = ({ label, params }: ShirtSelectionType) => {
   };
 
   return (
-    <DBInput
+    <DBSelect
       label={`${t(label)} ${t("scale")}`}
       labelVariant="floating"
       type="number"
-      min={1}
-      max={5}
       value={getFromJsonByArray([...params, "_scale"], defaultTheme)}
       onChange={(event) => {
         setDetfaultTheme(event.target.value);
       }}
-    />
+    >
+      <option>3xs</option>
+      <option>2xs</option>
+      <option>xs</option>
+      <option>sm</option>
+      <option>md</option>
+      <option>lg</option>
+      <option>xl</option>
+      <option>2xl</option>
+      <option>3xl</option>
+    </DBSelect>
   );
 };
 
-export default ShirtSelection;
+export default Scaling;
