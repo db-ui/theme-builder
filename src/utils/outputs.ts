@@ -149,7 +149,7 @@ export const getPaletteOutput = (
  * @param darkMode
  * @param luminanceSteps
  */
-const getExtraBrandColors = (
+export const getExtraBrandColors = (
   color: string,
   darkMode: boolean,
   luminanceSteps: number[],
