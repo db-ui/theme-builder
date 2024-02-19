@@ -48,20 +48,23 @@ export const getPalette = (allColors: object, luminanceSteps: number[]): any =>
     );
     const mergeColorsWithSpeakingNames = (
       speakingNames: Record<string, string>,
-      colors: Record<string, string>,
+      colors: Record<string, string>
     ): Record<string, string> => {
       const result: Record<string, string> = {};
-    
-      Object.entries(speakingNames).forEach(([speakingName, varValue]) => {
-        // Extracting the variable name from var()
-        const variableName = varValue.match(/\((.*?)\)/)?.[1];
-        if (variableName && colors.hasOwnProperty(variableName)) {
-          result[speakingName] = colors[variableName];
-        }
+
+      Object.entries(speakingNames).forEach(([speakingName, value]) => {
+        const transparencyMatch = value.match(/transparency (\d+%)/);
+        const transparency = transparencyMatch ? transparencyMatch[1] : '0%'; 
+
+        const variableMatch = value.match(/var\((.*?)\)/);
+        const variableName = variableMatch ? variableMatch[1] : '';
+        const colorHex = variableName && colors.hasOwnProperty(variableName) ? colors[variableName] : '';
+        
+        result[speakingName] = `${transparency}, ${colorHex}`;
       });
-    
       return result;
     };
+
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
   luminanceSteps: number[],

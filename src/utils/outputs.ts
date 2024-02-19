@@ -214,14 +214,13 @@ export const getSpeakingNamesForJSON = (
         speakingName.transparencyDark !== undefined ||
         speakingName.transparencyLight !== undefined
       ) {
-        if (speakingName.name.includes("enabled") || speakingName.name.includes("hover") || speakingName.name.includes("pressed")) {          
+        if (speakingName.name.includes("enabled") || speakingName.name.includes("hover") || speakingName.name.includes("pressed")) {  
           const stateIndex = speakingName.name.lastIndexOf("-");
           const nameWithoutState = speakingName.name.slice(0, stateIndex); 
           const state = speakingName.name.slice(stateIndex + 1);
-          console.log(state);
           const stateNumbered = (state === 'enabled') ? '01' : (state === 'hover') ? '02' : '03';
           result[`${name}/${nameWithoutState}/${stateNumbered}-${state}`] =
-            `color-mix(in srgb, transparent ${
+            `transparency ${
               darkMode
                 ? speakingName.transparencyDark
                 : speakingName.transparencyLight
@@ -230,7 +229,7 @@ export const getSpeakingNamesForJSON = (
             }))`;
         } else {
           result[`${name}/${speakingName.name}`] =
-          `color-mix(in srgb, transparent ${
+          `transparency ${
             darkMode
               ? speakingName.transparencyDark
               : speakingName.transparencyLight
@@ -246,14 +245,14 @@ export const getSpeakingNamesForJSON = (
             const nameWithoutState = nameWithoutOnPrefix.slice(0, stateIndex); 
             const state = speakingName.name.slice(stateIndex + 1).replace(/^ak-/, "");
             const stateNumbered = (state === 'enabled') ? '01' : (state === 'hover') ? '02' : '03';
-            result[`On/${name}/${nameWithoutState}/${stateNumbered}-${state}`] =
-              `var(--${prefix}-${name}-${
+            result
+            [`On/${name}/${nameWithoutState}/${stateNumbered}-${state}`] =
+              `transparency 0%, var(--${prefix}-${name}-${
                 darkMode ? speakingName.dark : speakingName.light
               })`;
           } else {
-            console.log("yes");
             result[`On/${name}/${nameWithoutOnPrefix}`] =
-            `var(--${prefix}-${name}-${
+            `transparency 0%, var(--${prefix}-${name}-${
               darkMode ? speakingName.dark : speakingName.light
             })`;
           }
@@ -264,18 +263,18 @@ export const getSpeakingNamesForJSON = (
             const state = speakingName.name.slice(stateIndex + 1);
             const stateNumbered = (state === 'enabled') ? '01' : (state === 'hover') ? '02' : '03';
             result[`${name}/${nameWithoutState}/${stateNumbered}-${state}`] =
-              `var(--${prefix}-${name}-${
+              `transparency 0%, var(--${prefix}-${name}-${
                 darkMode ? speakingName.dark : speakingName.light
               })`;
             } else {
               result[`${name}/${speakingName.name}`] =
-              `var(--${prefix}-${name}-${
+              `transparency 0%, var(--${prefix}-${name}-${
                 darkMode ? speakingName.dark : speakingName.light
               })`;
             }
         }
       }
     }); 
-  });
+  });  
   return result;
 };
