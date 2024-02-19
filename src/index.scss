@@ -2,6 +2,7 @@
 @use "@db-ui/foundations/build/scss/colors";
 @use "@db-ui/foundations/build/scss/screen-sizes";
 @forward "@db-ui/components/build/styles/db-ui-42-rollup";
+@forward "font-face.css";
 
 :root {
   --db-drawer-max-height: 100%;
@@ -107,4 +108,23 @@ h6 {
     padding-block-start: variables.$db-spacing-fixed-md;
     padding-block-end: variables.$db-spacing-fixed-2xl;
   }
+}
+
+.landing-select-card {
+  color: var(--landing-select-card-on-color);
+  background-color: var(--landing-select-card-color);
+
+  &[data-selected="false"] {
+    &:hover {
+      background-color: var(--landing-select-card-color-hover);
+    }
+
+    &:active {
+      background-color: var(--landing-select-card-color-pressed);
+    }
+  }
+}
+
+.brand-icon {
+  --db-icon-font-size: 34px;
 }

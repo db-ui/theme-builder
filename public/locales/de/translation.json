@@ -23,8 +23,7 @@
   "neutralTheme": "Neutral",
   "dbTheme": "DB",
   "sbahnTheme": "S-Bahn",
-  "landingMoreTitle": "Mehr, mehr, mehr!",
-  "landingMoreText": "Entdecke unser Design System ♥",
+  "landingMoreTitle": "Entdecke unser Design System♥",
   "landingDesignSystemText": "Wähle ein vorgefertigtes Theme aus oder erstelle ein eigenes:",
   "active": "Aktiv",
   "addColor": "Farbe hinzufügen",
@@ -95,6 +94,6 @@
   "today": "Heute",
   "tonality": "Tonalität",
   "transparency": "Transparenz",
-  "tryIt": "Probiere es aus",
+  "tryIt": "Probiere Unseren Playground",
   "username": "Benutzername"
 }

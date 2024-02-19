@@ -1,0 +1,26 @@
+/* Include this file in your app to load your custom icon font */
+
+@font-face {
+	font-display: block;
+	font-family: "piab";
+	font-style: normal;
+	font-weight: normal;
+	src: url("/theme-builder/assets/piab.woff2") format("woff2");
+}
+
+.piab {
+	font-family: 'piab' !important;
+	font-style:normal;
+	font-weight: normal;
+}
+
+.icon-family-piab::before,
+[data-icon-family="piab"]::before,
+[data-icon-family-before="piab"]::before{
+	--db-icon-font-family: 'piab';
+}
+
+
+[data-icon-family-after="piab"]::after{
+	--db-icon-font-family: 'piab';
+}
