@@ -88,7 +88,11 @@ const Landing = () => {
                   </DBCard>
                 </button>
               ))}
-              <Link className="no-underline" to="/customization">
+              <Link
+                className="no-underline"
+                to="/customization"
+                target="_blank"
+              >
                 <DBCard
                   className="items-center justify-center min-h-siz-xl"
                   spacing="small"
@@ -121,6 +125,7 @@ const Landing = () => {
                 to="/playground"
                 className="db-link"
                 data-content="internal"
+                target="_blank"
               >
                 {t("tryIt")}
               </Link>

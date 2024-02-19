@@ -12,9 +12,30 @@ export const getShirtValue = (
   scaleString: string,
   path: string[],
 ): string | number | undefined => {
-  const scale = Number(scaleString);
   if (path.at(-1) === "_scale") {
-    return scale;
+    return scaleString;
+  }
+
+  let scale = 1;
+
+  if (scaleString === "3xs") {
+    scale = 0;
+  } else if (scaleString === "2xs") {
+    scale = 0.33;
+  } else if (scaleString === "xs") {
+    scale = 0.5;
+  } else if (scaleString === "sm") {
+    scale = 0.75;
+  } else if (scaleString === "md") {
+    scale = 1;
+  } else if (scaleString === "lg") {
+    scale = 1.5;
+  } else if (scaleString === "xl") {
+    scale = 2;
+  } else if (scaleString === "2xl") {
+    scale = 3;
+  } else if (scaleString === "3xl") {
+    scale = 10;
   }
 
   if (path.length < 1 && !defaultTheme.has(path)) {

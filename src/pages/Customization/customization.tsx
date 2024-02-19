@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { Fragment, useState } from "react";
-import ShirtSelection from "../../components/Customization/Settings/ShirtSelection";
 import ColorSelection from "../../components/Customization/Settings/ColorSelection";
 import { TabItemType } from "./data.ts";
 import ComponentContainer from "../../components/Customization/Preview/ComponentContainer";
@@ -13,6 +12,7 @@ import SpeakingColors from "../../components/Customization/Preview/SpeakingColor
 import HeadlineDivider from "../../components/Customization/HeadlineDivider";
 import LogoUpload from "../../components/Customization/LogoUpload";
 import InteractiveDemo from "../../components/Customization/Preview/InteractiveDemo";
+import Scaling from "../../components/Customization/Settings/Scaling";
 
 const tabs: TabItemType[] = [
   {
@@ -59,19 +59,19 @@ const Customization = () => {
           <ColorSelection />
 
           <HeadlineDivider headline="spacing" />
-          <ShirtSelection label="spacing" params={["spacing"]} />
+          <Scaling label="spacing" params={["spacing"]} />
 
           <HeadlineDivider headline="sizing" />
-          <ShirtSelection label="sizing" params={["sizing"]} />
+          <Scaling label="sizing" params={["sizing"]} />
 
           <HeadlineDivider headline="elevation" />
-          <ShirtSelection label="elevation" params={["elevation"]} />
+          <Scaling label="elevation" params={["elevation"]} />
 
           <HeadlineDivider headline="borderHeight" />
-          <ShirtSelection label="borderHeight" params={["border", "height"]} />
+          <Scaling label="borderHeight" params={["border", "height"]} />
 
           <HeadlineDivider headline="borderRadius" />
-          <ShirtSelection label="borderRadius" params={["border", "radius"]} />
+          <Scaling label="borderRadius" params={["border", "radius"]} />
         </div>
         <div
           className="db-neutral-bg-lvl-2 p-fix-sm md:p-res-sm
