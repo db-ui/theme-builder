@@ -49,6 +49,9 @@ $selected-outline-height: 3px;
       margin: auto;
     }
   }
+  &:has(> .drag-button) {
+    position: relative;
+  }
 }
 
 [data-hint] {
@@ -72,8 +75,6 @@ $selected-outline-height: 3px;
   outline: $selected-outline-height colors.$db-informational-contrast-low solid;
 
   &:has(> .drag-button) {
-    position: relative;
-
     &:hover {
       > .drag-button {
         opacity: 100;
@@ -96,6 +97,16 @@ $selected-outline-height: 3px;
 
   &:active {
     cursor: grabbing;
+  }
+
+  &[data-outside-y="true"] {
+    inset-block-end: auto;
+    inset-block-start: 100%;
+  }
+
+  &[data-outside-x="true"] {
+    inset-inline-end: auto;
+    inset-inline-start: calc(-1 * #{$selected-outline-height});
   }
 }
 

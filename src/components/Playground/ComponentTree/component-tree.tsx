@@ -3,6 +3,9 @@ import { EditorState, useEditor } from "@craftjs/core";
 import { DBButton, DBDivider, DBIcon } from "@db-ui/react-components";
 import { Node } from "@craftjs/core/lib/interfaces/nodes";
 import { Fragment, useState } from "react";
+import { useDragAndDropStore } from "../../../store";
+import EditNodeTreeDialog from "./EditNodeTreeDialog";
+import { useTranslation } from "react-i18next";
 
 type TreeItemPropsType = {
   node: Node;
@@ -130,16 +133,29 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
 };
 
 const ComponentTree = ({ className }: ComponentTreePropsType) => {
+  const { t } = useTranslation();
+  const { currentId, nodeTrees } = useDragAndDropStore((state) => state);
   const { nodes } = useEditor((state: EditorState) => ({
     nodes: state.nodes,
   }));
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div
       className={`h-full${className ? ` ${className}` : ""} border-r overflow-hidden`}
     >
-      <div className="h-siz-md flex items-center p-fix-sm">
-        <h6>Component Tree</h6>
+      <div className="h-siz-md flex items-center justify-between p-fix-sm">
+        <h6>{nodeTrees[currentId].name}</h6>
+        <DBButton
+          data-tonality={"functional"}
+          noText
+          icon="edit"
+          variant="text"
+          onClick={() => setOpen(true)}
+        >
+          {t("pgEdit")}
+        </DBButton>
+        <EditNodeTreeDialog open={open} onClose={() => setOpen(false)} />
       </div>
       <DBDivider margin="none" />
       <div

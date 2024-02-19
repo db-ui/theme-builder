@@ -57,7 +57,10 @@ export const useDragAndDropStore = create<PlaygroundState>()(
     persist(
       () => {
         return {
-          serializedJson: "",
+          nodeTrees: {
+            page: { name: "Page", serializedJson: "", isPage: true },
+          },
+          currentId: "page",
           showBorders: false,
           showSpacings: false,
         };
