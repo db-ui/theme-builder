@@ -15,7 +15,7 @@ $selected-outline-height: 3px;
 .show-spacings {
   :has(> .drop-container),
   :has(> .drag-container) {
-    background-color: colors.$db-warning-bg-lvl-3;
+    background-color: #f9cc9d;
   }
 
   .drop-container,
@@ -25,10 +25,7 @@ $selected-outline-height: 3px;
         #{colors.$db-current-bg-color},
         #{colors.$db-current-bg-color}
       ),
-      linear-gradient(
-        #{colors.$db-successful-bg-lvl-3},
-        #{colors.$db-successful-bg-lvl-3}
-      );
+      linear-gradient(#c3d08b, #c3d08b);
     background-clip: content-box, padding-box;
     color: colors.$db-current-color;
   }

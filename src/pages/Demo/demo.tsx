@@ -13,7 +13,6 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
     <DefaultPage
       className="hide-action-bar relative"
       name="Demo"
-      themeImage
       tonality={tonality}
       isLocalDarkMode
     >

@@ -12,7 +12,7 @@ const MainFeatures = () => {
           key={`feature-card-${card}`}
           variant="medium"
           size="large"
-          className={`flex h-[100vh] items-center${index % 2 === 0 ? " db-neutral-bg-lvl-3" : ""}`}
+          className={`flex h-[100vh] items-center${index % 2 === 0 ? " db-neutral-bg-lvl-2" : ""}`}
         >
           <div className="flex flex-col text-balance text-center items-center gap-fix-md">
             <h6>{t(`landingHowItFeature${index + 1}Title`)}</h6>
