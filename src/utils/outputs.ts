@@ -48,17 +48,14 @@ export const getNonColorCssProperties = (
           ? `${value}rem`
           : value;
 
-      if (this.path.includes("body") && this.path.at(-1) === "fontSize") {
+      if (this.path.at(-1) === "fontSize") {
         const lineHeightPath = [...this.path];
         lineHeightPath[lineHeightPath.length - 1] = "lineHeight";
         const fontSizeAsNumber = Number(value);
         const lineHeightAsNumber = Number(traverse(theme).get(lineHeightPath));
 
         const remainingIconPath = this.path
-          .filter(
-            (path) =>
-              path !== "typography" && path !== "body" && path !== "fontSize",
-          )
+          .filter((path) => path !== "typography" && path !== "fontSize")
           .join("-");
         const fontSizing = fontSizeAsNumber * lineHeightAsNumber;
         resolvedProperties[
