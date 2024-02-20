@@ -1,13 +1,7 @@
 import { DBButton, DBHeader, DBPage } from "@db-ui/react-components";
-import { BASE_PATH } from "../../constants.ts";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
-import { PropsWithChildren, useCallback, useEffect, useState } from "react";
-import {
-  getNonColorCssProperties,
-  getPaletteOutput,
-  getSpeakingNames,
-} from "../../utils/outputs.ts";
+import { PropsWithChildren, useCallback, useState } from "react";
 import { getThemeImage } from "../../utils";
 
 const DefaultPage = ({
@@ -15,49 +9,15 @@ const DefaultPage = ({
   children,
   actionBar,
   className,
-  themeImage,
   isLocalDarkMode,
   tonality,
   navigation,
 }: PropsWithChildren<DefaultPagePropsType>) => {
-  const {
-    speakingNames,
-    luminanceSteps,
-    defaultColors,
-    customColors,
-    defaultTheme,
-    darkMode,
-    developerMode,
-  } = useThemeBuilderStore((state) => state);
+  const { defaultTheme, darkMode, developerMode } = useThemeBuilderStore(
+    (state) => state,
+  );
+
   const [localDarkMode, setLocalDarkMode] = useState<boolean>();
-
-  useEffect(() => {
-    const allColors: Record<string, string> = {
-      ...defaultColors,
-      ...customColors,
-    };
-    const cssProps: any = {
-      ...getPaletteOutput(allColors, luminanceSteps),
-      ...getSpeakingNames(speakingNames, allColors, false),
-      ...getNonColorCssProperties(defaultTheme),
-    };
-
-    const pages = document.getElementsByClassName("theme-props-container");
-    Array.from(pages).forEach((page: Element) => {
-      page.setAttribute(
-        "style",
-        Object.entries(cssProps)
-          .map((value) => `${value[0]}:${value[1]};`)
-          .join(" "),
-      );
-    });
-  }, [
-    speakingNames,
-    defaultColors,
-    customColors,
-    defaultTheme,
-    luminanceSteps,
-  ]);
 
   const isDark = useCallback(
     () => (isLocalDarkMode ? localDarkMode : darkMode),
@@ -78,14 +38,9 @@ const DefaultPage = ({
             slotBrand={
               <div className="db-brand">
                 <img
-                  src={
-                    themeImage
-                      ? getThemeImage(defaultTheme.image)
-                      : `${BASE_PATH}/assets/images/peace-in-a-box.svg`
-                  }
+                  className="logo"
+                  src={getThemeImage(defaultTheme.image)}
                   alt="brand"
-                  height="24"
-                  width="34"
                 />
                 {name}
               </div>
