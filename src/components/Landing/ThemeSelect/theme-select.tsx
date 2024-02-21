@@ -40,7 +40,7 @@ const ThemeSelect = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-fix-md">
         <div className="flex flex-col gap-fix-md">
-          <h1>DB UX Design System</h1>
+          <h1>Design System Platform</h1>
           <h4 data-variant="light">By all, for all</h4>
           <p>{t("landingDesignSystemText")}</p>
           <div className="grid grid-cols-4 gap-fix-md">

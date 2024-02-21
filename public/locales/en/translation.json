@@ -1,4 +1,9 @@
 {
+  "dashboard": "Dashboard",
+  "document": "Documents",
+  "account": "Account",
+  "build": "Build",
+  "piggybank": "Finance",
   "landingHowItFeature3Desc": " does the trick – saving time, money, and nerves for all stakeholders.",
   "landingHowItFeature3Strong": "One system",
   "landingHowItFeature3Title": "Efficient",

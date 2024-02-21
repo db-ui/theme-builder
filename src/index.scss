@@ -67,20 +67,15 @@ h6 {
 
 .scale-down {
   border: variables.$db-border-height-sm solid colors.$db-neutral-contrast-low;
+  border-radius: variables.$db-border-radius-lg;
+
+  .db-page {
+    border-radius: variables.$db-border-radius-lg;
+  }
 
   @include screen-sizes.screen {
     transform-origin: top;
     transform: scale(0.75);
-  }
-
-  .open-demo {
-    display: none;
-  }
-
-  &:hover {
-    .open-demo {
-      display: inherit;
-    }
   }
 }
 
