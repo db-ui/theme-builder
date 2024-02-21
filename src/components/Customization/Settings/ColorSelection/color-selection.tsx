@@ -6,7 +6,6 @@ import {
 } from "../../../../utils/data.ts";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import HeadlineDivider from "../../HeadlineDivider";
 
 const ColorSelection = () => {
   const { t } = useTranslation();
@@ -40,83 +39,88 @@ const ColorSelection = () => {
   };
 
   return (
-    <div className="flex flex-col gap-fix-md">
-      <div className="flex flex-wrap gap-fix-xs">
-        <ColorPicker
-          color={defaultColors.neutral}
-          label="Neutral"
-          setColor={(neutral) =>
-            setDefaultColors({ ...defaultColors, neutral })
-          }
-        />
+    <>
+      <div className="flex flex-col gap-fix-md">
+        <h5>{t("colors")}</h5>
+        <div className="flex flex-wrap gap-fix-xs">
+          <ColorPicker
+            color={defaultColors.neutral}
+            label="Neutral"
+            setColor={(neutral) =>
+              setDefaultColors({ ...defaultColors, neutral })
+            }
+          />
 
-        <ColorPicker
-          color={defaultColors.brand}
-          label="Brand"
-          setColor={(brand) => setDefaultColors({ ...defaultColors, brand })}
-        />
+          <ColorPicker
+            color={defaultColors.brand}
+            label="Brand"
+            setColor={(brand) => setDefaultColors({ ...defaultColors, brand })}
+          />
 
-        <ColorPicker
-          color={defaultColors.informational}
-          label="Informational"
-          setColor={(informational) =>
-            setDefaultColors({ ...defaultColors, informational })
-          }
-        />
+          <ColorPicker
+            color={defaultColors.informational}
+            label="Informational"
+            setColor={(informational) =>
+              setDefaultColors({ ...defaultColors, informational })
+            }
+          />
 
-        <ColorPicker
-          color={defaultColors.successful}
-          label="Successful"
-          setColor={(successful) =>
-            setDefaultColors({ ...defaultColors, successful })
-          }
-        />
+          <ColorPicker
+            color={defaultColors.successful}
+            label="Successful"
+            setColor={(successful) =>
+              setDefaultColors({ ...defaultColors, successful })
+            }
+          />
 
-        <ColorPicker
-          color={defaultColors.warning}
-          label="Warning"
-          setColor={(warning) =>
-            setDefaultColors({ ...defaultColors, warning })
-          }
-        />
+          <ColorPicker
+            color={defaultColors.warning}
+            label="Warning"
+            setColor={(warning) =>
+              setDefaultColors({ ...defaultColors, warning })
+            }
+          />
 
-        <ColorPicker
-          color={defaultColors.critical}
-          label="Critical"
-          setColor={(critical) =>
-            setDefaultColors({ ...defaultColors, critical })
-          }
-        />
+          <ColorPicker
+            color={defaultColors.critical}
+            label="Critical"
+            setColor={(critical) =>
+              setDefaultColors({ ...defaultColors, critical })
+            }
+          />
+        </div>
       </div>
-      <HeadlineDivider headline="custom" />
 
-      <div className="flex flex-wrap gap-fix-xs">
-        <ColorPicker
-          color="#ffffff"
-          label={t("addColor")}
-          setColor={() => {}}
-          customColor
-          isAddColor
-        />
-        {customColorArray?.length > 0 &&
-          customColorArray.map((color) => (
-            <ColorPicker
-              key={color}
-              color={customColors[color]}
-              label={color}
-              setColor={(changedColor) =>
-                setCustomColors({ ...customColors, [color]: changedColor })
-              }
-              customColor
-              onDelete={() => {
-                const copyCustomColors = { ...customColors };
-                delete copyCustomColors[color];
-                setCustomColors(copyCustomColors);
-              }}
-            />
-          ))}
+      <div className="flex flex-col gap-fix-md">
+        <h5>{t("custom")}</h5>
+        <div className="flex flex-wrap gap-fix-xs">
+          <ColorPicker
+            color="#ffffff"
+            label={t("addColor")}
+            setColor={() => {}}
+            customColor
+            isAddColor
+          />
+          {customColorArray?.length > 0 &&
+            customColorArray.map((color) => (
+              <ColorPicker
+                key={color}
+                color={customColors[color]}
+                label={color}
+                setColor={(changedColor) =>
+                  setCustomColors({ ...customColors, [color]: changedColor })
+                }
+                customColor
+                onDelete={() => {
+                  const copyCustomColors = { ...customColors };
+                  delete copyCustomColors[color];
+                  setCustomColors(copyCustomColors);
+                }}
+              />
+            ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
