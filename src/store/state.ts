@@ -1,5 +1,4 @@
 import {
-  ColorType,
   CustomColorMappingType,
   DefaultColorMappingType,
   DefaultThemeType,
@@ -11,7 +10,6 @@ export const THEME_BUILDER_STATE = "theme-builder-state";
 export type ThemeBuilderState = {
   defaultColors: DefaultColorMappingType;
   customColors: CustomColorMappingType;
-  colors: ColorType[];
   darkMode: boolean;
   resetDefaults: () => void;
   editorMarkup: string;
