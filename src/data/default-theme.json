@@ -1,6 +1,7 @@
 {
   "name": "Default Theme",
   "image": "peace-in-a-box.svg",
+  "imageDark": "peace-in-a-box-white.svg",
   "spacing": {
     "_scale": "100%",
     "responsive": {
