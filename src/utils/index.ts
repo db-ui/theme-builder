@@ -63,13 +63,13 @@ const mergeColorsWithSpeakingNames = (
 
     if (speakingName.startsWith("--")) {
       if (speakingName.includes("on-enabled")) {
-        speakingName = `On/Brand/01-Enabled`;
+        speakingName = `On/brand/01-Enabled`;
       } else if (speakingName.includes("origin-enabled")) {
-        speakingName = `Brand/Origin/01-Enabled`;
+        speakingName = `brand/Origin/01-Enabled`;
       } else if (speakingName.includes("origin-hover")) {
-        speakingName = `Brand/Origin/02-Hover`;
+        speakingName = `brand/Origin/02-Hover`;
       } else if (speakingName.includes("origin-pressed")) {
-        speakingName = `Brand/Origin/03-Pressed`;
+        speakingName = `brand/Origin/03-Pressed`;
       }
       colorHex = value;
     } else {
@@ -109,7 +109,6 @@ export const downloadTheme = async (
     false,
     luminanceSteps
   );
-
   const lightSpeakingNamesWithHex = mergeColorsWithSpeakingNames(
     lightSpeakingNames,
     colors
@@ -117,12 +116,6 @@ export const downloadTheme = async (
   const darkSpeakingNamesWithHex = mergeColorsWithSpeakingNames(
     darkSpeakingNames,
     colors
-  );
-  console.log(
-    "result light:",
-    lightSpeakingNamesWithHex,
-    "result dark:",
-    darkSpeakingNamesWithHex
   );
 
   const fileName = `default-theme`;
