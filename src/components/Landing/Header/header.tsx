@@ -9,7 +9,15 @@ const Header = () => {
   return (
     <div className="py-fix-xs px-fix-md md:py-fix-md">
       <div className="flex justify-between min-h-siz-md">
-        <img className="logo" src={getThemeImage(defaultTheme.image)} alt="brand" />
+        <img
+          className="logo"
+          src={getThemeImage(
+            isDarkMode && defaultTheme.imageDark
+              ? defaultTheme.imageDark
+              : defaultTheme.image,
+          )}
+          alt="brand"
+        />
         <a
           href="https://github.com/db-ui/theme-builder"
           target="_blank"

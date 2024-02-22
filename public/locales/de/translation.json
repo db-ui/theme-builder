@@ -1,4 +1,9 @@
 {
+  "dashboard": "Übersicht",
+  "document":  "Dokumente",
+  "account": "Benutzer",
+  "build": "Verwalten",
+  "piggybank": "Finanzen",
   "delete": "Löschen",
   "add": "Hinzufügen",
   "pgEdit": "Bearbeiten",

@@ -64,6 +64,7 @@ export type SizingFixedType = {
 export type DefaultThemeType = {
   name: string;
   image: string;
+  imageDark: string;
   spacing: {
     responsive: ThemeTonalities;
     fixed: ThemeTonalities;
