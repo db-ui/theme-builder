@@ -4,11 +4,11 @@
 .upload-button {
   @extend .db-button;
   &:hover {
-    background-color: colors.$db-current-bg-transparent-hover;
+    background-color: colors.$db-current-color-bg-transparent-hover;
   }
 
   &:active {
-    background-color: colors.$db-current-bg-transparent-pressed;
+    background-color: colors.$db-current-color-bg-transparent-pressed;
   }
 
   input[type="file"] {

@@ -43,7 +43,7 @@ const ActionBar = () => {
         }}
       />
       <DBButton
-        variant="primary"
+        variant="brand"
         icon="download"
         onClick={() =>
           downloadTheme(

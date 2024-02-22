@@ -34,11 +34,11 @@ const Toolbar = ({ className }: ToolbarType) => {
     >
       <div
         className="flex w-full justify-between m-auto"
-        data-tonality="functional"
+        data-density="functional"
       >
         <div className="flex gap-fix-sm">
           <DBButton
-            variant="text"
+            variant="ghost"
             noText
             icon="undo"
             disabled={!canUndo}
@@ -50,7 +50,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             {canUndo && <DBTooltip>{t("playgroundUndo")}</DBTooltip>}
           </DBButton>
           <DBButton
-            variant="text"
+            variant="ghost"
             noText
             icon="fast_forward_empty"
             disabled={!canRedo}
@@ -64,7 +64,7 @@ const Toolbar = ({ className }: ToolbarType) => {
         </div>
         <div className="flex gap-fix-sm">
           <DBButton
-            variant="text"
+            variant="ghost"
             noText
             icon="resize"
             onClick={() => {
@@ -75,7 +75,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             <DBTooltip>{t("playgroundShowSpacings")}</DBTooltip>
           </DBButton>
           <DBButton
-            variant="text"
+            variant="ghost"
             noText
             icon="grid_view"
             onClick={() => {

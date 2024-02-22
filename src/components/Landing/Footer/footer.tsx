@@ -17,14 +17,14 @@ const Footer = () => {
             to="/playground"
             className="db-button"
             target="_blank"
-            data-variant="solid"
+            data-variant="filled"
             data-width="full"
           >
             {t("tryIt")}
           </Link>
           <a
             className="db-button"
-            data-variant="primary"
+            data-variant="brand"
             href="https://marketingportal.extranet.deutschebahn.com/marketingportal"
             target="_blank"
             data-width="full"

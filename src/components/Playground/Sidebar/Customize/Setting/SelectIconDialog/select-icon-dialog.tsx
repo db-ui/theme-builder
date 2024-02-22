@@ -44,7 +44,7 @@ const SelectIconDialog = ({
             <span className="my-auto">{t("playgroundSelectIcon")}</span>
             <DBInput
               type="search"
-              labelVariant="floating"
+              variant="floating"
               label={t("search")}
               value={filter}
               onChange={(event) => setFilter(event.target.value)}
@@ -62,7 +62,7 @@ const SelectIconDialog = ({
                 onClick={() => onIconPick(icon)}
               >
                 <DBCard
-                  variant="interactive"
+                  data-interactive="elevation"
                   className={`items-center ${icon === "none" ? " h-full" : ""}${icon === selectedIcon ? " db-successful-bg-lvl-3" : ""}`}
                   spacing="small"
                 >

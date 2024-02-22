@@ -13,14 +13,14 @@ import {
   DBTag,
   DBTextarea,
 } from "@db-ui/react-components";
-import { DefaultVariantType } from "@db-ui/react-components/dist/shared/model";
+import { SemanticType } from "@db-ui/react-components/dist/shared/model";
 
 export type ComponentList = {
   title: string;
   component: ReactElement;
 };
 
-const variants: DefaultVariantType[] = [
+const variants: SemanticType[] = [
   "adaptive",
   "neutral",
   "critical",
@@ -37,7 +37,7 @@ export const components: ComponentList[] = [
     title: "Button",
     component: (
       <div className="grid grid-cols-5 gap-fix-sm items-center">
-        {["outlined", "solid", "text", "primary"].map((variant) => (
+        {["outlined", "filled", "ghost", "brand"].map((variant) => (
           <Fragment key={`button-${variant}`}>
             <h6>{toUpperCase(variant)}:</h6>
             <DBButton variant={variant}>Default</DBButton>
@@ -60,7 +60,7 @@ export const components: ComponentList[] = [
     component: (
       <Fragment>
         <DBLink href="#">Text Link</DBLink>
-        <DBLink href="#" variant="primary">
+        <DBLink href="#" variant="brand">
           Brand Text Link
         </DBLink>
         <DBLink href="#" disabled>
@@ -77,7 +77,7 @@ export const components: ComponentList[] = [
     component: (
       <Fragment>
         {variants.map((variant) => (
-          <DBInfotext key={`infotext-${variant}`} variant={variant}>
+          <DBInfotext key={`infotext-${variant}`} semantic={variant}>
             {toUpperCase(variant)}
           </DBInfotext>
         ))}
@@ -92,7 +92,7 @@ export const components: ComponentList[] = [
         <div className="flex flex-wrap gap-fix-sm">
           <h6>Weak:</h6>
           {variants.map((variant) => (
-            <DBTag key={`tag-${variant}`} variant={variant}>
+            <DBTag key={`tag-${variant}`} semantic={variant}>
               Tag {variant}
             </DBTag>
           ))}
@@ -102,7 +102,7 @@ export const components: ComponentList[] = [
           {variants.map((variant) => (
             <DBTag
               key={`tag-strong-${variant}`}
-              variant={variant}
+              semantic={variant}
               emphasis="strong"
             >
               Tag {variant}
@@ -119,7 +119,7 @@ export const components: ComponentList[] = [
         <div className="flex flex-wrap gap-fix-sm">
           <h6>Weak:</h6>
           {variants.map((variant) => (
-            <DBBadge key={`badge-${variant}`} variant={variant}>
+            <DBBadge key={`badge-${variant}`} semantic={variant}>
               Badge {variant}
             </DBBadge>
           ))}
@@ -129,7 +129,7 @@ export const components: ComponentList[] = [
           {variants.map((variant) => (
             <DBBadge
               key={`badge-strong-${variant}`}
-              variant={variant}
+              semantic={variant}
               emphasis="strong"
             >
               Badge {variant}
@@ -146,7 +146,7 @@ export const components: ComponentList[] = [
         {variants.map((variant) => (
           <DBAlert
             key={`alert-component-${variant}`}
-            variant={variant}
+            semantic={variant}
             type="alert"
             icon="account"
             headline="Variant"
@@ -170,19 +170,8 @@ export const components: ComponentList[] = [
     title: "Input",
     component: (
       <Fragment>
-        {variants.map((variant) => (
-          <DBInput
-            labelVariant="floating"
-            key={`input-${variant}`}
-            variant={variant}
-            label={toUpperCase(variant)}
-            placeholder={toUpperCase(variant)}
-            message={`${toUpperCase(variant)} Message`}
-          />
-        ))}
-
         <DBInput
-          labelVariant="floating"
+          variant="floating"
           label="Disabled"
           placeholder="Disabled"
           message="Disabled Message"
@@ -190,7 +179,7 @@ export const components: ComponentList[] = [
         />
 
         <DBInput
-          labelVariant="floating"
+          variant="floating"
           label="Readonly"
           placeholder="Readonly"
           message="Readonly Message"
@@ -199,7 +188,7 @@ export const components: ComponentList[] = [
         />
 
         <DBInput
-          labelVariant="floating"
+          variant="floating"
           label="Invalid"
           placeholder="Invalid"
           message="Invalid Message"
@@ -207,7 +196,7 @@ export const components: ComponentList[] = [
         />
 
         <DBInput
-          labelVariant="floating"
+          variant="floating"
           label="Valid"
           placeholder="Valid"
           message="Valid Message"
@@ -255,22 +244,8 @@ export const components: ComponentList[] = [
     title: "Select",
     component: (
       <Fragment>
-        {variants.map((variant) => (
-          <DBSelect
-            labelVariant="floating"
-            key={`input-${variant}`}
-            variant={variant}
-            label={toUpperCase(variant)}
-            placeholder={toUpperCase(variant)}
-            message={`${toUpperCase(variant)} Message`}
-          >
-            <option>Option1</option>
-            <option>Option2</option>
-          </DBSelect>
-        ))}
-
         <DBSelect
-          labelVariant="floating"
+          variant="floating"
           label="Disabled"
           placeholder="Disabled"
           message="Disabled Message"
@@ -281,7 +256,7 @@ export const components: ComponentList[] = [
         </DBSelect>
 
         <DBSelect
-          labelVariant="floating"
+          variant="floating"
           label="Readonly"
           placeholder="Readonly"
           message="Readonly Message"
@@ -293,7 +268,7 @@ export const components: ComponentList[] = [
         </DBSelect>
 
         <DBSelect
-          labelVariant="floating"
+          variant="floating"
           label="Invalid"
           placeholder="Invalid"
           message="Invalid Message"
@@ -304,7 +279,7 @@ export const components: ComponentList[] = [
         </DBSelect>
 
         <DBSelect
-          labelVariant="floating"
+          variant="floating"
           label="Valid"
           placeholder="Valid"
           message="Valid Message"
@@ -320,19 +295,8 @@ export const components: ComponentList[] = [
     title: "Textarea",
     component: (
       <Fragment>
-        {variants.map((variant) => (
-          <DBTextarea
-            labelVariant="floating"
-            key={`input-${variant}`}
-            variant={variant}
-            label={toUpperCase(variant)}
-            placeholder={toUpperCase(variant)}
-            message={`${toUpperCase(variant)} Message`}
-          />
-        ))}
-
         <DBTextarea
-          labelVariant="floating"
+          variant="floating"
           label="Disabled"
           placeholder="Disabled"
           message="Disabled Message"
@@ -340,7 +304,7 @@ export const components: ComponentList[] = [
         />
 
         <DBTextarea
-          labelVariant="floating"
+          variant="floating"
           label="Readonly"
           placeholder="Readonly"
           message="Readonly Message"
@@ -349,7 +313,7 @@ export const components: ComponentList[] = [
         />
 
         <DBTextarea
-          labelVariant="floating"
+          variant="floating"
           label="Invalid"
           placeholder="Invalid"
           message="Invalid Message"
@@ -357,7 +321,7 @@ export const components: ComponentList[] = [
         />
 
         <DBTextarea
-          labelVariant="floating"
+          variant="floating"
           label="Valid"
           placeholder="Valid"
           message="Valid Message"

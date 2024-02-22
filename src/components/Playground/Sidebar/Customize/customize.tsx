@@ -59,7 +59,7 @@ const Customize = () => {
     <div className="flex flex-col h-full overflow-y-auto">
       <div className="flex flex-col p-fix-xs gap-fix-xs h-full">
         <DBInput
-          labelVariant="floating"
+          variant="floating"
           label="Displayname"
           value={displayName}
           onChange={(event) => {
@@ -73,12 +73,12 @@ const Customize = () => {
         {selected.settings ? (
           createElement(selected.settings)
         ) : (
-          <DBInfotext variant="warning">No settings</DBInfotext>
+          <DBInfotext semantic="warning">No settings</DBInfotext>
         )}
 
         <DBDivider className="mt-auto" margin="none"></DBDivider>
         <DBButton
-          variant="primary"
+          variant="brand"
           icon="delete"
           width="full"
           disabled={!selected || selected.data.name === "Root"}

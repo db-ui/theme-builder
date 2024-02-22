@@ -24,7 +24,7 @@ const FakeDevice = ({ children }: PropsWithChildren) => {
       className="fake-device rounded-[32px] w-[312px] md:w-[376px] h-[668px]
     flex flex-col db-bg-base"
     >
-      <div className="fake-device-bar h-siz-md py-fix-sm flex justify-between  db-ui-functional">
+      <div className="fake-device-bar h-siz-md py-fix-sm flex justify-between  db-density-functional">
         {getLocalTime(currentTime)}
         <div className="flex gap-fix-xs">
           <DBIcon icon="cloud_upload" />

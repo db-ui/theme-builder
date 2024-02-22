@@ -28,7 +28,7 @@ const LoginScreen = () => {
         <DBButton
           icon="menu"
           noText
-          variant="text"
+          variant="ghost"
           className="absolute z-10 right-fix-xl"
         >
           Menu
@@ -37,9 +37,9 @@ const LoginScreen = () => {
       </div>
       <div className="flex flex-col p-fix-2xl justify-between h-full">
         <div className="flex flex-col gap-fix-md">
-          <DBInput labelVariant="floating" label={t("username")} />
+          <DBInput variant="floating" label={t("username")} />
           <DBInput
-            labelVariant="floating"
+            variant="floating"
             label={t("password")}
             type="password"
           />
@@ -49,7 +49,7 @@ const LoginScreen = () => {
           <div className="checkbox">
             <DBCheckbox>{t("keepLogin")}</DBCheckbox>
           </div>
-          <DBButton variant="primary" width="full">
+          <DBButton variant="brand" width="full">
             {t("login")}
           </DBButton>
         </div>

@@ -55,7 +55,7 @@ const DefaultPage = ({
                 <DBButton
                   className={!developerMode ? "opacity-0" : ""}
                   icon="face_delighted"
-                  variant="text"
+                  variant="ghost"
                   noText
                   onClick={() =>
                     useThemeBuilderStore.setState({
@@ -66,7 +66,7 @@ const DefaultPage = ({
                   Developer Mode
                 </DBButton>
                 <DBButton
-                  variant="text"
+                  variant="ghost"
                   icon={isDark() ? "day" : "night"}
                   noText
                   className="p-0 w-siz-md"

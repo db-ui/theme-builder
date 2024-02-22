@@ -30,7 +30,7 @@ const SpeakingColors = () => {
   };
 
   return (
-    <div data-tonality="functional" className="grid grid-cols-3 gap-fix-md">
+    <div data-density="functional" className="grid grid-cols-3 gap-fix-md">
       <div className="flex items-center">
         <h6>{t("colorName")}</h6>
       </div>
@@ -39,7 +39,7 @@ const SpeakingColors = () => {
         <DBButton
           icon="minus"
           noText
-          variant="text"
+          variant="ghost"
           onClick={() => updateAll(false, false)}
         >
           Decrease
@@ -47,7 +47,7 @@ const SpeakingColors = () => {
         <DBButton
           icon="add"
           noText
-          variant="text"
+          variant="ghost"
           onClick={() => updateAll(false, true)}
         >
           Increase
@@ -58,7 +58,7 @@ const SpeakingColors = () => {
         <DBButton
           icon="minus"
           noText
-          variant="text"
+          variant="ghost"
           onClick={() => updateAll(true, false)}
         >
           Decrease
@@ -66,7 +66,7 @@ const SpeakingColors = () => {
         <DBButton
           icon="add"
           noText
-          variant="text"
+          variant="ghost"
           onClick={() => updateAll(true, true)}
         >
           Increase
@@ -78,7 +78,7 @@ const SpeakingColors = () => {
           <div className="flex gap-fix-md">
             <DBInput
               className="w-full"
-              labelVariant="floating"
+              variant="floating"
               label={t("dark")}
               value={speakingName.dark}
               type="number"
@@ -93,7 +93,7 @@ const SpeakingColors = () => {
             {speakingName.transparencyDark !== undefined && (
               <DBInput
                 className="w-full"
-                labelVariant="floating"
+                variant="floating"
                 label={t("transparency")}
                 value={speakingName.transparencyDark}
                 type="number"
@@ -114,7 +114,7 @@ const SpeakingColors = () => {
           <div className="flex gap-fix-md">
             <DBInput
               className="w-full"
-              labelVariant="floating"
+              variant="floating"
               label={t("light")}
               value={speakingName.light}
               type="number"
@@ -129,7 +129,7 @@ const SpeakingColors = () => {
             {speakingName.transparencyLight !== undefined && (
               <DBInput
                 className="w-full"
-                labelVariant="floating"
+                variant="floating"
                 label={t("transparency")}
                 value={speakingName.transparencyLight}
                 type="number"

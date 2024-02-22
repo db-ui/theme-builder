@@ -41,7 +41,7 @@ const Customization = () => {
           <div className="flex flex-col gap-fix-md">
             <h5>{t("name")}</h5>
             <DBInput
-              labelVariant="floating"
+              variant="floating"
               label={t("themeName")}
               placeholder={t("themeName")}
               value={defaultTheme.name}
@@ -79,7 +79,7 @@ const Customization = () => {
               .map((tabItem, index) => (
                 <DBButton
                   key={`tab-button-${tabItem.text}`}
-                  variant={tab === index ? "outlined" : "text"}
+                  variant={tab === index ? "outlined" : "ghost"}
                   onClick={() => setTab(index)}
                 >
                   {t(tabItem.text)}

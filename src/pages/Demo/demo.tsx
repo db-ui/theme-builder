@@ -18,7 +18,7 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
           <Link
             to={linkToDemo ? "/demo" : "/"}
             className="db-button"
-            data-variant="primary"
+            data-variant="brand"
             target="_blank"
           >
             {linkToDemo ? t("openDemo") : t("openMainPage")}
@@ -39,7 +39,7 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
                 <div className="flex flex-col gap-fix-md h-full">
                   <h5>Mobile Users</h5>
                   <h3>500</h3>
-                  <DBInfotext className="mt-auto" variant="successful">
+                  <DBInfotext className="mt-auto" semantic="successful">
                     Good capacity
                   </DBInfotext>
                 </div>
@@ -51,7 +51,7 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
                 <div className="flex flex-col gap-fix-md h-full">
                   <h5>Tablet Users</h5>
                   <h3>200</h3>
-                  <DBInfotext className="mt-auto" variant="warning">
+                  <DBInfotext className="mt-auto" semantic="warning">
                     Medium capacity
                   </DBInfotext>
                 </div>
@@ -74,7 +74,7 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
                 <div className="flex flex-col gap-fix-md h-full">
                   <h5>Desktop Users</h5>
                   <h3>100</h3>
-                  <DBInfotext className="mt-auto" variant="critical">
+                  <DBInfotext className="mt-auto" semantic="critical">
                     Bad capacity
                   </DBInfotext>
                 </div>
