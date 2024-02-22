@@ -3,11 +3,15 @@ import "./index.scss";
 import { useTranslation } from "react-i18next";
 import { UploadPropsType } from "./data.ts";
 
-const Upload = memo(({ label, accept, onUpload }: UploadPropsType) => {
+const Upload = memo(({ label, accept, onUpload, size }: UploadPropsType) => {
   const { t } = useTranslation();
 
   return (
-    <label className="upload-button relative" data-icon="upload">
+    <label
+      className="upload-button relative"
+      data-icon="upload"
+      data-size={size}
+    >
       {t(label)}
       <input
         type="file"

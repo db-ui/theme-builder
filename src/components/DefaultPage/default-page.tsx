@@ -39,7 +39,11 @@ const DefaultPage = ({
               <div className="db-brand">
                 <img
                   className="logo"
-                  src={getThemeImage(defaultTheme.image)}
+                  src={getThemeImage(
+                    isDark() && defaultTheme.imageDark
+                      ? defaultTheme.imageDark
+                      : defaultTheme.image,
+                  )}
                   alt="brand"
                 />
                 {name}
