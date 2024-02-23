@@ -70,7 +70,7 @@ const EditNodeTreeDialog = ({
           <DBInput
             label={t("id")}
             placeholder={t("id")}
-            labelVariant="floating"
+            variant="floating"
             value={nodeTreeId}
             invalid={
               nodeTreeId.length === 0 || (create && nodeTrees[nodeTreeId])
@@ -83,7 +83,7 @@ const EditNodeTreeDialog = ({
           <DBInput
             label={t("name")}
             placeholder={t("name")}
-            labelVariant="floating"
+            variant="floating"
             value={nodeTreeName}
             onChange={(event) => setNodeTreeName(event.target.value)}
           />
@@ -110,7 +110,7 @@ const EditNodeTreeDialog = ({
           )}
           <DBButton
             width="full"
-            variant="primary"
+            variant="brand"
             disabled={disabled}
             onClick={() => {
               const tmpCopyTrees = { ...nodeTrees };

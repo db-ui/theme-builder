@@ -7,7 +7,7 @@ $selected-outline-height: 3px;
   .drop-container,
   .drag-container {
     &:not(.selected):not(.hovered) {
-      outline: 1px colors.$db-neutral-contrast-high dashed;
+      outline: 1px colors.$db-neutral-contrast-high-enabled dashed;
     }
   }
 }
@@ -20,14 +20,14 @@ $selected-outline-height: 3px;
 
   .drop-container,
   .drag-container {
-    --db-current-icon-color: #{colors.$db-current-color};
+    --db-current-icon-color: #{colors.$db-current-color-enabled};
     background-image: linear-gradient(
-        #{colors.$db-current-bg-color},
-        #{colors.$db-current-bg-color}
+        #{colors.$db-current-color-bg-enabled},
+        #{colors.$db-current-color-bg-enabled}
       ),
       linear-gradient(#c3d08b, #c3d08b);
     background-clip: content-box, padding-box;
-    color: colors.$db-current-color;
+    color: colors.$db-current-color-enabled;
   }
 }
 
@@ -54,7 +54,7 @@ $selected-outline-height: 3px;
 [data-hint] {
   &::before {
     content: attr(data-hint);
-    opacity: variables.$db-opacity-md;
+    opacity: 0.4;
   }
 }
 
@@ -65,11 +65,11 @@ $selected-outline-height: 3px;
 }
 
 .hovered {
-  outline: $selected-outline-height colors.$db-neutral-contrast-low dashed;
+  outline: $selected-outline-height colors.$db-neutral-contrast-low-enabled dashed;
 }
 
 .selected {
-  outline: $selected-outline-height colors.$db-informational-contrast-low solid;
+  outline: $selected-outline-height colors.$db-informational-contrast-low-enabled solid;
 
   &:has(> .drag-button) {
     &:hover {
@@ -81,10 +81,10 @@ $selected-outline-height: 3px;
 }
 
 .drag-button {
-  --db-current-icon-color: #{colors.$db-current-bg-color};
+  --db-current-icon-color: #{colors.$db-current-color-bg-enabled};
   --db-icon-margin-start: #{variables.$db-spacing-fixed-3xs};
-  color: colors.$db-current-bg-color;
-  background-color: colors.$db-informational-contrast-low;
+  color: colors.$db-current-color-bg-enabled;
+  background-color: colors.$db-informational-contrast-low-enabled;
   position: absolute;
   inset-block-end: 100%;
   inset-inline-end: calc(-1 * #{$selected-outline-height});
@@ -109,11 +109,11 @@ $selected-outline-height: 3px;
 
 .tree-item {
   &:hover {
-    background-color: colors.$db-current-bg-transparent-hover;
+    background-color: colors.$db-current-color-bg-transparent-hover;
   }
 
   &:active {
-    background-color: colors.$db-current-bg-transparent-pressed;
+    background-color: colors.$db-current-color-bg-transparent-pressed;
   }
 }
 

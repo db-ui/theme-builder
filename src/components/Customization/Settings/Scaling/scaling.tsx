@@ -45,7 +45,7 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
       <h5>{t(label)}</h5>
       <DBSelect
         label={`${t(label)} ${t("scale")}`}
-        labelVariant="floating"
+        variant="floating"
         type="number"
         value={getFromJsonByArray([...params, "_scale"], defaultTheme)}
         onChange={(event) => {

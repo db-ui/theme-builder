@@ -11,11 +11,11 @@ const ComponentList = () => {
   return (
     <div
       className="flex flex-col gap-fix-md p-fix-md h-full overflow-y-auto"
-      data-tonality="functional"
+      data-density="functional"
     >
       <DBInput
         type="search"
-        labelVariant="floating"
+        variant="floating"
         label={t("search")}
         placeholder={t("search")}
         onChange={(event) => setSearch(event.target.value)}

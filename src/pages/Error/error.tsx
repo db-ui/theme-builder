@@ -11,7 +11,7 @@ const Error = () => {
   return (
     <div className="w-[100vw] h-[100vh] flex">
       <div className="m-auto flex flex-col gap-fix-md">
-        <DBInfotext variant="critical" icon="quiet_zone">
+        <DBInfotext semantic="critical" icon="quiet_zone">
           {t("errorMessage")}
         </DBInfotext>
         <DBButton

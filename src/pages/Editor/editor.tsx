@@ -67,7 +67,7 @@ const Editor = () => {
               useWorker: false,
             }}
           />
-          <div className="flex flex-wrap db-ui-functional gap-fix-xs">
+          <div className="flex flex-wrap db-density-functional gap-fix-xs">
             <DBButton icon="grid_view" onClick={() => onFormat()}>
               {t("formatCode")}
             </DBButton>

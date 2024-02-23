@@ -12,7 +12,7 @@ const InteractiveDemo = memo(() => {
       <div className="flex gap-fix-md">
         <DBSelect
           label={t("tonality")}
-          labelVariant="floating"
+          variant="floating"
           value={tonality}
           onChange={(event) => setTonality(event.target.value)}
         >

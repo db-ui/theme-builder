@@ -51,9 +51,9 @@ const ButtonSettings = () => (
         type: "select",
         selectOptions: [
           { label: "outlined", value: "outlined" },
-          { label: "primary", value: "primary" },
-          { label: "solid", value: "solid" },
-          { label: "text", value: "text" },
+          { label: "brand", value: "brand" },
+          { label: "filled", value: "filled" },
+          { label: "ghost", value: "ghost" },
         ],
       },
       {

@@ -10,7 +10,7 @@ const ComponentContainer = () => {
   return (
     <div className="flex flex-col gap-fix-md">
       <DBInput
-        labelVariant="floating"
+        variant="floating"
         className="md:w-1/2"
         label={t("search")}
         placeholder={t("search")}

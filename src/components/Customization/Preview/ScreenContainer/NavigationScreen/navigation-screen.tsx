@@ -15,10 +15,10 @@ const NavigationScreen = () => {
   const { t } = useTranslation();
   return (
     <FakeDevice>
-      <div className="flex flex-col db-ui-functional h-full">
+      <div className="flex flex-col db-density-functional h-full">
         <div className="flex p-fix-sm relative">
           <DBButton
-            variant="text"
+            variant="ghost"
             icon="arrow_back"
             noText
             className="absolute"
@@ -30,12 +30,12 @@ const NavigationScreen = () => {
         <div className="db-neutral-bg-transparent-semi px-fix-xl py-fix-md flex flex-col">
           <div className="flex flex-col gap-fix-md mb-fix-md">
             <DBInput
-              labelVariant="floating"
+              variant="floating"
               label={t("from")}
               value="Stuttgart Hbf"
             />
             <DBInput
-              labelVariant="floating"
+              variant="floating"
               label={t("to")}
               value="Frankfurt (Main) Hbf"
             />
@@ -43,13 +43,13 @@ const NavigationScreen = () => {
           <div className="flex gap-fix-md items-center">
             <span data-icon="schedule">{t("today")}, 00:00</span>
             <span data-icon="account">1 Pers.</span>
-            <DBButton variant="text" icon="filter" className="ml-auto">
+            <DBButton variant="ghost" icon="filter" className="ml-auto">
               {t("options")}
             </DBButton>
           </div>
           <DBDivider />
           <div className="flex justify-between items-center">
-            <DBButton variant="text" icon="walking_fast">
+            <DBButton variant="ghost" icon="walking_fast">
               {t("fastestConnection")}
             </DBButton>
             <DBLink href="">{t("active")}</DBLink>
@@ -59,7 +59,7 @@ const NavigationScreen = () => {
           <DBButton>{t("now")}</DBButton>
           <DBButton>{t("later")}</DBButton>
         </div>
-        <DBAlert variant="informational">{t("iceInformation")}</DBAlert>
+        <DBAlert semantic="informational">{t("iceInformation")}</DBAlert>
 
         <div className="grid grid-cols-12 gap-fix-xs py-fix-sm px-fix-lg h-full items-center">
           <strong className="col-span-2 ml-auto">12:00</strong>
@@ -71,7 +71,7 @@ const NavigationScreen = () => {
           </div>
           <DBTag
             className="col-span-2 mx-auto"
-            variant="informational"
+            semantic="informational"
             emphasis="strong"
           >
             GL. 1
@@ -89,7 +89,7 @@ const NavigationScreen = () => {
               ICE 2
             </DBTag>
             <span>{t("to")} End Hbf</span>
-            <DBInfotext variant="critical" icon="aisle_not_available">
+            <DBInfotext semantic="critical" icon="aisle_not_available">
               {t("reservationNotPossible")}
             </DBInfotext>
             <DBInfotext icon="chevron_right">10 {t("stops")}</DBInfotext>
@@ -105,7 +105,7 @@ const NavigationScreen = () => {
           </div>
           <DBTag
             className="col-span-2 mx-auto"
-            variant="informational"
+            semantic="informational"
             emphasis="strong"
           >
             GL. 1

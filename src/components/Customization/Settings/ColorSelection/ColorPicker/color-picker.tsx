@@ -66,10 +66,8 @@ const ColorPicker = ({
               required
               value={colorName}
               disabled={!customColor}
-              variant={
-                customColor && customColors[colorName] && label !== colorName
-                  ? "critical"
-                  : "adaptive"
+              invalid={
+                customColor && !!customColors[colorName] && label !== colorName
               }
               message={
                 customColor && customColors[colorName] && label !== colorName
@@ -125,7 +123,7 @@ const ColorPicker = ({
 
                 <DBButton
                   className="ml-auto"
-                  variant="primary"
+                  variant="brand"
                   disabled={colorName.length === 0 || label === colorName}
                   onClick={() => {
                     if (isAddColor) {

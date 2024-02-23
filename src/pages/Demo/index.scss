@@ -34,10 +34,10 @@
 }
 
 .dashboard-progress {
-  border: variables.$db-sizing-xs solid colors.$db-current-bg-lvl-1-color;
+  border: variables.$db-sizing-xs solid colors.$db-current-color-bg-lvl-1-enabled;
   border-radius: 50%;
-  border-top-color: colors.$db-brand;
-  border-right-color: colors.$db-brand;
+  border-top-color: colors.$db-brand-origin-enabled;
+  border-right-color: colors.$db-brand-origin-enabled;
   width: 100%;
   height: 100%;
   max-width: variables.$db-sizing-xl;
