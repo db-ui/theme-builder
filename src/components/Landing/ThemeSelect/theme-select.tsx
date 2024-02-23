@@ -1,5 +1,4 @@
-import { DBCard, DBIcon, DBSection } from "@db-ui/react-components";
-import { getExtraBrandColors } from "../../../utils/outputs.ts";
+import { DBCard, DBIcon, DBSection, DBTooltip } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../../store";
 import { Link } from "react-router-dom";
 import Demo from "../../../pages/Demo";
@@ -30,7 +29,7 @@ const themes: Themes[] = [
 const ThemeSelect = () => {
   const { t } = useTranslation();
   const [selectedTheme, setSelectedTheme] = useState<string>(themes[0].key);
-  const { luminanceSteps, darkMode } = useThemeBuilderStore((state) => state);
+  const { darkMode } = useThemeBuilderStore((state) => state);
   return (
     <DBSection
       variant="large"
@@ -43,59 +42,44 @@ const ThemeSelect = () => {
           <h4 data-variant="light">By all, for all</h4>
           <p>{t("landingDesignSystemText")}</p>
           <div className="grid grid-cols-4 gap-fix-md">
-            {themes.map(({ key, theme }) => {
-              const brandColors = getExtraBrandColors(
-                theme.colors.brand,
-                darkMode,
-                luminanceSteps,
-              );
-              return (
-                <button
-                  key={key}
-                  onClick={() => {
-                    setSelectedTheme(key);
-                    useThemeBuilderStore.setState({
-                      defaultTheme: theme,
-                      defaultColors: theme.colors,
-                    });
-                  }}
-                  style={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-expect-error
-                    "--landing-select-card-on-color": brandColors.brandOnColor,
-                    "--landing-select-card-color": brandColors.color,
-                    "--landing-select-card-color-hover": brandColors.hoverColor,
-                    "--landing-select-card-color-pressed":
-                      brandColors.pressedColor,
-                  }}
+            {themes.map(({ key, theme }) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setSelectedTheme(key);
+                  useThemeBuilderStore.setState({
+                    defaultTheme: theme,
+                    defaultColors: theme.colors,
+                  });
+                }}
+              >
+                <DBCard
+                  className="min-h-siz-xl"
+                  spacing="small"
+                  data-selected={selectedTheme === key}
+                  elevationLevel="2"
+                  behaviour="interactive"
                 >
-                  <DBCard
-                    className="h-full min-h-siz-xl landing-select-card"
-                    spacing="small"
-                    data-selected={selectedTheme === key}
-                  >
-                    <div className="db-neutral-bg-lvl-1 p-fix-xs mx-auto rounded-xl">
-                      <img
-                        className="logo"
-                        src={getThemeImage(
-                          darkMode && theme.imageDark
-                            ? theme.imageDark
-                            : theme.image,
-                        )}
-                        alt="brand"
-                      />
-                    </div>
-                    <span className="m-auto break-all">{t(key)}</span>
-                  </DBCard>
-                </button>
-              );
-            })}
+                  <img
+                    className="logo m-auto"
+                    src={getThemeImage(
+                      darkMode && theme.imageDark
+                        ? theme.imageDark
+                        : theme.image,
+                    )}
+                    alt="brand"
+                  />
+                  <DBTooltip>{t(key)}</DBTooltip>
+                </DBCard>
+              </button>
+            ))}
             <Link className="no-underline" to="/customization" target="_blank">
               <DBCard
-                className="items-center justify-center min-h-siz-xl
-                landing-select-card default-landing-select-card"
+                className="items-center justify-center min-h-siz-xl"
                 spacing="small"
                 data-selected="false"
+                elevationLevel="2"
+                behaviour="interactive"
               >
                 <DBIcon icon="add">Add custom theme</DBIcon>
               </DBCard>
