@@ -1,7 +1,7 @@
 import { DBButton, DBHeader, DBPage } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
-import { PropsWithChildren, useCallback, useState } from "react";
+import { PropsWithChildren } from "react";
 import { getThemeImage } from "../../utils";
 
 const DefaultPage = ({
@@ -9,19 +9,11 @@ const DefaultPage = ({
   children,
   actionBar,
   className,
-  isLocalDarkMode,
   tonality,
   navigation,
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const { defaultTheme, darkMode, developerMode } = useThemeBuilderStore(
     (state) => state,
-  );
-
-  const [localDarkMode, setLocalDarkMode] = useState<boolean>();
-
-  const isDark = useCallback(
-    () => (isLocalDarkMode ? localDarkMode : darkMode),
-    [isLocalDarkMode, localDarkMode, darkMode],
   );
 
   return (
@@ -30,7 +22,6 @@ const DefaultPage = ({
       data-tonality={tonality || "regular"}
     >
       <DBPage
-        data-color-scheme={isDark() ? "dark" : "light"}
         className={className}
         type="fixedHeaderFooter"
         slotHeader={
@@ -40,7 +31,7 @@ const DefaultPage = ({
                 <img
                   className="logo"
                   src={getThemeImage(
-                    isDark() && defaultTheme.imageDark
+                    darkMode && defaultTheme.imageDark
                       ? defaultTheme.imageDark
                       : defaultTheme.image,
                   )}
@@ -67,19 +58,15 @@ const DefaultPage = ({
                 </DBButton>
                 <DBButton
                   variant="ghost"
-                  icon={isDark() ? "day" : "night"}
+                  icon={darkMode ? "day" : "night"}
                   noText
                   className="p-0 w-siz-md"
-                  title={isDark() ? "Enable Light-Mode" : "Enable Dark-Mode"}
+                  title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
                   onClick={() => {
-                    if (isLocalDarkMode) {
-                      setLocalDarkMode(!localDarkMode);
-                    } else {
-                      useThemeBuilderStore.setState({ darkMode: !darkMode });
-                    }
+                    useThemeBuilderStore.setState({ darkMode: !darkMode });
                   }}
                 >
-                  {isDark() ? "🌞" : "🌛"}
+                  {darkMode ? "🌞" : "🌛"}
                 </DBButton>
               </div>
             }

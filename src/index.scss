@@ -106,29 +106,7 @@ h6 {
   }
 }
 
-.default-landing-select-card {
-  --landing-select-card-on-color: #{colors.$db-current-color-enabled};
-  --landing-select-card-color: #{colors.$db-current-color-bg-lvl-2-enabled};
-  --landing-select-card-color-hover: #{colors.$db-current-color-bg-lvl-2-hover};
-  --landing-select-card-color-pressed: #{colors.$db-current-color-bg-lvl-2-pressed};
-}
 
-.landing-select-card {
-  &:not([data-interactive]) {
-    color: var(--landing-select-card-on-color);
-    background-color: var(--landing-select-card-color);
-
-    &[data-selected="false"] {
-      &:hover {
-        background-color: var(--landing-select-card-color-hover);
-      }
-
-      &:active {
-        background-color: var(--landing-select-card-color-pressed);
-      }
-    }
-  }
-}
 
 .brand-icon {
   --db-icon-font-size: 34px;
