@@ -66,21 +66,17 @@ h6 {
 }
 
 .scale-down {
-  border: variables.$db-border-height-sm solid colors.$db-neutral-contrast-low;
+  border: variables.$db-border-height-sm solid
+    colors.$db-neutral-contrast-low-enabled;
+  border-radius: variables.$db-border-radius-lg;
+
+  .db-page {
+    border-radius: variables.$db-border-radius-lg;
+  }
 
   @include screen-sizes.screen {
     transform-origin: top;
     transform: scale(0.75);
-  }
-
-  .open-demo {
-    display: none;
-  }
-
-  &:hover {
-    .open-demo {
-      display: inherit;
-    }
   }
 }
 
@@ -95,7 +91,7 @@ h6 {
 }
 
 [class*="border"] {
-  border-color: colors.$db-current-border-color;
+  border-color: colors.$db-current-color-border;
 }
 
 .db-tooltip {
@@ -110,17 +106,26 @@ h6 {
   }
 }
 
+.default-landing-select-card {
+  --landing-select-card-on-color: #{colors.$db-current-color-enabled};
+  --landing-select-card-color: #{colors.$db-current-color-bg-lvl-2-enabled};
+  --landing-select-card-color-hover: #{colors.$db-current-color-bg-lvl-2-hover};
+  --landing-select-card-color-pressed: #{colors.$db-current-color-bg-lvl-2-pressed};
+}
+
 .landing-select-card {
-  color: var(--landing-select-card-on-color);
-  background-color: var(--landing-select-card-color);
+  &:not([data-interactive]) {
+    color: var(--landing-select-card-on-color);
+    background-color: var(--landing-select-card-color);
 
-  &[data-selected="false"] {
-    &:hover {
-      background-color: var(--landing-select-card-color-hover);
-    }
+    &[data-selected="false"] {
+      &:hover {
+        background-color: var(--landing-select-card-color-hover);
+      }
 
-    &:active {
-      background-color: var(--landing-select-card-color-pressed);
+      &:active {
+        background-color: var(--landing-select-card-color-pressed);
+      }
     }
   }
 }

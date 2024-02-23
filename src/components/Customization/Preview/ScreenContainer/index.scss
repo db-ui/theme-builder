@@ -50,7 +50,7 @@
 .travel-line {
   width: 0.25rem;
   opacity: 0.5;
-  background-color: var(--db-current-color);
+  background-color: colors.$db-current-color-enabled;
   border-radius: variables.$db-border-radius-md;
   inset-block: 0;
   left: 50%;

@@ -35,8 +35,7 @@ const ActionBar = () => {
             const resultAsString = atob(result.split("base64,")[1]);
             const resultAsJson = JSON.parse(resultAsString);
             useThemeBuilderStore.setState({
-              defaultTheme: resultAsJson,
-              defaultColors: resultAsJson.colors,
+              defaultTheme: resultAsJson
             });
           } catch (error) {
             console.error(error);
@@ -44,7 +43,7 @@ const ActionBar = () => {
         }}
       />
       <DBButton
-        variant="primary"
+        variant="brand"
         icon="download"
         onClick={() =>
           downloadTheme(

@@ -17,7 +17,7 @@ export const properties = [
   { value: "text", meta: "button-variant" },
   {
     value: "primaryVariant",
-    snippet: 'variant="primary"',
+    snippet: 'variant="brand"',
     meta: "button-variant",
   },
   {
@@ -25,8 +25,8 @@ export const properties = [
     snippet: 'variant="outlined"',
     meta: "button-variant",
   },
-  { value: "solidVariant", snippet: 'variant="solid"', meta: "button-variant" },
-  { value: "textVariant", snippet: 'variant="text"', meta: "button-variant" },
+  { value: "solidVariant", snippet: 'variant="filled"', meta: "button-variant" },
+  { value: "textVariant", snippet: 'variant="ghost"', meta: "button-variant" },
   {
     value: "adaptive",
     meta: "semantic-variant",

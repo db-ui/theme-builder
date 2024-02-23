@@ -1,19 +1,48 @@
 @use "@db-ui/foundations/build/scss/variables";
 @use "@db-ui/foundations/build/scss/colors";
+.demo-side-nav {
+  .db-button {
+    justify-content: flex-start;
+    font-weight: 400;
 
-.demo-headline {
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    border-radius: variables.$db-border-radius-md;
-    border-inline-start: none;
-    border-block-end: variables.$db-border-height-lg solid colors.$db-brand;
-    inset-block-end: calc(-1 * #{variables.$db-spacing-fixed-xs});
-    inline-size: variables.$db-sizing-lg;
-    block-size: auto;
-    inset-inline-start: 50%;
-    inset-block-start: auto;
-    transform: translate(-50%, 0);
+    &:first-of-type {
+      font-weight: 700;
+    }
   }
+}
+
+.demo-dashboard {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "short1 short2 long"
+    "big big long";
+}
+
+.dashboard-short1 {
+  grid-area: short1;
+}
+.dashboard-short2 {
+  grid-area: short2;
+}
+
+.dashboard-big {
+  grid-area: big;
+}
+
+.dashboard-long {
+  grid-area: long;
+}
+
+.dashboard-progress {
+  border: variables.$db-sizing-xs solid colors.$db-current-color-bg-lvl-1-enabled;
+  border-radius: 50%;
+  border-top-color: colors.$db-brand-origin-enabled;
+  border-right-color: colors.$db-brand-origin-enabled;
+  width: 100%;
+  height: 100%;
+  max-width: variables.$db-sizing-xl;
+  max-height: variables.$db-sizing-xl;
+  margin: auto;
+  text-align: center;
+  display: flex;
 }

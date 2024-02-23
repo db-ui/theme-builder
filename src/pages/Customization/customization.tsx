@@ -5,11 +5,10 @@ import { TabItemType } from "./data.ts";
 import ComponentContainer from "../../components/Customization/Preview/ComponentContainer";
 import ColorPalettes from "../../components/Customization/Preview/ColorPalettes";
 import DefaultPage from "../../components/DefaultPage";
-import { DBButton, DBInput } from "@db-ui/react-components";
+import { DBButton, DBDivider, DBInput } from "@db-ui/react-components";
 import ActionBar from "../../components/Customization/ActionBar";
 import { useThemeBuilderStore } from "../../store";
 import SpeakingColors from "../../components/Customization/Preview/SpeakingColors";
-import HeadlineDivider from "../../components/Customization/HeadlineDivider";
 import LogoUpload from "../../components/Customization/LogoUpload";
 import InteractiveDemo from "../../components/Customization/Preview/InteractiveDemo";
 import Scaling from "../../components/Customization/Settings/Scaling";
@@ -38,39 +37,36 @@ const Customization = () => {
   return (
     <DefaultPage actionBar={<ActionBar />} name={t("customization")}>
       <div className="content flex flex-col md:flex-row md:h-full md:overflow-hidden">
-        <div className="flex flex-col p-res-xs w-full md:w-2/5 md:h-full md:overflow-auto border-r gap-fix-md">
-          <HeadlineDivider headline="name" />
-          <DBInput
-            labelVariant="floating"
-            label={t("themeName")}
-            placeholder={t("themeName")}
-            value={defaultTheme.name}
-            onChange={(event) =>
-              useThemeBuilderStore.setState({
-                defaultTheme: { ...defaultTheme, name: event.target.value },
-              })
-            }
-          />
-          <HeadlineDivider headline="logo" />
+        <div className="flex flex-col p-res-xs w-full md:w-2/5 md:h-full md:overflow-auto border-r gap-fix-xl">
+          <div className="flex flex-col gap-fix-md">
+            <h5>{t("name")}</h5>
+            <DBInput
+              variant="floating"
+              label={t("themeName")}
+              placeholder={t("themeName")}
+              value={defaultTheme.name}
+              onChange={(event) =>
+                useThemeBuilderStore.setState({
+                  defaultTheme: { ...defaultTheme, name: event.target.value },
+                })
+              }
+            />
+          </div>
+
           <LogoUpload />
 
-          <HeadlineDivider headline="colors" />
-
+          <DBDivider margin="none" />
           <ColorSelection />
+          <DBDivider margin="none" />
 
-          <HeadlineDivider headline="spacing" />
           <Scaling label="spacing" params={["spacing"]} />
 
-          <HeadlineDivider headline="sizing" />
           <Scaling label="sizing" params={["sizing"]} />
 
-          <HeadlineDivider headline="elevation" />
           <Scaling label="elevation" params={["elevation"]} />
 
-          <HeadlineDivider headline="borderHeight" />
           <Scaling label="borderHeight" params={["border", "height"]} />
 
-          <HeadlineDivider headline="borderRadius" />
           <Scaling label="borderRadius" params={["border", "radius"]} />
         </div>
         <div
@@ -83,7 +79,7 @@ const Customization = () => {
               .map((tabItem, index) => (
                 <DBButton
                   key={`tab-button-${tabItem.text}`}
-                  variant={tab === index ? "outlined" : "text"}
+                  variant={tab === index ? "outlined" : "ghost"}
                   onClick={() => setTab(index)}
                 >
                   {t(tabItem.text)}

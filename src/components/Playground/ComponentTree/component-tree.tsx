@@ -84,7 +84,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
       </span>
 
       <DBButton
-        variant="text"
+        variant="ghost"
         icon={data.hidden ? "visibility_off" : "visibility"}
         noText
         onClick={() => {
@@ -107,7 +107,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
           className="flex items-center"
         >
           <DBButton
-            variant="text"
+            variant="ghost"
             icon={open ? "expand_more" : "chevron_right"}
             noText
             onClick={() => {
@@ -150,7 +150,7 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
           data-tonality={"functional"}
           noText
           icon="edit"
-          variant="text"
+          variant="ghost"
           onClick={() => setOpen(true)}
         >
           {t("pgEdit")}
@@ -159,7 +159,7 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
       </div>
       <DBDivider margin="none" />
       <div
-        data-tonality="functional"
+        data-density="functional"
         className="flex flex-col p-fix-sm h-full overflow-auto"
       >
         <TreeItem node={nodes["ROOT"]} />

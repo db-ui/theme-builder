@@ -18,24 +18,18 @@ export const getShirtValue = (
 
   let scale = 1;
 
-  if (scaleString === "3xs") {
+  if (scaleString === "none") {
     scale = 0;
-  } else if (scaleString === "2xs") {
-    scale = 0.33;
-  } else if (scaleString === "xs") {
+  } else if (scaleString === "50%") {
     scale = 0.5;
-  } else if (scaleString === "sm") {
-    scale = 0.75;
-  } else if (scaleString === "md") {
+  } else if (scaleString === "100%") {
     scale = 1;
-  } else if (scaleString === "lg") {
+  } else if (scaleString === "150%") {
     scale = 1.5;
-  } else if (scaleString === "xl") {
+  } else if (scaleString === "200%") {
     scale = 2;
-  } else if (scaleString === "2xl") {
-    scale = 3;
-  } else if (scaleString === "3xl") {
-    scale = 10;
+  } else if (scaleString === "full") {
+    scale = 5;
   }
 
   if (path.length < 1 && !defaultTheme.has(path)) {

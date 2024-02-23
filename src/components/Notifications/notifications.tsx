@@ -30,7 +30,7 @@ const Notifications = () => {
   return (
     <DBAlert
       className={`notification${init ? " opacity-100" : " opacity-0"}${notification ? " show" : ""}`}
-      variant="informational"
+      semantic="informational"
       type="inline"
     >
       {lastNotification}

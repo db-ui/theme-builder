@@ -22,7 +22,7 @@ slotHeader="
 <DBSection className="db-bg-informational">
     <div className="grid grid-cols-2">
         <p>Test</p>
-        <p className="db-ui-functional">Test</p>
+        <p className="db-density-functional">Test</p>
     </div>
 </DBSection>
 </DBPage>`,
@@ -35,15 +35,15 @@ slotHeader="
         <h4>Buttons:</h4>
         <div className="flex gap-fix-md">
             <DBButton>Outlined</DBButton>
-            <DBButton variant="solid">Solid</DBButton>
-            <DBButton variant="text">Text</DBButton>
-            <DBButton variant="primary">Primary</DBButton>
+            <DBButton variant="filled">Solid</DBButton>
+            <DBButton variant="ghost">Text</DBButton>
+            <DBButton variant="brand">Primary</DBButton>
         </div>
         
         <h4>Links:</h4>
         <div className="flex gap-fix-md">
             <DBLink href="">Adaptive</DBLink>
-            <DBLink href="" variant="primary">Primary</DBLink>
+            <DBLink href="" variant="brand">Primary</DBLink>
         </div>
     </div>
 </div>

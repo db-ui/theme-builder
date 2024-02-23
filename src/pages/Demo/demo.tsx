@@ -1,43 +1,88 @@
 import DefaultPage from "../../components/DefaultPage";
-import { DBCard } from "@db-ui/react-components";
+import { DBCard, DBInfotext } from "@db-ui/react-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { DemoPropsType } from "./data.ts";
+import Sidenav from "../../components/Demo/Sidenav";
 import "./index.scss";
-
-const cards = ["1", "2", "3", "4", "5", "6"];
 
 const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
   const { t } = useTranslation();
   return (
     <DefaultPage
-      className="hide-action-bar relative"
       name="Demo"
       tonality={tonality}
       isLocalDarkMode
+      actionBar={
+        <>
+          <Link
+            to={linkToDemo ? "/demo" : "/"}
+            className="db-button"
+            data-variant="brand"
+            target="_blank"
+          >
+            {linkToDemo ? t("openDemo") : t("openMainPage")}
+          </Link>
+        </>
+      }
     >
-      <main className="flex flex-col gap-fix-md py-fix-md px-res-sm">
-        <h1 className="demo-headline mx-auto">Titan</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 p-fix-md gap-fix-md">
-          {cards.map((card) => (
-            <DBCard key={card} spacing="small" className="gap-fix-md">
-              <h4>Lorem Ipsum {card}</h4>
-              <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut.
-              </p>
-            </DBCard>
-          ))}
+      <main className="overflow-hidden">
+        <div className="flex h-full">
+          <Sidenav />
+          <div className="flex flex-col gap-fix-md py-fix-md px-res-sm db-neutral-bg-lvl-2 w-full h-full overflow-y-auto">
+            <h1>{t("dashboard")}</h1>
+            <div className="demo-dashboard grid gap-fix-md h-full">
+              <DBCard
+                spacing="small"
+                className="dashboard-short1 db-neutral-bg-lvl-1"
+              >
+                <div className="flex flex-col gap-fix-md h-full">
+                  <h5>Mobile Users</h5>
+                  <h3>500</h3>
+                  <DBInfotext className="mt-auto" semantic="successful">
+                    Good capacity
+                  </DBInfotext>
+                </div>
+              </DBCard>
+              <DBCard
+                spacing="small"
+                className="dashboard-short2 db-neutral-bg-lvl-1"
+              >
+                <div className="flex flex-col gap-fix-md h-full">
+                  <h5>Tablet Users</h5>
+                  <h3>200</h3>
+                  <DBInfotext className="mt-auto" semantic="warning">
+                    Medium capacity
+                  </DBInfotext>
+                </div>
+              </DBCard>
+              <DBCard
+                spacing="small"
+                className="dashboard-long db-brand-bg-lvl-3"
+              >
+                <div className="flex flex-col gap-fix-md h-full">
+                  <h5>Progress</h5>
+                  <div className="dashboard-progress">
+                    <h5 className="m-auto">50%</h5>
+                  </div>
+                </div>
+              </DBCard>
+              <DBCard
+                spacing="small"
+                className="dashboard-big db-neutral-bg-lvl-1 flex-row justify-between"
+              >
+                <div className="flex flex-col gap-fix-md h-full">
+                  <h5>Desktop Users</h5>
+                  <h3>100</h3>
+                  <DBInfotext className="mt-auto" semantic="critical">
+                    Bad capacity
+                  </DBInfotext>
+                </div>
+              </DBCard>
+            </div>
+          </div>
         </div>
       </main>
-      <Link
-        to={linkToDemo ? "/demo" : "/"}
-        className={`db-button open-demo absolute ${linkToDemo ? "bottom-0 right-0" : "bottom-fix-xs right-fix-xs"}`}
-        data-variant="primary"
-        target="_blank"
-      >
-        {linkToDemo ? t("openDemo") : t("openMainPage")}
-      </Link>
     </DefaultPage>
   );
 };

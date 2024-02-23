@@ -61,7 +61,7 @@ const Setting = ({ settings }: SettingPropsType) => {
                 }
                 dataList={setting.dataList}
                 label={t(setting.key)}
-                labelVariant="floating"
+                variant="floating"
                 defaultValue={props[setting.key]}
                 onChange={(event) =>
                   changeValue(
@@ -76,7 +76,7 @@ const Setting = ({ settings }: SettingPropsType) => {
               <DBTextarea
                 type={setting.type}
                 label={t(setting.key)}
-                labelVariant="floating"
+                variant="floating"
                 defaultValue={props[setting.key]}
                 onChange={(event) =>
                   changeValue(
@@ -91,7 +91,7 @@ const Setting = ({ settings }: SettingPropsType) => {
               <DBSelect
                 type={setting.type}
                 label={t(setting.key)}
-                labelVariant="floating"
+                variant="floating"
                 defaultValue={props[setting.key]}
                 onChange={(event) =>
                   changeValue(

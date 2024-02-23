@@ -40,7 +40,7 @@ const ThemeSelect = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-fix-md">
         <div className="flex flex-col gap-fix-md">
-          <h1>DB UX Design System</h1>
+          <h1>Design System Platform</h1>
           <h4 data-variant="light">By all, for all</h4>
           <p>{t("landingDesignSystemText")}</p>
           <div className="grid grid-cols-4 gap-fix-md">
@@ -73,7 +73,6 @@ const ThemeSelect = () => {
                   <DBCard
                     className="h-full min-h-siz-xl landing-select-card"
                     spacing="small"
-                    variant={selectedTheme === key ? "default" : "interactive"}
                     data-selected={selectedTheme === key}
                   >
                     <span className="m-auto break-all">{t(key)}</span>
@@ -83,9 +82,10 @@ const ThemeSelect = () => {
             })}
             <Link className="no-underline" to="/customization" target="_blank">
               <DBCard
-                className="items-center justify-center min-h-siz-xl"
+                className="items-center justify-center min-h-siz-xl
+                landing-select-card default-landing-select-card"
                 spacing="small"
-                variant="interactive"
+                data-selected="false"
               >
                 <DBIcon icon="add">Add custom theme</DBIcon>
               </DBCard>

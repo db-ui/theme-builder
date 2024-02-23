@@ -41,25 +41,27 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
   };
 
   return (
-    <DBSelect
-      label={`${t(label)} ${t("scale")}`}
-      labelVariant="floating"
-      type="number"
-      value={getFromJsonByArray([...params, "_scale"], defaultTheme)}
-      onChange={(event) => {
-        setDetfaultTheme(event.target.value);
-      }}
-    >
-      <option>3xs</option>
-      <option>2xs</option>
-      <option>xs</option>
-      <option>sm</option>
-      <option>md</option>
-      <option>lg</option>
-      <option>xl</option>
-      <option>2xl</option>
-      <option>3xl</option>
-    </DBSelect>
+    <div className="flex flex-col gap-fix-md">
+      <h5>{t(label)}</h5>
+      <DBSelect
+        label={`${t(label)} ${t("scale")}`}
+        variant="floating"
+        type="number"
+        value={getFromJsonByArray([...params, "_scale"], defaultTheme)}
+        onChange={(event) => {
+          setDetfaultTheme(event.target.value);
+        }}
+      >
+        {(params.includes("elevation") || params.includes("radius")) && (
+          <option>none</option>
+        )}
+        <option>50%</option>
+        <option>100%</option>
+        <option>150%</option>
+        <option>200%</option>
+        {params.includes("radius") && <option>full</option>}
+      </DBSelect>
+    </div>
   );
 };
 
