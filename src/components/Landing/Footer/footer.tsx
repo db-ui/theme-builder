@@ -15,7 +15,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row gap-fix-md mx-auto items-center">
           <Link
             to="/playground"
-            className="db-button"
+            className="db-button capitalize"
             target="_blank"
             data-variant="filled"
             data-width="full"
@@ -23,7 +23,7 @@ const Footer = () => {
             {t("tryIt")}
           </Link>
           <a
-            className="db-button"
+            className="db-button capitalize"
             data-variant="brand"
             href="https://marketingportal.extranet.deutschebahn.com/marketingportal"
             target="_blank"
