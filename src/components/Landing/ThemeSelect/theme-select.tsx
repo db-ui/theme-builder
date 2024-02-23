@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import Demo from "../../../pages/Demo";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { useDarkMode } from "usehooks-ts";
 
 import { DefaultThemeType } from "../../../utils/data.ts";
 import DefaultTheme from "../../../data/default-theme.json";
 import DBTheme from "../../../data/db-theme.json";
 import SBahnTheme from "../../../data/sbahn-theme.json";
+import { getThemeImage } from "../../../utils";
 
 const defaultTheme = DefaultTheme as unknown as DefaultThemeType;
 const sBahnTheme = SBahnTheme as unknown as DefaultThemeType;
@@ -30,8 +30,7 @@ const themes: Themes[] = [
 const ThemeSelect = () => {
   const { t } = useTranslation();
   const [selectedTheme, setSelectedTheme] = useState<string>(themes[0].key);
-  const { isDarkMode } = useDarkMode();
-  const { luminanceSteps } = useThemeBuilderStore((state) => state);
+  const { luminanceSteps, darkMode } = useThemeBuilderStore((state) => state);
   return (
     <DBSection
       variant="large"
@@ -47,7 +46,7 @@ const ThemeSelect = () => {
             {themes.map(({ key, theme }) => {
               const brandColors = getExtraBrandColors(
                 theme.colors.brand,
-                isDarkMode,
+                darkMode,
                 luminanceSteps,
               );
               return (
@@ -75,6 +74,17 @@ const ThemeSelect = () => {
                     spacing="small"
                     data-selected={selectedTheme === key}
                   >
+                    <div className="db-neutral-bg-lvl-1 p-fix-xs mx-auto rounded-xl">
+                      <img
+                        className="logo"
+                        src={getThemeImage(
+                          darkMode && theme.imageDark
+                            ? theme.imageDark
+                            : theme.image,
+                        )}
+                        alt="brand"
+                      />
+                    </div>
                     <span className="m-auto break-all">{t(key)}</span>
                   </DBCard>
                 </button>

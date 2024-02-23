@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 const Toolbar = ({ className }: ToolbarType) => {
   const { t } = useTranslation();
-  const { showBorders,showSpacings } = useDragAndDropStore((state) => state);
+  const { showBorders, showSpacings } = useDragAndDropStore((state) => state);
   const { actions, canUndo, canRedo } = useEditor((state, query) => {
     const [currentNodeId] = state.events.selected;
     let selected;
@@ -30,12 +30,10 @@ const Toolbar = ({ className }: ToolbarType) => {
 
   return (
     <div
+      data-density="functional"
       className={`flex h-siz-md db-neutral-bg-transparent-semi px-fix-sm ${className || ""}`}
     >
-      <div
-        className="flex w-full justify-between m-auto"
-        data-density="functional"
-      >
+      <div className="flex w-full justify-between m-auto">
         <div className="flex gap-fix-sm">
           <DBButton
             variant="ghost"

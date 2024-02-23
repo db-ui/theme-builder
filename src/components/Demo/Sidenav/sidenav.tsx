@@ -17,7 +17,12 @@ const Sidenav = () => {
     border-r p-fix-md flex flex-col gap-fix-md h-full overflow-y-auto"
     >
       {buttons.map((button) => (
-        <DBButton icon={button} variant="ghost" width="full">
+        <DBButton
+          key={`dashboard-sidenav-button-${button}`}
+          icon={button}
+          variant="ghost"
+          width="full"
+        >
           {t(button)}
         </DBButton>
       ))}

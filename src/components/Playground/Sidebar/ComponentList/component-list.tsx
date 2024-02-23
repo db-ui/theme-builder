@@ -1,4 +1,4 @@
-import { DBDivider, DBInput } from "@db-ui/react-components";
+import { DBInput } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import { Components } from "./data.tsx";
 import { Fragment, useState } from "react";
@@ -24,7 +24,6 @@ const ComponentList = () => {
         components.some(({ name }) => t(name).includes(search)),
       ).map(({ headline, components }) => (
         <Fragment key={headline}>
-          <DBDivider margin="none" />
           <h6>{t(headline)}</h6>
           <div className="grid grid-cols-3 gap-fix-sm">
             {components
