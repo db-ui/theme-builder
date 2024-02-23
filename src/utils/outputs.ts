@@ -197,7 +197,7 @@ export const getExtraBrandColors = (
 
 export const getSpeakingNames = (
   speakingNames: SpeakingName[],
-  allColors: object,
+  allColors: Record<string, string>,
   darkMode: boolean,
 ): any => {
   let result: any = {};
@@ -232,6 +232,105 @@ export const getSpeakingNames = (
           `var(--${prefix}-${name}-${
             darkMode ? speakingName.dark : speakingName.light
           })`;
+      }
+    });
+  });
+  return result;
+};
+
+export const getSpeakingNamesForJSON = (
+  speakingNames: SpeakingName[],
+  colors: Record<string, HeisslufType[]>,
+  darkMode: boolean,
+  luminanceSteps: number[],
+): any => {
+  let result: any = {};
+  Object.entries(colors).forEach((value) => {
+    const name = value[0];
+    const color = value[1];
+    let state;
+    const isStateName = (name: string) => {
+      return (
+        name.includes("enabled") ||
+        name.includes("hover") ||
+        name.includes("pressed")
+      );
+    };
+
+    const processState = (name: string) => {
+      const stateIndex = name.lastIndexOf("-");
+      state = name.slice(stateIndex + 1);
+      const nameWithoutState = name.slice(0, stateIndex);
+
+      const numOfState =
+        state === "enabled" ? "01" : state === "hover" ? "02" : "03";
+      const stateNumbered = `${numOfState}-${state}`;
+
+      return [nameWithoutState, numOfState, state, stateNumbered];
+    };
+
+    if (name === "brand") {
+      result = {
+        ...result,
+        ...getExtraBrandColors(color, darkMode, luminanceSteps),
+      };
+    }
+
+    speakingNames.forEach((speakingName) => {
+      if (
+        speakingName.transparencyDark !== undefined ||
+        speakingName.transparencyLight !== undefined
+      ) {
+        if (isStateName(speakingName.name)) {
+          const processedState = processState(speakingName.name);
+          result[`${name}/${processedState[0]}/${processedState[3]}`] =
+            `transparency ${
+              darkMode
+                ? speakingName.transparencyDark
+                : speakingName.transparencyLight
+            }%, var(--${prefix}-${name}-${
+              darkMode ? speakingName.dark : speakingName.light
+            }))`;
+        } else {
+          result[`${name}/${speakingName.name}`] = `transparency ${
+            darkMode
+              ? speakingName.transparencyDark
+              : speakingName.transparencyLight
+          }%, var(--${prefix}-${name}-${
+            darkMode ? speakingName.dark : speakingName.light
+          }))`;
+        }
+      } else {
+        if (speakingName.name.includes("on-bg")) {
+          const nameWithoutOnPrefix = speakingName.name.replace("on-", "");
+          if (isStateName(speakingName.name)) {
+            const processedState = processState(nameWithoutOnPrefix);
+            state = processedState[2].replace(/^ak-/, "").replace(/^bg-/, "");
+            const stateNumbered = `${processedState[1]}-${state}`;
+            result[`On/${name}/${processedState[0]}/${stateNumbered}`] =
+              `transparency 0%, var(--${prefix}-${name}-${
+                darkMode ? speakingName.dark : speakingName.light
+              })`;
+          } else {
+            result[`On/${name}/${nameWithoutOnPrefix}`] =
+              `transparency 0%, var(--${prefix}-${name}-${
+                darkMode ? speakingName.dark : speakingName.light
+              })`;
+          }
+        } else {
+          if (isStateName(speakingName.name)) {
+            const processedState = processState(speakingName.name);
+            result[`${name}/${processedState[0]}/${processedState[3]}`] =
+              `transparency 0%, var(--${prefix}-${name}-${
+                darkMode ? speakingName.dark : speakingName.light
+              })`;
+          } else {
+            result[`${name}/${speakingName.name}`] =
+              `transparency 0%, var(--${prefix}-${name}-${
+                darkMode ? speakingName.dark : speakingName.light
+              })`;
+          }
+        }
       }
     });
   });
