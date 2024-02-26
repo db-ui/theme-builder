@@ -93,6 +93,7 @@ const getPalette = (
       const name = value[0];
       const color = value[1];
       const hslColors: HeisslufType[] = getHeissluftColors(
+        name,
         color,
         luminanceSteps,
       );
@@ -156,7 +157,11 @@ export const getExtraBrandColors = (
   hoverColor: string;
   pressedColor: string;
 } => {
-  const hslColors: HeisslufType[] = getHeissluftColors(color, luminanceSteps);
+  const hslColors: HeisslufType[] = getHeissluftColors(
+    "",
+    color,
+    luminanceSteps,
+  );
   const hsluv = new Hsluv();
   hsluv.hex = color;
   hsluv.hexToHsluv();
