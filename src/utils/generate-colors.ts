@@ -1,8 +1,6 @@
 import { defaultLuminances, HeisslufType } from "./data.ts";
 import { Hsluv } from "hsluv";
 
-export const white = "#fff";
-export const black = "#000";
 
 export const getHeissluftColors = (
   color: string,

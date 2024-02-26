@@ -1,7 +1,7 @@
 export type DefaultColorMappingType = {
   neutral: string;
   brand: string;
-  onBrand: string;
+  brandDark: string;
   informational: string;
   successful: string;
   warning: string;

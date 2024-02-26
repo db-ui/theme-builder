@@ -53,8 +53,12 @@ const ColorSelection = () => {
 
           <ColorPicker
             color={defaultColors.brand}
+            darkColor={defaultColors.brandDark}
             label="Brand"
             setColor={(brand) => setDefaultColors({ ...defaultColors, brand })}
+            setDarkColor={(brandDark) =>
+              setDefaultColors({ ...defaultColors, brandDark })
+            }
           />
 
           <ColorPicker

@@ -420,6 +420,7 @@
   "colors": {
     "neutral": "#242629",
     "brand": "#4D8E45",
+    "brandDark": "#4D8E45",
     "informational": "#309FD1",
     "warning": "#F39200",
     "successful": "#63A615",

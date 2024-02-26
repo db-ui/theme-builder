@@ -421,6 +421,7 @@
   "colors": {
     "neutral": "#242629",
     "brand": "#242629",
+    "brandDark": "#f9f9fa",
     "informational": "#309FD1",
     "warning": "#F39200",
     "successful": "#63A615",

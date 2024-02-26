@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ColorPickerType } from "./data";
 import "./index.scss";
 import { getLuminance } from "../../../../../utils";
@@ -19,18 +19,24 @@ const ColorPicker = ({
   onDelete,
   customColor,
   isAddColor,
+  darkColor,
+  setDarkColor,
 }: ColorPickerType) => {
   const { t } = useTranslation();
   const [addColor, setAddColor] = useState<string>(color);
   const [open, setOpen] = useState<boolean>();
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
-  const { customColors } = useThemeBuilderStore((state) => state);
+  const { customColors, darkMode } = useThemeBuilderStore((state) => state);
 
   const setCustomColors = (colorMappingType: CustomColorMappingType) => {
     useThemeBuilderStore.setState({
       customColors: colorMappingType,
     });
   };
+
+  const getColor = useCallback(() => {
+    return darkColor && darkMode ? darkColor : color;
+  }, [darkMode, darkColor, color]);
 
   return (
     <div className="color-picker-container">
@@ -39,12 +45,12 @@ const ColorPicker = ({
           data-icon={isAddColor ? "add" : undefined}
           className="color-tag"
           style={{
-            backgroundColor: color,
-            color: getLuminance(color) < 0.4 ? "#fff" : "#000",
+            backgroundColor: getColor(),
+            color: getLuminance(getColor()) < 0.4 ? "#fff" : "#000",
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
             "--db-current-icon-color":
-              getLuminance(color) < 0.4 ? "#fff" : "#000",
+              getLuminance(getColor()) < 0.4 ? "#fff" : "#000",
             borderColor: `var(--db-${label.toLowerCase()}-contrast-high)`,
           }}
           onClick={() => setOpen(true)}
@@ -102,6 +108,32 @@ const ColorPicker = ({
                 }
               }}
             />
+
+            {darkColor && (
+              <div className="flex flex-col gap-fix-sm mt-fix-lg">
+                <h6>{t("alternativeDarkBrand")}</h6>
+                <DBInput
+                  label={t("colorInputPicker")}
+                  type="color"
+                  value={darkColor}
+                  onChange={(event) => {
+                    if (setDarkColor) {
+                      setDarkColor(event.target.value);
+                    }
+                  }}
+                />
+                <DBInput
+                  label={t("colorInputHex")}
+                  placeholder={t("colorInputHex")}
+                  value={darkColor}
+                  onChange={(event) => {
+                    if (setDarkColor) {
+                      setDarkColor(event.target.value);
+                    }
+                  }}
+                />
+              </div>
+            )}
           </div>
 
           {customColor && (
