@@ -53,6 +53,7 @@ const ColorPalettes = () => {
 
         {Object.keys(allColors).map((key: any, colorIndex: number) => {
           const heissluftColors = getHeissluftColors(
+            key,
             allColors[key],
             luminanceSteps,
           );

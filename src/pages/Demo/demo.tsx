@@ -58,7 +58,7 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
               <DBCard
                 spacing="small"
                 className="dashboard-long db-brand-bg"
-                elevationLevel="3"
+                elevationLevel="1"
               >
                 <div className="flex flex-col gap-fix-md h-full">
                   <h5>Progress</h5>

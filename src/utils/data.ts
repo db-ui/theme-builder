@@ -78,7 +78,7 @@ export type DefaultThemeType = {
 };
 
 export const defaultLuminances: number[] = [
-  0, 2, 5, 10, 20, 30, 40, 55, 65, 73, 80, 90, 95, 98, 100,
+  2, 4, 6, 10, 20, 30, 40, 50, 60, 70, 80, 90, 94, 96, 98,
 ];
 
 export type HeisslufType = {
