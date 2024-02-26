@@ -5,6 +5,7 @@ import {
   DefaultThemeType,
   SpeakingName,
   HeisslufType,
+  speakingNamesDefaultMapping,
 } from "./data.ts";
 import { getHeissluftColors } from "./generate-colors.ts";
 import {
@@ -12,7 +13,7 @@ import {
   getCssPropertyAsString,
   getPaletteOutput,
   getSpeakingNames,
-  getSpeakingNamesForJSON,
+  getSpeakingNamesWithColors,
 } from "./outputs.ts";
 import JSZip from "jszip";
 import { BASE_PATH } from "../constants.ts";
@@ -55,44 +56,6 @@ export const getPalette = (allColors: object, luminanceSteps: number[]): any =>
       (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
       {},
     );
-const mergeColorsWithSpeakingNames = (
-  speakingNames: Record<string, string>,
-  colors: any,
-): Record<string, string> => {
-  const result: Record<string, string> = {};
-
-  Object.entries(speakingNames).forEach(([speakingName, value]) => {
-    let transparency = "0%";
-    let colorHex = "";
-
-    const transparencyMatch = value.match(/transparency (\d+%)/);
-    if (transparencyMatch) {
-      transparency = transparencyMatch[1];
-    }
-
-    if (speakingName.startsWith("--")) {
-      if (speakingName.includes("on-enabled")) {
-        speakingName = `On/brand/01-Enabled`;
-      } else if (speakingName.includes("origin-enabled")) {
-        speakingName = `brand/Origin/01-Enabled`;
-      } else if (speakingName.includes("origin-hover")) {
-        speakingName = `brand/Origin/02-Hover`;
-      } else if (speakingName.includes("origin-pressed")) {
-        speakingName = `brand/Origin/03-Pressed`;
-      }
-      colorHex = value;
-    } else {
-      const variableMatch = value.match(/var\((.*?)\)/);
-      const variableName = variableMatch ? variableMatch[1] : "";
-      if (variableName && colors[variableName]) {
-        colorHex = colors[variableName];
-      }
-    }
-    result[speakingName] = `${transparency}, ${colorHex}`;
-  });
-
-  return result;
-};
 
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
@@ -104,33 +67,36 @@ export const downloadTheme = async (
   const theme: DefaultThemeType = { ...defaultTheme, colors: colorMapping };
 
   const allColors: Record<string, string> = { ...colorMapping, ...customColorMapping };
-   // TODO
-/*  const colors = getPalette(allColors, luminanceSteps);
+  const colors = getPalette(allColors, luminanceSteps);
 
-  const lightSpeakingNames = getSpeakingNamesForJSON(
+  const lightSpeakingNames = getSpeakingNamesWithColors(
     speakingNames,
-    colors,
-    true,
-    luminanceSteps,
-  );
-  const darkSpeakingNames = getSpeakingNamesForJSON(
-    speakingNames,
+    allColors,
     colors,
     false,
     luminanceSteps,
-  );*/
-
+    speakingNamesDefaultMapping
+  );
+  const darkSpeakingNames = getSpeakingNamesWithColors(
+    speakingNames,
+    allColors,
+    colors,
+    true,
+    luminanceSteps,
+    speakingNamesDefaultMapping
+  );
+  console.log('light: ', lightSpeakingNames, 'dark: ', darkSpeakingNames);
   const fileName = theme.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
-/*  const colorsJsonString = JSON.stringify({
+  const colorsJsonString = JSON.stringify({
     light: lightSpeakingNames,
     dark: darkSpeakingNames,
-  });*/
+  });
   const themeProperties = getCssThemeProperties(defaultTheme);
 
   const zip = new JSZip();
-  zip.file(`${fileName}.json`, themeJsonString);/*
-  zip.file(`${fileName}-colors.json`, colorsJsonString);*/
+  zip.file(`${fileName}.json`, themeJsonString);
+  zip.file(`${fileName}-colors.json`, colorsJsonString);
 
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(

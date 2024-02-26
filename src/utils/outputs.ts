@@ -20,7 +20,7 @@ const nonRemProperties = ["opacity", "elevation"];
 
 export const getNonColorCssProperties = (
   theme: DefaultThemeType,
-  asString?: boolean,
+  asString?: boolean
 ) => {
   const resolvedProperties: any = {};
   traverse(theme).forEach(function (value) {
@@ -86,7 +86,7 @@ export const getCssThemeProperties = (theme: DefaultThemeType): string => {
 
 const getPalette = (
   allColors: object,
-  luminanceSteps: number[],
+  luminanceSteps: number[]
 ): Record<string, HeisslufType[]> =>
   Object.entries(allColors)
     .map((value) => {
@@ -94,7 +94,7 @@ const getPalette = (
       const color = value[1];
       const hslColors: HeisslufType[] = getHeissluftColors(
         color,
-        luminanceSteps,
+        luminanceSteps
       );
 
       return {
@@ -103,16 +103,16 @@ const getPalette = (
     })
     .reduce(
       (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
-      {},
+      {}
     );
 
 export const getPaletteOutput = (
   allColors: Record<string, string>,
-  luminanceSteps: number[],
+  luminanceSteps: number[]
 ): any => {
   const palette: Record<string, HeisslufType[]> = getPalette(
     allColors,
-    luminanceSteps,
+    luminanceSteps
   );
   const result: any = {};
   Object.entries(palette).forEach((color) => {
@@ -149,7 +149,7 @@ export const getPaletteOutput = (
 export const getExtraBrandColors = (
   color: string,
   darkMode: boolean,
-  luminanceSteps: number[],
+  luminanceSteps: number[]
 ): {
   color: string;
   brandOnColor: string;
@@ -181,7 +181,7 @@ export const getExtraBrandColors = (
 
   if (!hoverColor || !pressedColor) {
     const foundColors = hslColors.filter((hsl) =>
-      fallbackCompareFn(hsl.luminance),
+      fallbackCompareFn(hsl.luminance)
     );
     if (foundColors.length > 2) {
       hoverColor = foundColors[0].hex;
@@ -198,7 +198,7 @@ export const getExtraBrandColors = (
 export const getSpeakingNames = (
   speakingNames: SpeakingName[],
   allColors: Record<string, string>,
-  darkMode: boolean,
+  darkMode: boolean
 ): any => {
   let result: any = {};
   Object.entries(allColors).forEach((value) => {
@@ -238,69 +238,74 @@ export const getSpeakingNames = (
   return result;
 };
 
-export const getSpeakingNamesForJSON = (
+export const getSpeakingNamesWithColors = (
   speakingNames: SpeakingName[],
+  allColors: Record<string, string>,
   colors: Record<string, HeisslufType[]>,
   darkMode: boolean,
   luminanceSteps: number[],
+  speakingNamesDefaultMapping: SpeakingName[]
 ): any => {
   let result: any = {};
-  Object.entries(colors).forEach((value) => {
-    const name = value[0];
-    const color = value[1];
-    let state;
-    const isStateName = (name: string) => {
-      return (
-        name.includes("enabled") ||
-        name.includes("hover") ||
-        name.includes("pressed")
-      );
-    };
+  let state;
+  const isStateName = (name: string) => {
+    return (
+      name.includes("enabled") ||
+      name.includes("hover") ||
+      name.includes("pressed")
+    );
+  };
 
-    const processState = (name: string) => {
-      const stateIndex = name.lastIndexOf("-");
-      state = name.slice(stateIndex + 1);
-      const nameWithoutState = name.slice(0, stateIndex);
+  const processState = (name: string) => {
+    const stateIndex = name.lastIndexOf("-");
+    state = name.slice(stateIndex + 1);
+    const nameWithoutState = name.slice(0, stateIndex);
 
-      const numOfState =
-        state === "enabled" ? "01" : state === "hover" ? "02" : "03";
-      const stateNumbered = `${numOfState}-${state}`;
+    const numOfState =
+      state === "enabled" ? "01" : state === "hover" ? "02" : "03";
+    const stateNumbered = `${numOfState}-${state}`;
 
-      return [nameWithoutState, numOfState, state, stateNumbered];
-    };
+    return [nameWithoutState, numOfState, state, stateNumbered];
+  };
 
+  Object.entries(colors).forEach(([name, color]) => {
     if (name === "brand") {
+      const brandColor = allColors["brand"];
+      const lightBrand = getExtraBrandColors(brandColor, false, luminanceSteps);
+      const darkBrand = getExtraBrandColors(brandColor, true, luminanceSteps);
+
+      const brandTheme = darkMode ? darkBrand : lightBrand;
+
       result = {
         ...result,
-        ...getExtraBrandColors(color, darkMode, luminanceSteps),
+        "On/brand/01--Enabled": `transparency 0%, ${brandTheme.brandOnColor}`,
+        "brand/Origin/01--Enabled": `transparency 0%, ${brandTheme.color}`,
+        "brand/Origin/02--Hover": `transparency 0%, ${brandTheme.hoverColor}`,
+        "brand/Origin/03--Pressed": `transparency 0%, ${brandTheme.pressedColor}`,
       };
     }
 
     speakingNames.forEach((speakingName) => {
-      if (
-        speakingName.transparencyDark !== undefined ||
-        speakingName.transparencyLight !== undefined
-      ) {
-        if (isStateName(speakingName.name)) {
-          const processedState = processState(speakingName.name);
-          result[`${name}/${processedState[0]}/${processedState[3]}`] =
-            `transparency ${
-              darkMode
-                ? speakingName.transparencyDark
-                : speakingName.transparencyLight
-            }%, var(--${prefix}-${name}-${
-              darkMode ? speakingName.dark : speakingName.light
-            }))`;
+      const mappedName = speakingNamesDefaultMapping.find(
+        (mapping) => mapping.name === speakingName.name
+      );
+
+      if (mappedName) {
+        const colorNumber = darkMode ? mappedName.dark : mappedName.light;
+        const hexValue = color[colorNumber].hex;
+
+        let transparency;
+        if (
+          speakingName.transparencyDark !== undefined ||
+          speakingName.transparencyLight !== undefined
+        ) {
+          transparency = darkMode
+            ? speakingName.transparencyDark
+            : speakingName.transparencyLight;
         } else {
-          result[`${name}/${speakingName.name}`] = `transparency ${
-            darkMode
-              ? speakingName.transparencyDark
-              : speakingName.transparencyLight
-          }%, var(--${prefix}-${name}-${
-            darkMode ? speakingName.dark : speakingName.light
-          }))`;
+          transparency = 0;
         }
-      } else {
+
         if (speakingName.name.includes("on-bg")) {
           const nameWithoutOnPrefix = speakingName.name.replace("on-", "");
           if (isStateName(speakingName.name)) {
@@ -308,27 +313,19 @@ export const getSpeakingNamesForJSON = (
             state = processedState[2].replace(/^ak-/, "").replace(/^bg-/, "");
             const stateNumbered = `${processedState[1]}-${state}`;
             result[`On/${name}/${processedState[0]}/${stateNumbered}`] =
-              `transparency 0%, var(--${prefix}-${name}-${
-                darkMode ? speakingName.dark : speakingName.light
-              })`;
+              `transparency ${transparency}%, ${hexValue}`;
           } else {
             result[`On/${name}/${nameWithoutOnPrefix}`] =
-              `transparency 0%, var(--${prefix}-${name}-${
-                darkMode ? speakingName.dark : speakingName.light
-              })`;
+              `transparency ${transparency}%, ${hexValue}`;
           }
         } else {
           if (isStateName(speakingName.name)) {
             const processedState = processState(speakingName.name);
             result[`${name}/${processedState[0]}/${processedState[3]}`] =
-              `transparency 0%, var(--${prefix}-${name}-${
-                darkMode ? speakingName.dark : speakingName.light
-              })`;
+              `transparency ${transparency}%, ${hexValue}`;
           } else {
             result[`${name}/${speakingName.name}`] =
-              `transparency 0%, var(--${prefix}-${name}-${
-                darkMode ? speakingName.dark : speakingName.light
-              })`;
+              `transparency ${transparency}%, ${hexValue}`;
           }
         }
       }
