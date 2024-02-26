@@ -1,18 +1,16 @@
 import { BASE_PATH } from "../../../constants.ts";
-import { useDarkMode } from "usehooks-ts";
 import { getThemeImage } from "../../../utils";
 import { useThemeBuilderStore } from "../../../store";
 
 const Header = () => {
-  const { defaultTheme } = useThemeBuilderStore((state) => state);
-  const { isDarkMode } = useDarkMode();
+  const { defaultTheme, darkMode } = useThemeBuilderStore((state) => state);
   return (
     <div className="py-fix-xs px-fix-md md:py-fix-md">
       <div className="flex justify-between min-h-siz-md">
         <img
           className="logo"
           src={getThemeImage(
-            isDarkMode && defaultTheme.imageDark
+            darkMode && defaultTheme.imageDark
               ? defaultTheme.imageDark
               : defaultTheme.image,
           )}
@@ -25,7 +23,7 @@ const Header = () => {
         >
           <img
             className="my-auto logo"
-            src={`${BASE_PATH}/assets/images/github-mark${isDarkMode ? "-white" : ""}.svg`}
+            src={`${BASE_PATH}/assets/images/github-mark${darkMode ? "-white" : ""}.svg`}
             alt="GitHub Mark"
           />
         </a>

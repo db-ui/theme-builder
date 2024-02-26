@@ -5,13 +5,14 @@ export const white = "#fff";
 export const black = "#000";
 
 export const getHeissluftColors = (
+  name: string,
   color: string,
   luminanceSteps: number[] = defaultLuminances,
 ): HeisslufType[] => {
   const platte: HeisslufType[] = [];
 
   try {
-    luminanceSteps.forEach((currentLuminance) => {
+    luminanceSteps.forEach((currentLuminance, index) => {
       const hsluv = new Hsluv();
       hsluv.hex = color;
       hsluv.hexToHsluv();
@@ -19,7 +20,10 @@ export const getHeissluftColors = (
         hex: "",
         saturation: hsluv.hsluv_s,
         hue: hsluv.hsluv_h,
-        luminance: currentLuminance,
+        luminance:
+        name === "neutral" && index === luminanceSteps.length - 1
+          ? 100
+          : currentLuminance,
       };
       hsluv.hsluv_l = paletteColor.luminance;
       hsluv.hsluvToHex();

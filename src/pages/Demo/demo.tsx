@@ -12,7 +12,6 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
     <DefaultPage
       name="Demo"
       tonality={tonality}
-      isLocalDarkMode
       actionBar={
         <>
           <Link
@@ -58,7 +57,8 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
               </DBCard>
               <DBCard
                 spacing="small"
-                className="dashboard-long db-brand-bg-lvl-3"
+                className="dashboard-long db-brand-bg"
+                elevationLevel="1"
               >
                 <div className="flex flex-col gap-fix-md h-full">
                   <h5>Progress</h5>

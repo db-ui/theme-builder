@@ -1,6 +1,6 @@
 import { ComponentTreePropsType } from "./data.ts";
 import { EditorState, useEditor } from "@craftjs/core";
-import { DBButton, DBDivider, DBIcon } from "@db-ui/react-components";
+import { DBButton, DBIcon } from "@db-ui/react-components";
 import { Node } from "@craftjs/core/lib/interfaces/nodes";
 import { Fragment, useState } from "react";
 import { useDragAndDropStore } from "../../../store";
@@ -142,6 +142,7 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
 
   return (
     <div
+      data-density="functional"
       className={`h-full${className ? ` ${className}` : ""} border-r overflow-hidden`}
     >
       <div className="h-siz-md flex items-center justify-between p-fix-sm">
@@ -157,7 +158,6 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
         </DBButton>
         <EditNodeTreeDialog open={open} onClose={() => setOpen(false)} />
       </div>
-      <DBDivider margin="none" />
       <div
         data-density="functional"
         className="flex flex-col p-fix-sm h-full overflow-auto"

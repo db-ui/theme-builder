@@ -44,6 +44,7 @@ export const getPalette = (allColors: object, luminanceSteps: number[]): any =>
       const name = value[0];
       const color = value[1];
       const hslColors: HeisslufType[] = getHeissluftColors(
+        name,
         color,
         luminanceSteps,
       );
@@ -66,7 +67,10 @@ export const downloadTheme = async (
 ) => {
   const theme: DefaultThemeType = { ...defaultTheme, colors: colorMapping };
 
-  const allColors: Record<string, string> = { ...colorMapping, ...customColorMapping };
+  const allColors: Record<string, string> = {
+    ...colorMapping,
+    ...customColorMapping,
+  };
   const colors = getPalette(allColors, luminanceSteps);
 
   const lightSpeakingNames = getSpeakingNamesWithColors(
@@ -75,7 +79,7 @@ export const downloadTheme = async (
     colors,
     false,
     luminanceSteps,
-    speakingNamesDefaultMapping
+    speakingNamesDefaultMapping,
   );
   const darkSpeakingNames = getSpeakingNamesWithColors(
     speakingNames,
@@ -83,9 +87,9 @@ export const downloadTheme = async (
     colors,
     true,
     luminanceSteps,
-    speakingNamesDefaultMapping
+    speakingNamesDefaultMapping,
   );
-  console.log('light: ', lightSpeakingNames, 'dark: ', darkSpeakingNames);
+  console.log("light: ", lightSpeakingNames, "dark: ", darkSpeakingNames);
   const fileName = theme.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
   const colorsJsonString = JSON.stringify({

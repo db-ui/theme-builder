@@ -15,6 +15,7 @@ const App = () => {
     defaultColors,
     customColors,
     defaultTheme,
+    darkMode,
   } = useThemeBuilderStore((state) => state);
 
   useEffect(() => {
@@ -22,13 +23,14 @@ const App = () => {
       ...defaultColors,
       ...customColors,
     };
+
     const cssProps: any = {
       ...getPaletteOutput(allColors, luminanceSteps),
-      ...getSpeakingNames(speakingNames, allColors, false),
+      ...getSpeakingNames(speakingNames, allColors, darkMode),
       ...getNonColorCssProperties(defaultTheme),
     };
 
-    const pages = document.getElementsByClassName("theme-props-container");
+    const pages = document.getElementsByTagName("html");
     Array.from(pages).forEach((page: Element) => {
       page.setAttribute(
         "style",
@@ -43,6 +45,7 @@ const App = () => {
     customColors,
     defaultTheme,
     luminanceSteps,
+    darkMode,
   ]);
 
   return (

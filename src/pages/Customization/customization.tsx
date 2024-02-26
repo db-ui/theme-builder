@@ -1,11 +1,17 @@
 import { useTranslation } from "react-i18next";
-import { Fragment, useState } from "react";
 import ColorSelection from "../../components/Customization/Settings/ColorSelection";
 import { TabItemType } from "./data.ts";
 import ComponentContainer from "../../components/Customization/Preview/ComponentContainer";
 import ColorPalettes from "../../components/Customization/Preview/ColorPalettes";
 import DefaultPage from "../../components/DefaultPage";
-import { DBButton, DBDivider, DBInput } from "@db-ui/react-components";
+import {
+  DBDivider,
+  DBInput,
+  DBTab,
+  DBTabList,
+  DBTabPanel,
+  DBTabs,
+} from "@db-ui/react-components";
 import ActionBar from "../../components/Customization/ActionBar";
 import { useThemeBuilderStore } from "../../store";
 import SpeakingColors from "../../components/Customization/Preview/SpeakingColors";
@@ -29,7 +35,6 @@ const tabs: TabItemType[] = [
 
 const Customization = () => {
   const { t } = useTranslation();
-  const [tab, setTab] = useState<number>(0);
   const { developerMode, defaultTheme } = useThemeBuilderStore(
     (state) => state,
   );
@@ -73,31 +78,23 @@ const Customization = () => {
           className="db-neutral-bg-lvl-2 p-fix-sm md:p-res-sm
       flex flex-col gap-res-sm w-full overflow-auto"
         >
-          <div className="flex gap-fix-3xs w-full">
+          <DBTabs alignment="center" width="full">
+            <DBTabList>
+              {tabs
+                .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
+                .map((tabItem) => (
+                  <DBTab key={`tab-${tabItem.text}`}>{t(tabItem.text)}</DBTab>
+                ))}
+            </DBTabList>
+
             {tabs
               .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
-              .map((tabItem, index) => (
-                <DBButton
-                  key={`tab-button-${tabItem.text}`}
-                  variant={tab === index ? "outlined" : "ghost"}
-                  onClick={() => setTab(index)}
-                >
-                  {t(tabItem.text)}
-                </DBButton>
+              .map((tabItem) => (
+                <DBTabPanel key={`tab-panel-${tabItem.text}`}>
+                  {tabItem.component}
+                </DBTabPanel>
               ))}
-          </div>
-
-          {tabs.map((tabItem, index) => {
-            if (tab !== index) {
-              return null;
-            }
-
-            return (
-              <Fragment key={`tab-${tabItem.text}`}>
-                {tabItem.component}
-              </Fragment>
-            );
-          })}
+          </DBTabs>
         </div>
       </div>
     </DefaultPage>
