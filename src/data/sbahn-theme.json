@@ -417,6 +417,101 @@
     "md": "0 0 2px -1px  rgba(0, 0, 0, 0.2), 0 0 8px 1px rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.14)",
     "lg": "0 0 4px -3px rgba(0, 0, 0, 0.2), 0 0 16px 3px rgba(0, 0, 0, 0.12), 0 0 8px 1px rgba(0, 0, 0, 0.14)"
   },
+  "transition": {
+    "duration": {
+      "x-slow": "0.5s",
+      "slow": "0.4s",
+      "medium": "0.3s",
+      "fast": "0.15s",
+      "x-fast": "0.075s"
+    },
+    "timing": {
+      "show": "cubic-bezier(0.49, 0.1, 0.16, 1) normal both",
+      "hide": "cubic-bezier(0.49, 0.1, 0.16, 1) normal both",
+      "emotional": "cubic-bezier(0.27, 0.05, 0.4, 0.95)",
+      "functional": "cubic-bezier(0.15, 0, 0.45, 1)"
+    },
+    "straight": {
+      "show": "0.5s cubic-bezier(0.49, 0.1, 0.16, 1) normal both",
+      "hide": "0.4s cubic-bezier(0.49, 0.1, 0.16, 1) normal both",
+      "emotional": "0.3s cubic-bezier(0.27, 0.05, 0.4, 0.95)",
+      "functional": "0.3s cubic-bezier(0.15, 0, 0.45, 1)"
+    }
+  },
+  "font": {
+    "family": {
+      "sans": "'DB Screen Sans', Helvetica, Arial, sans-serif",
+      "head": "'DB Screen Head', Helvetica, Arial, sans-serif"
+    },
+    "sans": {
+      "digitalregular": {
+        "name": "'DB Screen Sans Digital Regular'",
+        "local-name": "DB Screen Sans Digital",
+        "local-name-short": "DB Sans Digital",
+        "font-family": "'DB Screen Sans'",
+        "font-weight": 300,
+        "woff2": "'dbscreensans-digitalregular.woff2'"
+      },
+      "regular": {
+        "name": "'DB Screen Sans Regular'",
+        "local-name": "DB Screen Sans",
+        "local-name-short": "DB Sans",
+        "font-family": "'DB Screen Sans'",
+        "font-weight": 400,
+        "woff2": "'dbscreensans-regular.woff2'"
+      },
+      "medium": {
+        "name": "'DB Screen Sans Medium'",
+        "local-name": "DB Screen Sans Medium",
+        "local-name-short": "DB Sans Medium",
+        "font-family": "'DB Screen Sans'",
+        "font-weight": 500,
+        "woff2": "'dbscreensans-medium.woff2'"
+      },
+      "semibold": {
+        "name": "'DB Screen Sans SemiBold'",
+        "local-name": "DB Screen Sans SemiBold",
+        "local-name-short": "DB Sans SemiBold",
+        "font-family": "'DB Screen Sans'",
+        "font-weight": 600,
+        "woff2": "'dbscreensans-semibold.woff2'"
+      },
+      "bold": {
+        "name": "'DB Screen Sans Bold'",
+        "local-name": "DB Screen Sans Bold",
+        "local-name-short": "DB Sans Bold",
+        "font-family": "'DB Screen Sans'",
+        "font-weight": 700,
+        "woff2": "'dbscreensans-bold.woff2'"
+      }
+    },
+    "head": {
+      "light": {
+        "name": "'DB Screen Head Light'",
+        "local-name": "DB Screen Head Light",
+        "local-name-short": "DB Head Light",
+        "font-family": "'DB Screen Head'",
+        "font-weight": 300,
+        "woff2": "'dbscreenhead-light.woff2'"
+      },
+      "regular": {
+        "name": "'DB Screen Head'",
+        "local-name": "DB Screen Head",
+        "local-name-short": "DB Head",
+        "font-family": "'DB Screen Head'",
+        "font-weight": 400,
+        "woff2": "'dbscreenhead-regular.woff2'"
+      },
+      "black": {
+        "name": "'DB Screen Head Black'",
+        "local-name": "DB Screen Head Black",
+        "local-name-short": "DB Head Black",
+        "font-family": "'DB Screen Head'",
+        "font-weight": 900,
+        "woff2": "'dbscreenhead-black.woff2'"
+      }
+    }
+  },
   "colors": {
     "neutral": "#242629",
     "brand": "#4D8E45",

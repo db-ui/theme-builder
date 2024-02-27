@@ -16,7 +16,7 @@ export const getCssPropertyAsString = (properties: any): string => {
   return resultString;
 };
 
-const nonRemProperties = ["opacity", "elevation"];
+const nonRemProperties = ["opacity", "elevation", "font", "transition"];
 
 export const getNonColorCssProperties = (
   theme: DefaultThemeType,
