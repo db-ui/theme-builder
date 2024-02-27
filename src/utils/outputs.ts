@@ -283,7 +283,7 @@ export const getSpeakingNamesWithColors = (
 
       result = {
         ...result,
-        "On/brand/01--Enabled": `transparency 0%, ${brandTheme.brandOnColor}`,
+        "brand/On/01--Enabled": `transparency 0%, ${brandTheme.brandOnColor}`,
         "brand/Origin/01--Enabled": `transparency 0%, ${brandTheme.color}`,
         "brand/Origin/02--Hover": `transparency 0%, ${brandTheme.hoverColor}`,
         "brand/Origin/03--Pressed": `transparency 0%, ${brandTheme.pressedColor}`,
@@ -317,10 +317,10 @@ export const getSpeakingNamesWithColors = (
             const processedState = processState(nameWithoutOnPrefix);
             state = processedState[2].replace(/^ak-/, "").replace(/^bg-/, "");
             const stateNumbered = `${processedState[1]}-${state}`;
-            result[`On/${name}/${processedState[0]}/${stateNumbered}`] =
+            result[`${name}/On/${processedState[0]}/${stateNumbered}`] =
               `transparency ${transparency}%, ${hexValue}`;
           } else {
-            result[`On/${name}/${nameWithoutOnPrefix}`] =
+            result[`${name}/On/${nameWithoutOnPrefix}`] =
               `transparency ${transparency}%, ${hexValue}`;
           }
         } else {
