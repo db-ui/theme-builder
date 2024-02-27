@@ -1,7 +1,7 @@
 import FakeDevice from "../FakeDevice";
 import { useTranslation } from "react-i18next";
 import {
-  DBAlert,
+  DBNotification,
   DBButton,
   DBDivider,
   DBIcon,
@@ -59,7 +59,7 @@ const NavigationScreen = () => {
           <DBButton>{t("now")}</DBButton>
           <DBButton>{t("later")}</DBButton>
         </div>
-        <DBAlert semantic="informational">{t("iceInformation")}</DBAlert>
+        <DBNotification semantic="informational">{t("iceInformation")}</DBNotification>
 
         <div className="grid grid-cols-12 gap-fix-xs py-fix-sm px-fix-lg h-full items-center">
           <strong className="col-span-2 ml-auto">12:00</strong>

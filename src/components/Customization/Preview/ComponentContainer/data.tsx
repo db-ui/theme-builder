@@ -1,6 +1,6 @@
 import { Fragment, ReactElement } from "react";
 import {
-  DBAlert,
+  DBNotification,
   DBBadge,
   DBButton,
   DBCheckbox,
@@ -144,25 +144,26 @@ export const components: ComponentList[] = [
     component: (
       <Fragment>
         {variants.map((variant) => (
-          <DBAlert
+          <DBNotification
             key={`alert-component-${variant}`}
             semantic={variant}
-            type="alert"
-            icon="account"
+            variant="standalone"
             headline="Variant"
-            link={{ href: "#", text: "Link" }}
+            linkVariant="inline"
+            slotLink={<a href="#">Link</a>}
           >
             {toUpperCase(variant)}
-          </DBAlert>
+          </DBNotification>
         ))}
-        <DBAlert
-          type="inline"
+        <DBNotification
+          variant="docked"
           icon="account"
           headline="Type"
-          link={{ href: "#", text: "Link" }}
+          linkVariant="inline"
+          slotLink={<a href="#">Link</a>}
         >
-          Inline
-        </DBAlert>
+          Docked
+        </DBNotification>
       </Fragment>
     ),
   },

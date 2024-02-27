@@ -1,6 +1,6 @@
 import { useThemeBuilderStore } from "../../store";
 import { useEffect, useState } from "react";
-import { DBAlert } from "@db-ui/react-components";
+import { DBNotification } from "@db-ui/react-components";
 
 import "./index.scss";
 
@@ -28,13 +28,13 @@ const Notifications = () => {
   }, []);
 
   return (
-    <DBAlert
+    <DBNotification
       className={`notification${init ? " opacity-100" : " opacity-0"}${notification ? " show" : ""}`}
       semantic="informational"
-      type="inline"
+      variant="overlay"
     >
       {lastNotification}
-    </DBAlert>
+    </DBNotification>
   );
 };
 
