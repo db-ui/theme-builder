@@ -283,10 +283,10 @@ export const getSpeakingNamesWithColors = (
 
       result = {
         ...result,
-        "brand/On/01--Enabled": `transparency 0%, ${brandTheme.brandOnColor}`,
-        "brand/Origin/01--Enabled": `transparency 0%, ${brandTheme.color}`,
-        "brand/Origin/02--Hover": `transparency 0%, ${brandTheme.hoverColor}`,
-        "brand/Origin/03--Pressed": `transparency 0%, ${brandTheme.pressedColor}`,
+        "brand/On/01-Enabled": `transparency 0%, ${brandTheme.brandOnColor}`,
+        "brand/Origin/01-Enabled": `transparency 0%, ${brandTheme.color}`,
+        "brand/Origin/02-Hover": `transparency 0%, ${brandTheme.hoverColor}`,
+        "brand/Origin/03-Pressed": `transparency 0%, ${brandTheme.pressedColor}`,
       };
     }
 
@@ -311,7 +311,7 @@ export const getSpeakingNamesWithColors = (
           transparency = 0;
         }
 
-        if (speakingName.name.includes("on-bg")) {
+        if (speakingName.name.includes("on-")) {
           const nameWithoutOnPrefix = speakingName.name.replace("on-", "");
           if (isStateName(speakingName.name)) {
             const processedState = processState(nameWithoutOnPrefix);
