@@ -5,16 +5,16 @@ import { useTranslation } from "react-i18next";
 
 const InteractiveDemo = memo(() => {
   const { t } = useTranslation();
-  const [tonality, setTonality] = useState<string>("regular");
+  const [density, setDensity] = useState<string>("regular");
 
   return (
     <div className="flex-col flex w-full h-full gap-fix-md p-fix-sm overflow-hidden">
       <div className="flex gap-fix-md">
         <DBSelect
-          label={t("tonality")}
+          label={t("density")}
           variant="floating"
-          value={tonality}
-          onChange={(event) => setTonality(event.target.value)}
+          value={density}
+          onChange={(event) => setDensity(event.target.value)}
         >
           <option value="functional">functional</option>
           <option value="regular">regular</option>
@@ -22,7 +22,7 @@ const InteractiveDemo = memo(() => {
         </DBSelect>
       </div>
       <div className="scale-down w-full h-full">
-        <Demo linkToDemo tonality={tonality} />
+        <Demo linkToDemo density={density} />
       </div>
     </div>
   );
