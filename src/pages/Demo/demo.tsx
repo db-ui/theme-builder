@@ -6,12 +6,12 @@ import { DemoPropsType } from "./data.ts";
 import Sidenav from "../../components/Demo/Sidenav";
 import "./index.scss";
 
-const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
+const Demo = ({ linkToDemo, density }: DemoPropsType) => {
   const { t } = useTranslation();
   return (
     <DefaultPage
       name="Demo"
-      tonality={tonality}
+      density={density}
       actionBar={
         <>
           <Link
