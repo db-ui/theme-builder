@@ -5,7 +5,7 @@ import {
   DBAccordionItem,
   DBButton,
   DBBadge,
-  DBAlert,
+  DBNotification,
   DBCard,
   DBCheckbox,
   DBBrand,
@@ -70,9 +70,9 @@ export const PARSER_OPTIONS: HTMLReactParserOptions = {
     }
     if (name === "dbalert") {
       return (
-        <DBAlert {...attributes}>
+        <DBNotification {...attributes}>
           {domToReact(children, PARSER_OPTIONS)}
-        </DBAlert>
+        </DBNotification>
       );
     }
     if (name === "dbcard") {

@@ -16,7 +16,10 @@ export const getCssPropertyAsString = (properties: any): string => {
   return resultString;
 };
 
-const nonRemProperties = ["opacity", "elevation"];
+const nonRemProperties = ["opacity", "elevation", "transition"];
+
+const isFontFamily = (path: string[]): boolean =>
+  (path[0] === "font" && path[1] === "family") || path[0] !== "font";
 
 export const getNonColorCssProperties = (
   theme: DefaultThemeType,
@@ -28,6 +31,7 @@ export const getNonColorCssProperties = (
       this.isLeaf &&
       this.path.length > 0 &&
       this.path[0] !== "colors" &&
+      isFontFamily(this.path) &&
       !this.path.includes("_scale")
     ) {
       const key = `--${prefix}-${this.path
@@ -93,6 +97,7 @@ const getPalette = (
       const name = value[0];
       const color = value[1];
       const hslColors: HeisslufType[] = getHeissluftColors(
+        name,
         color,
         luminanceSteps,
       );
@@ -179,7 +184,11 @@ export const getExtraBrandColors = (
   hoverColor: string;
   pressedColor: string;
 } => {
-  const hslColors: HeisslufType[] = getHeissluftColors(color, luminanceSteps);
+  const hslColors: HeisslufType[] = getHeissluftColors(
+    "",
+    color,
+    luminanceSteps,
+  );
   const hsluv = new Hsluv();
   hsluv.hex = color;
   hsluv.hexToHsluv();

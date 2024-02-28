@@ -5,5 +5,5 @@ export type DefaultPagePropsType = {
   actionBar?: ReactElement;
   navigation?: ReactElement;
   className?: string;
-  tonality?: string;
+  density?: string;
 };

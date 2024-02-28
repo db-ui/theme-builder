@@ -61,6 +61,35 @@ export type SizingFixedType = {
   };
 };
 
+export type TransitionType = {
+  duration: {
+    "x-slow": string;
+    slow: string;
+    medium: string;
+    fast: string;
+    "x-fast": string;
+  };
+  timing: Record<string, string>;
+  straight: Record<string, string>;
+};
+
+export type FontType = {
+  name: string;
+  localName: string;
+  localShortName: string;
+  family: string;
+  weight: number;
+  woff2: string;
+};
+export type FontsType = {
+  family: {
+    sans: string;
+    head: string;
+  };
+  sans: Record<string, FontType>;
+  head: Record<string, FontType>;
+};
+
 export type DefaultThemeType = {
   name: string;
   image: string;
@@ -75,10 +104,12 @@ export type DefaultThemeType = {
   elevation: ThemeSizing;
   border: ThemeBorder;
   colors: DefaultColorMappingType;
+  transition: TransitionType;
+  font: FontsType;
 };
 
 export const defaultLuminances: number[] = [
-  0, 2, 5, 10, 20, 30, 40, 55, 65, 73, 80, 90, 95, 98, 100,
+  2, 4, 6, 10, 20, 30, 40, 50, 60, 70, 80, 90, 94, 96, 98,
 ];
 
 export type HeisslufType = {
@@ -142,6 +173,9 @@ export const speakingNamesDefaultMapping: SpeakingName[] = [
   { name: "on-bg-weak-enabled", dark: 10, light: 5 },
   { name: "on-bg-weak-hover", dark: 9, light: 6 },
   { name: "on-bg-weak-pressed", dark: 8, light: 7 },
+  { name: "on-contrast-enabled", dark: 3, light: 14 },
+  { name: "on-contrast-hover", dark: 4, light: 13 },
+  { name: "on-contrast-pressed", dark: 5, light: 12 },
   { name: "contrast-high-enabled", dark: 9, light: 6 },
   { name: "contrast-high-hover", dark: 8, light: 5 },
   { name: "contrast-high-pressed", dark: 7, light: 4 },

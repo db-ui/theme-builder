@@ -6,12 +6,12 @@ import { DemoPropsType } from "./data.ts";
 import Sidenav from "../../components/Demo/Sidenav";
 import "./index.scss";
 
-const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
+const Demo = ({ linkToDemo, density }: DemoPropsType) => {
   const { t } = useTranslation();
   return (
     <DefaultPage
       name="Demo"
-      tonality={tonality}
+      density={density}
       actionBar={
         <>
           <Link
@@ -58,7 +58,7 @@ const Demo = ({ linkToDemo, tonality }: DemoPropsType) => {
               <DBCard
                 spacing="small"
                 className="dashboard-long db-brand-bg"
-                elevationLevel="3"
+                elevationLevel="1"
               >
                 <div className="flex flex-col gap-fix-md h-full">
                   <h5>Progress</h5>
