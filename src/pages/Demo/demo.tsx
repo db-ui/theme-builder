@@ -26,7 +26,7 @@ const Demo = ({ linkToDemo, density }: DemoPropsType) => {
       }
     >
       <main className="overflow-hidden">
-        <div className="flex h-full">
+        <div className="flex flex-col md:flex-row h-full">
           <Sidenav />
           <div className="flex flex-col gap-fix-md py-fix-md px-res-sm db-neutral-bg-lvl-2 w-full h-full overflow-y-auto">
             <h1>{t("dashboard")}</h1>

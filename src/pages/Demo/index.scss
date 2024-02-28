@@ -1,5 +1,6 @@
 @use "@db-ui/foundations/build/scss/variables";
 @use "@db-ui/foundations/build/scss/colors";
+@use "@db-ui/foundations/build/scss/screen-sizes";
 .demo-side-nav {
   .db-button {
     justify-content: flex-start;
@@ -12,10 +13,18 @@
 }
 
 .demo-dashboard {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-areas:
-    "short1 short2 long"
-    "big big long";
+    "short1 long"
+    "short2 long"
+    "big big";
+
+  @include screen-sizes.screen("md") {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      "short1 short2 long"
+      "big big long";
+  }
 }
 
 .dashboard-short1 {
@@ -34,7 +43,8 @@
 }
 
 .dashboard-progress {
-  border: variables.$db-sizing-xs solid colors.$db-current-color-bg-lvl-1-enabled;
+  border: variables.$db-sizing-xs solid
+    colors.$db-current-color-bg-lvl-1-enabled;
   border-radius: 50%;
   border-top-color: colors.$db-brand-origin-enabled;
   border-right-color: colors.$db-brand-origin-enabled;
