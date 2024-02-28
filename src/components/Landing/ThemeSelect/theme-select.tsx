@@ -53,7 +53,6 @@ const ThemeSelect = () => {
                   setSelectedTheme(key);
                   useThemeBuilderStore.setState({
                     defaultTheme: theme,
-                    defaultColors: theme.colors,
                     luminanceSteps: defaultLuminances,
                     speakingNames: speakingNamesDefaultMapping,
                   });

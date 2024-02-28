@@ -9,19 +9,13 @@ import {
 } from "./utils/outputs.ts";
 
 const App = () => {
-  const {
-    speakingNames,
-    luminanceSteps,
-    defaultColors,
-    customColors,
-    defaultTheme,
-    darkMode,
-  } = useThemeBuilderStore((state) => state);
+  const { speakingNames, luminanceSteps, defaultTheme, darkMode } =
+    useThemeBuilderStore((state) => state);
 
   useEffect(() => {
     const allColors: Record<string, string> = {
-      ...defaultColors,
-      ...customColors,
+      ...defaultTheme.colors,
+      ...defaultTheme.customColors,
     };
 
     const cssProps: any = {
@@ -43,14 +37,7 @@ const App = () => {
           .join(" "),
       );
     });
-  }, [
-    speakingNames,
-    defaultColors,
-    customColors,
-    defaultTheme,
-    luminanceSteps,
-    darkMode,
-  ]);
+  }, [speakingNames, defaultTheme, luminanceSteps, darkMode]);
 
   return (
     <>

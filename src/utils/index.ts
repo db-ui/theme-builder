@@ -1,7 +1,5 @@
 import chroma from "chroma-js";
 import {
-  CustomColorMappingType,
-  DefaultColorMappingType,
   DefaultThemeType,
   SpeakingName,
   speakingNamesDefaultMapping,
@@ -41,14 +39,12 @@ export const downloadTheme = async (
   speakingNames: SpeakingName[],
   luminanceSteps: number[],
   defaultTheme: DefaultThemeType,
-  colorMapping: DefaultColorMappingType,
-  customColorMapping?: CustomColorMappingType,
 ) => {
-  const theme: DefaultThemeType = { ...defaultTheme, colors: colorMapping };
+  const theme: DefaultThemeType = { ...defaultTheme };
 
   const allColors: Record<string, string> = {
-    ...colorMapping,
-    ...customColorMapping,
+    ...defaultTheme.colors,
+    ...defaultTheme.customColors,
   };
 
   const fileName = theme.branding.name || `default-theme`;

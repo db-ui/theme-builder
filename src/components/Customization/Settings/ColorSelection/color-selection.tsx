@@ -1,7 +1,6 @@
 import ColorPicker from "./ColorPicker";
 import { useThemeBuilderStore } from "../../../../store";
 import {
-  CustomColorMappingType,
   DefaultColorMappingType,
   HeisslufType,
 } from "../../../../utils/data.ts";
@@ -15,44 +14,40 @@ import chroma from "chroma-js";
 
 const ColorSelection = () => {
   const { t } = useTranslation();
-  const [customColorArray, setCustomColorArray] = useState<string[]>([]);
   const [neutralColors, setNeutralColors] = useState<HeisslufType[]>();
   const [isAlternativeValid, setIsAlternativeValid] = useState<boolean>();
 
-  const { defaultColors, customColors, luminanceSteps, defaultTheme } =
-    useThemeBuilderStore((state) => state);
+  const { luminanceSteps, defaultTheme } = useThemeBuilderStore(
+    (state) => state,
+  );
 
-  const setCustomColors = (colorMappingType: CustomColorMappingType) => {
-    useThemeBuilderStore.setState({
-      customColors: colorMappingType,
-    });
-  };
-
-  useEffect(() => {
-    if (customColors) {
-      const colorKeys = Object.keys(customColors);
-      if (colorKeys.length > 0) {
-        setCustomColorArray(colorKeys);
-      } else {
-        setCustomColorArray([]);
-      }
-    }
-  }, [customColors]);
-
-  const setDefaultColors = useCallback(
-    (colorMappingType: DefaultColorMappingType) => {
+  const setCustomColors = useCallback(
+    (customColors: Record<string, string>) => {
       useThemeBuilderStore.setState({
-        defaultColors: colorMappingType,
+        defaultTheme: { ...defaultTheme, customColors },
       });
     },
-    [],
+    [defaultTheme],
+  );
+
+  const setDefaultColors = useCallback(
+    (colors: DefaultColorMappingType) => {
+      useThemeBuilderStore.setState({
+        defaultTheme: { ...defaultTheme, colors },
+      });
+    },
+    [defaultTheme],
   );
 
   useEffect(() => {
     setNeutralColors(
-      getHeissluftColors("neutral", defaultColors.neutral, luminanceSteps),
+      getHeissluftColors(
+        "neutral",
+        defaultTheme.colors.neutral,
+        luminanceSteps,
+      ),
     );
-  }, [defaultColors.neutral, luminanceSteps]);
+  }, [defaultTheme.colors.neutral, luminanceSteps]);
 
   const setBrandColor = useCallback(
     (hex: string, dark: boolean) => {
@@ -94,23 +89,23 @@ const ColorSelection = () => {
         <h5>{t("colors")}</h5>
         <div className="flex flex-wrap gap-fix-xs">
           <ColorPicker
-            color={defaultColors.neutral}
+            color={defaultTheme.colors.neutral}
             label="Neutral"
             setColor={(neutral) =>
-              setDefaultColors({ ...defaultColors, neutral })
+              setDefaultColors({ ...defaultTheme.colors, neutral })
             }
           />
 
           <ColorPicker
             isBrand
-            color={defaultColors.brand}
+            color={defaultTheme.colors.brand}
             label="Brand"
             setAlternativeColor={(color) => {
               setBrandColor(color, defaultTheme.branding.alternativeColor.dark);
             }}
             isAlternativeValid={isAlternativeValid}
             setColor={(brand) => {
-              setDefaultColors({ ...defaultColors, brand });
+              setDefaultColors({ ...defaultTheme.colors, brand });
               if (neutralColors) {
                 const neutralBgDarkest = neutralColors.at(0);
                 const neutralBgLightest = neutralColors.at(-1);
@@ -139,34 +134,34 @@ const ColorSelection = () => {
           />
 
           <ColorPicker
-            color={defaultColors.informational}
+            color={defaultTheme.colors.informational}
             label="Informational"
             setColor={(informational) =>
-              setDefaultColors({ ...defaultColors, informational })
+              setDefaultColors({ ...defaultTheme.colors, informational })
             }
           />
 
           <ColorPicker
-            color={defaultColors.successful}
+            color={defaultTheme.colors.successful}
             label="Successful"
             setColor={(successful) =>
-              setDefaultColors({ ...defaultColors, successful })
+              setDefaultColors({ ...defaultTheme.colors, successful })
             }
           />
 
           <ColorPicker
-            color={defaultColors.warning}
+            color={defaultTheme.colors.warning}
             label="Warning"
             setColor={(warning) =>
-              setDefaultColors({ ...defaultColors, warning })
+              setDefaultColors({ ...defaultTheme.colors, warning })
             }
           />
 
           <ColorPicker
-            color={defaultColors.critical}
+            color={defaultTheme.colors.critical}
             label="Critical"
             setColor={(critical) =>
-              setDefaultColors({ ...defaultColors, critical })
+              setDefaultColors({ ...defaultTheme.colors, critical })
             }
           />
         </div>
@@ -182,19 +177,22 @@ const ColorSelection = () => {
             customColor
             isAddColor
           />
-          {customColorArray?.length > 0 &&
-            customColorArray.map((color) => (
+          {defaultTheme.customColors &&
+            Object.entries(defaultTheme.customColors).map(([name, color]) => (
               <ColorPicker
-                key={color}
-                color={customColors[color]}
-                label={color}
+                key={name}
+                color={color}
+                label={name}
                 setColor={(changedColor) =>
-                  setCustomColors({ ...customColors, [color]: changedColor })
+                  setCustomColors({
+                    ...defaultTheme.customColors,
+                    [name]: changedColor,
+                  })
                 }
                 customColor
                 onDelete={() => {
-                  const copyCustomColors = { ...customColors };
-                  delete copyCustomColors[color];
+                  const copyCustomColors = { ...defaultTheme.customColors };
+                  delete copyCustomColors[name];
                   setCustomColors(copyCustomColors);
                 }}
               />
