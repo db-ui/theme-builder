@@ -4,20 +4,18 @@ import {
   DefaultColorMappingType,
   DefaultThemeType,
   SpeakingName,
-  HeisslufType,
   speakingNamesDefaultMapping,
 } from "./data.ts";
-import { getHeissluftColors } from "./generate-colors.ts";
 import {
-  getCssThemeProperties,
   getCssPropertyAsString,
+  getCssThemeProperties,
   getPaletteOutput,
   getSpeakingNames,
 } from "./outputs.ts";
 import JSZip from "jszip";
 import { BASE_PATH } from "../constants.ts";
 import { getFontFaces } from "./outputs/fonts.ts";
-import { getSketchColors } from "./outputs/sketch.ts";
+import { getSketchColorsAsString } from "./outputs/sketch.ts";
 
 export const getThemeImage = (image: string): string => {
   if (image.startsWith("data:image")) {
@@ -39,26 +37,6 @@ const download = (fileName: string, file: Blob) => {
   document.body.removeChild(element);
 };
 
-export const getPalette = (allColors: object, luminanceSteps: number[]): any =>
-  Object.entries(allColors)
-    .map((value) => {
-      const name = value[0];
-      const color = value[1];
-      const hslColors: HeisslufType[] = getHeissluftColors(
-        name,
-        color,
-        luminanceSteps,
-      );
-
-      return {
-        [name]: hslColors,
-      };
-    })
-    .reduce(
-      (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
-      {},
-    );
-
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
   luminanceSteps: number[],
@@ -72,35 +50,22 @@ export const downloadTheme = async (
     ...colorMapping,
     ...customColorMapping,
   };
-  const colors = getPalette(allColors, luminanceSteps);
 
-  const lightSpeakingNames = getSketchColors(
-    speakingNames,
-    allColors,
-    colors,
-    false,
-    luminanceSteps,
-    speakingNamesDefaultMapping,
-  );
-  const darkSpeakingNames = getSketchColors(
-    speakingNames,
-    allColors,
-    colors,
-    true,
-    luminanceSteps,
-    speakingNamesDefaultMapping,
-  );
   const fileName = theme.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
-  const colorsJsonString = JSON.stringify({
-    light: lightSpeakingNames,
-    dark: darkSpeakingNames,
-  });
   const themeProperties = getCssThemeProperties(defaultTheme);
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
-  zip.file(`${fileName}-sketch-colors.json`, colorsJsonString);
+  zip.file(
+    `${fileName}-sketch-colors.json`,
+    getSketchColorsAsString(
+      speakingNames,
+      allColors,
+      luminanceSteps,
+      speakingNamesDefaultMapping,
+    ),
+  );
 
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
