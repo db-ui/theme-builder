@@ -13,6 +13,7 @@ import {
 } from "./outputs.ts";
 import JSZip from "jszip";
 import { BASE_PATH } from "../constants.ts";
+import { getFontFaces } from "./outputs/fonts.ts";
 
 export const getThemeImage = (image: string): string => {
   if (image.startsWith("data:image")) {
@@ -64,6 +65,7 @@ export const downloadTheme = async (
     `${fileName}-speaking-names-dark.css`,
     getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, true)),
   );
+  zip.file(`${fileName}-font-faces.scss`, getFontFaces(theme));
   const zipFile = await zip.generateAsync({ type: "blob" });
   download(`${fileName}.zip`, zipFile);
 };

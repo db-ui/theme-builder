@@ -61,6 +61,35 @@ export type SizingFixedType = {
   };
 };
 
+export type TransitionType = {
+  duration: {
+    "x-slow": string;
+    slow: string;
+    medium: string;
+    fast: string;
+    "x-fast": string;
+  };
+  timing: Record<string, string>;
+  straight: Record<string, string>;
+};
+
+export type FontType = {
+  name: string;
+  localName: string;
+  localShortName: string;
+  family: string;
+  weight: number;
+  woff2: string;
+};
+export type FontsType = {
+  family: {
+    sans: string;
+    head: string;
+  };
+  sans: Record<string, FontType>;
+  head: Record<string, FontType>;
+};
+
 export type DefaultThemeType = {
   name: string;
   image: string;
@@ -75,6 +104,8 @@ export type DefaultThemeType = {
   elevation: ThemeSizing;
   border: ThemeBorder;
   colors: DefaultColorMappingType;
+  transition: TransitionType;
+  font: FontsType;
 };
 
 export const defaultLuminances: number[] = [

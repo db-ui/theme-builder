@@ -447,68 +447,68 @@
     "sans": {
       "digitalregular": {
         "name": "'DB Screen Sans Digital Regular'",
-        "local-name": "DB Screen Sans Digital",
-        "local-name-short": "DB Sans Digital",
-        "font-family": "'DB Screen Sans'",
-        "font-weight": 300,
+        "localName": "DB Screen Sans Digital",
+        "localShortName": "DB Sans Digital",
+        "family": "'DB Screen Sans'",
+        "weight": 300,
         "woff2": "'dbscreensans-digitalregular.woff2'"
       },
       "regular": {
         "name": "'DB Screen Sans Regular'",
-        "local-name": "DB Screen Sans",
-        "local-name-short": "DB Sans",
-        "font-family": "'DB Screen Sans'",
-        "font-weight": 400,
+        "localName": "DB Screen Sans",
+        "localShortName": "DB Sans",
+        "family": "'DB Screen Sans'",
+        "weight": 400,
         "woff2": "'dbscreensans-regular.woff2'"
       },
       "medium": {
         "name": "'DB Screen Sans Medium'",
-        "local-name": "DB Screen Sans Medium",
-        "local-name-short": "DB Sans Medium",
-        "font-family": "'DB Screen Sans'",
-        "font-weight": 500,
+        "localName": "DB Screen Sans Medium",
+        "localShortName": "DB Sans Medium",
+        "family": "'DB Screen Sans'",
+        "weight": 500,
         "woff2": "'dbscreensans-medium.woff2'"
       },
       "semibold": {
         "name": "'DB Screen Sans SemiBold'",
-        "local-name": "DB Screen Sans SemiBold",
-        "local-name-short": "DB Sans SemiBold",
-        "font-family": "'DB Screen Sans'",
-        "font-weight": 600,
+        "localName": "DB Screen Sans SemiBold",
+        "localShortName": "DB Sans SemiBold",
+        "family": "'DB Screen Sans'",
+        "weight": 600,
         "woff2": "'dbscreensans-semibold.woff2'"
       },
       "bold": {
         "name": "'DB Screen Sans Bold'",
-        "local-name": "DB Screen Sans Bold",
-        "local-name-short": "DB Sans Bold",
-        "font-family": "'DB Screen Sans'",
-        "font-weight": 700,
+        "localName": "DB Screen Sans Bold",
+        "localShortName": "DB Sans Bold",
+        "family": "'DB Screen Sans'",
+        "weight": 700,
         "woff2": "'dbscreensans-bold.woff2'"
       }
     },
     "head": {
       "light": {
         "name": "'DB Screen Head Light'",
-        "local-name": "DB Screen Head Light",
-        "local-name-short": "DB Head Light",
-        "font-family": "'DB Screen Head'",
-        "font-weight": 300,
+        "localName": "DB Screen Head Light",
+        "localShortName": "DB Head Light",
+        "family": "'DB Screen Head'",
+        "weight": 300,
         "woff2": "'dbscreenhead-light.woff2'"
       },
       "regular": {
         "name": "'DB Screen Head'",
-        "local-name": "DB Screen Head",
-        "local-name-short": "DB Head",
-        "font-family": "'DB Screen Head'",
-        "font-weight": 400,
+        "localName": "DB Screen Head",
+        "localShortName": "DB Head",
+        "family": "'DB Screen Head'",
+        "weight": 400,
         "woff2": "'dbscreenhead-regular.woff2'"
       },
       "black": {
         "name": "'DB Screen Head Black'",
-        "local-name": "DB Screen Head Black",
-        "local-name-short": "DB Head Black",
-        "font-family": "'DB Screen Head'",
-        "font-weight": 900,
+        "localName": "DB Screen Head Black",
+        "localShortName": "DB Head Black",
+        "family": "'DB Screen Head'",
+        "weight": 900,
         "woff2": "'dbscreenhead-black.woff2'"
       }
     }
