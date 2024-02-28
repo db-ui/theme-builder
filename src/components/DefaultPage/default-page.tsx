@@ -9,7 +9,7 @@ const DefaultPage = ({
   children,
   actionBar,
   className,
-  tonality,
+  density,
   navigation,
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const { defaultTheme, darkMode, developerMode } = useThemeBuilderStore(
@@ -19,7 +19,7 @@ const DefaultPage = ({
   return (
     <div
       className="theme-props-container contents"
-      data-tonality={tonality || "regular"}
+      data-density={density || "regular"}
     >
       <DBPage
         className={className}

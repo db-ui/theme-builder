@@ -16,7 +16,10 @@ export const getCssPropertyAsString = (properties: any): string => {
   return resultString;
 };
 
-const nonRemProperties = ["opacity", "elevation"];
+const nonRemProperties = ["opacity", "elevation", "transition"];
+
+const isFontFamily = (path: string[]): boolean =>
+  (path[0] === "font" && path[1] === "family") || path[0] !== "font";
 
 export const getNonColorCssProperties = (
   theme: DefaultThemeType,
@@ -28,6 +31,7 @@ export const getNonColorCssProperties = (
       this.isLeaf &&
       this.path.length > 0 &&
       this.path[0] !== "colors" &&
+      isFontFamily(this.path) &&
       !this.path.includes("_scale")
     ) {
       const key = `--${prefix}-${this.path
