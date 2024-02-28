@@ -8,15 +8,16 @@ import chroma from "chroma-js";
 import PaletteBox from "./PaletteBox";
 
 const ColorPalettes = () => {
-  const { defaultColors, customColors, luminanceSteps, developerMode } =
-    useThemeBuilderStore((state) => state);
+  const { luminanceSteps, developerMode, defaultTheme } = useThemeBuilderStore(
+    (state) => state,
+  );
   const { t } = useTranslation();
 
   const [allColors, setAllColors] = useState<any>({});
 
   useEffect(() => {
-    setAllColors({ ...defaultColors, ...customColors });
-  }, [defaultColors, customColors]);
+    setAllColors({ ...defaultTheme.colors, ...defaultTheme.customColors });
+  }, [defaultTheme]);
 
   return (
     <div className="flex flex-col">

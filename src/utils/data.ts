@@ -8,10 +8,6 @@ export type DefaultColorMappingType = {
   [key: string]: string;
 };
 
-export type CustomColorMappingType = {
-  [key: string]: string;
-};
-
 export type ThemeTypographyType = {
   lineHeight: number;
   fontSize: string;
@@ -116,6 +112,7 @@ export type DefaultThemeType = {
   elevation: ThemeSizing;
   border: ThemeBorder;
   colors: DefaultColorMappingType;
+  customColors?: Record<string, string>;
   transition: TransitionType;
   font: FontsType;
 };

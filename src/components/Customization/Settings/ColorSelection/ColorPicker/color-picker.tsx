@@ -10,7 +10,6 @@ import {
   DBInfotext,
   DBInput,
 } from "@db-ui/react-components";
-import { CustomColorMappingType } from "../../../../../utils/data.ts";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../../../store";
 
@@ -29,17 +28,15 @@ const ColorPicker = ({
   const [addColor, setAddColor] = useState<string>(color);
   const [open, setOpen] = useState<boolean>();
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
-  const { customColors, darkMode, defaultTheme } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const { darkMode, defaultTheme } = useThemeBuilderStore((state) => state);
 
   const setCustomColors = useCallback(
-    (colorMappingType: CustomColorMappingType) => {
+    (customColors: Record<string, string>) => {
       useThemeBuilderStore.setState({
-        customColors: colorMappingType,
+        defaultTheme: { ...defaultTheme, customColors },
       });
     },
-    [],
+    [defaultTheme],
   );
 
   const getColor = useCallback(() => {
@@ -83,10 +80,14 @@ const ColorPicker = ({
               value={colorName}
               disabled={!customColor}
               invalid={
-                customColor && !!customColors[colorName] && label !== colorName
+                customColor &&
+                !!defaultTheme.customColors?.[colorName] &&
+                label !== colorName
               }
               message={
-                customColor && customColors[colorName] && label !== colorName
+                customColor &&
+                !!defaultTheme.customColors?.[colorName] &&
+                label !== colorName
                   ? t("customColorExists")
                   : undefined
               }
@@ -206,21 +207,25 @@ const ColorPicker = ({
                   onClick={() => {
                     if (isAddColor) {
                       setCustomColors({
-                        ...customColors,
+                        ...defaultTheme.customColors,
                         [colorName]: addColor,
                       });
                       setOpen(false);
                       setAddColor("#ffffff");
                       setColorName("");
-                    } else {
-                      const newCustomColors: CustomColorMappingType = {};
-                      Object.keys(customColors).forEach((cName) => {
-                        if (cName === label) {
-                          newCustomColors[colorName] = customColors[cName];
-                        } else {
-                          newCustomColors[cName] = customColors[cName];
-                        }
-                      });
+                    } else if (defaultTheme.customColors) {
+                      const newCustomColors: Record<string, string> = {};
+                      Object.keys(defaultTheme.customColors).forEach(
+                        (cName) => {
+                          if (cName === label) {
+                            newCustomColors[colorName] =
+                              defaultTheme.customColors?.[cName] || "";
+                          } else {
+                            newCustomColors[cName] =
+                              defaultTheme.customColors?.[cName] || "";
+                          }
+                        },
+                      );
                       setCustomColors(newCustomColors);
                     }
                   }}

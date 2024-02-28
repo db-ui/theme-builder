@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import type {} from "@redux-devtools/extension"; // required for devtools typing
 import {
   PLAYGROUND_STATE,
   PlaygroundState,
@@ -24,12 +23,9 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
     persist(
       (set) => {
         return {
-          customColors: {},
           darkMode: false,
-          defaultColors: defaultTheme.colors,
           resetDefaults: () => {
             set(() => ({
-              defaultColors: defaultTheme.colors,
               defaultTheme,
               luminanceSteps: defaultLuminances,
               speakingNames: speakingNamesDefaultMapping,

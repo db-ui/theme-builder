@@ -3,15 +3,14 @@ import { useThemeBuilderStore } from "../../../store";
 import { downloadTheme } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import Upload from "../Upload";
+import { DefaultThemeType } from "../../../utils/data.ts";
 
 const ActionBar = () => {
   const { t } = useTranslation();
   const {
-    defaultColors,
     resetDefaults,
     luminanceSteps,
     defaultTheme,
-    customColors,
     speakingNames,
     developerMode,
   } = useThemeBuilderStore((state) => state);
@@ -33,11 +32,14 @@ const ActionBar = () => {
         onUpload={(result) => {
           try {
             const resultAsString = atob(result.split("base64,")[1]);
-            const resultAsJson = JSON.parse(resultAsString);
+            const resultAsJson: DefaultThemeType = JSON.parse(resultAsString);
             useThemeBuilderStore.setState({
-              defaultTheme: resultAsJson
+              defaultTheme: resultAsJson,
             });
-          } catch (error) {
+          } catch (error: any) {
+            useThemeBuilderStore.setState({
+              notification: error.message,
+            });
             console.error(error);
           }
         }}
@@ -46,13 +48,7 @@ const ActionBar = () => {
         variant="brand"
         icon="download"
         onClick={() =>
-          downloadTheme(
-            speakingNames,
-            luminanceSteps,
-            defaultTheme,
-            defaultColors,
-            customColors,
-          )
+          downloadTheme(speakingNames, luminanceSteps, defaultTheme)
         }
         title={t("exportDesc")}
       >
