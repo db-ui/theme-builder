@@ -13,11 +13,11 @@ import {
   getCssPropertyAsString,
   getPaletteOutput,
   getSpeakingNames,
-  getSpeakingNamesWithColors,
 } from "./outputs.ts";
 import JSZip from "jszip";
 import { BASE_PATH } from "../constants.ts";
 import { getFontFaces } from "./outputs/fonts.ts";
+import { getSketchColors } from "./outputs/sketch.ts";
 
 export const getThemeImage = (image: string): string => {
   if (image.startsWith("data:image")) {
@@ -74,7 +74,7 @@ export const downloadTheme = async (
   };
   const colors = getPalette(allColors, luminanceSteps);
 
-  const lightSpeakingNames = getSpeakingNamesWithColors(
+  const lightSpeakingNames = getSketchColors(
     speakingNames,
     allColors,
     colors,
@@ -82,7 +82,7 @@ export const downloadTheme = async (
     luminanceSteps,
     speakingNamesDefaultMapping,
   );
-  const darkSpeakingNames = getSpeakingNamesWithColors(
+  const darkSpeakingNames = getSketchColors(
     speakingNames,
     allColors,
     colors,
@@ -90,7 +90,6 @@ export const downloadTheme = async (
     luminanceSteps,
     speakingNamesDefaultMapping,
   );
-  console.log("light: ", lightSpeakingNames, "dark: ", darkSpeakingNames);
   const fileName = theme.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
   const colorsJsonString = JSON.stringify({
@@ -101,7 +100,7 @@ export const downloadTheme = async (
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
-  zip.file(`${fileName}-colors.json`, colorsJsonString);
+  zip.file(`${fileName}-sketch-colors.json`, colorsJsonString);
 
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
