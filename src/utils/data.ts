@@ -1,7 +1,6 @@
 export type DefaultColorMappingType = {
   neutral: string;
   brand: string;
-  brandDark: string;
   informational: string;
   successful: string;
   warning: string;
@@ -90,10 +89,23 @@ export type FontsType = {
   head: Record<string, FontType>;
 };
 
-export type DefaultThemeType = {
+export type BrandAlternativeColor = {
+  hex: string;
+  dark: boolean;
+  custom?: boolean;
+};
+
+export type BrandingType = {
   name: string;
-  image: string;
-  imageDark: string;
+  image: {
+    light: string;
+    dark: string;
+  };
+  alternativeColor: BrandAlternativeColor;
+};
+
+export type DefaultThemeType = {
+  branding: BrandingType;
   spacing: {
     responsive: ThemeTonalities;
     fixed: ThemeTonalities;

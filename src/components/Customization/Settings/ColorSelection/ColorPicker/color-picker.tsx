@@ -4,8 +4,10 @@ import "./index.scss";
 import { getLuminance } from "../../../../../utils";
 import {
   DBButton,
+  DBCheckbox,
   DBDivider,
   DBDrawer,
+  DBInfotext,
   DBInput,
 } from "@db-ui/react-components";
 import { CustomColorMappingType } from "../../../../../utils/data.ts";
@@ -19,24 +21,32 @@ const ColorPicker = ({
   onDelete,
   customColor,
   isAddColor,
-  darkColor,
-  setDarkColor,
+  isBrand,
+  setAlternativeColor,
+  isAlternativeValid,
 }: ColorPickerType) => {
   const { t } = useTranslation();
   const [addColor, setAddColor] = useState<string>(color);
   const [open, setOpen] = useState<boolean>();
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
-  const { customColors, darkMode } = useThemeBuilderStore((state) => state);
+  const { customColors, darkMode, defaultTheme } = useThemeBuilderStore(
+    (state) => state,
+  );
 
-  const setCustomColors = (colorMappingType: CustomColorMappingType) => {
-    useThemeBuilderStore.setState({
-      customColors: colorMappingType,
-    });
-  };
+  const setCustomColors = useCallback(
+    (colorMappingType: CustomColorMappingType) => {
+      useThemeBuilderStore.setState({
+        customColors: colorMappingType,
+      });
+    },
+    [],
+  );
 
   const getColor = useCallback(() => {
-    return darkColor && darkMode ? darkColor : color;
-  }, [darkMode, darkColor, color]);
+    return isBrand && defaultTheme.branding.alternativeColor.dark === darkMode
+      ? defaultTheme.branding.alternativeColor.hex
+      : color;
+  }, [isBrand, defaultTheme.branding.alternativeColor, darkMode, color]);
 
   return (
     <div className="color-picker-container">
@@ -109,31 +119,67 @@ const ColorPicker = ({
               }}
             />
 
-            {darkColor && (
-              <div className="flex flex-col gap-fix-sm mt-fix-lg">
-                <h6>{t("alternativeDarkBrand")}</h6>
-                <DBInput
-                  label={t("colorInputPicker")}
-                  type="color"
-                  value={darkColor}
-                  onChange={(event) => {
-                    if (setDarkColor) {
-                      setDarkColor(event.target.value);
+            {isBrand &&
+              defaultTheme.branding.alternativeColor.hex !== color && (
+                <div className="flex flex-col gap-fix-sm mt-fix-lg">
+                  <h6>{t("alternativeBrand")}</h6>
+                  <DBInfotext
+                    semantic={
+                      defaultTheme.branding.alternativeColor.custom &&
+                      !isAlternativeValid
+                        ? "critical"
+                        : "warning"
                     }
-                  }}
-                />
-                <DBInput
-                  label={t("colorInputHex")}
-                  placeholder={t("colorInputHex")}
-                  value={darkColor}
-                  onChange={(event) => {
-                    if (setDarkColor) {
-                      setDarkColor(event.target.value);
+                  >
+                    {defaultTheme.branding.alternativeColor.custom &&
+                    !isAlternativeValid
+                      ? t("alternativeBrandCritical")
+                      : t("alternativeBrandWarning")}
+                  </DBInfotext>
+                  <DBCheckbox
+                    label={t("alternativeBrandCheckbox")}
+                    defaultChecked={
+                      defaultTheme.branding.alternativeColor.custom
                     }
-                  }}
-                />
-              </div>
-            )}
+                    onChange={(event) => {
+                      useThemeBuilderStore.setState({
+                        defaultTheme: {
+                          ...defaultTheme,
+                          branding: {
+                            ...defaultTheme.branding,
+                            alternativeColor: {
+                              ...defaultTheme.branding.alternativeColor,
+                              custom: event.target.checked,
+                            },
+                          },
+                        },
+                      });
+                    }}
+                  />
+                  <DBInput
+                    label={t("colorInputPicker")}
+                    type="color"
+                    value={defaultTheme.branding.alternativeColor.hex}
+                    disabled={!defaultTheme.branding.alternativeColor.custom}
+                    onChange={(event) => {
+                      if (setAlternativeColor) {
+                        setAlternativeColor(event.target.value);
+                      }
+                    }}
+                  />
+                  <DBInput
+                    label={t("colorInputHex")}
+                    placeholder={t("colorInputHex")}
+                    value={defaultTheme.branding.alternativeColor.hex}
+                    disabled={!defaultTheme.branding.alternativeColor.custom}
+                    onChange={(event) => {
+                      if (setAlternativeColor) {
+                        setAlternativeColor(event.target.value);
+                      }
+                    }}
+                  />
+                </div>
+              )}
           </div>
 
           {customColor && (

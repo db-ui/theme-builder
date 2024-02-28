@@ -1,6 +1,14 @@
 {
-  "name": "S-Bahn Theme",
-  "image": "sbahn_logo.svg",
+  "branding": {
+    "name": "S-Bahn Theme",
+    "image": {
+      "light": "sbahn_logo.svg"
+    },
+    "alternativeColor": {
+      "hex": "#4D8E45",
+      "dark": true
+    }
+  },
   "spacing": {
     "_scale": "100%",
     "responsive": {

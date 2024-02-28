@@ -63,9 +63,9 @@ const ThemeSelect = () => {
                   <img
                     className="logo m-auto"
                     src={getThemeImage(
-                      darkMode && theme.imageDark
-                        ? theme.imageDark
-                        : theme.image,
+                      darkMode && theme.branding.image.dark
+                        ? theme.branding.image.dark
+                        : theme.branding.image.light,
                     )}
                     alt="brand"
                   />

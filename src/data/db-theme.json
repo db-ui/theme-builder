@@ -1,6 +1,14 @@
 {
-  "name": "DB Theme",
-  "image": "db_logo.svg",
+  "branding": {
+    "name": "DB Theme",
+    "image": {
+      "light": "db_logo.svg"
+    },
+    "alternativeColor": {
+      "hex": "#ec0016",
+      "dark": true
+    }
+  },
   "spacing": {
     "_scale": "100%",
     "responsive": {
@@ -515,7 +523,6 @@
   "colors": {
     "neutral": "#242629",
     "brand": "#ec0016",
-    "brandDark": "#ec0016",
     "informational": "#309FD1",
     "warning": "#F39200",
     "successful": "#63A615",

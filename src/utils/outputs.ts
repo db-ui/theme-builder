@@ -1,4 +1,9 @@
-import { DefaultThemeType, HeisslufType, SpeakingName } from "./data.ts";
+import {
+  BrandAlternativeColor,
+  DefaultThemeType,
+  HeisslufType,
+  SpeakingName,
+} from "./data.ts";
 import traverse from "traverse";
 import { Hsluv } from "hsluv";
 import { getHeissluftColors } from "./generate-colors.ts";
@@ -114,6 +119,7 @@ const getPalette = (
 export const getPaletteOutput = (
   allColors: Record<string, string>,
   luminanceSteps: number[],
+  altBrand: BrandAlternativeColor,
 ): any => {
   const palette: Record<string, HeisslufType[]> = getPalette(
     allColors,
@@ -122,42 +128,35 @@ export const getPaletteOutput = (
   const neutralHslColors = palette["neutral"];
   const result: any = {};
   Object.entries(palette).forEach((color) => {
-    let name = color[0];
-
-    if (name === "brandDark") {
-      name = "brand-dark";
-    }
-
+    const name = color[0];
     const hslType: HeisslufType[] = color[1];
     hslType.forEach((hsl) => {
       result[`--${prefix}-${name}-${hsl.index ?? hsl.name}`] = hsl.hex;
     });
 
     if (name === "brand") {
-      const brandColor = allColors["brand"];
+      const lightBrandColor = altBrand.dark ? allColors["brand"] : altBrand.hex;
+      const darkBrandColor = !altBrand.dark ? allColors["brand"] : altBrand.hex;
       const lightBrand = getExtraBrandColors(
-        brandColor,
-        false,
-        luminanceSteps,
-        neutralHslColors,
-      );
-      result[`--${prefix}-${name}-on`] = lightBrand.brandOnColor;
-      result[`--${prefix}-${name}-enabled`] = brandColor;
-      result[`--${prefix}-${name}-hover`] = lightBrand.hoverColor;
-      result[`--${prefix}-${name}-pressed`] = lightBrand.pressedColor;
-    }
-    if (name === "brand-dark") {
-      const brandColor = allColors["brandDark"];
-      const darkBrand = getExtraBrandColors(
-        brandColor,
+        lightBrandColor,
         true,
         luminanceSteps,
         neutralHslColors,
       );
-      result[`--${prefix}-${name}-on`] = darkBrand.brandOnColor;
-      result[`--${prefix}-${name}-enabled`] = brandColor;
-      result[`--${prefix}-${name}-hover`] = darkBrand.hoverColor;
-      result[`--${prefix}-${name}-pressed`] = darkBrand.pressedColor;
+      const darkBrand = getExtraBrandColors(
+        darkBrandColor,
+        false,
+        luminanceSteps,
+        neutralHslColors,
+      );
+      result[`--${prefix}-brand-on-light`] = lightBrand.brandOnColor;
+      result[`--${prefix}-brand-origin-light`] = lightBrand.color;
+      result[`--${prefix}-brand-hover-light`] = lightBrand.hoverColor;
+      result[`--${prefix}-brand-pressed-light`] = lightBrand.pressedColor;
+      result[`--${prefix}-brand-on-dark`] = darkBrand.brandOnColor;
+      result[`--${prefix}-brand-origin-dark`] = darkBrand.color;
+      result[`--${prefix}-brand-hover-dark`] = darkBrand.hoverColor;
+      result[`--${prefix}-brand-pressed-dark`] = darkBrand.pressedColor;
     }
   });
 
@@ -237,22 +236,14 @@ export const getSpeakingNames = (
   Object.entries(allColors).forEach((value) => {
     const name = value[0];
 
-    if (!darkMode && name === "brand") {
+    if (name === "brand") {
+      const colorScheme = darkMode ? "dark" : "light";
       result = {
         ...result,
-        "--db-brand-on-enabled": "var(--db-brand-on)",
-        "--db-brand-origin-enabled": "var(--db-brand-enabled)",
-        "--db-brand-origin-hover": `var(--db-brand-hover)`,
-        "--db-brand-origin-pressed": `var(--db-brand-pressed)`,
-      };
-    }
-    if (darkMode && name === "brandDark") {
-      result = {
-        ...result,
-        "--db-brand-on-enabled": "var(--db-brand-dark-on)",
-        "--db-brand-origin-enabled": "var(--db-brand-dark-enabled)",
-        "--db-brand-origin-hover": `var(--db-brand-dark-hover)`,
-        "--db-brand-origin-pressed": `var(--db-brand-dark-pressed)`,
+        "--db-brand-on-enabled": `var(--db-brand-on-${colorScheme})`,
+        "--db-brand-origin-enabled": `var(--db-brand-origin-${colorScheme})`,
+        "--db-brand-origin-hover": `var(--db-brand-hover-${colorScheme})`,
+        "--db-brand-origin-pressed": `var(--db-brand-pressed-${colorScheme})`,
       };
     }
 

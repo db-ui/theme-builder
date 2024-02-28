@@ -1,6 +1,14 @@
 import { defaultLuminances, HeisslufType } from "./data.ts";
 import { Hsluv } from "hsluv";
 
+export const getReverseColorAsHex = (color: string): string => {
+  const hsluv = new Hsluv();
+  hsluv.hex = color;
+  hsluv.hexToHsluv();
+  hsluv.hsluv_l = 100 - hsluv.hsluv_l;
+  hsluv.hsluvToHex();
+  return hsluv.hex;
+};
 
 export const getHeissluftColors = (
   name: string,

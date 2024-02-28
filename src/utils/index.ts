@@ -46,7 +46,7 @@ export const downloadTheme = async (
 
   const allColors = { ...colorMapping, ...customColorMapping };
 
-  const fileName = theme.name || `default-theme`;
+  const fileName = theme.branding.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
   const themeProperties = getCssThemeProperties(defaultTheme);
 
@@ -55,7 +55,13 @@ export const downloadTheme = async (
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
     `${fileName}-palette.css`,
-    getCssPropertyAsString(getPaletteOutput(allColors, luminanceSteps)),
+    getCssPropertyAsString(
+      getPaletteOutput(
+        allColors,
+        luminanceSteps,
+        theme.branding.alternativeColor,
+      ),
+    ),
   );
   zip.file(
     `${fileName}-speaking-names-light.css`,
