@@ -31,9 +31,9 @@ const DefaultPage = ({
                 <img
                   className="logo"
                   src={getThemeImage(
-                    darkMode && defaultTheme.imageDark
-                      ? defaultTheme.imageDark
-                      : defaultTheme.image,
+                    darkMode && defaultTheme.branding.image.dark
+                      ? defaultTheme.branding.image.dark
+                      : defaultTheme.branding.image.light,
                   )}
                   alt="brand"
                 />

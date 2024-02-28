@@ -1,6 +1,9 @@
 {
+  "alternativeBrandWarning": "Ihre Markenfarbe hat nicht den erforderlichen Kontrast, wir haben automatisch eine gültige Farbe generiert.",
+  "alternativeBrandCritical": "Ihre eigene Markenfarbe hat nicht den erforderlichen Kontrast, Ihr Theme entspricht nicht den Anforderungen für Accessibility!",
+  "alternativeBrandCheckbox": "Umgehung der automatischen Generierung",
   "dashboard": "Übersicht",
-  "document":  "Dokumente",
+  "document": "Dokumente",
   "account": "Benutzer",
   "build": "Verwalten",
   "piggybank": "Finanzen",

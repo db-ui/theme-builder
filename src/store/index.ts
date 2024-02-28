@@ -24,7 +24,6 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
     persist(
       (set) => {
         return {
-          colors: [],
           customColors: {},
           darkMode: false,
           defaultColors: defaultTheme.colors,

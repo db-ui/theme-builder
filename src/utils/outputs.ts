@@ -1,7 +1,12 @@
-import { DefaultThemeType, HeisslufType, SpeakingName } from "./data.ts";
+import {
+  BrandAlternativeColor,
+  DefaultThemeType,
+  HeisslufType,
+  SpeakingName,
+} from "./data.ts";
 import traverse from "traverse";
 import { Hsluv } from "hsluv";
-import { black, getHeissluftColors, white } from "./generate-colors.ts";
+import { getHeissluftColors } from "./generate-colors.ts";
 import { getLuminance } from "./index.ts";
 
 export const prefix = "db";
@@ -114,11 +119,13 @@ const getPalette = (
 export const getPaletteOutput = (
   allColors: Record<string, string>,
   luminanceSteps: number[],
+  altBrand: BrandAlternativeColor,
 ): any => {
   const palette: Record<string, HeisslufType[]> = getPalette(
     allColors,
     luminanceSteps,
   );
+  const neutralHslColors = palette["neutral"];
   const result: any = {};
   Object.entries(palette).forEach((color) => {
     const name = color[0];
@@ -128,15 +135,28 @@ export const getPaletteOutput = (
     });
 
     if (name === "brand") {
-      const brandColor = allColors["brand"];
-      const lightBrand = getExtraBrandColors(brandColor, false, luminanceSteps);
-      const darkBrand = getExtraBrandColors(brandColor, true, luminanceSteps);
-      result[`--${prefix}-${name}-on`] = lightBrand.brandOnColor;
-      result[`--${prefix}-${name}-origin`] = brandColor;
-      result[`--${prefix}-${name}-hover-light`] = lightBrand.hoverColor;
-      result[`--${prefix}-${name}-pressed-light`] = lightBrand.pressedColor;
-      result[`--${prefix}-${name}-hover-dark`] = darkBrand.hoverColor;
-      result[`--${prefix}-${name}-pressed-dark`] = darkBrand.pressedColor;
+      const lightBrandColor = altBrand.dark ? allColors["brand"] : altBrand.hex;
+      const darkBrandColor = !altBrand.dark ? allColors["brand"] : altBrand.hex;
+      const lightBrand = getExtraBrandColors(
+        lightBrandColor,
+        true,
+        luminanceSteps,
+        neutralHslColors,
+      );
+      const darkBrand = getExtraBrandColors(
+        darkBrandColor,
+        false,
+        luminanceSteps,
+        neutralHslColors,
+      );
+      result[`--${prefix}-brand-on-light`] = lightBrand.brandOnColor;
+      result[`--${prefix}-brand-origin-light`] = lightBrand.color;
+      result[`--${prefix}-brand-hover-light`] = lightBrand.hoverColor;
+      result[`--${prefix}-brand-pressed-light`] = lightBrand.pressedColor;
+      result[`--${prefix}-brand-on-dark`] = darkBrand.brandOnColor;
+      result[`--${prefix}-brand-origin-dark`] = darkBrand.color;
+      result[`--${prefix}-brand-hover-dark`] = darkBrand.hoverColor;
+      result[`--${prefix}-brand-pressed-dark`] = darkBrand.pressedColor;
     }
   });
 
@@ -150,11 +170,13 @@ export const getPaletteOutput = (
  * @param color brand color
  * @param darkMode
  * @param luminanceSteps
+ * @param neutralHslColors
  */
 export const getExtraBrandColors = (
   color: string,
   darkMode: boolean,
   luminanceSteps: number[],
+  neutralHslColors: HeisslufType[],
 ): {
   color: string;
   brandOnColor: string;
@@ -170,7 +192,9 @@ export const getExtraBrandColors = (
   hsluv.hex = color;
   hsluv.hexToHsluv();
   const brandLuminance = hsluv.hsluv_l;
-  const brandOnColor = getLuminance(color) < 0.4 ? white : black;
+  const brandOnColor =
+    (getLuminance(color) < 0.4 ? neutralHslColors.at(-1) : neutralHslColors[0])
+      ?.hex || "hotpink";
   let hoverColor: string | undefined;
   let pressedColor: string | undefined;
 
@@ -189,9 +213,8 @@ export const getExtraBrandColors = (
   }
 
   if (!hoverColor || !pressedColor) {
-    const foundColors = hslColors.filter((hsl) =>
-      fallbackCompareFn(hsl.luminance),
-    );
+    foundColors = hslColors.filter((hsl) => fallbackCompareFn(hsl.luminance));
+    foundColors = darkMode ? foundColors.reverse() : foundColors;
     if (foundColors.length > 2) {
       hoverColor = foundColors[0].hex;
       pressedColor = foundColors[1].hex;
@@ -214,12 +237,13 @@ export const getSpeakingNames = (
     const name = value[0];
 
     if (name === "brand") {
+      const colorScheme = darkMode ? "dark" : "light";
       result = {
         ...result,
-        "--db-brand-on-enabled": "var(--db-brand-on)",
-        "--db-brand-origin-enabled": "var(--db-brand-origin)",
-        "--db-brand-origin-hover": `var(--db-brand-hover-${darkMode ? "dark" : "light"})`,
-        "--db-brand-origin-pressed": `var(--db-brand-pressed-${darkMode ? "dark" : "light"})`,
+        "--db-brand-on-enabled": `var(--db-brand-on-${colorScheme})`,
+        "--db-brand-origin-enabled": `var(--db-brand-origin-${colorScheme})`,
+        "--db-brand-origin-hover": `var(--db-brand-hover-${colorScheme})`,
+        "--db-brand-origin-pressed": `var(--db-brand-pressed-${colorScheme})`,
       };
     }
 

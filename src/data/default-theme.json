@@ -1,7 +1,15 @@
 {
-  "name": "Default Theme",
-  "image": "peace-in-a-box.svg",
-  "imageDark": "peace-in-a-box-white.svg",
+  "branding": {
+    "name": "Default Theme",
+    "image": {
+      "light": "peace-in-a-box.svg",
+      "dark": "peace-in-a-box-white.svg"
+    },
+    "alternativeColor": {
+      "hex": "#d2d4d9",
+      "dark": true
+    }
+  },
   "spacing": {
     "_scale": "100%",
     "responsive": {
