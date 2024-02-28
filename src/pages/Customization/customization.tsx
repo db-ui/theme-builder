@@ -49,10 +49,16 @@ const Customization = () => {
               variant="floating"
               label={t("themeName")}
               placeholder={t("themeName")}
-              value={defaultTheme.name}
+              value={defaultTheme.branding.name}
               onChange={(event) =>
                 useThemeBuilderStore.setState({
-                  defaultTheme: { ...defaultTheme, name: event.target.value },
+                  defaultTheme: {
+                    ...defaultTheme,
+                    branding: {
+                      ...defaultTheme.branding,
+                      name: event.target.value,
+                    },
+                  },
                 })
               }
             />

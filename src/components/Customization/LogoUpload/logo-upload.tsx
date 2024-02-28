@@ -21,7 +21,7 @@ const LogoUpload = memo(() => {
           <DBInfotext icon="day">Light</DBInfotext>
           <img
             className="h-siz-md mx-auto"
-            src={getThemeImage(defaultTheme.image)}
+            src={getThemeImage(defaultTheme.branding.image.light)}
             alt="logo"
           />
           <Upload
@@ -32,7 +32,13 @@ const LogoUpload = memo(() => {
               useThemeBuilderStore.setState({
                 defaultTheme: {
                   ...defaultTheme,
-                  image: result,
+                  branding: {
+                    ...defaultTheme.branding,
+                    image: {
+                      ...defaultTheme.branding.image,
+                      light: result,
+                    },
+                  },
                 },
               });
             }}
@@ -46,7 +52,10 @@ const LogoUpload = memo(() => {
           <DBInfotext icon="night">Dark</DBInfotext>
           <img
             className="h-siz-md mx-auto"
-            src={getThemeImage(defaultTheme.imageDark || defaultTheme.image)}
+            src={getThemeImage(
+              defaultTheme.branding.image.dark ||
+                defaultTheme.branding.image.light,
+            )}
             alt="logo"
           />
           <Upload
@@ -57,7 +66,13 @@ const LogoUpload = memo(() => {
               useThemeBuilderStore.setState({
                 defaultTheme: {
                   ...defaultTheme,
-                  imageDark: result,
+                  branding: {
+                    ...defaultTheme.branding,
+                    image: {
+                      ...defaultTheme.branding.image,
+                      dark: result,
+                    },
+                  },
                 },
               });
             }}

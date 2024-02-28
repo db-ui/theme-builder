@@ -3,17 +3,24 @@ import { useThemeBuilderStore } from "../../../../store";
 import {
   CustomColorMappingType,
   DefaultColorMappingType,
+  HeisslufType,
 } from "../../../../utils/data.ts";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  getHeissluftColors,
+  getReverseColorAsHex,
+} from "../../../../utils/generate-colors.ts";
+import chroma from "chroma-js";
 
 const ColorSelection = () => {
   const { t } = useTranslation();
   const [customColorArray, setCustomColorArray] = useState<string[]>([]);
+  const [neutralColors, setNeutralColors] = useState<HeisslufType[]>();
+  const [isAlternativeValid, setIsAlternativeValid] = useState<boolean>();
 
-  const { defaultColors, customColors } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const { defaultColors, customColors, luminanceSteps, defaultTheme } =
+    useThemeBuilderStore((state) => state);
 
   const setCustomColors = (colorMappingType: CustomColorMappingType) => {
     useThemeBuilderStore.setState({
@@ -32,11 +39,54 @@ const ColorSelection = () => {
     }
   }, [customColors]);
 
-  const setDefaultColors = (colorMappingType: DefaultColorMappingType) => {
-    useThemeBuilderStore.setState({
-      defaultColors: colorMappingType,
-    });
-  };
+  const setDefaultColors = useCallback(
+    (colorMappingType: DefaultColorMappingType) => {
+      useThemeBuilderStore.setState({
+        defaultColors: colorMappingType,
+      });
+    },
+    [],
+  );
+
+  useEffect(() => {
+    setNeutralColors(
+      getHeissluftColors("neutral", defaultColors.neutral, luminanceSteps),
+    );
+  }, [defaultColors.neutral, luminanceSteps]);
+
+  const setBrandColor = useCallback(
+    (hex: string, dark: boolean) => {
+      useThemeBuilderStore.setState({
+        defaultTheme: {
+          ...defaultTheme,
+          branding: {
+            ...defaultTheme.branding,
+            alternativeColor: {
+              ...defaultTheme.branding.alternativeColor,
+              hex,
+              dark,
+            },
+          },
+        },
+      });
+    },
+    [defaultTheme],
+  );
+
+  useEffect(() => {
+    if (neutralColors) {
+      setIsAlternativeValid(
+        chroma.contrast(
+          chroma.hex(defaultTheme.branding.alternativeColor.hex),
+          chroma.hex(
+            neutralColors.at(
+              defaultTheme.branding.alternativeColor.dark ? -1 : 0,
+            )?.hex || "hotpink",
+          ),
+        ) < 3,
+      );
+    }
+  }, [defaultTheme.branding.alternativeColor, neutralColors]);
 
   return (
     <>
@@ -52,9 +102,40 @@ const ColorSelection = () => {
           />
 
           <ColorPicker
+            isBrand
             color={defaultColors.brand}
             label="Brand"
-            setColor={(brand) => setDefaultColors({ ...defaultColors, brand })}
+            setAlternativeColor={(color) => {
+              setBrandColor(color, defaultTheme.branding.alternativeColor.dark);
+            }}
+            isAlternativeValid={isAlternativeValid}
+            setColor={(brand) => {
+              setDefaultColors({ ...defaultColors, brand });
+              if (neutralColors) {
+                const neutralBgDarkest = neutralColors.at(0);
+                const neutralBgLightest = neutralColors.at(-1);
+                const lowContrastDark =
+                  chroma.contrast(
+                    chroma.hex(brand),
+                    chroma.hex(neutralBgDarkest?.hex || "hotpink"),
+                  ) < 3;
+                const lowContrastLight =
+                  chroma.contrast(
+                    chroma.hex(brand),
+                    chroma.hex(neutralBgLightest?.hex || "hotpink"),
+                  ) < 3;
+
+                if (!defaultTheme.branding.alternativeColor.custom) {
+                  if (lowContrastDark) {
+                    setBrandColor(getReverseColorAsHex(brand), true);
+                  } else if (lowContrastLight) {
+                    setBrandColor(getReverseColorAsHex(brand), false);
+                  } else {
+                    setBrandColor(brand, true);
+                  }
+                }
+              }
+            }}
           />
 
           <ColorPicker

@@ -1,4 +1,4 @@
-import { HeisslufType, SpeakingName } from "../data";
+import { BrandAlternativeColor, HeisslufType, SpeakingName } from "../data";
 import { getExtraBrandColors } from "../outputs";
 import { getHeissluftColors } from "../generate-colors.ts";
 
@@ -55,14 +55,28 @@ const getSketchColors = (
   darkMode: boolean,
   luminanceSteps: number[],
   speakingNamesDefaultMapping: SpeakingName[],
+  altBrand: BrandAlternativeColor,
 ): any => {
   let result: any = {};
 
+  const neutralHslColors = colors["neutral"];
+
   Object.entries(colors).forEach(([name, color]) => {
     if (name === "brand") {
-      const brandColor = allColors["brand"];
-      const lightBrand = getExtraBrandColors(brandColor, false, luminanceSteps);
-      const darkBrand = getExtraBrandColors(brandColor, true, luminanceSteps);
+      const lightBrandColor = altBrand.dark ? allColors["brand"] : altBrand.hex;
+      const darkBrandColor = !altBrand.dark ? allColors["brand"] : altBrand.hex;
+      const lightBrand = getExtraBrandColors(
+        lightBrandColor,
+        false,
+        luminanceSteps,
+        neutralHslColors,
+      );
+      const darkBrand = getExtraBrandColors(
+        darkBrandColor,
+        true,
+        luminanceSteps,
+        neutralHslColors,
+      );
 
       const brandTheme = darkMode ? darkBrand : lightBrand;
 
@@ -122,6 +136,7 @@ export const getSketchColorsAsString = (
   allColors: Record<string, string>,
   luminanceSteps: number[],
   speakingNamesDefaultMapping: SpeakingName[],
+  altBrand: BrandAlternativeColor,
 ): string => {
   const colors = getPalette(allColors, luminanceSteps);
 
@@ -132,6 +147,7 @@ export const getSketchColorsAsString = (
     false,
     luminanceSteps,
     speakingNamesDefaultMapping,
+    altBrand,
   );
   const darkSpeakingNames = getSketchColors(
     speakingNames,
@@ -140,6 +156,7 @@ export const getSketchColorsAsString = (
     true,
     luminanceSteps,
     speakingNamesDefaultMapping,
+    altBrand,
   );
 
   return JSON.stringify({

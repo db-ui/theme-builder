@@ -25,7 +25,11 @@ const App = () => {
     };
 
     const cssProps: any = {
-      ...getPaletteOutput(allColors, luminanceSteps),
+      ...getPaletteOutput(
+        allColors,
+        luminanceSteps,
+        defaultTheme.branding.alternativeColor,
+      ),
       ...getSpeakingNames(speakingNames, allColors, darkMode),
       ...getNonColorCssProperties(defaultTheme),
     };
