@@ -1,7 +1,7 @@
 import { DBButton, DBHeader, DBPage } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { getThemeImage } from "../../utils";
 
 const DefaultPage = ({
@@ -15,6 +15,7 @@ const DefaultPage = ({
   const { defaultTheme, darkMode, developerMode } = useThemeBuilderStore(
     (state) => state,
   );
+  const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
   return (
     <div
@@ -26,6 +27,8 @@ const DefaultPage = ({
         type="fixedHeaderFooter"
         slotHeader={
           <DBHeader
+            drawerOpen={drawerOpen}
+            onToggle={() => setDrawerOpen(!drawerOpen)}
             slotBrand={
               <div className="db-brand">
                 <img
