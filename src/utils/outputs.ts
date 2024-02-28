@@ -28,7 +28,7 @@ const isFontFamily = (path: string[]): boolean =>
 
 export const getNonColorCssProperties = (
   theme: DefaultThemeType,
-  asString?: boolean,
+  asString?: boolean
 ) => {
   const resolvedProperties: any = {};
   traverse(theme).forEach(function (value) {
@@ -95,7 +95,7 @@ export const getCssThemeProperties = (theme: DefaultThemeType): string => {
 
 const getPalette = (
   allColors: object,
-  luminanceSteps: number[],
+  luminanceSteps: number[]
 ): Record<string, HeisslufType[]> =>
   Object.entries(allColors)
     .map((value) => {
@@ -104,7 +104,7 @@ const getPalette = (
       const hslColors: HeisslufType[] = getHeissluftColors(
         name,
         color,
-        luminanceSteps,
+        luminanceSteps
       );
 
       return {
@@ -113,7 +113,7 @@ const getPalette = (
     })
     .reduce(
       (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
-      {},
+      {}
     );
 
 export const getPaletteOutput = (
@@ -123,7 +123,7 @@ export const getPaletteOutput = (
 ): any => {
   const palette: Record<string, HeisslufType[]> = getPalette(
     allColors,
-    luminanceSteps,
+    luminanceSteps
   );
   const neutralHslColors = palette["neutral"];
   const result: any = {};
@@ -229,8 +229,8 @@ export const getExtraBrandColors = (
 
 export const getSpeakingNames = (
   speakingNames: SpeakingName[],
-  allColors: object,
-  darkMode: boolean,
+  allColors: Record<string, string>,
+  darkMode: boolean
 ): any => {
   let result: any = {};
   Object.entries(allColors).forEach((value) => {

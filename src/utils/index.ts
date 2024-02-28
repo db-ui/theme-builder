@@ -4,6 +4,7 @@ import {
   DefaultColorMappingType,
   DefaultThemeType,
   SpeakingName,
+  speakingNamesDefaultMapping,
 } from "./data.ts";
 import {
   getCssPropertyAsString,
@@ -14,6 +15,7 @@ import {
 import JSZip from "jszip";
 import { BASE_PATH } from "../constants.ts";
 import { getFontFaces } from "./outputs/fonts.ts";
+import { getSketchColorsAsString } from "./outputs/sketch.ts";
 
 export const getThemeImage = (image: string): string => {
   if (image.startsWith("data:image")) {
@@ -44,7 +46,10 @@ export const downloadTheme = async (
 ) => {
   const theme: DefaultThemeType = { ...defaultTheme, colors: colorMapping };
 
-  const allColors = { ...colorMapping, ...customColorMapping };
+  const allColors: Record<string, string> = {
+    ...colorMapping,
+    ...customColorMapping,
+  };
 
   const fileName = theme.branding.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
@@ -52,6 +57,17 @@ export const downloadTheme = async (
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
+  zip.file(
+    `${fileName}-sketch-colors.json`,
+    getSketchColorsAsString(
+      speakingNames,
+      allColors,
+      luminanceSteps,
+      speakingNamesDefaultMapping,
+      theme.branding.alternativeColor,
+    ),
+  );
+
   zip.file(`${fileName}-theme.css`, themeProperties);
   zip.file(
     `${fileName}-palette.css`,
