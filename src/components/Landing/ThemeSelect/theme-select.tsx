@@ -5,7 +5,11 @@ import Demo from "../../../pages/Demo";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
-import { DefaultThemeType } from "../../../utils/data.ts";
+import {
+  defaultLuminances,
+  DefaultThemeType,
+  speakingNamesDefaultMapping,
+} from "../../../utils/data.ts";
 import DefaultTheme from "../../../data/default-theme.json";
 import DBTheme from "../../../data/db-theme.json";
 import SBahnTheme from "../../../data/sbahn-theme.json";
@@ -50,6 +54,8 @@ const ThemeSelect = () => {
                   useThemeBuilderStore.setState({
                     defaultTheme: theme,
                     defaultColors: theme.colors,
+                    luminanceSteps: defaultLuminances,
+                    speakingNames: speakingNamesDefaultMapping,
                   });
                 }}
               >
