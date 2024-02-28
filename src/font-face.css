@@ -2,25 +2,25 @@
 
 @font-face {
 	font-display: block;
-	family: "piab";
+	font-family: "piab";
 	font-style: normal;
-	weight: normal;
+	font-weight: normal;
 	src: url("/assets/piab.woff2") format("woff2");
 }
 
 .piab {
-	family: 'piab' !important;
+	font-family: 'piab' !important;
 	font-style:normal;
-	weight: normal;
+	font-weight: normal;
 }
 
 .icon-family-piab::before,
 [data-icon-family="piab"]::before,
 [data-icon-family-before="piab"]::before{
-	--db-icon-family: 'piab';
+	--db-icon-font-family: 'piab';
 }
 
 
 [data-icon-family-after="piab"]::after{
-	--db-icon-family: 'piab';
+	--db-icon-font-family: 'piab';
 }

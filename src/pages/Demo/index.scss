@@ -3,10 +3,10 @@
 .demo-side-nav {
   .db-button {
     justify-content: flex-start;
-    weight: 400;
+    font-weight: 400;
 
     &:first-of-type {
-      weight: 700;
+      font-weight: 700;
     }
   }
 }
