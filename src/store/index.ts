@@ -8,13 +8,13 @@ import {
 } from "./state.ts";
 import {
   defaultLuminances,
-  DefaultThemeType,
+  ThemeType,
   speakingNamesDefaultMapping,
 } from "../utils/data.ts";
 
 import DefaultTheme from "../data/default-theme.json";
 
-const defaultTheme = DefaultTheme as unknown as DefaultThemeType;
+const defaultTheme = DefaultTheme as unknown as ThemeType;
 
 export const useThemeBuilderStore = create<ThemeBuilderState>()(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -24,18 +24,43 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
       (set) => {
         return {
           darkMode: false,
+          editorMarkup: "",
+          theme: defaultTheme,
+          speakingNames: speakingNamesDefaultMapping,
+          luminanceSteps: defaultLuminances,
+          developerMode: false,
           resetDefaults: () => {
             set(() => ({
-              defaultTheme,
+              theme: defaultTheme,
               luminanceSteps: defaultLuminances,
               speakingNames: speakingNamesDefaultMapping,
             }));
           },
-          editorMarkup: "",
-          defaultTheme: defaultTheme,
-          speakingNames: speakingNamesDefaultMapping,
-          luminanceSteps: defaultLuminances,
-          developerMode: false,
+          setAlternativeColor: (alternativeColor) => {
+            set(({ theme }) => {
+              return {
+                theme: {
+                  ...theme,
+                  branding: {
+                    ...theme.branding,
+                    alternativeColor: {
+                      ...alternativeColor,
+                    },
+                  },
+                },
+              };
+            });
+          },
+          setColors: (colors) => {
+            set(({ theme }) => ({
+              theme: { ...theme, colors },
+            }));
+          },
+          setCustomColors: (customColors) => {
+            set(({ theme }) => ({
+              theme: { ...theme, customColors },
+            }));
+          },
         };
       },
       {

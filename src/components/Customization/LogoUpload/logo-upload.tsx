@@ -8,7 +8,7 @@ import { DBDivider, DBInfotext } from "@db-ui/react-components";
 
 const LogoUpload = memo(() => {
   const { t } = useTranslation();
-  const { defaultTheme } = useThemeBuilderStore((state) => state);
+  const { theme } = useThemeBuilderStore((state) => state);
 
   return (
     <div className="flex flex-col gap-fix-md">
@@ -21,7 +21,7 @@ const LogoUpload = memo(() => {
           <DBInfotext icon="day">Light</DBInfotext>
           <img
             className="h-siz-md mx-auto"
-            src={getThemeImage(defaultTheme.branding.image.light)}
+            src={getThemeImage(theme.branding.image.light)}
             alt="logo"
           />
           <Upload
@@ -30,12 +30,12 @@ const LogoUpload = memo(() => {
             accept="image/*"
             onUpload={(result) => {
               useThemeBuilderStore.setState({
-                defaultTheme: {
-                  ...defaultTheme,
+                theme: {
+                  ...theme,
                   branding: {
-                    ...defaultTheme.branding,
+                    ...theme.branding,
                     image: {
-                      ...defaultTheme.branding.image,
+                      ...theme.branding.image,
                       light: result,
                     },
                   },
@@ -53,8 +53,8 @@ const LogoUpload = memo(() => {
           <img
             className="h-siz-md mx-auto"
             src={getThemeImage(
-              defaultTheme.branding.image.dark ||
-                defaultTheme.branding.image.light,
+              theme.branding.image.dark ||
+                theme.branding.image.light,
             )}
             alt="logo"
           />
@@ -64,12 +64,12 @@ const LogoUpload = memo(() => {
             accept="image/*"
             onUpload={(result) => {
               useThemeBuilderStore.setState({
-                defaultTheme: {
-                  ...defaultTheme,
+                theme: {
+                  ...theme,
                   branding: {
-                    ...defaultTheme.branding,
+                    ...theme.branding,
                     image: {
-                      ...defaultTheme.branding.image,
+                      ...theme.branding.image,
                       dark: result,
                     },
                   },

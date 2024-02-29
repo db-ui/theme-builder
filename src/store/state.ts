@@ -1,17 +1,28 @@
-import { DefaultThemeType, SpeakingName } from "../utils/data.ts";
+import {
+  BrandAlternativeColor,
+  DefaultColorMappingType,
+  ThemeType,
+  SpeakingName,
+} from "../utils/data.ts";
 
 export const THEME_BUILDER_STATE = "theme-builder-state";
 
+export type ThemeBuilderStateFunctions = {
+  resetDefaults: () => void;
+  setColors: (colors: DefaultColorMappingType) => void;
+  setCustomColors: (colors: Record<string, string>) => void;
+  setAlternativeColor: (alternativeBrand: BrandAlternativeColor) => void;
+};
+
 export type ThemeBuilderState = {
   darkMode: boolean;
-  resetDefaults: () => void;
   editorMarkup: string;
   notification?: string;
-  defaultTheme: DefaultThemeType;
-  speakingNames: SpeakingName[];
+  theme: ThemeType;
   luminanceSteps: number[];
+  speakingNames: SpeakingName[];
   developerMode: boolean;
-};
+} & ThemeBuilderStateFunctions;
 
 export const PLAYGROUND_STATE = "playground-state";
 

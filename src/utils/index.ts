@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import {
-  DefaultThemeType,
+  ThemeType,
   SpeakingName,
   speakingNamesDefaultMapping,
 } from "./data.ts";
@@ -38,18 +38,17 @@ const download = (fileName: string, file: Blob) => {
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
   luminanceSteps: number[],
-  defaultTheme: DefaultThemeType,
+  theme: ThemeType,
 ) => {
-  const theme: DefaultThemeType = { ...defaultTheme };
 
   const allColors: Record<string, string> = {
-    ...defaultTheme.colors,
-    ...defaultTheme.customColors,
+    ...theme.colors,
+    ...theme.customColors,
   };
 
   const fileName = theme.branding.name || `default-theme`;
   const themeJsonString = JSON.stringify(theme);
-  const themeProperties = getCssThemeProperties(defaultTheme);
+  const themeProperties = getCssThemeProperties(theme);
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);

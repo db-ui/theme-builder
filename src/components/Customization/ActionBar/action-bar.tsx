@@ -3,14 +3,14 @@ import { useThemeBuilderStore } from "../../../store";
 import { downloadTheme } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import Upload from "../Upload";
-import { DefaultThemeType } from "../../../utils/data.ts";
+import { ThemeType } from "../../../utils/data.ts";
 
 const ActionBar = () => {
   const { t } = useTranslation();
   const {
     resetDefaults,
     luminanceSteps,
-    defaultTheme,
+    theme,
     speakingNames,
     developerMode,
   } = useThemeBuilderStore((state) => state);
@@ -32,9 +32,9 @@ const ActionBar = () => {
         onUpload={(result) => {
           try {
             const resultAsString = atob(result.split("base64,")[1]);
-            const resultAsJson: DefaultThemeType = JSON.parse(resultAsString);
+            const resultAsJson: ThemeType = JSON.parse(resultAsString);
             useThemeBuilderStore.setState({
-              defaultTheme: resultAsJson,
+              theme: resultAsJson,
             });
           } catch (error: any) {
             useThemeBuilderStore.setState({
@@ -48,7 +48,7 @@ const ActionBar = () => {
         variant="brand"
         icon="download"
         onClick={() =>
-          downloadTheme(speakingNames, luminanceSteps, defaultTheme)
+          downloadTheme(speakingNames, luminanceSteps, theme)
         }
         title={t("exportDesc")}
       >

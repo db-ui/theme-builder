@@ -1,6 +1,6 @@
 import {
   BrandAlternativeColor,
-  DefaultThemeType,
+  ThemeType,
   HeisslufType,
   SpeakingName,
 } from "./data.ts";
@@ -27,7 +27,7 @@ const isFontFamily = (path: string[]): boolean =>
   (path[0] === "font" && path[1] === "family") || path[0] !== "font";
 
 export const getNonColorCssProperties = (
-  theme: DefaultThemeType,
+  theme: ThemeType,
   asString?: boolean
 ) => {
   const resolvedProperties: any = {};
@@ -84,7 +84,7 @@ export const getNonColorCssProperties = (
   return resolvedProperties;
 };
 
-export const getCssThemeProperties = (theme: DefaultThemeType): string => {
+export const getCssThemeProperties = (theme: ThemeType): string => {
   const customTheme = getNonColorCssProperties(theme, true);
 
   return `:root{

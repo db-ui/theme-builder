@@ -9,23 +9,23 @@ import {
 } from "./utils/outputs.ts";
 
 const App = () => {
-  const { speakingNames, luminanceSteps, defaultTheme, darkMode } =
+  const { speakingNames, luminanceSteps, theme, darkMode } =
     useThemeBuilderStore((state) => state);
 
   useEffect(() => {
     const allColors: Record<string, string> = {
-      ...defaultTheme.colors,
-      ...defaultTheme.customColors,
+      ...theme.colors,
+      ...theme.customColors,
     };
 
     const cssProps: any = {
       ...getPaletteOutput(
         allColors,
         luminanceSteps,
-        defaultTheme.branding.alternativeColor,
+        theme.branding.alternativeColor,
       ),
       ...getSpeakingNames(speakingNames, allColors, darkMode),
-      ...getNonColorCssProperties(defaultTheme),
+      ...getNonColorCssProperties(theme),
     };
 
     const pages = document.getElementsByTagName("html");
@@ -37,7 +37,7 @@ const App = () => {
           .join(" "),
       );
     });
-  }, [speakingNames, defaultTheme, luminanceSteps, darkMode]);
+  }, [speakingNames, theme, luminanceSteps, darkMode]);
 
   return (
     <>
