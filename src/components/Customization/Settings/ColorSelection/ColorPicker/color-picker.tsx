@@ -22,28 +22,27 @@ const ColorPicker = ({
   isAddColor,
   isBrand,
   setAlternativeColor,
-  isAlternativeValid,
+  setAlternativeCustom,
 }: ColorPickerType) => {
   const { t } = useTranslation();
   const [addColor, setAddColor] = useState<string>(color);
   const [open, setOpen] = useState<boolean>();
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
-  const { darkMode, defaultTheme } = useThemeBuilderStore((state) => state);
-
-  const setCustomColors = useCallback(
-    (customColors: Record<string, string>) => {
-      useThemeBuilderStore.setState({
-        defaultTheme: { ...defaultTheme, customColors },
-      });
-    },
-    [defaultTheme],
+  const { darkMode, theme, setCustomColors } = useThemeBuilderStore(
+    (state) => state,
   );
 
   const getColor = useCallback(() => {
-    return isBrand && defaultTheme.branding.alternativeColor.dark === darkMode
-      ? defaultTheme.branding.alternativeColor.hex
+    return isBrand && theme.branding.alternativeColor.dark === darkMode
+      ? theme.branding.alternativeColor.hex
       : color;
-  }, [isBrand, defaultTheme.branding.alternativeColor, darkMode, color]);
+  }, [
+    isBrand,
+    theme.branding.alternativeColor.dark,
+    theme.branding.alternativeColor.hex,
+    darkMode,
+    color,
+  ]);
 
   return (
     <div className="color-picker-container">
@@ -81,12 +80,12 @@ const ColorPicker = ({
               disabled={!customColor}
               invalid={
                 customColor &&
-                !!defaultTheme.customColors?.[colorName] &&
+                !!theme.customColors?.[colorName] &&
                 label !== colorName
               }
               message={
                 customColor &&
-                !!defaultTheme.customColors?.[colorName] &&
+                !!theme.customColors?.[colorName] &&
                 label !== colorName
                   ? t("customColorExists")
                   : undefined
@@ -121,47 +120,42 @@ const ColorPicker = ({
             />
 
             {isBrand &&
-              defaultTheme.branding.alternativeColor.hex !== color && (
+              (theme.branding.alternativeColor.custom ||
+                theme.branding.alternativeColor.hex !== color) && (
                 <div className="flex flex-col gap-fix-sm mt-fix-lg">
                   <h6>{t("alternativeBrand")}</h6>
-                  <DBInfotext
-                    semantic={
-                      defaultTheme.branding.alternativeColor.custom &&
-                      !isAlternativeValid
-                        ? "critical"
-                        : "warning"
-                    }
-                  >
-                    {defaultTheme.branding.alternativeColor.custom &&
-                    !isAlternativeValid
-                      ? t("alternativeBrandCritical")
-                      : t("alternativeBrandWarning")}
-                  </DBInfotext>
+                  {!(
+                    theme.branding.alternativeColor.custom &&
+                    theme.branding.alternativeColor.isValid
+                  ) && (
+                    <DBInfotext
+                      semantic={
+                        theme.branding.alternativeColor.custom &&
+                        !theme.branding.alternativeColor.isValid
+                          ? "critical"
+                          : "warning"
+                      }
+                    >
+                      {theme.branding.alternativeColor.custom &&
+                      !theme.branding.alternativeColor.isValid
+                        ? t("alternativeBrandCritical")
+                        : t("alternativeBrandWarning")}
+                    </DBInfotext>
+                  )}
                   <DBCheckbox
                     label={t("alternativeBrandCheckbox")}
-                    defaultChecked={
-                      defaultTheme.branding.alternativeColor.custom
-                    }
+                    defaultChecked={theme.branding.alternativeColor.custom}
                     onChange={(event) => {
-                      useThemeBuilderStore.setState({
-                        defaultTheme: {
-                          ...defaultTheme,
-                          branding: {
-                            ...defaultTheme.branding,
-                            alternativeColor: {
-                              ...defaultTheme.branding.alternativeColor,
-                              custom: event.target.checked,
-                            },
-                          },
-                        },
-                      });
+                      if (setAlternativeCustom) {
+                        setAlternativeCustom(event.target.checked);
+                      }
                     }}
                   />
                   <DBInput
                     label={t("colorInputPicker")}
                     type="color"
-                    value={defaultTheme.branding.alternativeColor.hex}
-                    disabled={!defaultTheme.branding.alternativeColor.custom}
+                    value={theme.branding.alternativeColor.hex}
+                    disabled={!theme.branding.alternativeColor.custom}
                     onChange={(event) => {
                       if (setAlternativeColor) {
                         setAlternativeColor(event.target.value);
@@ -171,8 +165,8 @@ const ColorPicker = ({
                   <DBInput
                     label={t("colorInputHex")}
                     placeholder={t("colorInputHex")}
-                    value={defaultTheme.branding.alternativeColor.hex}
-                    disabled={!defaultTheme.branding.alternativeColor.custom}
+                    value={theme.branding.alternativeColor.hex}
+                    disabled={!theme.branding.alternativeColor.custom}
                     onChange={(event) => {
                       if (setAlternativeColor) {
                         setAlternativeColor(event.target.value);
@@ -207,25 +201,23 @@ const ColorPicker = ({
                   onClick={() => {
                     if (isAddColor) {
                       setCustomColors({
-                        ...defaultTheme.customColors,
+                        ...theme.customColors,
                         [colorName]: addColor,
                       });
                       setOpen(false);
                       setAddColor("#ffffff");
                       setColorName("");
-                    } else if (defaultTheme.customColors) {
+                    } else if (theme.customColors) {
                       const newCustomColors: Record<string, string> = {};
-                      Object.keys(defaultTheme.customColors).forEach(
-                        (cName) => {
-                          if (cName === label) {
-                            newCustomColors[colorName] =
-                              defaultTheme.customColors?.[cName] || "";
-                          } else {
-                            newCustomColors[cName] =
-                              defaultTheme.customColors?.[cName] || "";
-                          }
-                        },
-                      );
+                      Object.keys(theme.customColors).forEach((cName) => {
+                        if (cName === label) {
+                          newCustomColors[colorName] =
+                            theme.customColors?.[cName] || "";
+                        } else {
+                          newCustomColors[cName] =
+                            theme.customColors?.[cName] || "";
+                        }
+                      });
                       setCustomColors(newCustomColors);
                     }
                   }}

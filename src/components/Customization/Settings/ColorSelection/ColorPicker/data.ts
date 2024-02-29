@@ -6,6 +6,6 @@ export type ColorPickerType = {
   isAddColor?: boolean;
   onDelete?: () => void;
   isBrand?: boolean;
-  isAlternativeValid?: boolean;
   setAlternativeColor?: (color: string) => void;
+  setAlternativeCustom?: (custom: boolean) => void;
 };

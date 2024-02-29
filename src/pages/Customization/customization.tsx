@@ -35,7 +35,7 @@ const tabs: TabItemType[] = [
 
 const Customization = () => {
   const { t } = useTranslation();
-  const { developerMode, defaultTheme } = useThemeBuilderStore(
+  const { developerMode, theme } = useThemeBuilderStore(
     (state) => state,
   );
 
@@ -49,13 +49,13 @@ const Customization = () => {
               variant="floating"
               label={t("themeName")}
               placeholder={t("themeName")}
-              value={defaultTheme.branding.name}
+              value={theme.branding.name}
               onChange={(event) =>
                 useThemeBuilderStore.setState({
-                  defaultTheme: {
-                    ...defaultTheme,
+                  theme: {
+                    ...theme,
                     branding: {
-                      ...defaultTheme.branding,
+                      ...theme.branding,
                       name: event.target.value,
                     },
                   },

@@ -3,16 +3,16 @@ import { getThemeImage } from "../../../utils";
 import { useThemeBuilderStore } from "../../../store";
 
 const Header = () => {
-  const { defaultTheme, darkMode } = useThemeBuilderStore((state) => state);
+  const { theme, darkMode } = useThemeBuilderStore((state) => state);
   return (
     <div className="py-fix-xs px-fix-md md:py-fix-md">
       <div className="flex justify-between min-h-siz-md">
         <img
           className="logo"
           src={getThemeImage(
-            darkMode && defaultTheme.branding.image.dark
-              ? defaultTheme.branding.image.dark
-              : defaultTheme.branding.image.light,
+            darkMode && theme.branding.image.dark
+              ? theme.branding.image.dark
+              : theme.branding.image.light,
           )}
           alt="brand"
         />

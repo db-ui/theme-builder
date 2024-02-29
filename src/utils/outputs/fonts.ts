@@ -1,6 +1,6 @@
-import { DefaultThemeType, FontType } from "../data.ts";
+import { ThemeType, FontType } from "../data.ts";
 
-export const getFontFaces = (theme: DefaultThemeType): string => {
+export const getFontFaces = (theme: ThemeType): string => {
   let fontfaces: string = `@use "default.assets-paths" as assets-paths;`;
 
   for (const type of ["sans", "head"]) {

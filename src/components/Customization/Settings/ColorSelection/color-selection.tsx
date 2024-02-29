@@ -1,87 +1,40 @@
 import ColorPicker from "./ColorPicker";
 import { useThemeBuilderStore } from "../../../../store";
-import {
-  DefaultColorMappingType,
-  HeisslufType,
-} from "../../../../utils/data.ts";
-import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  getHeissluftColors,
-  getReverseColorAsHex,
-} from "../../../../utils/generate-colors.ts";
-import chroma from "chroma-js";
+import { getAlternativeBrand } from "./data.ts";
+import { useEffect, useState } from "react";
 
 const ColorSelection = () => {
   const { t } = useTranslation();
-  const [neutralColors, setNeutralColors] = useState<HeisslufType[]>();
-  const [isAlternativeValid, setIsAlternativeValid] = useState<boolean>();
 
-  const { luminanceSteps, defaultTheme } = useThemeBuilderStore(
-    (state) => state,
+  const {
+    setColors,
+    theme,
+    setCustomColors,
+    setAlternativeColor,
+    luminanceSteps,
+  } = useThemeBuilderStore((state) => state);
+
+  const [custom, setCustom] = useState<boolean>(
+    !!theme.branding.alternativeColor.custom,
   );
 
-  const setCustomColors = useCallback(
-    (customColors: Record<string, string>) => {
-      useThemeBuilderStore.setState({
-        defaultTheme: { ...defaultTheme, customColors },
-      });
-    },
-    [defaultTheme],
-  );
-
-  const setDefaultColors = useCallback(
-    (colors: DefaultColorMappingType) => {
-      useThemeBuilderStore.setState({
-        defaultTheme: { ...defaultTheme, colors },
-      });
-    },
-    [defaultTheme],
+  const [altColor, setAltColor] = useState<string>(
+    theme.branding.alternativeColor.hex || theme.colors.brand,
   );
 
   useEffect(() => {
-    setNeutralColors(
-      getHeissluftColors(
-        "neutral",
-        defaultTheme.colors.neutral,
-        luminanceSteps,
-      ),
+    setAlternativeColor(
+      getAlternativeBrand(theme.colors, luminanceSteps, custom, altColor),
     );
-  }, [defaultTheme.colors.neutral, luminanceSteps]);
-
-  const setBrandColor = useCallback(
-    (hex: string, dark: boolean) => {
-      useThemeBuilderStore.setState({
-        defaultTheme: {
-          ...defaultTheme,
-          branding: {
-            ...defaultTheme.branding,
-            alternativeColor: {
-              ...defaultTheme.branding.alternativeColor,
-              hex,
-              dark,
-            },
-          },
-        },
-      });
-    },
-    [defaultTheme],
-  );
-
-  useEffect(() => {
-    if (neutralColors) {
-      setIsAlternativeValid(
-        chroma.contrast(
-          chroma.hex(defaultTheme.branding.alternativeColor.hex),
-          chroma.hex(
-            neutralColors.at(
-              defaultTheme.branding.alternativeColor.dark ? -1 : 0,
-            )?.hex || "hotpink",
-          ),
-        ) < 3,
-      );
-    }
-  }, [defaultTheme.branding.alternativeColor, neutralColors]);
+  }, [
+    theme.colors,
+    luminanceSteps,
+    theme.branding.alternativeColor.custom,
+    setAlternativeColor,
+    custom,
+    altColor,
+  ]);
 
   return (
     <>
@@ -89,80 +42,48 @@ const ColorSelection = () => {
         <h5>{t("colors")}</h5>
         <div className="flex flex-wrap gap-fix-xs">
           <ColorPicker
-            color={defaultTheme.colors.neutral}
+            color={theme.colors.neutral}
             label="Neutral"
-            setColor={(neutral) =>
-              setDefaultColors({ ...defaultTheme.colors, neutral })
-            }
+            setColor={(neutral) => setColors({ ...theme.colors, neutral })}
           />
 
           <ColorPicker
             isBrand
-            color={defaultTheme.colors.brand}
+            color={theme.colors.brand}
             label="Brand"
-            setAlternativeColor={(color) => {
-              setBrandColor(color, defaultTheme.branding.alternativeColor.dark);
-            }}
-            isAlternativeValid={isAlternativeValid}
+            setAlternativeCustom={setCustom}
+            setAlternativeColor={setAltColor}
             setColor={(brand) => {
-              setDefaultColors({ ...defaultTheme.colors, brand });
-              if (neutralColors) {
-                const neutralBgDarkest = neutralColors.at(0);
-                const neutralBgLightest = neutralColors.at(-1);
-                const lowContrastDark =
-                  chroma.contrast(
-                    chroma.hex(brand),
-                    chroma.hex(neutralBgDarkest?.hex || "hotpink"),
-                  ) < 3;
-                const lowContrastLight =
-                  chroma.contrast(
-                    chroma.hex(brand),
-                    chroma.hex(neutralBgLightest?.hex || "hotpink"),
-                  ) < 3;
-
-                if (!defaultTheme.branding.alternativeColor.custom) {
-                  if (lowContrastDark) {
-                    setBrandColor(getReverseColorAsHex(brand), true);
-                  } else if (lowContrastLight) {
-                    setBrandColor(getReverseColorAsHex(brand), false);
-                  } else {
-                    setBrandColor(brand, true);
-                  }
-                }
-              }
+              setColors({ ...theme.colors, brand });
             }}
           />
 
           <ColorPicker
-            color={defaultTheme.colors.informational}
+            color={theme.colors.informational}
             label="Informational"
             setColor={(informational) =>
-              setDefaultColors({ ...defaultTheme.colors, informational })
+              setColors({ ...theme.colors, informational })
             }
           />
 
           <ColorPicker
-            color={defaultTheme.colors.successful}
+            color={theme.colors.successful}
             label="Successful"
             setColor={(successful) =>
-              setDefaultColors({ ...defaultTheme.colors, successful })
+              setColors({ ...theme.colors, successful })
             }
           />
 
           <ColorPicker
-            color={defaultTheme.colors.warning}
+            color={theme.colors.warning}
             label="Warning"
-            setColor={(warning) =>
-              setDefaultColors({ ...defaultTheme.colors, warning })
-            }
+            setColor={(warning) => setColors({ ...theme.colors, warning })}
           />
 
           <ColorPicker
-            color={defaultTheme.colors.critical}
+            color={theme.colors.critical}
             label="Critical"
-            setColor={(critical) =>
-              setDefaultColors({ ...defaultTheme.colors, critical })
-            }
+            setColor={(critical) => setColors({ ...theme.colors, critical })}
           />
         </div>
       </div>
@@ -177,21 +98,21 @@ const ColorSelection = () => {
             customColor
             isAddColor
           />
-          {defaultTheme.customColors &&
-            Object.entries(defaultTheme.customColors).map(([name, color]) => (
+          {theme.customColors &&
+            Object.entries(theme.customColors).map(([name, color]) => (
               <ColorPicker
                 key={name}
                 color={color}
                 label={name}
                 setColor={(changedColor) =>
                   setCustomColors({
-                    ...defaultTheme.customColors,
+                    ...theme.customColors,
                     [name]: changedColor,
                   })
                 }
                 customColor
                 onDelete={() => {
-                  const copyCustomColors = { ...defaultTheme.customColors };
+                  const copyCustomColors = { ...theme.customColors };
                   delete copyCustomColors[name];
                   setCustomColors(copyCustomColors);
                 }}

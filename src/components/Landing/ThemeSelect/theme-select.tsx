@@ -7,7 +7,7 @@ import { useState } from "react";
 
 import {
   defaultLuminances,
-  DefaultThemeType,
+  ThemeType,
   speakingNamesDefaultMapping,
 } from "../../../utils/data.ts";
 import DefaultTheme from "../../../data/default-theme.json";
@@ -15,13 +15,13 @@ import DBTheme from "../../../data/db-theme.json";
 import SBahnTheme from "../../../data/sbahn-theme.json";
 import { getThemeImage } from "../../../utils";
 
-const defaultTheme = DefaultTheme as unknown as DefaultThemeType;
-const sBahnTheme = SBahnTheme as unknown as DefaultThemeType;
-const dbTheme = DBTheme as unknown as DefaultThemeType;
+const defaultTheme = DefaultTheme as unknown as ThemeType;
+const sBahnTheme = SBahnTheme as unknown as ThemeType;
+const dbTheme = DBTheme as unknown as ThemeType;
 
 type Themes = {
   key: string;
-  theme: DefaultThemeType;
+  theme: ThemeType;
 };
 
 const themes: Themes[] = [
@@ -52,7 +52,7 @@ const ThemeSelect = () => {
                 onClick={() => {
                   setSelectedTheme(key);
                   useThemeBuilderStore.setState({
-                    defaultTheme: theme,
+                    theme: theme,
                     luminanceSteps: defaultLuminances,
                     speakingNames: speakingNamesDefaultMapping,
                   });

@@ -12,7 +12,7 @@ const DefaultPage = ({
   density,
   navigation,
 }: PropsWithChildren<DefaultPagePropsType>) => {
-  const { defaultTheme, darkMode, developerMode } = useThemeBuilderStore(
+  const { theme, darkMode, developerMode } = useThemeBuilderStore(
     (state) => state,
   );
   const [drawerOpen, setDrawerOpen] = useState<boolean>();
@@ -34,9 +34,9 @@ const DefaultPage = ({
                 <img
                   className="logo"
                   src={getThemeImage(
-                    darkMode && defaultTheme.branding.image.dark
-                      ? defaultTheme.branding.image.dark
-                      : defaultTheme.branding.image.light,
+                    darkMode && theme.branding.image.dark
+                      ? theme.branding.image.dark
+                      : theme.branding.image.light,
                   )}
                   alt="brand"
                 />

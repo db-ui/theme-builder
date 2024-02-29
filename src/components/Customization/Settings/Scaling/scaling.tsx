@@ -20,11 +20,11 @@ const getFromJsonByArray = (params: string[], json: any): any => {
 
 const Scaling = ({ label, params }: ShirtSelectionType) => {
   const { t } = useTranslation();
-  const { defaultTheme } = useThemeBuilderStore((state) => state);
+  const { theme } = useThemeBuilderStore((state) => state);
 
   const setDetfaultTheme = (scale: string) => {
     const path = [...params];
-    let copyTheme = { ...defaultTheme };
+    let copyTheme = { ...theme };
     copyTheme = traverse(copyTheme).map(function (value) {
       if (
         this.isLeaf &&
@@ -36,7 +36,7 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
     });
 
     useThemeBuilderStore.setState({
-      defaultTheme: copyTheme,
+      theme: copyTheme,
     });
   };
 
@@ -47,7 +47,7 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
         label={`${t(label)} ${t("scale")}`}
         variant="floating"
         type="number"
-        value={getFromJsonByArray([...params, "_scale"], defaultTheme)}
+        value={getFromJsonByArray([...params, "_scale"], theme)}
         onChange={(event) => {
           setDetfaultTheme(event.target.value);
         }}

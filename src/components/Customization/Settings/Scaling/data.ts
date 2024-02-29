@@ -6,7 +6,7 @@ export type ShirtSelectionType = {
   params: string[];
 };
 
-const defaultTheme = traverse(DefaultTheme);
+const theme = traverse(DefaultTheme);
 
 export const getShirtValue = (
   scaleString: string,
@@ -32,7 +32,7 @@ export const getShirtValue = (
     scale = 5;
   }
 
-  if (path.length < 1 && !defaultTheme.has(path)) {
+  if (path.length < 1 && !theme.has(path)) {
     return undefined;
   }
 
@@ -66,23 +66,23 @@ export const getShirtValue = (
 
   if (path[0] === "border") {
     if (path[1] === "radius") {
-      return `${Number(defaultTheme.get(path)) * scale}`;
+      return `${Number(theme.get(path)) * scale}`;
     }
     if (path[1] === "height") {
-      const height = Number(defaultTheme.get(path));
+      const height = Number(theme.get(path));
       return `${height + (height * (scale - 1)) / 3}`;
     }
   }
 
   if (path[0] === "sizing") {
     if (!path.includes("fixed")) {
-      const size = Number(defaultTheme.get(path));
+      const size = Number(theme.get(path));
       return `${size + (size * (scale - 1)) / 10}`;
     }
   }
 
   if (path[0] === "spacing") {
-    const size = Number(defaultTheme.get(path));
+    const size = Number(theme.get(path));
     return `${size + (size * (scale - 1)) / 5}`;
   }
 

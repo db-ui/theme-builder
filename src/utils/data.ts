@@ -5,7 +5,6 @@ export type DefaultColorMappingType = {
   successful: string;
   warning: string;
   critical: string;
-  [key: string]: string;
 };
 
 export type ThemeTypographyType = {
@@ -88,6 +87,7 @@ export type FontsType = {
 export type BrandAlternativeColor = {
   hex: string;
   dark: boolean;
+  isValid?: boolean;
   custom?: boolean;
 };
 
@@ -100,7 +100,7 @@ export type BrandingType = {
   alternativeColor: BrandAlternativeColor;
 };
 
-export type DefaultThemeType = {
+export type ThemeType = {
   branding: BrandingType;
   spacing: {
     responsive: ThemeTonalities;
