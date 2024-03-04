@@ -26,9 +26,9 @@
   z-index: 6;
   bottom: variables.$db-spacing-fixed-md;
   left: 50%;
-  animation: slide-out variables.$db-transition-show-straight;
+  animation: slide-out variables.$db-transition-straight-show;
 }
 
 .show {
-  animation: slide-in variables.$db-transition-show-straight;
+  animation: slide-in variables.$db-transition-straight-show;
 }

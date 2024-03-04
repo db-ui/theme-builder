@@ -21,7 +21,7 @@ export const getCssPropertyAsString = (properties: any): string => {
   return resultString;
 };
 
-const nonRemProperties = ["opacity", "elevation", "transition"];
+const nonRemProperties = ["opacity", "elevation", "transition","font"];
 
 const isFontFamily = (path: string[]): boolean =>
   (path[0] === "font" && path[1] === "family") || path[0] !== "font";

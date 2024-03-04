@@ -214,9 +214,11 @@
           "lg": { "lineHeight": 1.4, "fontSize": "1.25" },
           "xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
           "2xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
+          "3xl": { "lineHeight": 1.5, "fontSize": "2" },
           "md": { "lineHeight": 1.5, "fontSize": "1" },
           "sm": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
           "2xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" },
           "xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
         }
       },
@@ -228,7 +230,9 @@
           "xl": { "lineHeight": 1.4, "fontSize": "1.25" },
           "xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
           "2xl": { "lineHeight": 1.4, "fontSize": "1.25" },
-          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" }
+          "3xl": { "lineHeight": 1.4, "fontSize": "1.25" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
@@ -250,7 +254,9 @@
           "xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
           "xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
           "2xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
-          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" }
+          "3xl": { "lineHeight": 1.5, "fontSize": "2" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": { "lineHeight": 1.25, "fontSize": "2" },
@@ -274,7 +280,9 @@
           "xl": { "lineHeight": 1.4, "fontSize": "1.25" },
           "xs": { "lineHeight": 1.4, "fontSize": "0.625" },
           "2xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
-          "2xs": { "lineHeight": 1.5, "fontSize": "0.5" }
+          "3xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
@@ -296,7 +304,9 @@
           "xl": { "lineHeight": 1.4, "fontSize": "1.25" },
           "xs": { "lineHeight": 1.4, "fontSize": "0.625" },
           "2xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
-          "2xs": { "lineHeight": 1.5, "fontSize": "0.5" }
+          "3xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": { "lineHeight": 1.1428571428571428, "fontSize": "1.75" },
@@ -318,7 +328,9 @@
           "xl": { "lineHeight": 1.5, "fontSize": "1" },
           "xs": { "lineHeight": 1.4, "fontSize": "0.625" },
           "2xl": { "lineHeight": 1.5, "fontSize": "1" },
-          "2xs": { "lineHeight": 1.5, "fontSize": "0.5" }
+          "3xl": { "lineHeight": 1.5, "fontSize": "1" },
+          "2xs": { "lineHeight": 1.4, "fontSize": "0.625" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": { "lineHeight": 1.1666666666666667, "fontSize": "1.5" },
@@ -342,7 +354,9 @@
           "xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
           "xs": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
           "2xl": { "lineHeight": 1.5, "fontSize": "2" },
-          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
+          "3xl": { "lineHeight": 1.6, "fontSize": "2.5" },
+          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": { "lineHeight": 1.3333333333333333, "fontSize": "3" },
@@ -364,7 +378,9 @@
           "xl": { "lineHeight": 1.4285714285714286, "fontSize": "1.75" },
           "xs": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
           "2xl": { "lineHeight": 1.5, "fontSize": "2" },
-          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
+          "3xl": { "lineHeight": 1.6, "fontSize": "2.5" },
+          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": { "lineHeight": 1.2, "fontSize": "2.5" },
@@ -386,7 +402,9 @@
           "xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
           "xs": { "lineHeight": 1.4285714285714286, "fontSize": "0.875" },
           "2xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
-          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" }
+          "3xl": { "lineHeight": 1.3333333333333333, "fontSize": "1.5" },
+          "2xs": { "lineHeight": 1.3333333333333333, "fontSize": "0.75" },
+          "3xs": { "lineHeight": 1.4, "fontSize": "0.625" }
         },
         "headline": {
           "lg": {
@@ -408,16 +426,28 @@
   "border": {
     "height": {
       "_scale": "100%",
-      "sm": "0.0625",
-      "md": "0.125",
-      "lg": "0.25"
+      "3xs": "0.0625",
+      "2xs": "0.125",
+      "xs": "0.25",
+      "sm": "0.375",
+      "md": "0.5",
+      "lg": "0.625",
+      "xl": "0.75",
+      "2xl": "0.875",
+      "3xl": "1"
     },
     "radius": {
       "_scale": "100%",
-      "sm": "0.15625",
-      "md": "0.25",
-      "lg": "0.5",
-      "3xl": "2.625"
+      "3xs": "0.0625",
+      "2xs": "0.125",
+      "xs": "0.25",
+      "sm": "0.5",
+      "md": "0.75",
+      "lg": "1",
+      "xl": "1.5",
+      "2xl": "1.75",
+      "3xl": "2",
+      "full": "500"
     }
   },
   "elevation": {

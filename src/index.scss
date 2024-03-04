@@ -66,12 +66,23 @@ h6 {
 }
 
 .scale-down {
-  border: variables.$db-border-height-sm solid
+  border: variables.$db-border-height-2xs solid
     colors.$db-neutral-contrast-low-enabled;
   border-radius: variables.$db-border-radius-lg;
 
   .db-page {
     border-radius: variables.$db-border-radius-lg;
+
+    header {
+      border-top-left-radius: variables.$db-border-radius-lg;
+      border-top-right-radius: variables.$db-border-radius-lg;
+      padding: calc(#{variables.$db-border-radius-lg} / 25);
+    }
+
+    main {
+      border-bottom-left-radius: variables.$db-border-radius-lg;
+      border-bottom-right-radius: variables.$db-border-radius-lg;
+    }
   }
 
   @include screen-sizes.screen {
@@ -105,8 +116,6 @@ h6 {
     padding-block-end: variables.$db-spacing-fixed-2xl;
   }
 }
-
-
 
 .brand-icon {
   --db-icon-font-size: 34px;
