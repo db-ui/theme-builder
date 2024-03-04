@@ -18,8 +18,12 @@ import {
   generateColorScheme,
   generateComposeColorFile,
 } from "./outputs/compose/colors.ts";
-import { generateComposeDimensionsFile } from "./outputs/compose/dimensions.ts";
+import {
+  generateComposeDimensionsFile,
+  generateDimensionsSchemeFile,
+} from "./outputs/compose/dimensions.ts";
 import { generateComposeTypographyFile } from "./outputs/compose/typography.ts";
+import { generateDensityEnumFile } from "./outputs/compose/density.ts";
 
 export const getThemeImage = (image: string): string => {
   if (image.startsWith("data:image")) {
@@ -76,25 +80,30 @@ export const downloadTheme = async (
   const androidFolder: string = "Android";
   const androidDataFolder: string = "Android/data";
   zip.file(
-    `${androidFolder}/${composeFileName}SpeakingColorScheme.kt`,
+    `${androidFolder}/${composeFileName}ColorScheme.kt`,
     generateColorScheme(composeFileName, speakingNames, allColors),
   );
   zip.file(
-    `${androidDataFolder}/${composeFileName}Dimensions.kt`,
+    `${androidFolder}/${composeFileName}Dimensions.kt`,
+    generateDimensionsSchemeFile(composeFileName),
+  );
+  zip.file(
+    `${androidDataFolder}/Dimensions.kt`,
     generateComposeDimensionsFile(theme),
   );
   zip.file(
-    `${androidDataFolder}/${composeFileName}Typography.kt`,
+    `${androidDataFolder}/Typography.kt`,
     generateComposeTypographyFile(theme),
   );
   zip.file(
-    `${androidDataFolder}/${composeFileName}Colors.kt`,
+    `${androidDataFolder}/Colors.kt`,
     generateComposeColorFile(
       allColors,
       luminanceSteps,
       theme.branding.alternativeColor,
     ),
   );
+  zip.file(`${androidDataFolder}/Density.kt`, generateDensityEnumFile());
 
   // Utils
   const utilsFolder: string = "Utils";

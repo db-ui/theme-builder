@@ -81,7 +81,7 @@ const generateColorSchemeDarkLight = (
   darkMode?: boolean,
 ): string => {
   const colorScheme = darkMode ? "dark" : "light";
-  resolvedScheme += `fun ${colorScheme}ColorScheme(\n`;
+  resolvedScheme += `fun ${prefix}ColorScheme${upperCaseFirstLetters(colorScheme)}(\n`;
 
   for (const [name] of Object.entries(allColors)) {
     for (const speakingName of speakingNames) {
@@ -209,7 +209,7 @@ class ${fileName}ColorScheme(
   );
 
   resolvedScheme += `
-val LocalColors = staticCompositionLocalOf { lightColorScheme() }
+val LocalColors = staticCompositionLocalOf { ${prefix}ColorSchemeLight() }
 `;
 
   return resolvedScheme;
