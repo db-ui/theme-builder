@@ -133,7 +133,6 @@ export const generateColorScheme = (
 ): string => {
   const resolvedNames: Record<string, string> = {};
   let resolvedScheme: string = `package ${replacePackageName}
-import ${replacePackageName}.Colors 
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

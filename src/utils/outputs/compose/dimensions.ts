@@ -83,8 +83,7 @@ export const generateDimensionsScheme = (
 };
 
 export const generateDimensionsSchemeFile = (fileName: string): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}    
-import ${replacePackageName}.data.Dimensions 
+  let resolvedTokenFile: string = `package ${replacePackageName}
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
