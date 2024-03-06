@@ -1,6 +1,5 @@
 import { useThemeBuilderStore } from "../../../store";
 import { memo } from "react";
-import "./index.scss";
 import { getThemeImage } from "../../../utils";
 import Upload from "../Upload";
 import { useTranslation } from "react-i18next";
