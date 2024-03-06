@@ -28,9 +28,8 @@ const ColorPicker = ({
   const [addColor, setAddColor] = useState<string>(color);
   const [open, setOpen] = useState<boolean>();
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
-  const { darkMode, theme, setCustomColors } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const { darkMode, theme, setCustomColors, developerMode } =
+    useThemeBuilderStore((state) => state);
 
   const getColor = useCallback(() => {
     return isBrand && theme.branding.alternativeColor.dark === darkMode
@@ -142,15 +141,17 @@ const ColorPicker = ({
                         : t("alternativeBrandWarning")}
                     </DBInfotext>
                   )}
-                  <DBCheckbox
-                    label={t("alternativeBrandCheckbox")}
-                    defaultChecked={theme.branding.alternativeColor.custom}
-                    onChange={(event) => {
-                      if (setAlternativeCustom) {
-                        setAlternativeCustom(event.target.checked);
-                      }
-                    }}
-                  />
+                  {developerMode && (
+                    <DBCheckbox
+                      label={t("alternativeBrandCheckbox")}
+                      defaultChecked={theme.branding.alternativeColor.custom}
+                      onChange={(event) => {
+                        if (setAlternativeCustom) {
+                          setAlternativeCustom(event.target.checked);
+                        }
+                      }}
+                    />
+                  )}
                   <DBInput
                     label={t("colorInputPicker")}
                     type="color"

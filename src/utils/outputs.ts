@@ -194,7 +194,7 @@ export const getExtraBrandColors = (
   const brandLuminance = hsluv.hsluv_l;
   const brandOnColor =
     (getLuminance(color) < 0.4 ? neutralHslColors.at(-1) : neutralHslColors[0])
-      ?.hex || "hotpink";
+      ?.hex || "#ff69b4";
   let hoverColor: string | undefined;
   let pressedColor: string | undefined;
 
@@ -219,8 +219,8 @@ export const getExtraBrandColors = (
       hoverColor = foundColors[0].hex;
       pressedColor = foundColors[1].hex;
     } else {
-      hoverColor = "hotpink";
-      pressedColor = "hotpink";
+      hoverColor = "#ff69b4";
+      pressedColor = "#ff69b4";
     }
   }
 

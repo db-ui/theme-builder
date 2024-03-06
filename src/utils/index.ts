@@ -23,6 +23,8 @@ export const getThemeImage = (image: string): string => {
   return `${BASE_PATH}/assets/images/${image || "peace-in-a-box.svg"}`;
 };
 
+export const isValidColor = (color: string): boolean => chroma.valid(color);
+
 export const getLuminance = (color: string): number =>
   chroma.valid(color) ? chroma.hex(color).luminance() : -1;
 
@@ -40,7 +42,6 @@ export const downloadTheme = async (
   luminanceSteps: number[],
   theme: ThemeType,
 ) => {
-
   const allColors: Record<string, string> = {
     ...theme.colors,
     ...theme.customColors,
