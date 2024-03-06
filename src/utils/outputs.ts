@@ -21,14 +21,14 @@ export const getCssPropertyAsString = (properties: any): string => {
   return resultString;
 };
 
-const nonRemProperties = ["opacity", "elevation", "transition","font"];
+const nonRemProperties = ["opacity", "elevation", "transition", "font"];
 
 const isFontFamily = (path: string[]): boolean =>
   (path[0] === "font" && path[1] === "family") || path[0] !== "font";
 
 export const getNonColorCssProperties = (
   theme: ThemeType,
-  asString?: boolean
+  asString?: boolean,
 ) => {
   const resolvedProperties: any = {};
   traverse(theme).forEach(function (value) {
@@ -95,7 +95,7 @@ export const getCssThemeProperties = (theme: ThemeType): string => {
 
 const getPalette = (
   allColors: object,
-  luminanceSteps: number[]
+  luminanceSteps: number[],
 ): Record<string, HeisslufType[]> =>
   Object.entries(allColors)
     .map((value) => {
@@ -104,7 +104,7 @@ const getPalette = (
       const hslColors: HeisslufType[] = getHeissluftColors(
         name,
         color,
-        luminanceSteps
+        luminanceSteps,
       );
 
       return {
@@ -113,7 +113,7 @@ const getPalette = (
     })
     .reduce(
       (previousValue, currentValue) => ({ ...previousValue, ...currentValue }),
-      {}
+      {},
     );
 
 export const getPaletteOutput = (
@@ -123,7 +123,7 @@ export const getPaletteOutput = (
 ): any => {
   const palette: Record<string, HeisslufType[]> = getPalette(
     allColors,
-    luminanceSteps
+    luminanceSteps,
   );
   const neutralHslColors = palette["neutral"];
   const result: any = {};
@@ -149,11 +149,17 @@ export const getPaletteOutput = (
         luminanceSteps,
         neutralHslColors,
       );
+      result[`--${prefix}-brand-on-pressed-light`] =
+        lightBrand.brandOnColorPressed;
+      result[`--${prefix}-brand-on-hover-light`] = lightBrand.brandOnColorHover;
       result[`--${prefix}-brand-on-light`] = lightBrand.brandOnColor;
       result[`--${prefix}-brand-origin-light`] = lightBrand.color;
       result[`--${prefix}-brand-hover-light`] = lightBrand.hoverColor;
       result[`--${prefix}-brand-pressed-light`] = lightBrand.pressedColor;
-      result[`--${prefix}-brand-on-dark`] = darkBrand.brandOnColor;
+      result[`--${prefix}-brand-on-pressed-dark`] =
+        lightBrand.brandOnColorPressed;
+      result[`--${prefix}-brand-on-hover-dark`] = lightBrand.brandOnColorHover;
+      result[`--${prefix}-brand-on-dark`] = lightBrand.brandOnColor;
       result[`--${prefix}-brand-origin-dark`] = darkBrand.color;
       result[`--${prefix}-brand-hover-dark`] = darkBrand.hoverColor;
       result[`--${prefix}-brand-pressed-dark`] = darkBrand.pressedColor;
@@ -179,6 +185,8 @@ export const getExtraBrandColors = (
   neutralHslColors: HeisslufType[],
 ): {
   color: string;
+  brandOnColorPressed: string;
+  brandOnColorHover: string;
   brandOnColor: string;
   hoverColor: string;
   pressedColor: string;
@@ -192,9 +200,16 @@ export const getExtraBrandColors = (
   hsluv.hex = color;
   hsluv.hexToHsluv();
   const brandLuminance = hsluv.hsluv_l;
+  const isDarkColor = getLuminance(color) < 0.4;
   const brandOnColor =
-    (getLuminance(color) < 0.4 ? neutralHslColors.at(-1) : neutralHslColors[0])
-      ?.hex || "#ff69b4";
+    (isDarkColor ? neutralHslColors.at(-1) : neutralHslColors[0])?.hex ||
+    "#ff69b4";
+  const brandOnColorHover =
+    (isDarkColor ? neutralHslColors.at(-2) : neutralHslColors[1])?.hex ||
+    "#ff69b4";
+  const brandOnColorPressed =
+    (isDarkColor ? neutralHslColors.at(-3) : neutralHslColors[2])?.hex ||
+    "#ff69b4";
   let hoverColor: string | undefined;
   let pressedColor: string | undefined;
 
@@ -224,13 +239,20 @@ export const getExtraBrandColors = (
     }
   }
 
-  return { color, brandOnColor, hoverColor, pressedColor };
+  return {
+    color,
+    brandOnColor,
+    brandOnColorHover,
+    brandOnColorPressed,
+    hoverColor,
+    pressedColor,
+  };
 };
 
 export const getSpeakingNames = (
   speakingNames: SpeakingName[],
   allColors: Record<string, string>,
-  darkMode: boolean
+  darkMode: boolean,
 ): any => {
   let result: any = {};
   Object.entries(allColors).forEach((value) => {
@@ -241,6 +263,8 @@ export const getSpeakingNames = (
       result = {
         ...result,
         "--db-brand-on-enabled": `var(--db-brand-on-${colorScheme})`,
+        "--db-brand-on-hover": `var(--db-brand-on-hover-${colorScheme})`,
+        "--db-brand-on-pressed": `var(--db-brand-on-pressed-${colorScheme})`,
         "--db-brand-origin-enabled": `var(--db-brand-origin-${colorScheme})`,
         "--db-brand-origin-hover": `var(--db-brand-hover-${colorScheme})`,
         "--db-brand-origin-pressed": `var(--db-brand-pressed-${colorScheme})`,
