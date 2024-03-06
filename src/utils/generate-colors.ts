@@ -1,13 +1,23 @@
 import { defaultLuminances, HeisslufType } from "./data.ts";
 import { Hsluv } from "hsluv";
+import chroma from "chroma-js";
 
-export const getReverseColorAsHex = (color: string): string => {
-  const hsluv = new Hsluv();
-  hsluv.hex = color;
-  hsluv.hexToHsluv();
-  hsluv.hsluv_l = 100 - hsluv.hsluv_l;
-  hsluv.hsluvToHex();
-  return hsluv.hex;
+export const getValidPaletteColorAsHex = (
+  brandColors: HeisslufType[],
+  lowContrastDark: boolean,
+  neutralColor?: HeisslufType,
+): string => {
+  const foundColor = (
+    lowContrastDark ? brandColors : brandColors.reverse()
+  ).find(
+    (brandColor) =>
+      chroma.contrast(
+        chroma.hex(brandColor.hex),
+        chroma.hex(neutralColor?.hex || "#ff69b4"),
+      ) >= 3,
+  );
+
+  return foundColor?.hex || "#ff69b4";
 };
 
 export const getHeissluftColors = (
@@ -27,9 +37,9 @@ export const getHeissluftColors = (
         saturation: hsluv.hsluv_s,
         hue: hsluv.hsluv_h,
         luminance:
-        name === "neutral" && index === luminanceSteps.length - 1
-          ? 100
-          : currentLuminance,
+          name === "neutral" && index === luminanceSteps.length - 1
+            ? 100
+            : currentLuminance,
       };
       hsluv.hsluv_l = paletteColor.luminance;
       hsluv.hsluvToHex();

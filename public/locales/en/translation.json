@@ -1,6 +1,6 @@
 {
   "alternativeBrand": "Alternative: Brand",
-  "alternativeBrandWarning": "Your brand color doesn't have the required contrast, we auto-generated a valid color.",
+  "alternativeBrandWarning": "Your brand color doesn't have the required contrast, we've selected a valid color from the palette.",
   "alternativeBrandCritical": "Your custom brand color doesn't have the required contrast, your theme won't be accessible!",
   "alternativeBrandCheckbox": "Bypass auto-generation",
   "dashboard": "Dashboard",
