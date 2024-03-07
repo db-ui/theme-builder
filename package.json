@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@craftjs/core": "^0.2.5",
-    "@db-ui/react-components": "0.0.66-palette-6ffcab0",
+    "@db-ui/react-components": "0.0.67-palette-d15bbe3",
     "@redux-devtools/extension": "^3.3.0",
     "@types/node": "^20.11.24",
     "ace-builds": "1.32.7",

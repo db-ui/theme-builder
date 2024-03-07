@@ -9,6 +9,7 @@ import {
   DBDrawer,
   DBInfotext,
   DBInput,
+  DBTooltip,
 } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../../../store";
@@ -61,6 +62,7 @@ const ColorPicker = ({
           onClick={() => setOpen(true)}
         >
           {label}
+          {!isAddColor && <DBTooltip placement="bottom" className="db-neutral-bg-lvl-1">{t("adaptColor")}</DBTooltip>}
         </button>
         <DBDrawer
           backdrop="weak"

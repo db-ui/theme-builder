@@ -213,6 +213,7 @@ export const getExtraBrandColors = (
   let hoverColor: string | undefined;
   let pressedColor: string | undefined;
 
+  // TODO: #ec0016 takes #ef0016 as hover which doesn't have enough difference in luminance we need to add some gap here
   const bestCompareFn = darkMode
     ? (luminance: number) => luminance > brandLuminance
     : (luminance: number) => luminance < brandLuminance;
