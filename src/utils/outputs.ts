@@ -93,7 +93,7 @@ export const getCssThemeProperties = (theme: ThemeType): string => {
   `;
 };
 
-const getPalette = (
+export const getPalette = (
   allColors: object,
   luminanceSteps: number[],
 ): Record<string, HeisslufType[]> =>
