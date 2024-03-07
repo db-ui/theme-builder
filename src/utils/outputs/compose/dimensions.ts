@@ -1,7 +1,6 @@
 import { ThemeType } from "../../data.ts";
 import traverse from "traverse";
-import { prefix } from "../../outputs.ts";
-import { upperCaseFirstLetters } from "../../index.ts";
+import { kebabCase } from "../../index.ts";
 import {
   densities,
   devices,
@@ -10,7 +9,7 @@ import {
 } from "./shared.ts";
 
 export const generateComposeDimensionsFile = (theme: ThemeType): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}  
+  let resolvedTokenFile: string = `package ${replacePackageName}.theme
   
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -31,9 +30,7 @@ object Dimensions {
       !this.path.includes("desktop") &&
       !this.path.includes("_scale")
     ) {
-      const key = `${prefix}${this.path
-        .map((path) => upperCaseFirstLetters(path))
-        .join("")}`;
+      const key = `${kebabCase(this.path.join("-"), true)}`;
       const finalValue =
         typeof value === "string" || value instanceof String
           ? `${Number(value) * 16}.dp`
@@ -48,13 +45,11 @@ object Dimensions {
   return resolvedTokenFile;
 };
 
-const dimensionTypes = [
-  "SpacingResponsive",
-  "SpacingFixed",
-  "Sizing",
-  "BorderHeight",
-  "BorderRadius",
-];
+const dimensionTypes: Record<string, string[]> = {
+  spacing: ["responsive", "fixed"],
+  sizing: ["base"],
+  border: ["height", "radius"],
+};
 
 export const generateDimensionsScheme = (
   fileName: string,
@@ -62,20 +57,27 @@ export const generateDimensionsScheme = (
   density: string,
   device: string,
 ): string => {
-  resolvedTokenFile += `fun ${prefix}Dimensions${density}${device}(`;
-
-  for (const type of dimensionTypes) {
-    for (const size of shirtSizes) {
-      const uSize = upperCaseFirstLetters(size);
-      resolvedTokenFile += `${prefix}${type}${uSize}: Dp = Dimensions.${prefix}${type}${type.includes("Border") ? "" : density}${type.includes("Responsive") ? device : ""}${uSize},\n`;
+  for (const [type, values] of Object.entries(dimensionTypes)) {
+    resolvedTokenFile += `val ${type}Dimensions${density}${device} = ${kebabCase(type)}Dimensions(`;
+    for (const value of values) {
+      const resolvedValue = value === "base" ? "" : `-${value}`;
+      const resolvedDevice = value === "responsive" ? `-${device}` : "";
+      const resolvedDensity = type === "border" ? "" : `-${density}`;
+      for (const size of shirtSizes) {
+        resolvedTokenFile += `Dimensions.${kebabCase(`${type}${resolvedValue}${resolvedDensity}${resolvedDevice}-${size}`, true)},\n`;
+      }
     }
+    resolvedTokenFile += `)\n`;
+  }
+
+  resolvedTokenFile += `fun getDimensions${density}${device}(`;
+
+  for (const type of Object.keys(dimensionTypes)) {
+    resolvedTokenFile += `${type}: ${kebabCase(type)}Dimensions = ${type}Dimensions${density}${device},\n`;
   }
   resolvedTokenFile += `\n):${fileName}Dimensions = ${fileName}Dimensions(\n`;
-  for (const type of dimensionTypes) {
-    for (const size of shirtSizes) {
-      const uSize = upperCaseFirstLetters(size);
-      resolvedTokenFile += `${prefix}${type}${uSize}=${prefix}${type}${uSize},\n`;
-    }
+  for (const type of Object.keys(dimensionTypes)) {
+    resolvedTokenFile += `${type}=${type},\n`;
   }
   resolvedTokenFile += `)\n`;
 
@@ -83,18 +85,26 @@ export const generateDimensionsScheme = (
 };
 
 export const generateDimensionsSchemeFile = (fileName: string): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}
+  let resolvedTokenFile: string = `package ${replacePackageName}.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
-data class ${fileName}Dimensions(
 `;
 
-  for (const type of dimensionTypes) {
-    for (const size of shirtSizes) {
-      const uSize = upperCaseFirstLetters(size);
-      resolvedTokenFile += `val ${prefix}${type}${uSize}: Dp = Dimensions.${prefix}${type}${type.includes("Border") ? "" : "Regular"}${type.includes("Responsive") ? "Mobile" : ""}${uSize},\n`;
+  for (const [type, values] of Object.entries(dimensionTypes)) {
+    resolvedTokenFile += `data class ${kebabCase(type)}Dimensions(\n`;
+    for (const value of values) {
+      for (const size of shirtSizes) {
+        // val fixedXl: Dp = Dimensions.spacingFixedXl,
+        resolvedTokenFile += `val ${kebabCase(`${value}-${size}`, true)}: Dp,\n`;
+      }
     }
+    resolvedTokenFile += ")\n";
+  }
+
+  resolvedTokenFile += `data class ${fileName}Dimensions(\n`;
+  for (const type of Object.keys(dimensionTypes)) {
+    resolvedTokenFile += `val ${type}: ${kebabCase(type)}Dimensions,\n`;
   }
   resolvedTokenFile += ")\n";
 
@@ -110,7 +120,7 @@ data class ${fileName}Dimensions(
   }
 
   resolvedTokenFile += `
-val LocalDimensions = staticCompositionLocalOf { ${prefix}DimensionsRegularMobile() }
+val LocalDimensions = staticCompositionLocalOf { getDimensionsRegularMobile() }
 `;
 
   return resolvedTokenFile;

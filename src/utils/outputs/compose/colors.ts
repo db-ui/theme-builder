@@ -3,15 +3,15 @@ import {
   HeisslufType,
   SpeakingName,
 } from "../../data.ts";
-import { getExtraBrandColors, getPalette, prefix } from "../../outputs.ts";
-import { upperCaseFirstLetters } from "../../index.ts";
+import { getExtraBrandColors, getPalette } from "../../outputs.ts";
+import { kebabCase } from "../../index.ts";
 import { replacePackageName } from "./shared.ts";
 
 const brandAdditionalColors = [
-  { name: "OnEnabled", light: 0, dark: 0 },
-  { name: "OriginEnabled", light: 0, dark: 0 },
-  { name: "OriginHover", light: 0, dark: 0 },
-  { name: "OriginPressed", light: 0, dark: 0 },
+  { name: "onEnabled", light: 0, dark: 0 },
+  { name: "originEnabled", light: 0, dark: 0 },
+  { name: "originHover", light: 0, dark: 0 },
+  { name: "originPressed", light: 0, dark: 0 },
 ];
 
 const getComposeColorFromHex = (hex: string): string => {
@@ -23,7 +23,7 @@ export const generateComposeColorFile = (
   luminanceSteps: number[],
   altBrand: BrandAlternativeColor,
 ): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}
+  let resolvedTokenFile: string = `package ${replacePackageName}.theme
   
 import androidx.compose.ui.graphics.Color
 object Colors {
@@ -37,7 +37,7 @@ object Colors {
   const neutralHslColors = palette["neutral"];
   Object.entries(palette).forEach(([name, hslType]) => {
     hslType.forEach((hsl) => {
-      const key = `${prefix}${upperCaseFirstLetters(name)}${hsl.index}`;
+      const key = `${name}${hsl.index}`;
       resolvedTokenFile += `val ${key} = ${getComposeColorFromHex(hsl.hex)}\n`;
     });
 
@@ -56,14 +56,14 @@ object Colors {
         luminanceSteps,
         neutralHslColors,
       );
-      resolvedTokenFile += `val ${prefix}BrandOnLight = ${getComposeColorFromHex(lightBrand.brandOnColor)}\n`;
-      resolvedTokenFile += `val ${prefix}BrandOriginLight = ${getComposeColorFromHex(lightBrand.color)}\n`;
-      resolvedTokenFile += `val ${prefix}BrandHoverLight = ${getComposeColorFromHex(lightBrand.hoverColor)}\n`;
-      resolvedTokenFile += `val ${prefix}BrandPressedLight = ${getComposeColorFromHex(lightBrand.pressedColor)}\n`;
-      resolvedTokenFile += `val ${prefix}BrandOnDark = ${getComposeColorFromHex(darkBrand.brandOnColor)}\n`;
-      resolvedTokenFile += `val ${prefix}BrandOriginDark = ${getComposeColorFromHex(darkBrand.color)}\n`;
-      resolvedTokenFile += `val ${prefix}BrandHoverDark = ${getComposeColorFromHex(darkBrand.hoverColor)}\n`;
-      resolvedTokenFile += `val ${prefix}BrandPressedDark = ${getComposeColorFromHex(darkBrand.pressedColor)}\n`;
+      resolvedTokenFile += `val brandOnLight = ${getComposeColorFromHex(lightBrand.brandOnColor)}\n`;
+      resolvedTokenFile += `val brandOriginLight = ${getComposeColorFromHex(lightBrand.color)}\n`;
+      resolvedTokenFile += `val brandHoverLight = ${getComposeColorFromHex(lightBrand.hoverColor)}\n`;
+      resolvedTokenFile += `val brandPressedLight = ${getComposeColorFromHex(lightBrand.pressedColor)}\n`;
+      resolvedTokenFile += `val brandOnDark = ${getComposeColorFromHex(darkBrand.brandOnColor)}\n`;
+      resolvedTokenFile += `val brandOriginDark = ${getComposeColorFromHex(darkBrand.color)}\n`;
+      resolvedTokenFile += `val brandHoverDark = ${getComposeColorFromHex(darkBrand.hoverColor)}\n`;
+      resolvedTokenFile += `val brandPressedDark = ${getComposeColorFromHex(darkBrand.pressedColor)}\n`;
     }
   });
 
@@ -75,18 +75,16 @@ object Colors {
 const generateColorSchemeDarkLight = (
   fileName: string,
   speakingNames: SpeakingName[],
-  allColors: Record<string, string>,
-  resolvedNames: Record<string, string>,
+  colorKeys: string[],
   resolvedScheme: string,
   darkMode?: boolean,
 ): string => {
-  const colorScheme = darkMode ? "dark" : "light";
-  resolvedScheme += `fun ${prefix}ColorScheme${upperCaseFirstLetters(colorScheme)}(\n`;
+  const colorScheme = kebabCase(darkMode ? "dark" : "light");
 
-  for (const [name] of Object.entries(allColors)) {
+  for (const name of colorKeys) {
+    resolvedScheme += `val ${kebabCase(name)}Colors${colorScheme} = ${kebabCase(name)}Colors(\n`;
     for (const speakingName of speakingNames) {
-      const resolvedName = resolvedNames[`${name}${speakingName.name}`];
-      const color = `${prefix}${upperCaseFirstLetters(name)}${
+      const color = `${name}${
         darkMode ? speakingName.dark : speakingName.light
       }`;
       if (
@@ -97,29 +95,30 @@ const generateColorSchemeDarkLight = (
           (speakingName.transparencyDark !== undefined
             ? speakingName.transparencyDark
             : speakingName.transparencyLight || 0) / 100;
-        resolvedScheme += `${resolvedName}: Color = Colors.${color}.copy(${transparency}f),\n`;
+        resolvedScheme += `Colors.${color}.copy(${transparency}f),\n`;
       } else {
-        resolvedScheme += `${resolvedName}: Color = Colors.${color},\n`;
+        resolvedScheme += `Colors.${color},\n`;
       }
     }
 
     if (name === "brand") {
-      resolvedScheme += `dbBrandOnEnabled: Color = Colors.dbBrandOn${upperCaseFirstLetters(colorScheme)},\n`;
-      resolvedScheme += `dbBrandOriginEnabled: Color =Colors.dbBrandOrigin${upperCaseFirstLetters(colorScheme)},\n`;
-      resolvedScheme += `dbBrandOriginHover: Color = Colors.dbBrandHover${upperCaseFirstLetters(colorScheme)},\n`;
-      resolvedScheme += `dbBrandOriginPressed: Color =Colors.dbBrandPressed${upperCaseFirstLetters(colorScheme)},\n`;
+      resolvedScheme += `Colors.brandOn${colorScheme},\n`;
+      resolvedScheme += `Colors.brandOrigin${colorScheme},\n`;
+      resolvedScheme += `Colors.brandHover${colorScheme},\n`;
+      resolvedScheme += `Colors.brandPressed${colorScheme},\n`;
     }
+    resolvedScheme += `)\n`;
   }
 
-  resolvedScheme += `\n):${fileName}ColorScheme = ${fileName}ColorScheme(\n`;
+  resolvedScheme += `fun getColorScheme${colorScheme}(\n`;
 
-  for (const [name] of Object.entries(allColors)) {
-    for (const speakingName of name === "brand"
-      ? [...speakingNames, ...brandAdditionalColors]
-      : speakingNames) {
-      const resolvedName = resolvedNames[`${name}${speakingName.name}`];
-      resolvedScheme += `${resolvedName}=${resolvedName},\n`;
-    }
+  for (const name of colorKeys) {
+    const semanticColor = `${kebabCase(name)}Colors`;
+    resolvedScheme += `${name}: ${semanticColor} = ${kebabCase(name)}Colors${colorScheme},\n`;
+  }
+  resolvedScheme += `\n):${fileName}ColorScheme = ${fileName}ColorScheme(\n`;
+  for (const name of colorKeys) {
+    resolvedScheme += `${name}=${name},\n`;
   }
   resolvedScheme += `)\n`;
 
@@ -132,7 +131,8 @@ export const generateColorScheme = (
   allColors: Record<string, string>,
 ): string => {
   const resolvedNames: Record<string, string> = {};
-  let resolvedScheme: string = `package ${replacePackageName}
+  const colorKeys = Object.keys(allColors);
+  let resolvedScheme: string = `package ${replacePackageName}.theme
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -141,59 +141,46 @@ import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.runtime.staticCompositionLocalOf
 
 import androidx.compose.ui.graphics.Color
-class ${fileName}ColorScheme(
-
 `;
 
-  for (const [name] of Object.entries(allColors)) {
-    for (const speakingName of name === "brand"
-      ? [...speakingNames, ...brandAdditionalColors]
-      : speakingNames) {
-      const resolvedName = `${prefix}${upperCaseFirstLetters(name)}${upperCaseFirstLetters(speakingName.name.replace(/-/g, " "))}`;
+  // 1. Generate semantic color classes like 'NeutralColors'
+  for (const name of colorKeys) {
+    const allSpeakingNames =
+      name === "brand"
+        ? [...speakingNames, ...brandAdditionalColors]
+        : speakingNames;
+    resolvedScheme += `class ${kebabCase(name)}Colors(\n`;
+    for (const speakingName of allSpeakingNames) {
+      const resolvedName = `${kebabCase(speakingName.name, true)}`;
       resolvedNames[`${name}${speakingName.name}`] = resolvedName;
       resolvedScheme += `${resolvedName}: Color,\n`;
     }
-  }
-
-  resolvedScheme += `) {\n`;
-
-  for (const [name] of Object.entries(allColors)) {
-    for (const speakingName of name === "brand"
-      ? [...speakingNames, ...brandAdditionalColors]
-      : speakingNames) {
+    resolvedScheme += `) {\n`;
+    for (const speakingName of allSpeakingNames) {
       const resolvedName = resolvedNames[`${name}${speakingName.name}`];
       resolvedScheme += `var ${resolvedName} by mutableStateOf(${resolvedName}, structuralEqualityPolicy())
   internal set\n`;
     }
+    resolvedScheme += `}\n`;
   }
 
-  resolvedScheme += `fun copy(\n`;
-  for (const [name] of Object.entries(allColors)) {
-    for (const speakingName of name === "brand"
-      ? [...speakingNames, ...brandAdditionalColors]
-      : speakingNames) {
-      const resolvedName = resolvedNames[`${name}${speakingName.name}`];
-      resolvedScheme += `${resolvedName}:Color = this.${resolvedName},\n`;
-    }
+  // 2. Generate ColorScheme with semantic colors
+  resolvedScheme += `class ${fileName}ColorScheme(\n`;
+  for (const name of colorKeys) {
+    const semanticColor = `${kebabCase(name)}Colors`;
+    resolvedScheme += `${name}: ${semanticColor},\n`;
   }
-  resolvedScheme += `):${fileName}ColorScheme =
-  ${fileName}ColorScheme(\n`;
-  for (const [name] of Object.entries(allColors)) {
-    for (const speakingName of name === "brand"
-      ? [...speakingNames, ...brandAdditionalColors]
-      : speakingNames) {
-      const resolvedName = resolvedNames[`${name}${speakingName.name}`];
-      resolvedScheme += `${resolvedName} = ${resolvedName},\n`;
-    }
+  resolvedScheme += `){\n`;
+  for (const name of colorKeys) {
+    resolvedScheme += `var ${name} by mutableStateOf(${name}, structuralEqualityPolicy())
+  internal set\n`;
   }
-  resolvedScheme += `)\n`;
-  resolvedScheme += `}\n\n`;
+  resolvedScheme += `}\n`;
 
   resolvedScheme = generateColorSchemeDarkLight(
     fileName,
     speakingNames,
-    allColors,
-    resolvedNames,
+    colorKeys,
     resolvedScheme,
     true,
   );
@@ -201,14 +188,13 @@ class ${fileName}ColorScheme(
   resolvedScheme = generateColorSchemeDarkLight(
     fileName,
     speakingNames,
-    allColors,
-    resolvedNames,
+    colorKeys,
     resolvedScheme,
     false,
   );
 
   resolvedScheme += `
-val LocalColors = staticCompositionLocalOf { ${prefix}ColorSchemeLight() }
+val LocalColors = staticCompositionLocalOf { getColorSchemeLight() }
 `;
 
   return resolvedScheme;

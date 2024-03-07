@@ -22,8 +22,14 @@ import {
   generateComposeDimensionsFile,
   generateDimensionsSchemeFile,
 } from "./outputs/compose/dimensions.ts";
-import { generateComposeTypographyFile } from "./outputs/compose/typography.ts";
+import {
+  generateComposeTypographyFile,
+  generateFontFamilyFile,
+  generateTypographySchemeFile,
+} from "./outputs/compose/typography.ts";
 import { generateDensityEnumFile } from "./outputs/compose/density.ts";
+import { generateThemeFile } from "./outputs/compose/theme.ts";
+import { generateReadmeFile } from "./outputs/compose/readme.ts";
 
 export const getThemeImage = (image: string): string => {
   if (image.startsWith("data:image")) {
@@ -45,11 +51,16 @@ const download = (fileName: string, file: Blob) => {
   document.body.removeChild(element);
 };
 
-export const upperCaseFirstLetters = (input: string): string => {
+export const kebabCase = (input: string, firstLower?: boolean): string => {
   try {
     return input
+      .replace(/-/g, " ")
       .split(" ")
-      .map((split) => split[0].toUpperCase() + split.substring(1, split.length))
+      .map(
+        (split, index) =>
+          (firstLower && index === 0 ? split[0] : split[0].toUpperCase()) +
+          split.substring(1, split.length),
+      )
       .join("");
   } catch (error) {
     console.error(error);
@@ -71,22 +82,33 @@ export const downloadTheme = async (
   const themeJsonString = JSON.stringify(theme);
   const themeProperties = getCssThemeProperties(theme);
 
-  const composeFileName = upperCaseFirstLetters(theme.branding.name);
+  const composeFileName = kebabCase(theme.branding.name);
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
 
   //Android
   const androidFolder: string = "Android";
-  const androidDataFolder: string = "Android/data";
+  const androidThemeFolder: string = `${androidFolder}/theme`;
+  const androidDataFolder: string = `${androidThemeFolder}/data`;
+  zip.file(`${androidFolder}/README.md`, generateReadmeFile(composeFileName));
   zip.file(
-    `${androidFolder}/${composeFileName}ColorScheme.kt`,
+    `${androidThemeFolder}/${composeFileName}.kt`,
+    generateThemeFile(composeFileName),
+  );
+  zip.file(
+    `${androidThemeFolder}/${composeFileName}ColorScheme.kt`,
     generateColorScheme(composeFileName, speakingNames, allColors),
   );
   zip.file(
-    `${androidFolder}/${composeFileName}Dimensions.kt`,
+    `${androidThemeFolder}/${composeFileName}Dimensions.kt`,
     generateDimensionsSchemeFile(composeFileName),
   );
+  zip.file(
+    `${androidThemeFolder}/${composeFileName}Typography.kt`,
+    generateTypographySchemeFile(composeFileName),
+  );
+  zip.file(`${androidDataFolder}/Fonts.kt`, generateFontFamilyFile());
   zip.file(
     `${androidDataFolder}/Dimensions.kt`,
     generateComposeDimensionsFile(theme),
