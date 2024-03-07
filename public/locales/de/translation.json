@@ -1,4 +1,6 @@
 {
+  "enableLightMode": "Lightmode einschalten",
+  "enableDarkMode": "Darkmode einschalten",
   "alternativeBrandWarning": "Ihre Markenfarbe hat nicht den erforderlichen Kontrast, wir haben eine gültige Farbe aus der Palette ausgewählt.",
   "alternativeBrandCritical": "Ihre eigene Markenfarbe hat nicht den erforderlichen Kontrast, Ihr Theme entspricht nicht den Anforderungen für Accessibility!",
   "alternativeBrandCheckbox": "Umgehung der automatischen Generierung",

@@ -59,7 +59,6 @@ const ColorPicker = ({
             borderColor: `var(--db-${label.toLowerCase()}-contrast-high)`,
           }}
           onClick={() => setOpen(true)}
-          title="Change Color"
         >
           {label}
         </button>
