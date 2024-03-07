@@ -1,8 +1,9 @@
-import { DBButton, DBHeader, DBPage } from "@db-ui/react-components";
+import { DBButton, DBHeader, DBPage, DBTooltip } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
 import { PropsWithChildren, useState } from "react";
 import { getThemeImage } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 const DefaultPage = ({
   name,
@@ -12,6 +13,7 @@ const DefaultPage = ({
   density,
   navigation,
 }: PropsWithChildren<DefaultPagePropsType>) => {
+  const { t } = useTranslation();
   const { theme, darkMode, developerMode } = useThemeBuilderStore(
     (state) => state,
   );
@@ -64,12 +66,14 @@ const DefaultPage = ({
                   icon={darkMode ? "day" : "night"}
                   noText
                   className="p-0 w-siz-md"
-                  title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
                   onClick={() => {
                     useThemeBuilderStore.setState({ darkMode: !darkMode });
                   }}
                 >
                   {darkMode ? "🌞" : "🌛"}
+                  <DBTooltip>
+                    {t(darkMode ? "enableLightMode" : "enableDarkMode")}
+                  </DBTooltip>
                 </DBButton>
               </div>
             }

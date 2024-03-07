@@ -22,7 +22,6 @@ const Error = () => {
             resetDefaults();
             navigate(0);
           }}
-          title={t("resetDesc")}
         >
           {t("reset")}
         </DBButton>
