@@ -74,7 +74,7 @@ const ThemeSelect = () => {
                     )}
                     alt="brand"
                   />
-                  <DBTooltip>{t(key)}</DBTooltip>
+                  <DBTooltip placement="bottom">{t(key)}</DBTooltip>
                 </DBCard>
               </button>
             ))}

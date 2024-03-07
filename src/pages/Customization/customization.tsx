@@ -4,20 +4,14 @@ import { TabItemType } from "./data.ts";
 import ComponentContainer from "../../components/Customization/Preview/ComponentContainer";
 import ColorPalettes from "../../components/Customization/Preview/ColorPalettes";
 import DefaultPage from "../../components/DefaultPage";
-import {
-  DBDivider,
-  DBInput,
-  DBTab,
-  DBTabList,
-  DBTabPanel,
-  DBTabs,
-} from "@db-ui/react-components";
+import { DBDivider, DBInput } from "@db-ui/react-components";
 import ActionBar from "../../components/Customization/ActionBar";
 import { useThemeBuilderStore } from "../../store";
 import SpeakingColors from "../../components/Customization/Preview/SpeakingColors";
 import LogoUpload from "../../components/Customization/LogoUpload";
 import InteractiveDemo from "../../components/Customization/Preview/InteractiveDemo";
 import Scaling from "../../components/Customization/Settings/Scaling";
+import Tabs from "../../components/Customization/Tabs";
 
 const tabs: TabItemType[] = [
   {
@@ -25,7 +19,7 @@ const tabs: TabItemType[] = [
     component: <InteractiveDemo />,
   },
   { text: "components", component: <ComponentContainer /> },
-  { text: "colorPalettes", component: <ColorPalettes /> },
+  { text: "colorPalettes", component: <ColorPalettes />, onlyDeveloper: true },
   {
     text: "speakingColors",
     component: <SpeakingColors />,
@@ -35,9 +29,7 @@ const tabs: TabItemType[] = [
 
 const Customization = () => {
   const { t } = useTranslation();
-  const { developerMode, theme } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const {  theme } = useThemeBuilderStore((state) => state);
 
   return (
     <DefaultPage actionBar={<ActionBar />} name={t("customization")}>
@@ -84,23 +76,7 @@ const Customization = () => {
           className="db-neutral-bg-lvl-2 p-fix-sm md:p-res-sm
       flex flex-col gap-res-sm w-full overflow-auto"
         >
-          <DBTabs alignment="center" width="full">
-            <DBTabList>
-              {tabs
-                .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
-                .map((tabItem) => (
-                  <DBTab key={`tab-${tabItem.text}`}>{t(tabItem.text)}</DBTab>
-                ))}
-            </DBTabList>
-
-            {tabs
-              .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
-              .map((tabItem) => (
-                <DBTabPanel key={`tab-panel-${tabItem.text}`}>
-                  {tabItem.component}
-                </DBTabPanel>
-              ))}
-          </DBTabs>
+          <Tabs tabs={tabs} />
         </div>
       </div>
     </DefaultPage>

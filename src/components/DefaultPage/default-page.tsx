@@ -50,7 +50,7 @@ const DefaultPage = ({
               <div className="flex gap-fix-sm">
                 <DBButton
                   className={!developerMode ? "opacity-0" : ""}
-                  icon="face_delighted"
+                  icon="build"
                   variant="ghost"
                   noText
                   onClick={() =>
@@ -60,6 +60,9 @@ const DefaultPage = ({
                   }
                 >
                   Developer Mode
+                  <DBTooltip placement="bottom">
+                    {t(developerMode ? "disableDevMode" : "enableDevMode")}
+                  </DBTooltip>
                 </DBButton>
                 <DBButton
                   variant="ghost"
@@ -71,7 +74,7 @@ const DefaultPage = ({
                   }}
                 >
                   {darkMode ? "🌞" : "🌛"}
-                  <DBTooltip>
+                  <DBTooltip placement="bottom">
                     {t(darkMode ? "enableLightMode" : "enableDarkMode")}
                   </DBTooltip>
                 </DBButton>
