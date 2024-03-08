@@ -80,7 +80,7 @@ export const downloadTheme = async (
     ...theme.customColors,
   };
 
-  const fileName = theme.branding.name || `default-theme`;
+  const fileName = (theme.branding.name || `default-theme`) + "Theme";
   const themeJsonString = JSON.stringify(theme);
   const themeProperties = getCssThemeProperties(theme);
 

@@ -1,8 +1,8 @@
 import {
   BrandAlternativeColor,
-  ThemeType,
   HeisslufType,
   SpeakingName,
+  ThemeType,
 } from "./data.ts";
 import traverse from "traverse";
 import { Hsluv } from "hsluv";
@@ -139,13 +139,13 @@ export const getPaletteOutput = (
       const darkBrandColor = !altBrand.dark ? allColors["brand"] : altBrand.hex;
       const lightBrand = getExtraBrandColors(
         lightBrandColor,
-        true,
+        false,
         luminanceSteps,
         neutralHslColors,
       );
       const darkBrand = getExtraBrandColors(
         darkBrandColor,
-        false,
+        true,
         luminanceSteps,
         neutralHslColors,
       );
@@ -157,9 +157,9 @@ export const getPaletteOutput = (
       result[`--${prefix}-brand-hover-light`] = lightBrand.hoverColor;
       result[`--${prefix}-brand-pressed-light`] = lightBrand.pressedColor;
       result[`--${prefix}-brand-on-pressed-dark`] =
-        lightBrand.brandOnColorPressed;
-      result[`--${prefix}-brand-on-hover-dark`] = lightBrand.brandOnColorHover;
-      result[`--${prefix}-brand-on-dark`] = lightBrand.brandOnColor;
+        darkBrand.brandOnColorPressed;
+      result[`--${prefix}-brand-on-hover-dark`] = darkBrand.brandOnColorHover;
+      result[`--${prefix}-brand-on-dark`] = darkBrand.brandOnColor;
       result[`--${prefix}-brand-origin-dark`] = darkBrand.color;
       result[`--${prefix}-brand-hover-dark`] = darkBrand.hoverColor;
       result[`--${prefix}-brand-pressed-dark`] = darkBrand.pressedColor;
@@ -168,6 +168,9 @@ export const getPaletteOutput = (
 
   return result;
 };
+
+// We use this for hover/pressed to make sure the colors aren't to similar
+const brandLuminanceMinDifference: number = 5;
 
 /**
  * if we are in light mode and the brand color has more than 20 luminance we can darken the states
@@ -202,24 +205,27 @@ export const getExtraBrandColors = (
   const brandLuminance = hsluv.hsluv_l;
   const isDarkColor = getLuminance(color) < 0.4;
   const brandOnColor =
-    (isDarkColor ? neutralHslColors.at(-1) : neutralHslColors[0])?.hex ||
+    (isDarkColor ? neutralHslColors.at(-1) : neutralHslColors[1])?.hex ||
     "#ff69b4";
   const brandOnColorHover =
-    (isDarkColor ? neutralHslColors.at(-2) : neutralHslColors[1])?.hex ||
+    (isDarkColor ? neutralHslColors.at(-2) : neutralHslColors[2])?.hex ||
     "#ff69b4";
   const brandOnColorPressed =
-    (isDarkColor ? neutralHslColors.at(-3) : neutralHslColors[2])?.hex ||
+    (isDarkColor ? neutralHslColors.at(-3) : neutralHslColors[3])?.hex ||
     "#ff69b4";
   let hoverColor: string | undefined;
   let pressedColor: string | undefined;
 
-  // TODO: #ec0016 takes #ef0016 as hover which doesn't have enough difference in luminance we need to add some gap here
   const bestCompareFn = darkMode
-    ? (luminance: number) => luminance > brandLuminance
-    : (luminance: number) => luminance < brandLuminance;
+    ? (luminance: number) =>
+        luminance > brandLuminance + brandLuminanceMinDifference
+    : (luminance: number) =>
+        luminance < brandLuminance - brandLuminanceMinDifference;
   const fallbackCompareFn = darkMode
-    ? (luminance: number) => luminance < brandLuminance
-    : (luminance: number) => luminance > brandLuminance;
+    ? (luminance: number) =>
+        luminance < brandLuminance - brandLuminanceMinDifference
+    : (luminance: number) =>
+        luminance > brandLuminance + brandLuminanceMinDifference;
 
   let foundColors = hslColors.filter((hsl) => bestCompareFn(hsl.luminance));
   foundColors = darkMode ? foundColors : foundColors.reverse();
