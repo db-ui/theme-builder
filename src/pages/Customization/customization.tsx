@@ -29,12 +29,16 @@ const tabs: TabItemType[] = [
 
 const Customization = () => {
   const { t } = useTranslation();
-  const {  theme } = useThemeBuilderStore((state) => state);
+  const { theme } = useThemeBuilderStore((state) => state);
 
   return (
-    <DefaultPage actionBar={<ActionBar />} name={t("customization")}>
+    <DefaultPage
+      withDevMode
+      actionBar={<ActionBar />}
+      name={t("customization")}
+    >
       <div className="content flex flex-col md:flex-row md:h-full md:overflow-hidden">
-        <div className="flex flex-col p-res-xs w-full md:w-2/5 md:h-full md:overflow-auto border-r gap-fix-xl">
+        <div className="flex flex-col p-fix-lg w-full md:w-2/5 md:h-full md:overflow-auto border-r gap-fix-xl">
           <div className="flex flex-col gap-fix-md">
             <h5>{t("name")}</h5>
             <DBInput
