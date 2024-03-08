@@ -11,7 +11,6 @@ const ComponentContainer = () => {
     <div className="flex flex-col gap-fix-md">
       <DBInput
         variant="floating"
-        className="md:w-1/2"
         label={t("search")}
         placeholder={t("search")}
         type="search"

@@ -1,12 +1,13 @@
 import { BASE_PATH } from "../../../constants.ts";
 import { getThemeImage } from "../../../utils";
 import { useThemeBuilderStore } from "../../../store";
+import { DBSection } from "@db-ui/react-components";
 
 const Header = () => {
   const { theme, darkMode } = useThemeBuilderStore((state) => state);
   return (
-    <div className="py-fix-xs px-fix-md md:py-fix-md">
-      <div className="flex justify-between min-h-siz-md">
+    <DBSection size="none" variant="large">
+      <div className="flex justify-between min-h-siz-md py-fix-xs md:py-fix-md">
         <img
           className="logo"
           src={getThemeImage(
@@ -28,7 +29,7 @@ const Header = () => {
           />
         </a>
       </div>
-    </div>
+    </DBSection>
   );
 };
 

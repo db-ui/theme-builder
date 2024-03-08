@@ -12,6 +12,7 @@ const DefaultPage = ({
   className,
   density,
   navigation,
+  withDevMode,
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const { t } = useTranslation();
   const { theme, darkMode, developerMode } = useThemeBuilderStore(
@@ -48,22 +49,24 @@ const DefaultPage = ({
             slotActionBar={actionBar}
             slotCallToAction={
               <div className="flex gap-fix-sm">
-                <DBButton
-                  className={!developerMode ? "opacity-0" : ""}
-                  icon="build"
-                  variant="ghost"
-                  noText
-                  onClick={() =>
-                    useThemeBuilderStore.setState({
-                      developerMode: !developerMode,
-                    })
-                  }
-                >
-                  Developer Mode
-                  <DBTooltip placement="bottom">
-                    {t(developerMode ? "disableDevMode" : "enableDevMode")}
-                  </DBTooltip>
-                </DBButton>
+                {withDevMode && (
+                  <DBButton
+                    className={!developerMode ? "opacity-0" : ""}
+                    icon="build"
+                    variant="ghost"
+                    noText
+                    onClick={() =>
+                      useThemeBuilderStore.setState({
+                        developerMode: !developerMode,
+                      })
+                    }
+                  >
+                    Developer Mode
+                    <DBTooltip placement="bottom">
+                      {t(developerMode ? "disableDevMode" : "enableDevMode")}
+                    </DBTooltip>
+                  </DBButton>
+                )}
                 <DBButton
                   variant="ghost"
                   icon={darkMode ? "day" : "night"}
