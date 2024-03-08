@@ -19,20 +19,15 @@ const defaultTheme = DefaultTheme as unknown as ThemeType;
 const sBahnTheme = SBahnTheme as unknown as ThemeType;
 const dbTheme = DBTheme as unknown as ThemeType;
 
-type Themes = {
-  key: string;
-  theme: ThemeType;
+const themes: Record<string, ThemeType> = {
+  neutralTheme: defaultTheme,
+  dbTheme: dbTheme,
+  sbahnTheme: sBahnTheme,
 };
-
-const themes: Themes[] = [
-  { key: "neutralTheme", theme: defaultTheme },
-  { key: "dbTheme", theme: dbTheme },
-  { key: "sbahnTheme", theme: sBahnTheme },
-];
 
 const ThemeSelect = () => {
   const { t } = useTranslation();
-  const [selectedTheme, setSelectedTheme] = useState<string>(themes[0].key);
+  const [selectedTheme, setSelectedTheme] = useState<string>("neutralTheme");
   const { darkMode } = useThemeBuilderStore((state) => state);
   return (
     <DBSection
@@ -42,11 +37,16 @@ const ThemeSelect = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-fix-md">
         <div className="flex flex-col gap-fix-md">
-          <h1>Design System Platform</h1>
+          <h1>
+            <span className="brand-name">
+              {themes[selectedTheme].branding.name}{" "}
+            </span>
+            Design System Platform
+          </h1>
           <h4 data-variant="light">By all, for all</h4>
           <p>{t("landingDesignSystemText")}</p>
           <div className="grid grid-cols-4 gap-fix-md">
-            {themes.map(({ key, theme }) => (
+            {Object.entries(themes).map(([key, theme]) => (
               <button
                 key={key}
                 onClick={() => {
