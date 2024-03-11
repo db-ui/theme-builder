@@ -53,7 +53,11 @@ const download = (fileName: string, file: Blob) => {
   document.body.removeChild(element);
 };
 
-export const kebabCase = (input: string, firstLower?: boolean): string => {
+export const kebabCase = (
+  input: string,
+  firstLower?: boolean,
+  separator?: string,
+): string => {
   try {
     return input
       .replace(/-/g, " ")
@@ -63,7 +67,7 @@ export const kebabCase = (input: string, firstLower?: boolean): string => {
           (firstLower && index === 0 ? split[0] : split[0].toUpperCase()) +
           split.substring(1, split.length),
       )
-      .join("");
+      .join(separator || "");
   } catch (error) {
     console.error(error);
   }

@@ -12,6 +12,7 @@ import LogoUpload from "../../components/Customization/LogoUpload";
 import InteractiveDemo from "../../components/Customization/Preview/InteractiveDemo";
 import Scaling from "../../components/Customization/Settings/Scaling";
 import Tabs from "../../components/Customization/Tabs";
+import TokenContainer from "../../components/Customization/Preview/TokenContainer";
 
 const tabs: TabItemType[] = [
   {
@@ -19,6 +20,7 @@ const tabs: TabItemType[] = [
     component: <InteractiveDemo />,
   },
   { text: "components", component: <ComponentContainer /> },
+  { text: "token", component: <TokenContainer /> },
   { text: "colorPalettes", component: <ColorPalettes />, onlyDeveloper: true },
   {
     text: "speakingColors",
