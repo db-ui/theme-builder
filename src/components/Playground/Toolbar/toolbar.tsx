@@ -45,7 +45,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundUndo")}
-            {canUndo && <DBTooltip placement="bottom">{t("playgroundUndo")}</DBTooltip>}
+            {canUndo && <DBTooltip placement="right">{t("playgroundUndo")}</DBTooltip>}
           </DBButton>
           <DBButton
             variant="ghost"
@@ -81,7 +81,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundShowBorders")}
-            <DBTooltip placement="bottom">{t("playgroundShowBorders")}</DBTooltip>
+            <DBTooltip placement="left">{t("playgroundShowBorders")}</DBTooltip>
           </DBButton>
         </div>
       </div>

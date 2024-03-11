@@ -1,6 +1,5 @@
 import { ColorsPropsType } from "./index.tsx";
 import { kebabCase } from "../../../../../utils";
-import { Fragment } from "react";
 
 const ColorPreview = ({
   colorName,
@@ -21,27 +20,44 @@ const ColorPreview = ({
           " ",
         )}
       </p>
-      {(isBorder ? ["enabled"] : ["enabled", "hover", "pressed"]).map(
-        (state) => {
-          const bgColor =
-            `var(--db-${colorName}-${type}` +
-            `${bgTransparent && state === "enabled" ? `-${bgTransparent}` : ""}` +
-            `${isBorder ? "" : `-${state}`})`;
-          const borderColor: string = `var(--db-${colorName}-border)`;
-          return (
-            <Fragment key={`color-preview-${colorName}-${type}-${state}`}>
+      <div className="flex flex-col">
+        {(isBorder ? ["enabled"] : ["enabled", "hover", "pressed"]).map(
+          (state) => {
+            const bgColor =
+              `var(--db-${colorName}-${type}` +
+              `${bgTransparent && state === "enabled" ? `-${bgTransparent}` : ""}` +
+              `${isBorder ? "" : `-${state}`})`;
+            const borderColor: string = `var(--db-${colorName}-border)`;
+            let color = `var(--db-${colorName}-on-bg-enabled)`;
+            if (type.startsWith("on-bg")) {
+              color = `var(--db-${colorName}-bg-lvl-1-enabled)`;
+            } else if (type === "origin") {
+              color = `var(--db-${colorName}-on-enabled)`;
+            }  else if (type === "on") {
+              color = `var(--db-${colorName}-origin-enabled)`;
+            } else if (
+              type === "contrast-high" ||
+              type === "contrast-low" ||
+              type === "border"
+            ) {
+              color = `var(--db-${colorName}-on-contrast-enabled)`;
+            }
+            return (
               <div
-                className="w-full md:min-w-siz-2xl h-siz-md mx-auto rounded-sm"
+                key={`color-preview-${colorName}-${type}-${state}`}
+                className="flex w-full md:min-w-siz-2xl h-siz-md mx-auto rounded-sm"
                 style={{
                   backgroundColor: bgColor,
                   border: `1px solid ${borderColor}`,
+                  color,
                 }}
-              ></div>
-              <span>{state}</span>
-            </Fragment>
-          );
-        },
-      )}
+              >
+                <span className="m-auto">{state}</span>
+              </div>
+            );
+          },
+        )}
+      </div>
     </div>
   );
 };
@@ -57,10 +73,8 @@ const Colors = ({ colorName }: ColorsPropsType) => (
     )}
     {/* On Colors */}
     <div className="flex flex-col md:flex-row gap-fix-md">
-      <div className="flex flex-col gap-fix-md md:gap-0 md:flex-row">
-        <ColorPreview colorName={colorName} type="on-bg" />
-        <ColorPreview colorName={colorName} type="on-bg-weak" />
-      </div>
+      <ColorPreview colorName={colorName} type="on-bg" />
+      <ColorPreview colorName={colorName} type="on-bg-weak" />
       <ColorPreview colorName={colorName} type="on-contrast" />
     </div>
     {/* Contrast Colors */}
@@ -71,23 +85,19 @@ const Colors = ({ colorName }: ColorsPropsType) => (
     </div>
     {/* BAckgrounds */}
     <div className="flex flex-col md:flex-row gap-fix-md">
-      <div className="flex flex-col gap-fix-md md:gap-0 md:flex-row">
-        <ColorPreview colorName={colorName} type="bg-lvl-1" />
-        <ColorPreview colorName={colorName} type="bg-lvl-2" />
-        <ColorPreview colorName={colorName} type="bg-lvl-3" />
-      </div>
-      <div className="flex flex-col gap-fix-md md:gap-0 md:flex-row">
-        <ColorPreview
-          colorName={colorName}
-          type="bg-transparent"
-          bgTransparent="full"
-        />
-        <ColorPreview
-          colorName={colorName}
-          type="bg-transparent"
-          bgTransparent="semi"
-        />
-      </div>
+      <ColorPreview colorName={colorName} type="bg-lvl-1" />
+      <ColorPreview colorName={colorName} type="bg-lvl-2" />
+      <ColorPreview colorName={colorName} type="bg-lvl-3" />
+      <ColorPreview
+        colorName={colorName}
+        type="bg-transparent"
+        bgTransparent="full"
+      />
+      <ColorPreview
+        colorName={colorName}
+        type="bg-transparent"
+        bgTransparent="semi"
+      />
     </div>
   </div>
 );

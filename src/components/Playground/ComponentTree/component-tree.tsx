@@ -84,6 +84,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
       </span>
 
       <DBButton
+        className="min-w-siz-md"
         variant="ghost"
         icon={data.hidden ? "visibility_off" : "visibility"}
         noText
@@ -145,19 +146,21 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
       data-density="functional"
       className={`h-full${className ? ` ${className}` : ""} border-r overflow-hidden`}
     >
-      <div className="h-siz-md flex items-center justify-between p-fix-sm">
-        <h6>{nodeTrees[currentId].name}</h6>
-        <DBButton
-          data-tonality={"functional"}
-          noText
-          icon="edit"
-          variant="ghost"
-          onClick={() => setOpen(true)}
-        >
-          {t("pgEdit")}
-        </DBButton>
-        <EditNodeTreeDialog open={open} onClose={() => setOpen(false)} />
-      </div>
+      {nodeTrees[currentId] && (
+        <div className="h-siz-md flex items-center justify-between p-fix-sm">
+          <h6>{nodeTrees[currentId].name}</h6>
+          <DBButton
+            data-tonality={"functional"}
+            noText
+            icon="edit"
+            variant="ghost"
+            onClick={() => setOpen(true)}
+          >
+            {t("pgEdit")}
+          </DBButton>
+          <EditNodeTreeDialog open={open} onClose={() => setOpen(false)} />
+        </div>
+      )}
       <div
         data-density="functional"
         className="flex flex-col p-fix-sm h-full overflow-auto"

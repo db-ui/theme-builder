@@ -1,9 +1,4 @@
-import {
-  DBButton,
-  DBDivider,
-  DBInfotext,
-  DBInput,
-} from "@db-ui/react-components";
+import { DBButton, DBInfotext, DBInput } from "@db-ui/react-components";
 import { createElement, useEffect, useState } from "react";
 import { useEditor } from "@craftjs/core";
 
@@ -41,9 +36,7 @@ const Customize = () => {
     } else {
       if (selected && currentSelected !== selected.id) {
         setCurrentSelected(selected.id);
-        setDisplayName(
-          selected.data.custom.displayName || selected.data.name,
-        );
+        setDisplayName(selected.data.custom.displayName || selected.data.name);
       } else if (!selected) {
         setDisplayName("");
         setCurrentSelected(undefined);
@@ -57,7 +50,7 @@ const Customize = () => {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
-      <div className="flex flex-col p-fix-xs gap-fix-xs h-full">
+      <div className="flex flex-col p-fix-sm gap-fix-md h-full">
         <DBInput
           variant="floating"
           label="Displayname"
@@ -76,7 +69,6 @@ const Customize = () => {
           <DBInfotext semantic="warning">No settings</DBInfotext>
         )}
 
-        <DBDivider className="mt-auto" margin="none"></DBDivider>
         <DBButton
           variant="brand"
           icon="delete"

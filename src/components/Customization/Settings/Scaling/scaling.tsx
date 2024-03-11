@@ -52,13 +52,39 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
           setDetfaultTheme(event.target.value);
         }}
       >
-        {(params.includes("elevation") || params.includes("radius")) && (
-          <option>none</option>
+        {params.includes("sizing") && (
+          <>
+            <option>90%</option>
+            <option>100%</option>
+            <option>110%</option>
+            <option>120%</option>
+          </>
         )}
-        <option>50%</option>
-        <option>100%</option>
-        <option>150%</option>
-        <option>200%</option>
+        {params.includes("spacing") && (
+          <>
+            <option>90%</option>
+            <option>100%</option>
+            <option>110%</option>
+            <option>120%</option>
+          </>
+        )}
+        {params.includes("height") && (
+          <>
+            <option>90%</option>
+            <option>100%</option>
+            <option>110%</option>
+            <option>120%</option>
+          </>
+        )}
+        {(params.includes("elevation") || params.includes("radius")) && (
+          <>
+            <option>none</option>
+            <option>50%</option>
+            <option>100%</option>
+            <option>150%</option>
+            <option>200%</option>
+          </>
+        )}
         {params.includes("radius") && <option>full</option>}
       </DBSelect>
     </div>

@@ -1,5 +1,5 @@
 import { DEFAULT_SIZES } from "./index.tsx";
-import { DBInfotext, DBTooltip } from "@db-ui/react-components";
+import { DBInfotext } from "@db-ui/react-components";
 
 const Sizing = () => (
   <div className="flex flex-wrap gap-fix-md">
@@ -16,7 +16,7 @@ const Sizing = () => (
             border: `var(--db-border-height-3xs) solid var(--db-current-color-border)`,
           }}
         >
-          <DBTooltip>{name}</DBTooltip>
+          <span className="hidden">{name}</span>
         </div>
         <DBInfotext semantic="informational" icon="none">
           {name}

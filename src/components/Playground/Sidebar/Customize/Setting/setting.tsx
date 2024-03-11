@@ -2,7 +2,6 @@ import { SettingPropsType } from "./data.ts";
 import { Fragment } from "react";
 import {
   DBCheckbox,
-  DBDivider,
   DBIcon,
   DBInfotext,
   DBInput,
@@ -38,12 +37,11 @@ const Setting = ({ settings }: SettingPropsType) => {
   };
 
   return (
-    <div className="flex flex-col gap-fix-sm">
+    <div className="flex flex-col gap-fix-md">
       {settings
         .filter((setting) => !setting.isHidden || !setting.isHidden(props))
         .map((setting) => (
           <Fragment key={`setting-${setting.key}`}>
-            <DBDivider margin="none" />
             {(setting.type === "text" || setting.type === "number") && (
               <DBInput
                 type={setting.type}
@@ -115,7 +113,7 @@ const Setting = ({ settings }: SettingPropsType) => {
               <DBCheckbox
                 type={setting.type}
                 label={t(setting.key)}
-                defaultValue={props[setting.key]}
+                checked={props[setting.key]}
                 onChange={(event) =>
                   changeValue(
                     setting.key,

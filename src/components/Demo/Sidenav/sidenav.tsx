@@ -13,7 +13,7 @@ const Sidenav = () => {
   const { t } = useTranslation();
   return (
     <div
-      className="demo-side-nav min-w-siz-3xl db-neutral-bg-lvl-1
+      className="demo-side-nav min-w-fit db-neutral-bg-lvl-1
       p-fix-md gap-fix-md mx-[1px] md:mx-0
     border-b md:border-b-0 md:border-r
     flex md:flex-col h-auto md:h-full

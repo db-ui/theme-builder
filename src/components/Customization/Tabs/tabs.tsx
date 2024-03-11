@@ -9,24 +9,20 @@ const Tabs = ({ tabs }: TabsPropsType) => {
   return (
     <DBTabs alignment="center" width="full">
       <DBTabList>
-        {tabs.map((tabItem) => (
-          <DBTab
-            className={developerMode || !tabItem.onlyDeveloper ? "" : "hidden"}
-            key={`tab-${tabItem.text}`}
-          >
-            {t(tabItem.text)}
-          </DBTab>
-        ))}
+        {tabs
+          .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
+          .map((tabItem) => (
+            <DBTab key={`tab-${tabItem.text}`}>{t(tabItem.text)}</DBTab>
+          ))}
       </DBTabList>
 
-      {tabs.map((tabItem) => (
-        <DBTabPanel
-          className={developerMode || !tabItem.onlyDeveloper ? "" : "hidden"}
-          key={`tab-panel-${tabItem.text}`}
-        >
-          {tabItem.component}
-        </DBTabPanel>
-      ))}
+      {tabs
+        .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
+        .map((tabItem) => (
+          <DBTabPanel key={`tab-panel-${tabItem.text}`}>
+            {tabItem.component}
+          </DBTabPanel>
+        ))}
     </DBTabs>
   );
 };

@@ -58,6 +58,7 @@ const SelectIconDialog = ({
             .filter((icon) => icon.includes(filter))
             .map((icon) => (
               <button
+                key={`icon-button-${icon}`}
                 className={icon === "none" ? "h-full" : "h-fit"}
                 onClick={() => onIconPick(icon)}
               >

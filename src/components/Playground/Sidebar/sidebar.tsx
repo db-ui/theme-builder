@@ -29,6 +29,7 @@ const Sidebar = ({ className }: SidebarType) => {
   });
 
   useEffect(() => {
+    console.log(customizeTabRef.current, selected);
     if (customizeTabRef.current && selected) {
       customizeTabRef.current.click();
     }
