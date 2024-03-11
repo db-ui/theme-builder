@@ -39,8 +39,9 @@ const ThemeSelect = () => {
         <div className="flex flex-col gap-fix-md">
           <h1>
             <span className="brand-name">
-              {themes[selectedTheme].branding.name}{" "}
+              {themes[selectedTheme].branding.name}
             </span>
+            <br />
             Design System Platform
           </h1>
           <h4 data-variant="light">By all, for all</h4>
