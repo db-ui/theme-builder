@@ -45,7 +45,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundUndo")}
-            {canUndo && <DBTooltip>{t("playgroundUndo")}</DBTooltip>}
+            {canUndo && <DBTooltip placement="bottom">{t("playgroundUndo")}</DBTooltip>}
           </DBButton>
           <DBButton
             variant="ghost"
@@ -57,7 +57,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundRedo")}
-            {canRedo && <DBTooltip>{t("playgroundRedo")}</DBTooltip>}
+            {canRedo && <DBTooltip placement="bottom">{t("playgroundRedo")}</DBTooltip>}
           </DBButton>
         </div>
         <div className="flex gap-fix-sm">
@@ -70,7 +70,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundShowSpacings")}
-            <DBTooltip>{t("playgroundShowSpacings")}</DBTooltip>
+            <DBTooltip placement="bottom">{t("playgroundShowSpacings")}</DBTooltip>
           </DBButton>
           <DBButton
             variant="ghost"
@@ -81,7 +81,7 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundShowBorders")}
-            <DBTooltip>{t("playgroundShowBorders")}</DBTooltip>
+            <DBTooltip placement="bottom">{t("playgroundShowBorders")}</DBTooltip>
           </DBButton>
         </div>
       </div>

@@ -1,8 +1,9 @@
-import { DBButton, DBHeader, DBPage } from "@db-ui/react-components";
+import { DBButton, DBHeader, DBPage, DBTooltip } from "@db-ui/react-components";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
 import { PropsWithChildren, useState } from "react";
 import { getThemeImage } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 const DefaultPage = ({
   name,
@@ -11,7 +12,9 @@ const DefaultPage = ({
   className,
   density,
   navigation,
+  withDevMode,
 }: PropsWithChildren<DefaultPagePropsType>) => {
+  const { t } = useTranslation();
   const { theme, darkMode, developerMode } = useThemeBuilderStore(
     (state) => state,
   );
@@ -46,30 +49,37 @@ const DefaultPage = ({
             slotActionBar={actionBar}
             slotCallToAction={
               <div className="flex gap-fix-sm">
-                <DBButton
-                  className={!developerMode ? "opacity-0" : ""}
-                  icon="face_delighted"
-                  variant="ghost"
-                  noText
-                  onClick={() =>
-                    useThemeBuilderStore.setState({
-                      developerMode: !developerMode,
-                    })
-                  }
-                >
-                  Developer Mode
-                </DBButton>
+                {withDevMode && (
+                  <DBButton
+                    className={!developerMode ? "opacity-0" : ""}
+                    icon="build"
+                    variant="ghost"
+                    noText
+                    onClick={() =>
+                      useThemeBuilderStore.setState({
+                        developerMode: !developerMode,
+                      })
+                    }
+                  >
+                    Developer Mode
+                    <DBTooltip placement="bottom">
+                      {t(developerMode ? "disableDevMode" : "enableDevMode")}
+                    </DBTooltip>
+                  </DBButton>
+                )}
                 <DBButton
                   variant="ghost"
                   icon={darkMode ? "day" : "night"}
                   noText
                   className="p-0 w-siz-md"
-                  title={darkMode ? "Enable Light-Mode" : "Enable Dark-Mode"}
                   onClick={() => {
                     useThemeBuilderStore.setState({ darkMode: !darkMode });
                   }}
                 >
                   {darkMode ? "🌞" : "🌛"}
+                  <DBTooltip placement="bottom">
+                    {t(darkMode ? "enableLightMode" : "enableDarkMode")}
+                  </DBTooltip>
                 </DBButton>
               </div>
             }

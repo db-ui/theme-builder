@@ -66,7 +66,7 @@ h6 {
 }
 
 .scale-down {
-  border: variables.$db-border-height-2xs solid
+  border: variables.$db-border-height-3xs solid
     colors.$db-neutral-contrast-low-enabled;
   border-radius: variables.$db-border-radius-lg;
 
@@ -123,4 +123,8 @@ h6 {
 
 .logo {
   height: variables.$db-sizing-sm;
+}
+
+.brand-name {
+  color: colors.$db-brand-origin-enabled;
 }

@@ -9,6 +9,7 @@ import {
   DBDrawer,
   DBInfotext,
   DBInput,
+  DBTooltip,
 } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../../../store";
@@ -28,9 +29,8 @@ const ColorPicker = ({
   const [addColor, setAddColor] = useState<string>(color);
   const [open, setOpen] = useState<boolean>();
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
-  const { darkMode, theme, setCustomColors } = useThemeBuilderStore(
-    (state) => state,
-  );
+  const { darkMode, theme, setCustomColors, developerMode } =
+    useThemeBuilderStore((state) => state);
 
   const getColor = useCallback(() => {
     return isBrand && theme.branding.alternativeColor.dark === darkMode
@@ -60,9 +60,9 @@ const ColorPicker = ({
             borderColor: `var(--db-${label.toLowerCase()}-contrast-high)`,
           }}
           onClick={() => setOpen(true)}
-          title="Change Color"
         >
           {label}
+          {!isAddColor && <DBTooltip placement="bottom" className="db-neutral-bg-lvl-1">{t("adaptColor")}</DBTooltip>}
         </button>
         <DBDrawer
           backdrop="weak"
@@ -142,15 +142,17 @@ const ColorPicker = ({
                         : t("alternativeBrandWarning")}
                     </DBInfotext>
                   )}
-                  <DBCheckbox
-                    label={t("alternativeBrandCheckbox")}
-                    defaultChecked={theme.branding.alternativeColor.custom}
-                    onChange={(event) => {
-                      if (setAlternativeCustom) {
-                        setAlternativeCustom(event.target.checked);
-                      }
-                    }}
-                  />
+                  {developerMode && (
+                    <DBCheckbox
+                      label={t("alternativeBrandCheckbox")}
+                      defaultChecked={theme.branding.alternativeColor.custom}
+                      onChange={(event) => {
+                        if (setAlternativeCustom) {
+                          setAlternativeCustom(event.target.checked);
+                        }
+                      }}
+                    />
+                  )}
                   <DBInput
                     label={t("colorInputPicker")}
                     type="color"

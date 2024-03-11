@@ -17,6 +17,7 @@ const Upload = memo(({ label, accept, onUpload, size }: UploadPropsType) => {
         type="file"
         accept={accept}
         className="absolute w-full h-full"
+        title=""
         onChange={(event) => {
           const files = event.target.files;
           if (files && files.length > 0) {

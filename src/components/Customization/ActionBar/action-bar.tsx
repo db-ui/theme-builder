@@ -21,7 +21,6 @@ const ActionBar = () => {
         <DBButton
           icon="undo"
           onClick={() => resetDefaults()}
-          title={t("resetDesc")}
         >
           {t("reset")}
         </DBButton>
@@ -50,7 +49,6 @@ const ActionBar = () => {
         onClick={() =>
           downloadTheme(speakingNames, luminanceSteps, theme)
         }
-        title={t("exportDesc")}
       >
         {t("export")}
       </DBButton>

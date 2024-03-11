@@ -6,4 +6,5 @@ export type DefaultPagePropsType = {
   navigation?: ReactElement;
   className?: string;
   density?: string;
+  withDevMode?: boolean;
 };
