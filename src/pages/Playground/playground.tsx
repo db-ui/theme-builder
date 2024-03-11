@@ -25,8 +25,8 @@ export const Playground = () => {
     <Editor
       // Save the updated JSON whenever the Nodes has been changed
       indicator={{
-        success: "var(--db-successful-contrast-high)",
-        error: "var(--db-critical-contrast-high)",
+        success: "var(--db-successful-contrast-high-enabled)",
+        error: "var(--db-critical-contrast-high-enabled)",
       }}
       resolver={{
         Button,

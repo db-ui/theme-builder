@@ -5,7 +5,7 @@ import ThemeSelect from "../../components/Landing/ThemeSelect";
 
 const Landing = () => {
   return (
-    <div className="theme-props-container flex flex-col overflow-y-auto h-full">
+    <div className="flex flex-col overflow-y-auto h-full">
       <Header />
       <main>
         <ThemeSelect />

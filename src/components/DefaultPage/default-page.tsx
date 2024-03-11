@@ -22,7 +22,7 @@ const DefaultPage = ({
 
   return (
     <div
-      className="theme-props-container contents"
+      className="contents"
       data-density={density || "regular"}
     >
       <DBPage

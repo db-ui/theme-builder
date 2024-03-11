@@ -9,10 +9,11 @@ export type ContainerPropsType = {
   className?: string;
   display?: "flex" | "grid";
   direction?: "column" | "row";
-  gap?: "xs" | "sm" | "md" | "lg" | "xl";
+  gap?: "none" | "xs" | "sm" | "md" | "lg" | "xl";
   width?: "full" | "fit";
   cells?: number;
   padding?:
+    | "none"
     | "3xs"
     | "2xs"
     | "xs"
@@ -21,8 +22,7 @@ export type ContainerPropsType = {
     | "lg"
     | "xl"
     | "2xl"
-    | "3xl"
-    | "none";
+    | "3xl";
 };
 
 const getFlexLayout = ({
@@ -53,7 +53,7 @@ const getFlexLayout = ({
     }
   }
 
-  if (gap) {
+  if (gap && gap !== "none") {
     layout += ` gap-fix-${gap}`;
   }
 
@@ -151,6 +151,7 @@ const ContainerSettings = () => (
         key: "gap",
         type: "select",
         selectOptions: [
+          { value: "none" },
           { value: "xs" },
           { value: "sm" },
           { value: "md" },

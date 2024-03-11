@@ -20,16 +20,10 @@ export const getShirtValue = (
 
   if (scaleString === "none") {
     scale = 0;
-  } else if (scaleString === "50%") {
-    scale = 0.5;
-  } else if (scaleString === "100%") {
-    scale = 1;
-  } else if (scaleString === "150%") {
-    scale = 1.5;
-  } else if (scaleString === "200%") {
-    scale = 2;
   } else if (scaleString === "full") {
     scale = 5;
+  } else {
+    scale = Number(scaleString.replace("%", "")) / 100;
   }
 
   if (path.length < 1 && !theme.has(path)) {
@@ -70,20 +64,20 @@ export const getShirtValue = (
     }
     if (path[1] === "height") {
       const height = Number(theme.get(path));
-      return `${height + (height * (scale - 1)) / 3}`;
+      return `${height + height * (scale - 1)}`;
     }
   }
 
   if (path[0] === "sizing") {
     if (!path.includes("fixed")) {
       const size = Number(theme.get(path));
-      return `${size + (size * (scale - 1)) / 10}`;
+      return `${size + size * (scale - 1)}`;
     }
   }
 
   if (path[0] === "spacing") {
     const size = Number(theme.get(path));
-    return `${size + (size * (scale - 1)) / 5}`;
+    return `${size + size * (scale - 1)}`;
   }
 
   return undefined;

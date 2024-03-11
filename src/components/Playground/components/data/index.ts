@@ -1,4 +1,3 @@
 export type ClassNamePropType = {
-
-    className?: string;
-}
+  className?: string;
+};

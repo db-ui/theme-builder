@@ -28,7 +28,7 @@ const themes: Record<string, ThemeType> = {
 const ThemeSelect = () => {
   const { t } = useTranslation();
   const [selectedTheme, setSelectedTheme] = useState<string>("neutralTheme");
-  const { darkMode } = useThemeBuilderStore((state) => state);
+  const { darkMode, theme } = useThemeBuilderStore((state) => state);
   return (
     <DBSection
       variant="large"
@@ -38,9 +38,7 @@ const ThemeSelect = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-fix-md">
         <div className="flex flex-col gap-fix-md">
           <h1>
-            <span className="brand-name">
-              {themes[selectedTheme].branding.name}
-            </span>
+            <span className="brand-name">{theme.branding.name}</span>
             <br />
             Design System Platform
           </h1>

@@ -65,16 +65,19 @@ $selected-outline-height: 3px;
 }
 
 .hovered {
-  outline: $selected-outline-height colors.$db-neutral-contrast-low-enabled dashed;
+  outline: $selected-outline-height colors.$db-neutral-contrast-low-enabled
+    dashed;
 }
 
 .selected {
-  outline: $selected-outline-height colors.$db-informational-contrast-low-enabled solid;
+  outline: $selected-outline-height
+    colors.$db-informational-contrast-low-enabled solid;
 
   &:has(> .drag-button) {
     &:hover {
       > .drag-button {
         opacity: 100;
+        pointer-events: inherit;
       }
     }
   }
@@ -86,11 +89,13 @@ $selected-outline-height: 3px;
   color: colors.$db-current-color-bg-enabled;
   background-color: colors.$db-informational-contrast-low-enabled;
   position: absolute;
-  inset-block-end: 100%;
+  z-index: 6;
+  inset-block-end: calc(100% - 1px);
   inset-inline-end: calc(-1 * #{$selected-outline-height});
   opacity: 0;
   cursor: grab;
   width: max-content;
+  pointer-events: none;
 
   &:active {
     cursor: grabbing;
@@ -98,7 +103,7 @@ $selected-outline-height: 3px;
 
   &[data-outside-y="true"] {
     inset-block-end: auto;
-    inset-block-start: 100%;
+    inset-block-start: calc(100% - 1px);
   }
 
   &[data-outside-x="true"] {
