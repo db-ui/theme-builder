@@ -78,10 +78,9 @@ const getSketchColors = (
 
       result = {
         ...result,
-        [`${prefix}-brand/on/enabled`]: `transparency 0%, ${brandTheme.brandOnColor}`,
-        [`${prefix}-brand/on/origin/enabled`]: `transparency 0%, `,
-        [`${prefix}-brand/on/origin/hover`]: `transparency 0%, `,
-        [`${prefix}-brand/on/origin/pressed`]: `transparency 0%, `,
+        [`${prefix}-brand/on/origin/enabled`]: `transparency 0%, ${brandTheme.brandOnColor}`,
+        [`${prefix}-brand/on/origin/hover`]: `transparency 0%, ${brandTheme.brandOnColorHover}`,
+        [`${prefix}-brand/on/origin/pressed`]: `transparency 0%, ${brandTheme.brandOnColorPressed}`,
         [`${prefix}-brand/origin/enabled`]: `transparency 0%, ${brandTheme.color}`,
         [`${prefix}-brand/origin/hover`]: `transparency 0%, ${brandTheme.hoverColor}`,
         [`${prefix}-brand/origin/pressed`]: `transparency 0%, ${brandTheme.pressedColor}`,
