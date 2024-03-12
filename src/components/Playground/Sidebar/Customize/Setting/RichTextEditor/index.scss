@@ -1,0 +1,54 @@
+@use "@db-ui/foundations/build/scss/colors";
+@use "@db-ui/foundations/build/scss/variables";
+@use "@db-ui/foundations/build/scss/fonts";
+@use "@db-ui/foundations/build/scss/focus";
+@use "@db-ui/components/build/styles/component";
+
+.menu-bar {
+  @extend %db-neutral-bg-lvl-1;
+  display: flex;
+  gap: variables.$db-spacing-fixed-3xs;
+  border-radius: variables.$db-border-radius-xs;
+  padding: variables.$db-spacing-fixed-3xs;
+}
+
+.editor-container {
+  .text-container {
+    @extend %default-interactive-component;
+    @extend %component-border;
+
+    background-color: colors.$db-current-color-bg-transparent-semi-enabled;
+    caret-color: colors.$db-current-color-enabled;
+    padding: variables.$db-spacing-fixed-xs variables.$db-spacing-fixed-sm;
+    display: flex;
+    flex-direction: column;
+    gap: variables.$db-spacing-fixed-xs;
+
+    &:hover:not(:disabled):not([aria-disabled="true"]) {
+      background-color: colors.$db-current-color-bg-transparent-hover;
+    }
+  }
+
+  &:has(.tiptap:focus-visible) {
+    .text-container {
+      @extend %focus-placeholder;
+    }
+  }
+
+  label {
+    @extend %db-overwrite-font-size-xs;
+    margin-block-end: variables.$db-spacing-fixed-xs;
+  }
+}
+
+.text-editor.tiptap {
+  height: variables.$db-sizing-2xl;
+  max-height: variables.$db-sizing-2xl;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+}

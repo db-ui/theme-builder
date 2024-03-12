@@ -124,6 +124,7 @@
   "playground": "Playground",
   "playgroundRedo": "Redo last action",
   "playgroundSelectIcon": "Select icon",
+  "playgroundSelectColor": "Select color",
   "playgroundShowBorders": "Show component borders",
   "playgroundUndo": "Undo last action",
   "preview": "Preview",

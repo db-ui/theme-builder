@@ -4,6 +4,7 @@ import DropContainer from "./drop-container.tsx";
 import { getDragClassNames } from "./data/utils.ts";
 import Setting from "../Sidebar/Customize/Setting";
 import DragButton from "./DragButton";
+import { COLOR } from "@db-ui/react-components/dist/shared/constants";
 
 export type ContainerPropsType = {
   className?: string;
@@ -23,6 +24,7 @@ export type ContainerPropsType = {
     | "xl"
     | "2xl"
     | "3xl";
+  color?: COLOR | string;
 };
 
 const getFlexLayout = ({
@@ -32,6 +34,7 @@ const getFlexLayout = ({
   width,
   cells,
   padding,
+  color,
 }: ContainerPropsType) => {
   let layout = "";
 
@@ -65,6 +68,10 @@ const getFlexLayout = ({
 
   if (padding !== "none") {
     layout += ` p-fix-${padding}`;
+  }
+
+  if (color && color !== "none") {
+    layout += ` db-${color}`;
   }
 
   return layout;
@@ -159,6 +166,7 @@ const ContainerSettings = () => (
           { value: "xl" },
         ],
       },
+      { key: "color", type: "color" },
     ]}
   />
 );
@@ -171,6 +179,7 @@ Container.craft = {
     width: "full",
     cells: 4,
     padding: "none",
+    color: "none",
   },
   related: {
     settings: ContainerSettings,
