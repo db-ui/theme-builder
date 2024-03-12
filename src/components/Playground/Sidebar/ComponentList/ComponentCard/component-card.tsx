@@ -16,13 +16,13 @@ const ComponentCard = ({
         }
       }}
     >
-      <DBCard className="items-center cursor-grab" spacing="small">
+      <DBCard className="items-center cursor-grab p-fix-xs" spacing="small">
         <img
           className="max-h-siz-md"
           alt={name}
           src={assetPath || "assets/components/component.svg"}
         />
-        <span>{name}</span>
+        <span className="break-all">{name}</span>
       </DBCard>
     </div>
   );

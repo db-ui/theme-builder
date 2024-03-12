@@ -77,7 +77,7 @@ const Preview = ({ className }: PreviewType) => {
   return (
     <div
       ref={ref}
-      className={`${className || ""} p-fix-3xs h-full overflow-y-auto`}
+      className={`${className || ""} p-fix-3xs h-full overflow-y-auto overflow-x-hidden`}
     >
       <Frame>
         <Element id="canvas" is={Root} canvas></Element>

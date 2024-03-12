@@ -16,7 +16,11 @@ export const Components: ComponentListType[] = [
   {
     headline: "general",
     components: [
-      { name: "container", component: <Container /> },
+      {
+        name: "container",
+        component: <Container />,
+        assetPath: "assets/components/flex.svg",
+      },
       { name: "text", component: <Text /> },
       { name: "headline", component: <Headline /> },
     ],

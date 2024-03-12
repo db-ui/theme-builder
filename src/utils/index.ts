@@ -74,6 +74,15 @@ export const kebabCase = (
   return "ERROR";
 };
 
+export const downloadPlayground = async (files: Record<string, string>) => {
+  const zip = new JSZip();
+  for (const [name, content] of Object.entries(files)) {
+    zip.file(`${name}.json`, content);
+  }
+  const zipFile = await zip.generateAsync({ type: "blob" });
+  download(`Playground.zip`, zipFile);
+};
+
 export const downloadTheme = async (
   speakingNames: SpeakingName[],
   luminanceSteps: number[],
