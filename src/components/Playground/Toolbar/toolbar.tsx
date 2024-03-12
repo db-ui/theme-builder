@@ -3,11 +3,14 @@ import { useEditor } from "@craftjs/core";
 import { DBButton, DBTooltip } from "@db-ui/react-components";
 import { useDragAndDropStore } from "../../../store";
 import { useTranslation } from "react-i18next";
+import { downloadPlayground } from "../../../utils";
+import Upload from "../../Customization/Upload";
 
 const Toolbar = ({ className }: ToolbarType) => {
   const { t } = useTranslation();
-  const { showBorders, showSpacings } = useDragAndDropStore((state) => state);
-  const { actions, canUndo, canRedo } = useEditor((state, query) => {
+  const { currentId, nodeTrees, showBorders, showSpacings } =
+    useDragAndDropStore((state) => state);
+  const { actions, canUndo, canRedo, query } = useEditor((state, query) => {
     const [currentNodeId] = state.events.selected;
     let selected;
 
@@ -45,7 +48,9 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundUndo")}
-            {canUndo && <DBTooltip placement="right">{t("playgroundUndo")}</DBTooltip>}
+            {canUndo && (
+              <DBTooltip placement="right">{t("playgroundUndo")}</DBTooltip>
+            )}
           </DBButton>
           <DBButton
             variant="ghost"
@@ -57,10 +62,40 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundRedo")}
-            {canRedo && <DBTooltip placement="bottom">{t("playgroundRedo")}</DBTooltip>}
+            {canRedo && (
+              <DBTooltip placement="bottom">{t("playgroundRedo")}</DBTooltip>
+            )}
           </DBButton>
         </div>
         <div className="flex gap-fix-sm">
+          <Upload
+            noText
+            variant="ghost"
+            label="import"
+            accept="application/JSON"
+            tooltip="import"
+            onUpload={(result) => {
+              try {
+                const resultAsString = atob(result.split("base64,")[1]);
+                actions.deserialize(resultAsString);
+              } catch (error: any) {
+                console.error(error);
+              }
+            }}
+          />
+          <DBButton
+            variant="ghost"
+            noText
+            icon="download"
+            onClick={() => {
+              downloadPlayground({
+                [nodeTrees[currentId].name]: query.serialize(),
+              });
+            }}
+          >
+            {t("export")}
+            <DBTooltip placement="bottom">{t("export")}</DBTooltip>
+          </DBButton>
           <DBButton
             variant="ghost"
             noText
@@ -70,7 +105,9 @@ const Toolbar = ({ className }: ToolbarType) => {
             }}
           >
             {t("playgroundShowSpacings")}
-            <DBTooltip placement="bottom">{t("playgroundShowSpacings")}</DBTooltip>
+            <DBTooltip placement="bottom">
+              {t("playgroundShowSpacings")}
+            </DBTooltip>
           </DBButton>
           <DBButton
             variant="ghost"

@@ -77,11 +77,9 @@ $selected-outline-height: 3px;
     colors.$db-informational-contrast-low-enabled solid;
 
   &:has(> .drag-button) {
-    &:hover {
-      > .drag-button {
-        opacity: 100;
-        pointer-events: inherit;
-      }
+    > .drag-button {
+      opacity: 100;
+      pointer-events: inherit;
     }
   }
 }

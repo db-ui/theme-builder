@@ -30,14 +30,14 @@ const Text = ({ text, className }: TextPropsType & ClassNamePropType) => {
   return (
     <div
       className={`${getDragClassNames(selected, hovered, className)}`}
-      data-hint={text ? undefined : t("pgEditMe")}
+      data-hint={text && text?.length > 0 ? undefined : t("pgEditMe")}
       ref={(ref) => {
         if (ref) {
           connect(ref);
         }
       }}
     >
-      <div dangerouslySetInnerHTML={{ __html: text || "" }} />
+      {text && <div dangerouslySetInnerHTML={{ __html: text || "" }} />}
       <DragButton componentName={name} drag={drag} />
     </div>
   );

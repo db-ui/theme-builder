@@ -37,7 +37,7 @@ const Sidebar = ({ className }: SidebarType) => {
   return (
     <div
       data-density="functional"
-      className={`border-l flex flex-col overflow-hidden ${className || ""}`}
+      className={`border-l flex flex-col grow-0 shrink-0 min-w-siz-3xl overflow-hidden ${className || ""}`}
     >
       <DBTabs className="h-full" alignment="center" width="full">
         <DBTabList>

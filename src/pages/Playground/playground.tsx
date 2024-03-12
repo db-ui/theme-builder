@@ -44,10 +44,10 @@ export const Playground = () => {
     >
       <DefaultPage name={t("playground")} navigation={<PageNavigation />}>
         <div
-          className={`grid grid-cols-6 h-full w-full${showBorders ? " show-borders" : ""}${showSpacings ? " show-spacings" : ""}`}
+          className={`flex h-full w-full${showBorders ? " show-borders" : ""}${showSpacings ? " show-spacings" : ""}`}
         >
           <ComponentTree />
-          <div className="flex flex-col col-span-4 h-full overflow-hidden">
+          <div className="flex flex-col w-full h-full overflow-hidden">
             <Toolbar />
             <DBDivider margin="none" />
             <Preview />

@@ -103,9 +103,10 @@ const RichTextEditor: FC<RichTextEditorType> = ({
       preserveWhitespace: false,
     },
     onUpdate(props) {
-      handleRichTextChange(
-        DOMPurify.sanitize(props.editor.getHTML().replaceAll("&nbsp;", "")),
+      const content = DOMPurify.sanitize(
+        props.editor.getHTML().replaceAll("&nbsp;", ""),
       );
+      handleRichTextChange(content === "<p></p>" ? "" : content);
     },
   });
 

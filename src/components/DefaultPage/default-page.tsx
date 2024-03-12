@@ -21,10 +21,7 @@ const DefaultPage = ({
   const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
   return (
-    <div
-      className="contents"
-      data-density={density || "regular"}
-    >
+    <div className="contents" data-density={density || "regular"}>
       <DBPage
         className={className}
         type="fixedHeaderFooter"
@@ -77,7 +74,7 @@ const DefaultPage = ({
                   }}
                 >
                   {darkMode ? "🌞" : "🌛"}
-                  <DBTooltip placement="bottom">
+                  <DBTooltip placement="left">
                     {t(darkMode ? "enableLightMode" : "enableDarkMode")}
                   </DBTooltip>
                 </DBButton>
