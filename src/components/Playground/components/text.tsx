@@ -1,5 +1,4 @@
 import Setting from "../Sidebar/Customize/Setting";
-import { Fragment, useEffect, useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
 import { getDragClassNames } from "./data/utils.ts";
 import { ClassNamePropType } from "./data";
@@ -8,13 +7,8 @@ import { useTranslation } from "react-i18next";
 
 export type TextPropsType = {
   text?: string;
-  inline?: boolean;
 };
-const Text = ({
-  text,
-  inline,
-  className,
-}: TextPropsType & ClassNamePropType) => {
+const Text = ({ text, className }: TextPropsType & ClassNamePropType) => {
   const { t } = useTranslation();
   const {
     connectors: { connect, drag },
@@ -32,23 +26,9 @@ const Text = ({
     const [currentNodeId] = state.events.selected;
     return { selected: id === currentNodeId };
   });
-  const [renderedText, setRenderedText] = useState<any>();
-  useEffect(() => {
-    if (inline || !text || !text.includes("\n")) {
-      setRenderedText(text);
-    } else {
-      setRenderedText(
-        text.split("\n").map((line) => (
-          <Fragment>
-            {line}
-            <br />
-          </Fragment>
-        )),
-      );
-    }
-  }, [inline, text]);
+
   return (
-    <p
+    <div
       className={`${getDragClassNames(selected, hovered, className)}`}
       data-hint={text ? undefined : t("pgEditMe")}
       ref={(ref) => {
@@ -57,9 +37,9 @@ const Text = ({
         }
       }}
     >
-      {renderedText}
+      <div dangerouslySetInnerHTML={{ __html: text || "" }} />
       <DragButton componentName={name} drag={drag} />
-    </p>
+    </div>
   );
 };
 
@@ -68,20 +48,14 @@ const TextSettings = () => (
     settings={[
       {
         key: "text",
-        type: "textarea",
-      },
-      {
-        key: "inline",
-        type: "switch",
+        type: "richtext",
       },
     ]}
   />
 );
 
 Text.craft = {
-  props: {
-    inline: false,
-  },
+  props: {},
   related: {
     settings: TextSettings,
   },

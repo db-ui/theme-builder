@@ -4,6 +4,8 @@ import Text from "../../components/text.tsx";
 import Button from "../../components/button.tsx";
 import Link from "../../components/link.tsx";
 import Card from "../../components/card.tsx";
+import Headline from "../../components/headline.tsx";
+import Divider from "../../components/divider.tsx";
 
 export type ComponentListType = {
   headline: string;
@@ -15,7 +17,8 @@ export const Components: ComponentListType[] = [
     headline: "general",
     components: [
       { name: "container", component: <Container /> },
-      { name: "text", component: <Text  /> },
+      { name: "text", component: <Text /> },
+      { name: "headline", component: <Headline /> },
     ],
   },
   {
@@ -35,6 +38,13 @@ export const Components: ComponentListType[] = [
   },
   {
     headline: "layout",
-    components: [{ name: "card", component: <Card /> }],
+    components: [
+      { name: "card", component: <Card /> },
+      {
+        name: "divider",
+        component: <Divider />,
+        assetPath: "assets/components/divider.svg",
+      },
+    ],
   },
 ];

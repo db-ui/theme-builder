@@ -1,4 +1,4 @@
-import { SelectIconDialogPropsType } from "./data.ts";
+import { SelectColorDialogPropsType } from "./data.ts";
 import { useState } from "react";
 import {
   DBButton,
@@ -9,13 +9,13 @@ import {
   DBTooltip,
 } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
-import { ALL_ICONS } from "@db-ui/react-components/dist/shared/all-icons";
+import { COLORS } from "@db-ui/react-components/dist/shared/constants";
 
-const SelectIconDialog = ({
+const SelectColorDialog = ({
   className,
-  onIconPick,
-  selectedIcon,
-}: SelectIconDialogPropsType) => {
+  onColorPick,
+  selectedColor,
+}: SelectColorDialogPropsType) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
@@ -28,8 +28,8 @@ const SelectIconDialog = ({
         noText
         onClick={() => setOpen(true)}
       >
-        {t("playgroundSelectIcon")}
-        <DBTooltip placement="left">{t("playgroundSelectIcon")}</DBTooltip>
+        {t("playgroundSelectColor")}
+        <DBTooltip placement="left">{t("playgroundSelectColor")}</DBTooltip>
       </DBButton>
       <DBDrawer
         backdrop="weak"
@@ -41,7 +41,7 @@ const SelectIconDialog = ({
         withCloseButton
         slotDrawerHeader={
           <div className="flex gap-fix-3xl">
-            <span className="my-auto">{t("playgroundSelectIcon")}</span>
+            <span className="my-auto">{t("playgroundSelectColor")}</span>
             <DBInput
               type="search"
               variant="floating"
@@ -53,22 +53,23 @@ const SelectIconDialog = ({
         }
         className="select-icon-dialog"
       >
-        <div className="grid-cols-3 md:grid-cols-6 grid gap-fix-md p-fix-sm overflow-y-auto h-full">
-          {["none", ...ALL_ICONS]
-            .filter((icon) => icon.includes(filter))
-            .map((icon) => (
+        <div className="grid-cols-3 md:grid-cols-5 grid gap-fix-md p-fix-sm overflow-y-auto h-full">
+          {[...COLORS, "none"]
+            .filter((color) => color.includes(filter))
+            .map((color) => (
               <button
-                key={`icon-button-${icon}`}
-                className={icon === "none" ? "h-full" : "h-fit"}
-                onClick={() => onIconPick(icon)}
+                key={`color-button-${color}`}
+                onClick={() => onColorPick(color)}
               >
                 <DBCard
                   data-interactive="elevation"
-                  className={`items-center ${icon === "none" ? " h-full" : ""}${icon === selectedIcon ? " db-successful-bg-lvl-3" : ""}`}
+                  className={`flex-row min-h-siz-lg gap-fix-md justify-between items-center db-${color}`}
                   spacing="small"
                 >
-                  {icon !== "none" && <DBIcon icon={icon} />}
-                  <span className="break-all m-auto">{icon}</span>
+                  {color}
+                  {selectedColor === color && (
+                    <DBIcon icon="done">Selected color</DBIcon>
+                  )}
                 </DBCard>
               </button>
             ))}
@@ -78,4 +79,4 @@ const SelectIconDialog = ({
   );
 };
 
-export default SelectIconDialog;
+export default SelectColorDialog;

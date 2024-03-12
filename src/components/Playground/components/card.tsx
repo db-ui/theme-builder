@@ -49,10 +49,20 @@ const CardSettings = () => (
         key: "spacing",
         type: "select",
         selectOptions: [
-          { label: "none", value: "none" },
-          { label: "small", value: "small" },
-          { label: "medium", value: "medium" },
+          { value: "none" },
+          { value: "small" },
+          { value: "medium" },
         ],
+      },
+      {
+        key: "elevationLevel",
+        type: "select",
+        selectOptions: [{ value: "1" }, { value: "2" }, { value: "3" }],
+      },
+      {
+        key: "behaviour",
+        type: "select",
+        selectOptions: [{ value: "default" }, { value: "interactive" }],
       },
     ]}
   />
@@ -61,6 +71,8 @@ const CardSettings = () => (
 Card.craft = {
   props: {
     spacing: "small",
+    behaviour: "default",
+    elevationLevel: "1",
   },
   related: {
     settings: CardSettings,

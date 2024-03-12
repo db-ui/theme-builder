@@ -1,5 +1,6 @@
 @use "@db-ui/foundations/build/scss/variables";
 @use "@db-ui/foundations/build/scss/colors";
+@use "@db-ui/foundations/build/scss/fonts";
 
 $selected-outline-height: 3px;
 
@@ -35,15 +36,17 @@ $selected-outline-height: 3px;
 .drag-container {
   & > div:empty,
   &:empty {
-    min-height: variables.$db-sizing-md;
-    min-width: variables.$db-sizing-md;
-    width: 100%;
-    height: 100%;
-    display: flex;
+    &:not(.db-divider) {
+      min-height: variables.$db-sizing-md;
+      min-width: variables.$db-sizing-md;
+      width: 100%;
+      height: 100%;
+      display: flex;
 
-    &::before {
-      content: "Drag component to me";
-      margin: auto;
+      &::before {
+        content: "Drag component to me";
+        margin: auto;
+      }
     }
   }
   &:has(> .drag-button) {
@@ -84,9 +87,11 @@ $selected-outline-height: 3px;
 }
 
 .drag-button {
-  --db-current-icon-color: #{colors.$db-current-color-bg-enabled};
+  @extend %db-overwrite-font-size-sm;
+  --db-current-icon-color: var(--db-informational-on-contrast-enabled);
   --db-icon-margin-start: #{variables.$db-spacing-fixed-3xs};
-  color: colors.$db-current-color-bg-enabled;
+  font-family: var(--db-font-family-sans);
+  color: var(--db-informational-on-contrast-enabled);
   background-color: colors.$db-informational-contrast-low-enabled;
   position: absolute;
   z-index: 6;

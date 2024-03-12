@@ -12,7 +12,15 @@ export type NumberOptionType = {
 
 export type SettingOptionType = {
   key: string;
-  type: "text" | "select" | "number" | "textarea" | "switch" | "icon";
+  type:
+    | "text"
+    | "select"
+    | "number"
+    | "textarea"
+    | "switch"
+    | "icon"
+    | "richtext"
+    | "color";
   selectOptions?: SelectOptionType[];
   numberOptions?: NumberOptionType;
   changeType?: "props" | "custom" | "hidden";

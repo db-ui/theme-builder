@@ -11,6 +11,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { useNode } from "@craftjs/core";
 import SelectIconDialog from "./SelectIconDialog";
+import RichTextEditor from "./RichTextEditor";
+import SelectColorDialog from "./SelectColorDialog";
 
 const Setting = ({ settings }: SettingPropsType) => {
   const { t } = useTranslation();
@@ -85,6 +87,15 @@ const Setting = ({ settings }: SettingPropsType) => {
                 }
               />
             )}
+            {setting.type === "richtext" && (
+              <RichTextEditor
+                label={t(setting.key)}
+                richTextValue={props[setting.key]}
+                handleRichTextChange={(text) =>
+                  changeValue(setting.key, text, setting.changeType)
+                }
+              />
+            )}
             {setting.type === "select" && (
               <DBSelect
                 type={setting.type}
@@ -136,6 +147,29 @@ const Setting = ({ settings }: SettingPropsType) => {
                   className="ml-auto"
                   selectedIcon={props[setting.key]}
                   onIconPick={(icon: string) => {
+                    changeValue(setting.key, icon, setting.changeType);
+                  }}
+                />
+              </div>
+            )}
+            {setting.type === "color" && (
+              <div className="flex gap-fix-md items-center">
+                <div
+                  className={`flex flex-col rounded p-fix-xs ${
+                    props[setting.key] !== "none"
+                      ? `db-${props[setting.key]}`
+                      : ""
+                  }`}
+                >
+                  <DBInfotext size="small" icon="none">
+                    {t(setting.key)}
+                  </DBInfotext>
+                  <span>{props[setting.key]}</span>
+                </div>
+                <SelectColorDialog
+                  className="ml-auto"
+                  selectedColor={props[setting.key]}
+                  onColorPick={(icon: string) => {
                     changeValue(setting.key, icon, setting.changeType);
                   }}
                 />

@@ -16,6 +16,8 @@ import Preview from "../../components/Playground/Preview";
 import Sidebar from "../../components/Playground/Sidebar";
 import { useDragAndDropStore } from "../../store";
 import PageNavigation from "../../components/Playground/PageNavigation";
+import Headline from "../../components/Playground/components/headline.tsx";
+import Divider from "../../components/Playground/components/divider.tsx";
 
 export const Playground = () => {
   const { showBorders, showSpacings } = useDragAndDropStore((state) => state);
@@ -36,6 +38,8 @@ export const Playground = () => {
         Text,
         Root,
         Link,
+        Headline,
+        Divider,
       }}
     >
       <DefaultPage name={t("playground")} navigation={<PageNavigation />}>

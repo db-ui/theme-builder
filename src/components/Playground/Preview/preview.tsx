@@ -20,7 +20,6 @@ const Preview = ({ className }: PreviewType) => {
 
   useEffect(() => {
     if (ref.current) {
-      console.log("Preview", "useEffect");
       useDragAndDropStore.setState({
         previewContainer: ref.current.getBoundingClientRect(),
       });

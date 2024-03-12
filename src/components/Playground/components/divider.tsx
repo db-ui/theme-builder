@@ -1,11 +1,10 @@
-import { DBLink } from "@db-ui/react-components";
-import { DBLinkProps } from "@db-ui/react-components/dist/components/link/model";
 import { getDragClassNames } from "./data/utils.ts";
 import { useEditor, useNode } from "@craftjs/core";
 import Setting from "../Sidebar/Customize/Setting";
 import DragButton from "./DragButton";
+import { DBDividerProps } from "@db-ui/react-components/dist/components/divider/model";
 
-const Link = (props: DBLinkProps) => {
+const Divider = (props: DBDividerProps) => {
   const {
     connectors: { connect, drag },
     id,
@@ -23,65 +22,54 @@ const Link = (props: DBLinkProps) => {
     return { selected: id === currentNodeId };
   });
   return (
-    <DBLink
-      className={`${getDragClassNames(selected, hovered, props.className)}`}
+    <div
+      className={`db-divider text-[0] ${getDragClassNames(selected, hovered, props.className)}`}
+      data-margin={props.margin}
+      data-variant={props.variant}
+      data-emphasis={props.emphasis}
       ref={(ref) => {
         if (ref) {
           connect(ref);
         }
       }}
-      {...props}
     >
-      {props.children}
+      Divider
       <DragButton componentName={name} drag={drag} />
-    </DBLink>
+    </div>
   );
 };
 
-const LinkSettings = () => (
+const DividerSettings = () => (
   <Setting
     settings={[
       {
-        key: "href",
-        type: "text",
-      },
-      {
-        key: "children",
-        type: "text",
-      },
-      {
-        key: "content",
+        key: "emphasis",
         type: "select",
-        selectOptions: [{ value: "internal" }, { value: "external" }],
+        selectOptions: [{ value: "weak" }, { value: "strong" }],
       },
       {
         key: "variant",
         type: "select",
-        selectOptions: [
-          { value: "adaptive" },
-          { value: "brand" },
-          { value: "inline" },
-        ],
+        selectOptions: [{ value: "horizontal" }, { value: "vertical" }],
       },
       {
-        key: "size",
+        key: "margin",
         type: "select",
-        selectOptions: [{ value: "medium" }, { value: "small" }],
+        selectOptions: [{ value: "auto" }, { value: "none" }],
       },
     ]}
   />
 );
 
-Link.craft = {
+Divider.craft = {
   props: {
-    children: "Link",
-    content: "internal",
-    variant: "adaptive",
-    size: "medium",
+    emphasis: "weak",
+    variant: "horizontal",
+    margin: "auto",
   },
   related: {
-    settings: LinkSettings,
+    settings: DividerSettings,
   },
 };
 
-export default Link;
+export default Divider;
