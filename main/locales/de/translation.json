@@ -28,6 +28,7 @@
   "action": "Action",
   "customize": "Anpassen",
   "playgroundSelectIcon": "Icon auswählen",
+  "playgroundSelectColor": "Farbe auswählen",
   "playgroundShowBorders": "Zeige Komponentenumrandung",
   "playgroundRedo": "Letzte Aktion wiederherstellen",
   "playgroundUndo": "Letzte Aktion rückgängig machen",
