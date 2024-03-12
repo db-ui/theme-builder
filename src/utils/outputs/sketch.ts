@@ -1,5 +1,5 @@
 import { BrandAlternativeColor, HeisslufType, SpeakingName } from "../data";
-import { getExtraBrandColors } from "../outputs";
+import { getExtraBrandColors, prefix } from "../outputs";
 import { getHeissluftColors } from "../generate-colors.ts";
 
 const isStateName = (name: string) =>
@@ -12,11 +12,7 @@ const processState = (name: string) => {
   const state = name.slice(stateIndex + 1);
   const nameWithoutState = name.slice(0, stateIndex);
 
-  const numOfState =
-    state === "enabled" ? "01" : state === "hover" ? "02" : "03";
-  const stateNumbered = `${numOfState}-${state}`;
-
-  return { nameWithoutState, numOfState, state, stateNumbered };
+  return { nameWithoutState, state };
 };
 
 const getTransparency = (
@@ -82,10 +78,12 @@ const getSketchColors = (
 
       result = {
         ...result,
-        "brand/On/01-Enabled": `transparency 0%, ${brandTheme.brandOnColor}`,
-        "brand/Origin/01-Enabled": `transparency 0%, ${brandTheme.color}`,
-        "brand/Origin/02-Hover": `transparency 0%, ${brandTheme.hoverColor}`,
-        "brand/Origin/03-Pressed": `transparency 0%, ${brandTheme.pressedColor}`,
+        [`${prefix}-brand/on/origin/enabled`]: `transparency 0%, ${brandTheme.brandOnColor}`,
+        [`${prefix}-brand/on/origin/hover`]: `transparency 0%, ${brandTheme.brandOnColorHover}`,
+        [`${prefix}-brand/on/origin/pressed`]: `transparency 0%, ${brandTheme.brandOnColorPressed}`,
+        [`${prefix}-brand/origin/enabled`]: `transparency 0%, ${brandTheme.color}`,
+        [`${prefix}-brand/origin/hover`]: `transparency 0%, ${brandTheme.hoverColor}`,
+        [`${prefix}-brand/origin/pressed`]: `transparency 0%, ${brandTheme.pressedColor}`,
       };
     }
 
@@ -103,26 +101,25 @@ const getSketchColors = (
         if (speakingName.name.includes("on-")) {
           const nameWithoutOnPrefix = speakingName.name.replace("on-", "");
           if (isStateName(speakingName.name)) {
-            const { nameWithoutState, numOfState, state } =
+            const { nameWithoutState, state } =
               processState(nameWithoutOnPrefix);
-            const processedState = state
+            state
               .replace(/^ak-/, "")
               .replace(/^bg-/, "");
-            const stateWithNum = `${numOfState}-${processedState}`;
-            result[`${name}/On/${nameWithoutState}/${stateWithNum}`] =
+            result[`${prefix}-${name}/on/${nameWithoutState}/${state}`] =
               `transparency ${transparency}%, ${hexValue}`;
           } else {
-            result[`${name}/On/${nameWithoutOnPrefix}`] =
+            result[`${prefix}-${name}/on/${nameWithoutOnPrefix}`] =
               `transparency ${transparency}%, ${hexValue}`;
           }
         } else if (isStateName(speakingName.name)) {
-          const { nameWithoutState, stateNumbered } = processState(
+          const { nameWithoutState, state } = processState(
             speakingName.name,
           );
-          result[`${name}/${nameWithoutState}/${stateNumbered}`] =
+          result[`${prefix}-${name}/${nameWithoutState}/${state}`] =
             `transparency ${transparency}%, ${hexValue}`;
         } else {
-          result[`${name}/${speakingName.name}`] =
+          result[`${prefix}-${name}/${speakingName.name}`] =
             `transparency ${transparency}%, ${hexValue}`;
         }
       }
