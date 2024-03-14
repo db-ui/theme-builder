@@ -34,7 +34,6 @@ object Colors {
     allColors,
     luminanceSteps,
   );
-  const neutralHslColors = palette["neutral"];
   Object.entries(palette).forEach(([name, hslType]) => {
     hslType.forEach((hsl) => {
       const key = `${name}${hsl.index}`;
@@ -48,13 +47,11 @@ object Colors {
         lightBrandColor,
         true,
         luminanceSteps,
-        neutralHslColors,
       );
       const darkBrand = getExtraBrandColors(
         darkBrandColor,
         false,
         luminanceSteps,
-        neutralHslColors,
       );
       resolvedTokenFile += `val brandOnLight = ${getComposeColorFromHex(lightBrand.brandOnColor)}\n`;
       resolvedTokenFile += `val brandOriginLight = ${getComposeColorFromHex(lightBrand.color)}\n`;

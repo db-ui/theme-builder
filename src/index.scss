@@ -85,7 +85,7 @@ h6 {
     }
   }
 
-  @include screen-sizes.screen {
+  @include screen-sizes.screen($size: "md") {
     transform-origin: top left;
     inset-inline-start: 50%;
     inset-block-start: 50%;

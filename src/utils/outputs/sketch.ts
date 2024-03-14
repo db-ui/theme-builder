@@ -55,8 +55,6 @@ const getSketchColors = (
 ): any => {
   let result: any = {};
 
-  const neutralHslColors = colors["neutral"];
-
   Object.entries(colors).forEach(([name, color]) => {
     if (name === "brand") {
       const lightBrandColor = altBrand.dark ? allColors["brand"] : altBrand.hex;
@@ -65,13 +63,11 @@ const getSketchColors = (
         lightBrandColor,
         false,
         luminanceSteps,
-        neutralHslColors,
       );
       const darkBrand = getExtraBrandColors(
         darkBrandColor,
         true,
         luminanceSteps,
-        neutralHslColors,
       );
 
       const brandTheme = darkMode ? darkBrand : lightBrand;

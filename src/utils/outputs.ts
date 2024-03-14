@@ -125,7 +125,6 @@ export const getPaletteOutput = (
     allColors,
     luminanceSteps,
   );
-  const neutralHslColors = palette["neutral"];
   const result: any = {};
   Object.entries(palette).forEach((color) => {
     const name = color[0];
@@ -141,13 +140,11 @@ export const getPaletteOutput = (
         lightBrandColor,
         false,
         luminanceSteps,
-        neutralHslColors,
       );
       const darkBrand = getExtraBrandColors(
         darkBrandColor,
         true,
         luminanceSteps,
-        neutralHslColors,
       );
       result[`--${prefix}-brand-on-pressed-light`] =
         lightBrand.brandOnColorPressed;
@@ -179,13 +176,11 @@ const brandLuminanceMinDifference: number = 5;
  * @param color brand color
  * @param darkMode
  * @param luminanceSteps
- * @param neutralHslColors
  */
 export const getExtraBrandColors = (
   color: string,
   darkMode: boolean,
   luminanceSteps: number[],
-  neutralHslColors: HeisslufType[],
 ): {
   color: string;
   brandOnColorPressed: string;
@@ -204,15 +199,11 @@ export const getExtraBrandColors = (
   hsluv.hexToHsluv();
   const brandLuminance = hsluv.hsluv_l;
   const isDarkColor = getLuminance(color) < 0.4;
-  const brandOnColor =
-    (isDarkColor ? neutralHslColors.at(-1) : neutralHslColors[1])?.hex ||
-    "#ff69b4";
+  const brandOnColor = isDarkColor ? "#fff" : hslColors[1]?.hex || "#ff69b4";
   const brandOnColorHover =
-    (isDarkColor ? neutralHslColors.at(-2) : neutralHslColors[2])?.hex ||
-    "#ff69b4";
+    (isDarkColor ? hslColors.at(-2) : hslColors[2])?.hex || "#ff69b4";
   const brandOnColorPressed =
-    (isDarkColor ? neutralHslColors.at(-3) : neutralHslColors[3])?.hex ||
-    "#ff69b4";
+    (isDarkColor ? hslColors.at(-3) : hslColors[3])?.hex || "#ff69b4";
   let hoverColor: string | undefined;
   let pressedColor: string | undefined;
 
