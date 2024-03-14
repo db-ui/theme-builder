@@ -38,6 +38,12 @@ const Setting = ({ settings }: SettingPropsType) => {
     }
   };
 
+  if (!props) {
+    return (
+      <DBInfotext semantic="warning">{t("playgroundCopyError")}</DBInfotext>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-fix-md">
       {settings

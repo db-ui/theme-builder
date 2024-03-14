@@ -93,7 +93,7 @@ $selected-outline-height: 3px;
   background-color: colors.$db-informational-contrast-low-enabled;
   position: absolute;
   z-index: 6;
-  inset-block-end: calc(100% - 1px);
+  inset-block-end: 100%;
   inset-inline-end: calc(-1 * #{$selected-outline-height});
   opacity: 0;
   cursor: grab;
@@ -106,7 +106,7 @@ $selected-outline-height: 3px;
 
   &[data-outside-y="true"] {
     inset-block-end: auto;
-    inset-block-start: calc(100% - 1px);
+    inset-block-start: 100%;
   }
 
   &[data-outside-x="true"] {

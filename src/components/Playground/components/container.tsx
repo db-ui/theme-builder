@@ -152,7 +152,7 @@ const ContainerSettings = () => (
           min: 1,
           max: 8,
         },
-        isHidden: (props) => props.display === "flex",
+        isHidden: (props) => props?.display === "flex",
       },
       {
         key: "gap",
