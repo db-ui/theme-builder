@@ -7,7 +7,7 @@ const Tabs = ({ tabs }: TabsPropsType) => {
   const { t } = useTranslation();
   const { developerMode } = useThemeBuilderStore((state) => state);
   return (
-    <DBTabs alignment="center" width="full">
+    <DBTabs alignment="center" width="full" className="h-full">
       <DBTabList>
         {tabs
           .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
@@ -19,7 +19,7 @@ const Tabs = ({ tabs }: TabsPropsType) => {
       {tabs
         .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
         .map((tabItem) => (
-          <DBTabPanel key={`tab-panel-${tabItem.text}`}>
+          <DBTabPanel className="h-full" key={`tab-panel-${tabItem.text}`}>
             {tabItem.component}
           </DBTabPanel>
         ))}

@@ -8,7 +8,7 @@ const InteractiveDemo = memo(() => {
   const [density, setDensity] = useState<string>("regular");
 
   return (
-    <div className="flex-col flex w-full h-full gap-fix-md p-fix-sm overflow-hidden">
+    <div className="flex-col flex w-full h-full gap-fix-md p-fix-sm overflow-hidden relative">
       <div className="flex gap-fix-md">
         <DBSelect
           label={t("density")}
@@ -21,7 +21,7 @@ const InteractiveDemo = memo(() => {
           <option value="expressive">expressive</option>
         </DBSelect>
       </div>
-      <div className="scale-down w-full h-full">
+      <div className="scale-down w-full md:w-[100vw] md:h-[100vh] md:absolute">
         <Demo linkToDemo density={density} />
       </div>
     </div>

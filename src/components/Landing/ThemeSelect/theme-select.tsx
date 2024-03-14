@@ -35,7 +35,7 @@ const ThemeSelect = () => {
       size="large"
       className="flex md:h-[100vh] items-center"
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-fix-md">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-fix-md md:gap-fix-xl">
         <div className="flex flex-col gap-fix-md">
           <h1>
             <span className="brand-name">{theme.branding.name}</span>
@@ -90,8 +90,8 @@ const ThemeSelect = () => {
             </Link>
           </div>
         </div>
-        <div className="flex col-span-2 md:h-[60vh]">
-          <div className="scale-down w-full">
+        <div className="flex col-span-2 relative">
+          <div className="scale-down w-full md:w-[100vw] md:h-[100vh] md:absolute">
             <Demo linkToDemo />
           </div>
         </div>
