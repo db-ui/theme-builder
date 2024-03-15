@@ -1,26 +1,49 @@
 /* Include this file in your app to load your custom icon font */
 
 @font-face {
-	font-display: block;
-	font-family: "piab";
-	font-style: normal;
-	font-weight: normal;
-	src: url("/assets/piab.woff2") format("woff2");
+  font-display: block;
+  font-family: "piab";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/assets/piab.woff2") format("woff2");
 }
 
 .piab {
-	font-family: 'piab' !important;
-	font-style:normal;
-	font-weight: normal;
+  font-family: "piab" !important;
+  font-style: normal;
+  font-weight: normal;
 }
 
 .icon-family-piab::before,
 [data-icon-family="piab"]::before,
-[data-icon-family-before="piab"]::before{
-	--db-icon-font-family: 'piab';
+[data-icon-family-before="piab"]::before {
+  --db-icon-font-family: "piab";
 }
 
+[data-icon-family-after="piab"]::after {
+  --db-icon-font-family: "piab";
+}
 
-[data-icon-family-after="piab"]::after{
-	--db-icon-font-family: 'piab';
+@font-face {
+  font-display: block;
+  font-family: "pg-components";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/assets/pg-components.woff2") format("woff2");
+}
+
+.pg-components {
+  font-family: "pg-components" !important;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.icon-family-pg-components::before,
+[data-icon-family="pg-components"]::before,
+[data-icon-family-before="pg-components"]::before {
+  --db-icon-font-family: "pg-components";
+}
+
+[data-icon-family-after="pg-components"]::after {
+  --db-icon-font-family: "pg-components";
 }
