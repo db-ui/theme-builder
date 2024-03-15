@@ -18,7 +18,7 @@ const ComponentTree = ({ className }: ComponentTreePropsType) => {
   return (
     <div
       data-density="functional"
-      className={`h-full${className ? ` ${className}` : ""} grow-0 shrink-0 min-w-siz-3xl max-w-[20%] border-r overflow-hidden`}
+      className={`h-full${className ? ` ${className}` : ""} grow-0 shrink-0 w-[320px] border-r overflow-hidden`}
     >
       {nodeTrees[currentId] && (
         <div className="h-siz-md flex items-center justify-between p-fix-sm">
