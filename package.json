@@ -29,7 +29,7 @@
     "@tiptap/react": "^2.2.4",
     "@tiptap/starter-kit": "^2.2.4",
     "@types/node": "^20.11.30",
-    "ace-builds": "1.32.8",
+    "ace-builds": "1.32.9",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
     "dompurify": "^3.0.11",
