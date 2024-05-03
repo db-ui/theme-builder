@@ -17,7 +17,7 @@ const LogoUpload = memo(() => {
           className="flex flex-col gap-fix-md p-fix-sm"
           data-color-scheme="light"
         >
-          <DBInfotext icon="day">Light</DBInfotext>
+          <DBInfotext icon="sun">Light</DBInfotext>
           <img
             className="h-siz-md mx-auto"
             src={getThemeImage(theme.branding.image.light)}
@@ -48,7 +48,7 @@ const LogoUpload = memo(() => {
           className="flex flex-col gap-fix-md p-fix-sm"
           data-color-scheme="dark"
         >
-          <DBInfotext icon="night">Dark</DBInfotext>
+          <DBInfotext icon="moon">Dark</DBInfotext>
           <img
             className="h-siz-md mx-auto"
             src={getThemeImage(

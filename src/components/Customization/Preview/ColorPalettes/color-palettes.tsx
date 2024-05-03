@@ -73,46 +73,50 @@ const ColorPalettes = () => {
                 {heissluftColors.map(
                   ({ hex, hue, saturation, luminance }, index) => (
                     <Fragment key={`${key}-${hex}-${index}`}>
-                      <PaletteBox
-                        hex={hex}
-                        hue={hue}
-                        saturation={saturation}
-                        luminance={luminance}
-                        index={index}
+                      <DBPopover
+                        style={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          /* @ts-expect-error */
+                          "--color-index": index,
+                        }}
+                        placement={
+                          colorIndex > 3 ? "left-start" : "right-start"
+                        }
+                        trigger={
+                          <PaletteBox
+                            hex={hex}
+                            hue={hue}
+                            saturation={saturation}
+                            luminance={luminance}
+                            index={index}
+                          />
+                        }
                       >
-                        <DBPopover
-                          placement={
-                            colorIndex > 3 ? "left-start" : "right-start"
-                          }
-                        >
-                          <div className="flex flex-col gap-fix-2xs items-center grid-color-palettes">
-                            {heissluftColors.map(
-                              (popoverColor, tooltipIndex) => (
-                                <Fragment
-                                  key={`popover-${key}-${popoverColor.hex}-${tooltipIndex}`}
-                                >
-                                  <PaletteBox
-                                    hex={popoverColor.hex}
-                                    hue={popoverColor.hue}
-                                    saturation={popoverColor.saturation}
-                                    luminance={popoverColor.luminance}
-                                    hideText
-                                  >
-                                    <span className="m-auto">
-                                      {chroma
-                                        .contrast(
-                                          chroma.hex(hex),
-                                          chroma.hex(popoverColor.hex),
-                                        )
-                                        .toFixed(2)}
-                                    </span>
-                                  </PaletteBox>
-                                </Fragment>
-                              ),
-                            )}
-                          </div>
-                        </DBPopover>
-                      </PaletteBox>
+                        <div className="flex flex-col gap-fix-2xs items-center grid-color-palettes">
+                          {heissluftColors.map((popoverColor, tooltipIndex) => (
+                            <Fragment
+                              key={`popover-${key}-${popoverColor.hex}-${tooltipIndex}`}
+                            >
+                              <PaletteBox
+                                hex={popoverColor.hex}
+                                hue={popoverColor.hue}
+                                saturation={popoverColor.saturation}
+                                luminance={popoverColor.luminance}
+                                hideText
+                              >
+                                <span className="m-auto">
+                                  {chroma
+                                    .contrast(
+                                      chroma.hex(hex),
+                                      chroma.hex(popoverColor.hex),
+                                    )
+                                    .toFixed(2)}
+                                </span>
+                              </PaletteBox>
+                            </Fragment>
+                          ))}
+                        </div>
+                      </DBPopover>
                     </Fragment>
                   ),
                 )}

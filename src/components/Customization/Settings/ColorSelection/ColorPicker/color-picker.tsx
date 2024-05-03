@@ -51,7 +51,7 @@ const ColorPicker = ({
     <div className="color-picker-container">
       <div className="color-input-container">
         <button
-          data-icon={isAddColor ? "add" : undefined}
+          data-icon={isAddColor ? "plus" : undefined}
           className="color-tag"
           style={{
             // @ts-expect-error
@@ -78,7 +78,7 @@ const ColorPicker = ({
           backdrop="weak"
           open={open}
           onClose={() => setOpen(false)}
-          slotDrawerHeader={t("editColor", { colorName })}
+          drawerHeader={t("editColor", { colorName })}
           withCloseButton
         >
           <div className="flex flex-col gap-fix-sm mt-fix-md">
@@ -88,10 +88,12 @@ const ColorPicker = ({
               required
               value={colorName}
               disabled={!customColor}
-              invalid={
+              customValidity={
                 customColor &&
                 !!theme.customColors?.[colorName] &&
                 label !== colorName
+                  ? "invalid"
+                  : "no-validation"
               }
               message={
                 customColor &&

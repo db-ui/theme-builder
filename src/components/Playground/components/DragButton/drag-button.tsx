@@ -35,7 +35,7 @@ const DragButton = ({
         }
       }}
       className="drag-button flex py-fix-3xs pl-fix-3xs"
-      data-icon-after="drag_and_drop"
+      data-icon-after="dots_drag_and_drop"
       data-outside-y={outsideY}
       data-outside-x={outsideX}
     >

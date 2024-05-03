@@ -1,11 +1,11 @@
 import { SettingPropsType } from "./data.ts";
 import { Fragment } from "react";
 import {
-  DBCheckbox,
   DBIcon,
   DBInfotext,
   DBInput,
   DBSelect,
+  DBSwitch,
   DBTextarea,
 } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
@@ -80,7 +80,6 @@ const Setting = ({ settings }: SettingPropsType) => {
             )}
             {setting.type === "textarea" && (
               <DBTextarea
-                type={setting.type}
                 label={t(setting.key)}
                 variant="floating"
                 defaultValue={props[setting.key]}
@@ -104,7 +103,6 @@ const Setting = ({ settings }: SettingPropsType) => {
             )}
             {setting.type === "select" && (
               <DBSelect
-                type={setting.type}
                 label={t(setting.key)}
                 variant="floating"
                 defaultValue={props[setting.key]}
@@ -127,8 +125,7 @@ const Setting = ({ settings }: SettingPropsType) => {
               </DBSelect>
             )}
             {setting.type === "switch" && (
-              <DBCheckbox
-                type={setting.type}
+              <DBSwitch
                 label={t(setting.key)}
                 checked={props[setting.key]}
                 onChange={(event) =>

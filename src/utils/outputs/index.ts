@@ -127,8 +127,6 @@ export const getOriginColorsLightAndDark = (
   darkOrigin: OriginColor | undefined;
 } => {
   const altColor = alternativeColors[name];
-
-  console.log(allColors, alternativeColors, altColor, name);
   if (!altColor) return { lightOrigin: undefined, darkOrigin: undefined };
 
   const lightColor = altColor.dark ? allColors[name] : altColor.hex;

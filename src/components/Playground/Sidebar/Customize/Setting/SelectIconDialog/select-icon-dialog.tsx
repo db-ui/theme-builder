@@ -24,7 +24,7 @@ const SelectIconDialog = ({
     <>
       <DBButton
         className={className}
-        icon="push_button"
+        icon="magnifying_glass"
         noText
         onClick={() => setOpen(true)}
       >
@@ -39,7 +39,7 @@ const SelectIconDialog = ({
           setOpen(false);
         }}
         withCloseButton
-        slotDrawerHeader={
+        drawerHeader={
           <div className="flex gap-fix-3xl">
             <span className="my-auto">{t("playgroundSelectIcon")}</span>
             <DBInput

@@ -64,7 +64,7 @@ const EditNodeTreeDialog = ({
         open={open}
         onClose={onClose}
         withCloseButton
-        slotDrawerHeader={t(create ? "add" : "pgEdit")}
+        drawerHeader={t(create ? "add" : "pgEdit")}
       >
         <div className="flex flex-col gap-fix-md py-fix-md">
           <DBInput
@@ -72,10 +72,10 @@ const EditNodeTreeDialog = ({
             placeholder={t("id")}
             variant="floating"
             value={nodeTreeId}
-            invalid={
+            customValidity={
               nodeTreeId.length === 0 || (create && nodeTrees[nodeTreeId])
-                ? true
-                : undefined
+                ? "invalid"
+                : "no-validation"
             }
             onChange={(event) => setNodeTreeId(event.target.value)}
           />

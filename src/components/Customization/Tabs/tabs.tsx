@@ -1,4 +1,4 @@
-import { DBTab, DBTabList, DBTabPanel, DBTabs } from "@db-ui/react-components";
+import { DBTabItem, DBTabList, DBTabPanel, DBTabs } from "@db-ui/react-components";
 import { TabsPropsType } from "./data.ts";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../store";
@@ -12,7 +12,7 @@ const Tabs = ({ tabs }: TabsPropsType) => {
         {tabs
           .filter((tabItem) => developerMode || !tabItem.onlyDeveloper)
           .map((tabItem) => (
-            <DBTab key={`tab-${tabItem.text}`}>{t(tabItem.text)}</DBTab>
+            <DBTabItem key={`tab-${tabItem.text}`}>{t(tabItem.text)}</DBTabItem>
           ))}
       </DBTabList>
 
