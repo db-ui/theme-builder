@@ -162,7 +162,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
         >
           <DBButton
             variant="ghost"
-            icon={open ? "expand_more" : "chevron_right"}
+            icon={open ? "chevron_down" : "chevron_right"}
             noText
             onClick={() => {
               setOpen(!open);

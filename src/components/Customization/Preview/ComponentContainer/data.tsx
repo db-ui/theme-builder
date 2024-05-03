@@ -41,7 +41,7 @@ export const components: ComponentList[] = [
           <Fragment key={`button-${variant}`}>
             <h6>{toUpperCase(variant)}:</h6>
             <DBButton variant={variant}>Default</DBButton>
-            <DBButton variant={variant} icon="account">
+            <DBButton variant={variant} icon="user">
               Icon
             </DBButton>
             <DBButton variant={variant} disabled>
@@ -140,7 +140,7 @@ export const components: ComponentList[] = [
     ),
   },
   {
-    title: "Alert",
+    title: "Notification",
     component: (
       <Fragment>
         {variants.map((variant) => (
@@ -150,17 +150,17 @@ export const components: ComponentList[] = [
             variant="standalone"
             headline="Variant"
             linkVariant="inline"
-            slotLink={<a href="#">Link</a>}
+            link={<a href="#">Link</a>}
           >
             {toUpperCase(variant)}
           </DBNotification>
         ))}
         <DBNotification
           variant="docked"
-          icon="account"
+          icon="user"
           headline="Type"
           linkVariant="inline"
-          slotLink={<a href="#">Link</a>}
+          link={<a href="#">Link</a>}
         >
           Docked
         </DBNotification>
@@ -190,19 +190,12 @@ export const components: ComponentList[] = [
 
         <DBInput
           variant="floating"
-          label="Invalid"
-          placeholder="Invalid"
-          message="Invalid Message"
-          invalid
+          label="Required"
+          placeholder="Required"
+          message="Required Message"
+          required
         />
 
-        <DBInput
-          variant="floating"
-          label="Valid"
-          placeholder="Valid"
-          message="Valid Message"
-          invalid={false}
-        />
       </Fragment>
     ),
   },
@@ -211,14 +204,8 @@ export const components: ComponentList[] = [
     component: (
       <Fragment>
         <DBCheckbox name="checkbox">Checkbox</DBCheckbox>
-        <DBCheckbox name="checkbox" checked>
-          Checkbox
-        </DBCheckbox>
-        <DBCheckbox name="checkbox" invalid>
-          Checkbox
-        </DBCheckbox>
-        <DBCheckbox name="checkbox" checked required>
-          Checkbox
+        <DBCheckbox name="checkbox" required>
+          Checkbox required
         </DBCheckbox>
       </Fragment>
     ),
@@ -228,14 +215,8 @@ export const components: ComponentList[] = [
     component: (
       <Fragment>
         <DBRadio name="radio">Radio</DBRadio>
-        <DBRadio name="radio2" checked>
-          Radio
-        </DBRadio>
-        <DBRadio name="radio3" invalid>
-          Radio
-        </DBRadio>
-        <DBRadio name="radio4" checked required>
-          Radio
+        <DBRadio name="radio" required>
+          Radio required
         </DBRadio>
       </Fragment>
     ),
@@ -245,6 +226,17 @@ export const components: ComponentList[] = [
     title: "Select",
     component: (
       <Fragment>
+        <DBSelect
+          variant="floating"
+          label="Select"
+          placeholder="Select"
+          message="Select Message"
+          disabled
+        >
+          <option>Option1</option>
+          <option>Option2</option>
+        </DBSelect>
+
         <DBSelect
           variant="floating"
           label="Disabled"
@@ -258,33 +250,10 @@ export const components: ComponentList[] = [
 
         <DBSelect
           variant="floating"
-          label="Readonly"
-          placeholder="Readonly"
-          message="Readonly Message"
-          readOnly
-          value="Readonly"
-        >
-          <option>Option1</option>
-          <option>Option2</option>
-        </DBSelect>
-
-        <DBSelect
-          variant="floating"
-          label="Invalid"
-          placeholder="Invalid"
-          message="Invalid Message"
-          invalid
-        >
-          <option>Option1</option>
-          <option>Option2</option>
-        </DBSelect>
-
-        <DBSelect
-          variant="floating"
-          label="Valid"
-          placeholder="Valid"
-          message="Valid Message"
-          invalid={false}
+          label="Required"
+          placeholder="Required"
+          message="Required Message"
+          required
         >
           <option>Option1</option>
           <option>Option2</option>
@@ -315,19 +284,12 @@ export const components: ComponentList[] = [
 
         <DBTextarea
           variant="floating"
-          label="Invalid"
-          placeholder="Invalid"
-          message="Invalid Message"
-          invalid
+          label="Required"
+          placeholder="Required"
+          message="Required Message"
+          required
         />
 
-        <DBTextarea
-          variant="floating"
-          label="Valid"
-          placeholder="Valid"
-          message="Valid Message"
-          invalid={false}
-        />
       </Fragment>
     ),
   },

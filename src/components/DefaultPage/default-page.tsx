@@ -24,12 +24,12 @@ const DefaultPage = ({
     <div className="contents" data-density={density || "regular"}>
       <DBPage
         className={className}
-        type="fixedHeaderFooter"
-        slotHeader={
+        variant="fixed"
+        header={
           <DBHeader
             drawerOpen={drawerOpen}
             onToggle={() => setDrawerOpen(!drawerOpen)}
-            slotBrand={
+            brand={
               <div className="db-brand">
                 <img
                   className="logo"
@@ -43,8 +43,8 @@ const DefaultPage = ({
                 {name}
               </div>
             }
-            slotActionBar={actionBar}
-            slotCallToAction={
+            actionBar={actionBar}
+            callToAction={
               <div className="flex gap-fix-sm">
                 {withDevMode && (
                   <DBButton
@@ -66,7 +66,7 @@ const DefaultPage = ({
                 )}
                 <DBButton
                   variant="ghost"
-                  icon={darkMode ? "day" : "night"}
+                  icon={darkMode ? "sun" : "moon"}
                   noText
                   className="p-0 w-siz-md"
                   onClick={() => {

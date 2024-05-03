@@ -24,7 +24,7 @@ const SelectColorDialog = ({
     <>
       <DBButton
         className={className}
-        icon="push_button"
+        icon="magnifying_glass"
         noText
         onClick={() => setOpen(true)}
       >
@@ -39,7 +39,7 @@ const SelectColorDialog = ({
           setOpen(false);
         }}
         withCloseButton
-        slotDrawerHeader={
+        drawerHeader={
           <div className="flex gap-fix-3xl">
             <span className="my-auto">{t("playgroundSelectColor")}</span>
             <DBInput
@@ -63,6 +63,7 @@ const SelectColorDialog = ({
               >
                 <DBCard
                   data-interactive="elevation"
+                  style={{backgroundColor: "var(--db-current-color-bg-enabled)"}}
                   className={`flex-row min-h-siz-lg gap-fix-md justify-between items-center db-${color}`}
                   spacing="small"
                 >

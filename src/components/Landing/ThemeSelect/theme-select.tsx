@@ -85,7 +85,7 @@ const ThemeSelect = () => {
                 elevationLevel="2"
                 behaviour="interactive"
               >
-                <DBIcon icon="add">Add custom theme</DBIcon>
+                <DBIcon icon="plus">Add custom theme</DBIcon>
               </DBCard>
             </Link>
           </div>

@@ -16,7 +16,7 @@ import {
   DBIcon,
   DBLink,
   DBInput,
-  DBMainNavigation,
+  DBNavigation,
   DBNavigationItem,
   DBRadio,
   DBSection,
@@ -141,9 +141,9 @@ export const PARSER_OPTIONS: HTMLReactParserOptions = {
     }
     if (name === "dbmainnavigation") {
       return (
-        <DBMainNavigation {...attributes}>
+        <DBNavigation {...attributes}>
           {domToReact(children, PARSER_OPTIONS)}
-        </DBMainNavigation>
+        </DBNavigation>
       );
     }
     if (name === "dbnavigationitem") {

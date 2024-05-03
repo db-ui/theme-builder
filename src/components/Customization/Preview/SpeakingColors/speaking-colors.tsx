@@ -45,7 +45,7 @@ const SpeakingColors = () => {
           Decrease
         </DBButton>
         <DBButton
-          icon="add"
+          icon="plus"
           noText
           variant="ghost"
           onClick={() => updateAll(false, true)}
@@ -64,7 +64,7 @@ const SpeakingColors = () => {
           Decrease
         </DBButton>
         <DBButton
-          icon="add"
+          icon="plus"
           noText
           variant="ghost"
           onClick={() => updateAll(true, true)}

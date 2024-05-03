@@ -1,4 +1,4 @@
-import { DBMainNavigation, DBNavigationItem } from "@db-ui/react-components";
+import { DBNavigation, DBNavigationItem } from "@db-ui/react-components";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AppRoutes from "../../../utils/app-routes.tsx";
@@ -8,7 +8,7 @@ const Navigation = () => {
   const location = useLocation();
 
   return (
-    <DBMainNavigation>
+    <DBNavigation>
       {AppRoutes.map((route) => (
         <DBNavigationItem
           active={
@@ -22,7 +22,7 @@ const Navigation = () => {
           <Link to={route.path}>{t(route.label)}</Link>
         </DBNavigationItem>
       ))}
-    </DBMainNavigation>
+    </DBNavigation>
   );
 };
 

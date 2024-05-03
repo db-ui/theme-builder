@@ -1,5 +1,5 @@
 import { SidebarType } from "./data.ts";
-import { DBTab, DBTabList, DBTabPanel, DBTabs } from "@db-ui/react-components";
+import { DBTabItem, DBTabList, DBTabPanel, DBTabs } from "@db-ui/react-components";
 import { useEditor } from "@craftjs/core";
 import { useEffect, useRef } from "react";
 import Customize from "./Customize";
@@ -41,10 +41,10 @@ const Sidebar = ({ className }: SidebarType) => {
     >
       <DBTabs className="h-full" alignment="center" width="full">
         <DBTabList>
-          <DBTab>{t("components")}</DBTab>
-          <DBTab disabled={!selected} ref={customizeTabRef}>
+          <DBTabItem>{t("components")}</DBTabItem>
+          <DBTabItem disabled={!selected} ref={customizeTabRef}>
             {t("customize")}
-          </DBTab>
+          </DBTabItem>
         </DBTabList>
         <DBTabPanel>
           <ComponentList />

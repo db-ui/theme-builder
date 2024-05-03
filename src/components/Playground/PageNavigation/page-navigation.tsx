@@ -1,4 +1,4 @@
-import { DBMainNavigation, DBNavigationItem } from "@db-ui/react-components";
+import { DBNavigation, DBNavigationItem } from "@db-ui/react-components";
 import { useDragAndDropStore } from "../../../store";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -11,7 +11,7 @@ const PageNavigation = () => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <>
-      <DBMainNavigation>
+      <DBNavigation>
         {Object.entries(nodeTrees).map(([id, nodeTree]) => (
           <DBNavigationItem key={id} active={id === currentId}>
             <a onClick={() => useDragAndDropStore.setState({ currentId: id })}>
@@ -19,7 +19,7 @@ const PageNavigation = () => {
             </a>
           </DBNavigationItem>
         ))}
-        <DBNavigationItem icon="add">
+        <DBNavigationItem icon="plus">
           <a
             onClick={() => {
               setOpen(true);
@@ -28,7 +28,7 @@ const PageNavigation = () => {
             {t("add")}
           </a>
         </DBNavigationItem>
-      </DBMainNavigation>
+      </DBNavigation>
       <EditNodeTreeDialog create open={open} onClose={() => setOpen(false)} />
     </>
   );
