@@ -1,8 +1,9 @@
 import ColorPicker from "./ColorPicker";
 import { useThemeBuilderStore } from "../../../../store";
 import { useTranslation } from "react-i18next";
-import { getAlternativeBrand } from "./data.ts";
-import { useEffect, useState } from "react";
+import { getAlternativeColor } from "./data.ts";
+import { useCallback } from "react";
+import { AlternativeColor } from "../../../../utils/data.ts";
 
 const ColorSelection = () => {
   const { t } = useTranslation();
@@ -11,30 +12,50 @@ const ColorSelection = () => {
     setColors,
     theme,
     setCustomColors,
-    setAlternativeColor,
+    setAlternativeColors,
     luminanceSteps,
   } = useThemeBuilderStore((state) => state);
 
-  const [custom, setCustom] = useState<boolean>(
-    !!theme.branding.alternativeColor.custom,
-  );
+  const setAltColor = useCallback(
+    ({
+      name,
+      altColor,
+      custom,
+      currentColor,
+    }: {
+      name: string;
+      currentColor?: string;
+      altColor?: string;
+      custom?: boolean;
+    }) => {
+      const allColors: Record<string, string> = {
+        ...theme.colors,
+        ...theme.customColors,
+      };
+      const currentAlt: AlternativeColor | undefined =
+        theme?.branding?.alternativeColors?.[name];
+      const alternativeColor = getAlternativeColor(
+        allColors,
+        name,
+        luminanceSteps,
+        custom ?? currentAlt?.custom ?? false,
+        altColor ?? currentAlt?.hex,
+        currentColor,
+      );
 
-  const [altColor, setAltColor] = useState<string>(
-    theme.branding.alternativeColor.hex || theme.colors.brand,
+      setAlternativeColors({
+        ...theme.branding.alternativeColors,
+        [name]: alternativeColor,
+      });
+    },
+    [
+      theme.colors,
+      theme.customColors,
+      theme.branding.alternativeColors,
+      setAlternativeColors,
+      luminanceSteps,
+    ],
   );
-
-  useEffect(() => {
-    setAlternativeColor(
-      getAlternativeBrand(theme.colors, luminanceSteps, custom, altColor),
-    );
-  }, [
-    theme.colors,
-    luminanceSteps,
-    theme.branding.alternativeColor.custom,
-    setAlternativeColor,
-    custom,
-    altColor,
-  ]);
 
   return (
     <>
@@ -48,13 +69,18 @@ const ColorSelection = () => {
           />
 
           <ColorPicker
-            isBrand
+            isOrigin
             color={theme.colors.brand}
-            label="Brand"
-            setAlternativeCustom={setCustom}
-            setAlternativeColor={setAltColor}
+            label="brand"
+            setAlternativeCustom={(custom) => {
+              setAltColor({ name: "brand", custom });
+            }}
+            setAlternativeColor={(altColor) => {
+              setAltColor({ name: "brand", altColor });
+            }}
             setColor={(brand) => {
               setColors({ ...theme.colors, brand });
+              setAltColor({ name: "brand", currentColor: brand });
             }}
           />
 
@@ -94,7 +120,13 @@ const ColorSelection = () => {
           <ColorPicker
             color="#ffffff"
             label={t("addColor")}
-            setColor={() => {}}
+            onAddColor={(name, color) => {
+              setCustomColors({
+                ...theme.customColors,
+                [name]: color,
+              });
+              setAltColor({ name, currentColor: color });
+            }}
             customColor
             isAddColor
           />
@@ -104,12 +136,20 @@ const ColorSelection = () => {
                 key={name}
                 color={color}
                 label={name}
-                setColor={(changedColor) =>
+                isOrigin
+                setAlternativeCustom={(custom) => {
+                  setAltColor({ name, custom });
+                }}
+                setAlternativeColor={(altColor) => {
+                  setAltColor({ name, altColor });
+                }}
+                setColor={(changedColor) => {
                   setCustomColors({
                     ...theme.customColors,
                     [name]: changedColor,
-                  })
-                }
+                  });
+                  setAltColor({ name, currentColor: changedColor });
+                }}
                 customColor
                 onDelete={() => {
                   const copyCustomColors = { ...theme.customColors };

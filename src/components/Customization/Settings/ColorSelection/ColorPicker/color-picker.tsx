@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useCallback, useState } from "react";
 import { ColorPickerType } from "./data";
 import "./index.scss";
@@ -13,36 +14,38 @@ import {
 } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../../../store";
+import { AlternativeColor } from "../../../../../utils/data.ts";
 
 const ColorPicker = ({
   label,
   color,
   setColor,
+  onAddColor,
   onDelete,
   customColor,
   isAddColor,
-  isBrand,
+  isOrigin,
   setAlternativeColor,
   setAlternativeCustom,
 }: ColorPickerType) => {
   const { t } = useTranslation();
   const [addColor, setAddColor] = useState<string>(color);
   const [open, setOpen] = useState<boolean>();
+  const [valid, setValid] = useState<boolean>(true);
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
   const { darkMode, theme, setCustomColors, developerMode } =
     useThemeBuilderStore((state) => state);
 
+  const getAlternativeColor: () => AlternativeColor | undefined =
+    useCallback(() => {
+      return theme.branding.alternativeColors[label];
+    }, [label, theme.branding.alternativeColors]);
+
   const getColor = useCallback(() => {
-    return isBrand && theme.branding.alternativeColor.dark === darkMode
-      ? theme.branding.alternativeColor.hex
+    return isOrigin && getAlternativeColor()?.dark === darkMode
+      ? getAlternativeColor()?.hex ?? "#ff69b4"
       : color;
-  }, [
-    isBrand,
-    theme.branding.alternativeColor.dark,
-    theme.branding.alternativeColor.hex,
-    darkMode,
-    color,
-  ]);
+  }, [isOrigin, getAlternativeColor, darkMode, color]);
 
   return (
     <div className="color-picker-container">
@@ -51,18 +54,25 @@ const ColorPicker = ({
           data-icon={isAddColor ? "add" : undefined}
           className="color-tag"
           style={{
-            backgroundColor: getColor(),
-            color: getLuminance(getColor()) < 0.4 ? "#fff" : "#000",
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
-            "--db-current-icon-color":
-              getLuminance(getColor()) < 0.4 ? "#fff" : "#000",
-            borderColor: `var(--db-${label.toLowerCase()}-contrast-high)`,
+            "--current-color": isOrigin
+              ? `var(--db-${label}-on-enabled)`
+              : getLuminance(getColor()) < 0.4
+                ? "#fff"
+                : "#000",
+            backgroundColor: getColor(),
+            color: "var(--current-color)",
+            "--db-current-icon-color": "var(--current-color)",
+            borderColor: `var(--db-${label.toLowerCase()}-contrast-high-enabled)`,
           }}
           onClick={() => setOpen(true)}
         >
-          {label}
-          {!isAddColor && <DBTooltip placement="bottom" className="db-neutral-bg-lvl-1">{t("adaptColor")}</DBTooltip>}
+          {t(label)}
+          {!isAddColor && (
+            <DBTooltip placement="bottom" className="db-neutral-bg-lvl-1">
+              {t("adaptColor")}
+            </DBTooltip>
+          )}
         </button>
         <DBDrawer
           backdrop="weak"
@@ -90,7 +100,11 @@ const ColorPicker = ({
                   ? t("customColorExists")
                   : undefined
               }
-              onChange={(event) => setColorName(event.target.value)}
+              pattern="[a-zA-Z0-9\-_]+"
+              onChange={(event) => {
+                setColorName(event.target.value);
+                setValid(event.target.validity.valid);
+              }}
             />
 
             <DBInput
@@ -100,7 +114,7 @@ const ColorPicker = ({
               onChange={(event) => {
                 if (isAddColor) {
                   setAddColor(event.target.value);
-                } else {
+                } else if (setColor) {
                   setColor(event.target.value);
                 }
               }}
@@ -113,31 +127,31 @@ const ColorPicker = ({
               onChange={(event) => {
                 if (isAddColor) {
                   setAddColor(event.target.value);
-                } else {
+                } else if (setColor) {
                   setColor(event.target.value);
                 }
               }}
             />
 
-            {isBrand &&
-              (theme.branding.alternativeColor.custom ||
-                theme.branding.alternativeColor.hex !== color) && (
+            {isOrigin &&
+              (getAlternativeColor()?.custom ||
+                getAlternativeColor()?.hex !== color) && (
                 <div className="flex flex-col gap-fix-sm mt-fix-lg">
                   <h6>{t("alternativeBrand")}</h6>
                   {!(
-                    theme.branding.alternativeColor.custom &&
-                    theme.branding.alternativeColor.isValid
+                    getAlternativeColor()?.custom &&
+                    getAlternativeColor()?.isValid
                   ) && (
                     <DBInfotext
                       semantic={
-                        theme.branding.alternativeColor.custom &&
-                        !theme.branding.alternativeColor.isValid
+                        getAlternativeColor()?.custom &&
+                        !getAlternativeColor()?.isValid
                           ? "critical"
                           : "warning"
                       }
                     >
-                      {theme.branding.alternativeColor.custom &&
-                      !theme.branding.alternativeColor.isValid
+                      {getAlternativeColor()?.custom &&
+                      !getAlternativeColor()?.isValid
                         ? t("alternativeBrandCritical")
                         : t("alternativeBrandWarning")}
                     </DBInfotext>
@@ -145,7 +159,7 @@ const ColorPicker = ({
                   {developerMode && (
                     <DBCheckbox
                       label={t("alternativeBrandCheckbox")}
-                      defaultChecked={theme.branding.alternativeColor.custom}
+                      defaultChecked={getAlternativeColor()?.custom}
                       onChange={(event) => {
                         if (setAlternativeCustom) {
                           setAlternativeCustom(event.target.checked);
@@ -156,8 +170,8 @@ const ColorPicker = ({
                   <DBInput
                     label={t("colorInputPicker")}
                     type="color"
-                    value={theme.branding.alternativeColor.hex}
-                    disabled={!theme.branding.alternativeColor.custom}
+                    value={getAlternativeColor()?.hex}
+                    disabled={!getAlternativeColor()?.custom}
                     onChange={(event) => {
                       if (setAlternativeColor) {
                         setAlternativeColor(event.target.value);
@@ -167,8 +181,8 @@ const ColorPicker = ({
                   <DBInput
                     label={t("colorInputHex")}
                     placeholder={t("colorInputHex")}
-                    value={theme.branding.alternativeColor.hex}
-                    disabled={!theme.branding.alternativeColor.custom}
+                    value={getAlternativeColor()?.hex}
+                    disabled={!getAlternativeColor()?.custom}
                     onChange={(event) => {
                       if (setAlternativeColor) {
                         setAlternativeColor(event.target.value);
@@ -199,14 +213,15 @@ const ColorPicker = ({
                 <DBButton
                   className="ml-auto"
                   variant="brand"
-                  disabled={colorName.length === 0 || label === colorName}
+                  disabled={
+                    colorName.length === 0 || label === colorName || !valid
+                  }
                   onClick={() => {
                     if (isAddColor) {
-                      setCustomColors({
-                        ...theme.customColors,
-                        [colorName]: addColor,
-                      });
                       setOpen(false);
+                      if (onAddColor) {
+                        onAddColor(colorName, addColor);
+                      }
                       setAddColor("#ffffff");
                       setColorName("");
                     } else if (theme.customColors) {
