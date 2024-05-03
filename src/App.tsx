@@ -6,7 +6,7 @@ import {
   getNonColorCssProperties,
   getPaletteOutput,
   getSpeakingNames,
-} from "./utils/outputs.ts";
+} from "./utils/outputs";
 
 const App = () => {
   const { speakingNames, luminanceSteps, theme, darkMode } =
@@ -22,7 +22,7 @@ const App = () => {
       ...getPaletteOutput(
         allColors,
         luminanceSteps,
-        theme.branding.alternativeColor,
+        theme.branding.alternativeColors,
       ),
       ...getSpeakingNames(speakingNames, allColors, darkMode),
       ...getNonColorCssProperties(theme),

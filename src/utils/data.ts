@@ -84,7 +84,16 @@ export type FontsType = {
   head: Record<string, FontType>;
 };
 
-export type BrandAlternativeColor = {
+export type OriginColor = {
+  color: string;
+  onColorPressed: string;
+  onColorHover: string;
+  onColor: string;
+  hoverColor: string;
+  pressedColor: string;
+};
+
+export type AlternativeColor = {
   hex: string;
   dark: boolean;
   isValid?: boolean;
@@ -97,7 +106,7 @@ export type BrandingType = {
     light: string;
     dark: string;
   };
-  alternativeColor: BrandAlternativeColor;
+  alternativeColors: Record<string, AlternativeColor>;
 };
 
 export type ThemeType = {

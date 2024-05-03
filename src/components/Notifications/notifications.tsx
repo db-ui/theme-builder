@@ -11,7 +11,6 @@ const Notifications = () => {
 
   useEffect(() => {
     if (notification) {
-      console.log(notification);
       setLastNotification(notification);
       setTimeout(
         () => useThemeBuilderStore.setState({ notification: undefined }),

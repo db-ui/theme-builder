@@ -1,13 +1,9 @@
-import {
-  BrandAlternativeColor,
-  HeisslufType,
-  SpeakingName,
-} from "../../data.ts";
-import { getExtraBrandColors, getPalette } from "../../outputs.ts";
-import { kebabCase } from "../../index.ts";
+import { AlternativeColor, HeisslufType, SpeakingName } from "../../data.ts";
+import { isOriginColor, kebabCase } from "../../index.ts";
 import { replacePackageName } from "./shared.ts";
+import {getOriginColorsLightAndDark, getPalette} from "../index.ts";
 
-const brandAdditionalColors = [
+const originAdditionalColors = [
   { name: "onEnabled", light: 0, dark: 0 },
   { name: "originEnabled", light: 0, dark: 0 },
   { name: "originHover", light: 0, dark: 0 },
@@ -21,7 +17,7 @@ const getComposeColorFromHex = (hex: string): string => {
 export const generateComposeColorFile = (
   allColors: Record<string, string>,
   luminanceSteps: number[],
-  altBrand: BrandAlternativeColor,
+  alternativeColors: Record<string, AlternativeColor>,
 ): string => {
   let resolvedTokenFile: string = `package ${replacePackageName}.theme
   
@@ -40,27 +36,23 @@ object Colors {
       resolvedTokenFile += `val ${key} = ${getComposeColorFromHex(hsl.hex)}\n`;
     });
 
-    if (name === "brand") {
-      const lightBrandColor = altBrand.dark ? allColors["brand"] : altBrand.hex;
-      const darkBrandColor = !altBrand.dark ? allColors["brand"] : altBrand.hex;
-      const lightBrand = getExtraBrandColors(
-        lightBrandColor,
-        true,
+    if (isOriginColor(name)) {
+      const { lightOrigin, darkOrigin } = getOriginColorsLightAndDark(
+        allColors,
         luminanceSteps,
+        alternativeColors,
+        name,
       );
-      const darkBrand = getExtraBrandColors(
-        darkBrandColor,
-        false,
-        luminanceSteps,
-      );
-      resolvedTokenFile += `val brandOnLight = ${getComposeColorFromHex(lightBrand.brandOnColor)}\n`;
-      resolvedTokenFile += `val brandOriginLight = ${getComposeColorFromHex(lightBrand.color)}\n`;
-      resolvedTokenFile += `val brandHoverLight = ${getComposeColorFromHex(lightBrand.hoverColor)}\n`;
-      resolvedTokenFile += `val brandPressedLight = ${getComposeColorFromHex(lightBrand.pressedColor)}\n`;
-      resolvedTokenFile += `val brandOnDark = ${getComposeColorFromHex(darkBrand.brandOnColor)}\n`;
-      resolvedTokenFile += `val brandOriginDark = ${getComposeColorFromHex(darkBrand.color)}\n`;
-      resolvedTokenFile += `val brandHoverDark = ${getComposeColorFromHex(darkBrand.hoverColor)}\n`;
-      resolvedTokenFile += `val brandPressedDark = ${getComposeColorFromHex(darkBrand.pressedColor)}\n`;
+      if (lightOrigin && darkOrigin) {
+        resolvedTokenFile += `val ${name}OnLight = ${getComposeColorFromHex(lightOrigin.onColor)}\n`;
+        resolvedTokenFile += `val ${name}OriginLight = ${getComposeColorFromHex(lightOrigin.color)}\n`;
+        resolvedTokenFile += `val ${name}HoverLight = ${getComposeColorFromHex(lightOrigin.hoverColor)}\n`;
+        resolvedTokenFile += `val ${name}PressedLight = ${getComposeColorFromHex(lightOrigin.pressedColor)}\n`;
+        resolvedTokenFile += `val ${name}OnDark = ${getComposeColorFromHex(darkOrigin.onColor)}\n`;
+        resolvedTokenFile += `val ${name}OriginDark = ${getComposeColorFromHex(darkOrigin.color)}\n`;
+        resolvedTokenFile += `val ${name}HoverDark = ${getComposeColorFromHex(darkOrigin.hoverColor)}\n`;
+        resolvedTokenFile += `val ${name}PressedDark = ${getComposeColorFromHex(darkOrigin.pressedColor)}\n`;
+      }
     }
   });
 
@@ -98,11 +90,11 @@ const generateColorSchemeDarkLight = (
       }
     }
 
-    if (name === "brand") {
-      resolvedScheme += `Colors.brandOn${colorScheme},\n`;
-      resolvedScheme += `Colors.brandOrigin${colorScheme},\n`;
-      resolvedScheme += `Colors.brandHover${colorScheme},\n`;
-      resolvedScheme += `Colors.brandPressed${colorScheme},\n`;
+    if (isOriginColor(name)) {
+      resolvedScheme += `Colors.${name}On${colorScheme},\n`;
+      resolvedScheme += `Colors.${name}Origin${colorScheme},\n`;
+      resolvedScheme += `Colors.${name}Hover${colorScheme},\n`;
+      resolvedScheme += `Colors.${name}Pressed${colorScheme},\n`;
     }
     resolvedScheme += `)\n`;
   }
@@ -142,10 +134,9 @@ import androidx.compose.ui.graphics.Color
 
   // 1. Generate semantic color classes like 'NeutralColors'
   for (const name of colorKeys) {
-    const allSpeakingNames =
-      name === "brand"
-        ? [...speakingNames, ...brandAdditionalColors]
-        : speakingNames;
+    const allSpeakingNames = isOriginColor(name)
+      ? [...speakingNames, ...originAdditionalColors]
+      : speakingNames;
     resolvedScheme += `class ${kebabCase(name)}Colors(\n`;
     for (const speakingName of allSpeakingNames) {
       const resolvedName = `${kebabCase(speakingName.name, true)}`;

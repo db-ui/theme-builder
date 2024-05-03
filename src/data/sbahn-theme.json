@@ -4,9 +4,11 @@
     "image": {
       "light": "sbahn_logo.svg"
     },
-    "alternativeColor": {
-      "hex": "#4D8E45",
-      "dark": true
+    "alternativeColors": {
+      "brand": {
+        "hex": "#4D8E45",
+        "dark": true
+      }
     }
   },
   "spacing": {
