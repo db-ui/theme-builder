@@ -3,32 +3,34 @@ import {
   getValidPaletteColorAsHex,
 } from "../../../../utils/generate-colors.ts";
 import chroma from "chroma-js";
-import { DefaultColorMappingType } from "../../../../utils/data.ts";
 import { isValidColor } from "../../../../utils";
 
-export const getAlternativeBrand = (
-  colors: DefaultColorMappingType,
+export const getAlternativeColor = (
+  colors: Record<string, string>,
+  name: string,
   luminanceSteps: number[],
   custom: boolean,
   alternativeHex: string,
+  currentColor?: string,
 ) => {
-  const brand = isValidColor(colors.brand) ? colors.brand : "#ff69b4";
+  const color = currentColor ?? colors[name];
+  const origin = isValidColor(color) ? color : "#ff69b4";
   const neutralColors = getHeissluftColors(
     "neutral",
     colors.neutral,
     luminanceSteps,
   );
-  const brandColors = getHeissluftColors("brand", colors.brand, luminanceSteps);
+  const heissluftColors = getHeissluftColors(name, color, luminanceSteps);
   const neutralBgDarkest = neutralColors.at(0);
   const neutralBgLightest = neutralColors.at(-1);
   const lowContrastDark =
     chroma.contrast(
-      chroma.hex(brand),
+      chroma.hex(origin),
       chroma.hex(neutralBgDarkest?.hex || "#ff69b4"),
     ) < 3;
   const lowContrastLight =
     chroma.contrast(
-      chroma.hex(brand),
+      chroma.hex(origin),
       chroma.hex(neutralBgLightest?.hex || "#ff69b4"),
     ) < 3;
 
@@ -36,22 +38,18 @@ export const getAlternativeBrand = (
   let dark = true;
   if (!custom) {
     if (lowContrastDark) {
-      hex = getValidPaletteColorAsHex(
-        brandColors,
-        true,
-        neutralBgDarkest,
-      );
+      hex = getValidPaletteColorAsHex(heissluftColors, true, neutralBgDarkest);
     }
     if (lowContrastLight) {
       dark = false;
       hex = getValidPaletteColorAsHex(
-          brandColors,
-          false,
-          neutralBgLightest,
+        heissluftColors,
+        false,
+        neutralBgLightest,
       );
     }
     if (!lowContrastDark && !lowContrastLight) {
-      hex = brand;
+      hex = origin;
     }
   }
 

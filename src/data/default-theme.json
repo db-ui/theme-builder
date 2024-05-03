@@ -5,9 +5,11 @@
       "light": "peace-in-a-box.svg",
       "dark": "peace-in-a-box-white.svg"
     },
-    "alternativeColor": {
-      "hex": "#d2d4d9",
-      "dark": true
+    "alternativeColors": {
+      "brand": {
+        "hex": "#d2d4d9",
+        "dark": true
+      }
     }
   },
   "spacing": {

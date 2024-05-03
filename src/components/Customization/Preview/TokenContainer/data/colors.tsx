@@ -1,5 +1,5 @@
 import { ColorsPropsType } from "./index.tsx";
-import { kebabCase } from "../../../../../utils";
+import { isOriginColor, kebabCase } from "../../../../../utils";
 
 const ColorPreview = ({
   colorName,
@@ -33,7 +33,7 @@ const ColorPreview = ({
               color = `var(--db-${colorName}-bg-lvl-1-enabled)`;
             } else if (type === "origin") {
               color = `var(--db-${colorName}-on-enabled)`;
-            }  else if (type === "on") {
+            } else if (type === "on") {
               color = `var(--db-${colorName}-origin-enabled)`;
             } else if (
               type === "contrast-high" ||
@@ -65,7 +65,7 @@ const ColorPreview = ({
 const Colors = ({ colorName }: ColorsPropsType) => (
   <div className="flex flex-col gap-fix-md">
     {/* Brand origin */}
-    {colorName === "brand" && (
+    {isOriginColor(colorName) && (
       <div className="flex flex-col md:flex-row gap-fix-md">
         <ColorPreview colorName={colorName} type="on" />
         <ColorPreview colorName={colorName} type="origin" />

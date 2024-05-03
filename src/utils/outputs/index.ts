@@ -1,13 +1,14 @@
 import {
-  BrandAlternativeColor,
+  AlternativeColor,
   HeisslufType,
+  OriginColor,
   SpeakingName,
   ThemeType,
-} from "./data.ts";
+} from "../data.ts";
 import traverse from "traverse";
 import { Hsluv } from "hsluv";
-import { getHeissluftColors } from "./generate-colors.ts";
-import { getLuminance } from "./index.ts";
+import { getHeissluftColors } from "../generate-colors.ts";
+import { getContrast, isOriginColor } from "../index.ts";
 
 export const prefix = "db";
 
@@ -116,10 +117,32 @@ export const getPalette = (
       {},
     );
 
+export const getOriginColorsLightAndDark = (
+  allColors: Record<string, string>,
+  luminanceSteps: number[],
+  alternativeColors: Record<string, AlternativeColor>,
+  name: string,
+): {
+  lightOrigin: OriginColor | undefined;
+  darkOrigin: OriginColor | undefined;
+} => {
+  const altColor = alternativeColors[name];
+
+  console.log(allColors, alternativeColors, altColor, name);
+  if (!altColor) return { lightOrigin: undefined, darkOrigin: undefined };
+
+  const lightColor = altColor.dark ? allColors[name] : altColor.hex;
+  const darkColor = !altColor.dark ? allColors[name] : altColor.hex;
+  const lightOrigin = getOriginColors(lightColor, false, luminanceSteps);
+  const darkOrigin = getOriginColors(darkColor, true, luminanceSteps);
+
+  return { lightOrigin, darkOrigin };
+};
+
 export const getPaletteOutput = (
   allColors: Record<string, string>,
   luminanceSteps: number[],
-  altBrand: BrandAlternativeColor,
+  alternativeColors: Record<string, AlternativeColor>,
 ): any => {
   const palette: Record<string, HeisslufType[]> = getPalette(
     allColors,
@@ -133,33 +156,29 @@ export const getPaletteOutput = (
       result[`--${prefix}-${name}-${hsl.index ?? hsl.name}`] = hsl.hex;
     });
 
-    if (name === "brand") {
-      const lightBrandColor = altBrand.dark ? allColors["brand"] : altBrand.hex;
-      const darkBrandColor = !altBrand.dark ? allColors["brand"] : altBrand.hex;
-      const lightBrand = getExtraBrandColors(
-        lightBrandColor,
-        false,
+    if (isOriginColor(name)) {
+      const { lightOrigin, darkOrigin } = getOriginColorsLightAndDark(
+        allColors,
         luminanceSteps,
+        alternativeColors,
+        name,
       );
-      const darkBrand = getExtraBrandColors(
-        darkBrandColor,
-        true,
-        luminanceSteps,
-      );
-      result[`--${prefix}-brand-on-pressed-light`] =
-        lightBrand.brandOnColorPressed;
-      result[`--${prefix}-brand-on-hover-light`] = lightBrand.brandOnColorHover;
-      result[`--${prefix}-brand-on-light`] = lightBrand.brandOnColor;
-      result[`--${prefix}-brand-origin-light`] = lightBrand.color;
-      result[`--${prefix}-brand-hover-light`] = lightBrand.hoverColor;
-      result[`--${prefix}-brand-pressed-light`] = lightBrand.pressedColor;
-      result[`--${prefix}-brand-on-pressed-dark`] =
-        darkBrand.brandOnColorPressed;
-      result[`--${prefix}-brand-on-hover-dark`] = darkBrand.brandOnColorHover;
-      result[`--${prefix}-brand-on-dark`] = darkBrand.brandOnColor;
-      result[`--${prefix}-brand-origin-dark`] = darkBrand.color;
-      result[`--${prefix}-brand-hover-dark`] = darkBrand.hoverColor;
-      result[`--${prefix}-brand-pressed-dark`] = darkBrand.pressedColor;
+      if (lightOrigin && darkOrigin) {
+        result[`--${prefix}-${name}-on-pressed-light`] =
+          lightOrigin.onColorPressed;
+        result[`--${prefix}-${name}-on-hover-light`] = lightOrigin.onColorHover;
+        result[`--${prefix}-${name}-on-light`] = lightOrigin.onColor;
+        result[`--${prefix}-${name}-origin-light`] = lightOrigin.color;
+        result[`--${prefix}-${name}-hover-light`] = lightOrigin.hoverColor;
+        result[`--${prefix}-${name}-pressed-light`] = lightOrigin.pressedColor;
+        result[`--${prefix}-${name}-on-pressed-dark`] =
+          darkOrigin.onColorPressed;
+        result[`--${prefix}-${name}-on-hover-dark`] = darkOrigin.onColorHover;
+        result[`--${prefix}-${name}-on-dark`] = darkOrigin.onColor;
+        result[`--${prefix}-${name}-origin-dark`] = darkOrigin.color;
+        result[`--${prefix}-${name}-hover-dark`] = darkOrigin.hoverColor;
+        result[`--${prefix}-${name}-pressed-dark`] = darkOrigin.pressedColor;
+      }
     }
   });
 
@@ -167,28 +186,21 @@ export const getPaletteOutput = (
 };
 
 // We use this for hover/pressed to make sure the colors aren't to similar
-const brandLuminanceMinDifference: number = 5;
+const originLuminanceMinDifference: number = 5;
 
 /**
- * if we are in light mode and the brand color has more than 20 luminance we can darken the states
+ * if we are in light mode and the origin color has more than 20 luminance we can darken the states
  * this would be the best case, otherwise we go to a fallback
  * dark-mode is the same but inverted
- * @param color brand color
+ * @param color
  * @param darkMode
  * @param luminanceSteps
  */
-export const getExtraBrandColors = (
+export const getOriginColors = (
   color: string,
   darkMode: boolean,
   luminanceSteps: number[],
-): {
-  color: string;
-  brandOnColorPressed: string;
-  brandOnColorHover: string;
-  brandOnColor: string;
-  hoverColor: string;
-  pressedColor: string;
-} => {
+): OriginColor => {
   const hslColors: HeisslufType[] = getHeissluftColors(
     "",
     color,
@@ -197,26 +209,27 @@ export const getExtraBrandColors = (
   const hsluv = new Hsluv();
   hsluv.hex = color;
   hsluv.hexToHsluv();
-  const brandLuminance = hsluv.hsluv_l;
-  const isDarkColor = getLuminance(color) < 0.4;
-  const brandOnColor = isDarkColor ? "#fff" : hslColors[1]?.hex || "#ff69b4";
-  const brandOnColorHover =
-    (isDarkColor ? hslColors.at(-2) : hslColors[2])?.hex || "#ff69b4";
-  const brandOnColorPressed =
-    (isDarkColor ? hslColors.at(-3) : hslColors[3])?.hex || "#ff69b4";
+  const originLuminance = hsluv.hsluv_l;
+
+  const isWhiteContrastEnough = getContrast("#fff", color) >= 4.5;
+  const onColor = isWhiteContrastEnough ? "#fff" : "#000";
+  const onColorHover =
+    (isWhiteContrastEnough ? hslColors.at(-2) : hslColors[2])?.hex || "#ff69b4";
+  const onColorPressed =
+    (isWhiteContrastEnough ? hslColors.at(-3) : hslColors[3])?.hex || "#ff69b4";
   let hoverColor: string | undefined;
   let pressedColor: string | undefined;
 
   const bestCompareFn = darkMode
     ? (luminance: number) =>
-        luminance > brandLuminance + brandLuminanceMinDifference
+        luminance > originLuminance + originLuminanceMinDifference
     : (luminance: number) =>
-        luminance < brandLuminance - brandLuminanceMinDifference;
+        luminance < originLuminance - originLuminanceMinDifference;
   const fallbackCompareFn = darkMode
     ? (luminance: number) =>
-        luminance < brandLuminance - brandLuminanceMinDifference
+        luminance < originLuminance - originLuminanceMinDifference
     : (luminance: number) =>
-        luminance > brandLuminance + brandLuminanceMinDifference;
+        luminance > originLuminance + originLuminanceMinDifference;
 
   let foundColors = hslColors.filter((hsl) => bestCompareFn(hsl.luminance));
   foundColors = darkMode ? foundColors : foundColors.reverse();
@@ -239,9 +252,9 @@ export const getExtraBrandColors = (
 
   return {
     color,
-    brandOnColor,
-    brandOnColorHover,
-    brandOnColorPressed,
+    onColor,
+    onColorHover,
+    onColorPressed,
     hoverColor,
     pressedColor,
   };
@@ -256,16 +269,16 @@ export const getSpeakingNames = (
   Object.entries(allColors).forEach((value) => {
     const name = value[0];
 
-    if (name === "brand") {
+    if (isOriginColor(name)) {
       const colorScheme = darkMode ? "dark" : "light";
       result = {
         ...result,
-        "--db-brand-on-enabled": `var(--db-brand-on-${colorScheme})`,
-        "--db-brand-on-hover": `var(--db-brand-on-hover-${colorScheme})`,
-        "--db-brand-on-pressed": `var(--db-brand-on-pressed-${colorScheme})`,
-        "--db-brand-origin-enabled": `var(--db-brand-origin-${colorScheme})`,
-        "--db-brand-origin-hover": `var(--db-brand-hover-${colorScheme})`,
-        "--db-brand-origin-pressed": `var(--db-brand-pressed-${colorScheme})`,
+        [`--db-${name}-on-enabled`]: `var(--db-${name}-on-${colorScheme})`,
+        [`--db-${name}-on-hover`]: `var(--db-${name}-on-hover-${colorScheme})`,
+        [`--db-${name}-on-pressed`]: `var(--db-${name}-on-pressed-${colorScheme})`,
+        [`--db-${name}-origin-enabled`]: `var(--db-${name}-origin-${colorScheme})`,
+        [`--db-${name}-origin-hover`]: `var(--db-${name}-hover-${colorScheme})`,
+        [`--db-${name}-origin-pressed`]: `var(--db-${name}-pressed-${colorScheme})`,
       };
     }
 

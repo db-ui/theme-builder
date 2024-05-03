@@ -4,9 +4,11 @@
     "image": {
       "light": "db_logo.svg"
     },
-    "alternativeColor": {
-      "hex": "#ec0016",
-      "dark": true
+    "alternativeColors": {
+      "brand": {
+        "hex": "#ec0016",
+        "dark": true
+      }
     }
   },
   "spacing": {

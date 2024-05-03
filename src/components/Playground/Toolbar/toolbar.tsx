@@ -3,8 +3,8 @@ import { useEditor } from "@craftjs/core";
 import { DBButton, DBTooltip } from "@db-ui/react-components";
 import { useDragAndDropStore } from "../../../store";
 import { useTranslation } from "react-i18next";
-import { downloadPlayground } from "../../../utils";
 import Upload from "../../Customization/Upload";
+import {downloadPlayground} from "../../../utils/outputs/download.ts";
 
 const Toolbar = ({ className }: ToolbarType) => {
   const { t } = useTranslation();

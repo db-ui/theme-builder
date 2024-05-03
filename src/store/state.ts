@@ -1,5 +1,5 @@
 import {
-  BrandAlternativeColor,
+  AlternativeColor,
   DefaultColorMappingType,
   ThemeType,
   SpeakingName,
@@ -11,7 +11,9 @@ export type ThemeBuilderStateFunctions = {
   resetDefaults: () => void;
   setColors: (colors: DefaultColorMappingType) => void;
   setCustomColors: (colors: Record<string, string>) => void;
-  setAlternativeColor: (alternativeBrand: BrandAlternativeColor) => void;
+  setAlternativeColors: (
+    alternativeColors: Record<string, AlternativeColor>,
+  ) => void;
 };
 
 export type ThemeBuilderState = {
