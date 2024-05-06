@@ -2,7 +2,7 @@
 import { useCallback, useState } from "react";
 import { ColorPickerType } from "./data";
 import "./index.scss";
-import { getLuminance } from "../../../../../utils";
+import { getContrast } from "../../../../../utils";
 import {
   DBButton,
   DBCheckbox,
@@ -57,7 +57,7 @@ const ColorPicker = ({
             // @ts-expect-error
             "--current-color": isOrigin
               ? `var(--db-${label}-on-enabled)`
-              : getLuminance(getColor()) < 0.4
+              : getContrast("#fff", color) >= 4.5
                 ? "#fff"
                 : "#000",
             backgroundColor: getColor(),
