@@ -25,7 +25,7 @@
     "@tiptap/extension-color": "^2.3.2",
     "@tiptap/extension-text-style": "^2.3.2",
     "@tiptap/extension-underline": "^2.3.2",
-    "@tiptap/pm": "^2.3.1",
+    "@tiptap/pm": "^2.3.2",
     "@tiptap/react": "^2.3.2",
     "@tiptap/starter-kit": "^2.3.2",
     "@types/node": "^20.12.11",
