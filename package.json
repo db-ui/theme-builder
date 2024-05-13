@@ -46,7 +46,7 @@
     "react-ace": "11.0.1",
     "react-dom": "^18.3.1",
     "react-i18next": "14.1.1",
-    "react-router-dom": "6.23.0",
+    "react-router-dom": "6.23.1",
     "traverse": "^0.6.9",
     "zustand": "^4.5.2"
   },
