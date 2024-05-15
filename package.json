@@ -28,7 +28,7 @@
     "@tiptap/pm": "^2.3.2",
     "@tiptap/react": "^2.3.2",
     "@tiptap/starter-kit": "^2.3.2",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.12",
     "ace-builds": "1.33.2",
     "apca-w3": "^0.1.9",
     "chroma-js": "^2.4.2",
