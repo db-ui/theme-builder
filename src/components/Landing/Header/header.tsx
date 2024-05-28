@@ -6,7 +6,7 @@ import { DBSection } from "@db-ui/react-components";
 const Header = () => {
   const { theme, darkMode } = useThemeBuilderStore((state) => state);
   return (
-    <DBSection size="none" variant="large">
+    <DBSection spacing="none" width="large">
       <div className="flex justify-between min-h-siz-md py-fix-xs md:py-fix-md">
         <img
           className="logo"

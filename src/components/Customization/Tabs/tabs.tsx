@@ -1,4 +1,9 @@
-import { DBTabItem, DBTabList, DBTabPanel, DBTabs } from "@db-ui/react-components";
+import {
+  DBTabItem,
+  DBTabList,
+  DBTabPanel,
+  DBTabs,
+} from "@db-ui/react-components";
 import { TabsPropsType } from "./data.ts";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../store";
@@ -6,7 +11,9 @@ import { useThemeBuilderStore } from "../../../store";
 const Tabs = ({ tabs }: TabsPropsType) => {
   const { t } = useTranslation();
   const { developerMode } = useThemeBuilderStore((state) => state);
+
   return (
+    /* @ts-expect-error missing prop */
     <DBTabs alignment="center" width="full" className="h-full">
       <DBTabList>
         {tabs

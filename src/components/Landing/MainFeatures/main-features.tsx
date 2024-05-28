@@ -10,8 +10,8 @@ const MainFeatures = () => {
       {cards.map((card, index) => (
         <DBSection
           key={`feature-card-${card}`}
-          variant="medium"
-          size="large"
+          spacing="medium"
+          width="large"
           className={`flex h-[100vh] items-center${index % 2 === 0 ? " db-neutral-bg-lvl-2" : ""}`}
         >
           <div className="flex flex-col text-balance text-center items-center gap-fix-md">

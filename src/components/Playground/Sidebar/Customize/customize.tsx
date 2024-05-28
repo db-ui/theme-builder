@@ -71,7 +71,7 @@ const Customize = () => {
 
         <DBButton
           variant="brand"
-          icon="delete"
+          icon="bin"
           width="full"
           disabled={!selected || selected.data.name === "Root"}
           onClick={() => {

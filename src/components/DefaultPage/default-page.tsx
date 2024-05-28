@@ -43,13 +43,13 @@ const DefaultPage = ({
                 {name}
               </div>
             }
-            actionBar={actionBar}
-            callToAction={
+            secondaryAction={actionBar}
+            primaryAction={
               <div className="flex gap-fix-sm">
                 {withDevMode && (
                   <DBButton
                     className={!developerMode ? "opacity-0" : ""}
-                    icon="build"
+                    icon="wrench"
                     variant="ghost"
                     noText
                     onClick={() =>

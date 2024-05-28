@@ -6,8 +6,8 @@ const Footer = () => {
   const { t } = useTranslation();
   return (
     <DBSection
-      variant="medium"
-      size="large"
+      spacing="medium"
+      width="large"
       className="flex items-center db-brand-bg-lvl-3"
     >
       <div className="flex flex-col gap-fix-xl items-center text-center text-balance">
