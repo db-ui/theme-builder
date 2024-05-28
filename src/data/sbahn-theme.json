@@ -8,6 +8,66 @@
       "brand": {
         "hex": "#4D8E45",
         "dark": true
+      },
+      "yellow": {
+        "custom": false,
+        "hex": "#aa8f00",
+        "dark": false,
+        "isValid": false
+      },
+      "orange": {
+        "custom": false,
+        "hex": "#d17d00",
+        "dark": false,
+        "isValid": false
+      },
+      "red": {
+        "custom": false,
+        "hex": "#EC0016",
+        "dark": true,
+        "isValid": false
+      },
+      "burgundy": {
+        "custom": false,
+        "hex": "#A9455D",
+        "dark": true,
+        "isValid": false
+      },
+      "pink": {
+        "custom": false,
+        "hex": "#E93E8F",
+        "dark": true,
+        "isValid": false
+      },
+      "violet": {
+        "custom": false,
+        "hex": "#814997",
+        "dark": true,
+        "isValid": false
+      },
+      "blue": {
+        "custom": false,
+        "hex": "#1558c6",
+        "dark": true,
+        "isValid": false
+      },
+      "cyan": {
+        "custom": false,
+        "hex": "#2e9acb",
+        "dark": false,
+        "isValid": false
+      },
+      "turquoise": {
+        "custom": false,
+        "hex": "#00A099",
+        "dark": true,
+        "isValid": false
+      },
+      "green": {
+        "custom": false,
+        "hex": "#63A615",
+        "dark": true,
+        "isValid": false
       }
     }
   },
@@ -560,5 +620,16 @@
     "warning": "#F39200",
     "successful": "#63A615",
     "critical": "#EC0016"
+  },
+  "customColors": {
+    "yellow": "#FFD800",
+    "orange": "#F39200",
+    "red": "#EC0016",
+    "pink": "#E93E8F",
+    "violet": "#814997",
+    "blue": "#1455C0",
+    "cyan": "#309FD1",
+    "turquoise": "#00A099",
+    "green": "#63A615"
   }
 }

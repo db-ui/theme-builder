@@ -2,11 +2,11 @@ import { DBButton } from "@db-ui/react-components";
 import { useTranslation } from "react-i18next";
 
 const buttons: string[] = [
-  "dashboard",
+  "folder_open",
   "document",
-  "account",
-  "build",
-  "piggybank",
+  "user",
+  "wrench",
+  "toys",
 ];
 
 const Sidenav = () => {

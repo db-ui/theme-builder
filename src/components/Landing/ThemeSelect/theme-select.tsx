@@ -31,8 +31,8 @@ const ThemeSelect = () => {
   const { darkMode, theme } = useThemeBuilderStore((state) => state);
   return (
     <DBSection
-      variant="large"
-      size="large"
+      width="large"
+      spacing="large"
       className="flex md:h-[100vh] items-center"
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-fix-md md:gap-fix-3xl">

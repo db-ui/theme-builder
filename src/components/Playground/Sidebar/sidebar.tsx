@@ -1,5 +1,10 @@
 import { SidebarType } from "./data.ts";
-import { DBTabItem, DBTabList, DBTabPanel, DBTabs } from "@db-ui/react-components";
+import {
+  DBTabItem,
+  DBTabList,
+  DBTabPanel,
+  DBTabs,
+} from "@db-ui/react-components";
 import { useEditor } from "@craftjs/core";
 import { useEffect, useRef } from "react";
 import Customize from "./Customize";
@@ -39,7 +44,8 @@ const Sidebar = ({ className }: SidebarType) => {
       data-density="functional"
       className={`border-l flex flex-col grow-0 shrink-0 w-[320px] overflow-hidden ${className || ""}`}
     >
-      <DBTabs className="h-full" alignment="center" width="full">
+      {/* @ts-expect-error missing prop */}
+      <DBTabs alignment="center" className="h-full" width="full">
         <DBTabList>
           <DBTabItem>{t("components")}</DBTabItem>
           <DBTabItem disabled={!selected} ref={customizeTabRef}>

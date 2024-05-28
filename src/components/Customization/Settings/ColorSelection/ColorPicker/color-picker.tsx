@@ -201,7 +201,7 @@ const ColorPicker = ({
               <div className="ml-auto flex gap-fix-md">
                 {!isAddColor && (
                   <DBButton
-                    icon="delete"
+                    icon="bin"
                     onClick={() => {
                       if (onDelete) {
                         onDelete();
