@@ -37,6 +37,8 @@ export const getNonColorCssProperties = (
       this.isLeaf &&
       this.path.length > 0 &&
       this.path[0] !== "colors" &&
+      this.path[0] !== "customColors" &&
+      this.path[0] !== "branding" &&
       isFontFamily(this.path) &&
       !this.path.includes("_scale")
     ) {
@@ -92,6 +94,25 @@ export const getCssThemeProperties = (theme: ThemeType): string => {
     ${customTheme}
   }
   `;
+};
+
+export const getFullColorCss = (colorsPalette:string, colorsSpeakingNamesLight:string, colorsSpeakingNamesDark:string): string => {
+  return `:root{
+      ${colorsPalette}
+      ${colorsSpeakingNamesLight}
+      @media (prefers-color-scheme: dark) {
+      ${colorsSpeakingNamesLight}
+      }
+      }
+      
+[data-color-scheme="light"] {
+      ${colorsSpeakingNamesDark}
+}
+
+[data-color-scheme="dark"] {
+      ${colorsSpeakingNamesDark}
+}
+      `;
 };
 
 export const getPalette = (

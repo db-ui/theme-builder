@@ -4,7 +4,7 @@ import {
   speakingNamesDefaultMapping,
   ThemeType,
 } from "../data.ts";
-import { generateReadmeFile } from "./compose/readme.ts";
+import { generateReadmeFile } from "./web/readme.ts";
 import { generateThemeFile } from "./compose/theme.ts";
 import {
   generateColorScheme,
@@ -21,14 +21,16 @@ import {
 } from "./compose/typography.ts";
 import { generateDensityEnumFile } from "./compose/density.ts";
 import { getSketchColorsAsString } from "./sketch.ts";
-import { getFontFaces } from "./fonts.ts";
+import { getFontFaces } from "./web/fonts.ts";
 import { kebabCase } from "../index.ts";
 import {
   getCssPropertyAsString,
   getCssThemeProperties,
+  getFullColorCss,
   getPaletteOutput,
   getSpeakingNames,
 } from "./index.ts";
+import { generateCustomColorClass } from "./web/custom-color-class.ts";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -125,48 +127,94 @@ export const downloadTheme = async (
   const webFolder: string = "Web";
 
   zip.file(`${webFolder}/${fileName}-theme.css`, themeProperties);
-  zip.file(
-    `${webFolder}/${fileName}-palette.css`,
-    getCssPropertyAsString(
-      getPaletteOutput(
-        allColors,
-        luminanceSteps,
-        theme.branding.alternativeColors,
-      ),
+
+  const colorsPalette = getCssPropertyAsString(
+    getPaletteOutput(
+      allColors,
+      luminanceSteps,
+      theme.branding.alternativeColors,
     ),
   );
+  const colorSpeakingNamesLight = getCssPropertyAsString(
+    getSpeakingNames(speakingNames, allColors, false),
+  );
+  const colorSpeakingNamesDark = getCssPropertyAsString(
+    getSpeakingNames(speakingNames, allColors, true),
+  );
+  zip.file(
+    `${webFolder}/${fileName}-colors-full.css`,
+    getFullColorCss(
+      colorsPalette,
+      colorSpeakingNamesLight,
+      colorSpeakingNamesDark,
+    ),
+  );
+  zip.file(`${webFolder}/${fileName}-palette.css`, colorsPalette);
   zip.file(
     `${webFolder}/${fileName}-speaking-names-light.css`,
-    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, false)),
+    colorSpeakingNamesLight,
   );
   zip.file(
     `${webFolder}/${fileName}-speaking-names-dark.css`,
-    getCssPropertyAsString(getSpeakingNames(speakingNames, allColors, true)),
+    colorSpeakingNamesDark,
   );
+  zip.file(`${webFolder}/README.md`, generateReadmeFile(fileName));
 
+  // Custom Colors
   if (theme.customColors) {
+    const customColorsFolder: string = "Custom Colors";
+
+    const customColorsPalette = getCssPropertyAsString(
+      getPaletteOutput(
+        theme.customColors,
+        luminanceSteps,
+        theme.branding.alternativeColors,
+      ),
+    );
+
+    const customColorsSpeakingNamesLight = getCssPropertyAsString(
+      getSpeakingNames(speakingNames, theme.customColors, false),
+    );
+    const customColorsSpeakingNamesDark = getCssPropertyAsString(
+      getSpeakingNames(speakingNames, theme.customColors, true),
+    );
+
+    let allCustomColorClasses = "";
+    for (const colorName of Object.keys(theme.customColors)) {
+      const colorClass = generateCustomColorClass(colorName);
+      zip.file(
+        `${webFolder}/${customColorsFolder}/classes/${colorName}.css`,
+        colorClass,
+      );
+      allCustomColorClasses += colorClass;
+    }
+
     zip.file(
-      `${webFolder}/${fileName}-custom-colors-palette.css`,
-      getCssPropertyAsString(
-        getPaletteOutput(
-          theme.customColors,
-          luminanceSteps,
-          theme.branding.alternativeColors,
-        ),
+      `${webFolder}/${customColorsFolder}/classes/all.css`,
+      allCustomColorClasses,
+    );
+
+    zip.file(
+      `${webFolder}/${customColorsFolder}/${fileName}-custom-colors-full.css`,
+      getFullColorCss(
+        customColorsPalette,
+        customColorsSpeakingNamesLight,
+        customColorsSpeakingNamesDark,
       ),
     );
 
     zip.file(
-      `${webFolder}/${fileName}-speaking-names-custom-colors-light.css`,
-      getCssPropertyAsString(
-        getSpeakingNames(speakingNames, theme.customColors, false),
-      ),
+      `${webFolder}/${customColorsFolder}/${fileName}-custom-colors-palette.css`,
+      customColorsPalette,
+    );
+
+    zip.file(
+      `${webFolder}/${customColorsFolder}/${fileName}-speaking-names-custom-colors-light.css`,
+      customColorsSpeakingNamesLight,
     );
     zip.file(
-      `${webFolder}/${fileName}-speaking-names-custom-colors-dark.css`,
-      getCssPropertyAsString(
-        getSpeakingNames(speakingNames, theme.customColors, true),
-      ),
+      `${webFolder}/${customColorsFolder}/${fileName}-speaking-names-custom-colors-dark.css`,
+      customColorsSpeakingNamesDark,
     );
   }
 
