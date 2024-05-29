@@ -15,6 +15,7 @@ const App = () => {
   useEffect(() => {
     const allColors: Record<string, string> = {
       ...theme.colors,
+      ...theme.additionalColors,
       ...theme.customColors,
     };
 

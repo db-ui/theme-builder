@@ -628,7 +628,7 @@
     "successful": "#63A615",
     "critical": "#EC0016"
   },
-  "customColors": {
+  "additionalColors": {
     "yellow": "#FFD800",
     "orange": "#F39200",
     "red": "#EC0016",

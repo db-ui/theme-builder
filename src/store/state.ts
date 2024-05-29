@@ -2,7 +2,7 @@ import {
   AlternativeColor,
   DefaultColorMappingType,
   ThemeType,
-  SpeakingName,
+  SpeakingName, AdditionalColorMappingType,
 } from "../utils/data.ts";
 
 export const THEME_BUILDER_STATE = "theme-builder-state";
@@ -10,6 +10,7 @@ export const THEME_BUILDER_STATE = "theme-builder-state";
 export type ThemeBuilderStateFunctions = {
   resetDefaults: () => void;
   setColors: (colors: DefaultColorMappingType) => void;
+  setAdditionalColors: (additionalColors: AdditionalColorMappingType) => void;
   setCustomColors: (colors: Record<string, string>) => void;
   setAlternativeColors: (
     alternativeColors: Record<string, AlternativeColor>,

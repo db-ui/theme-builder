@@ -12,11 +12,18 @@ import { getContrast, isOriginColor } from "../index.ts";
 
 export const prefix = "db";
 
-export const getCssPropertyAsString = (properties: any): string => {
+export const getCssPropertyAsString = (
+  properties: any,
+  inRoot?: boolean,
+): string => {
   let resultString = "";
 
   for (const [key, value] of Object.entries(properties)) {
     resultString += `${key}: ${value};\n`;
+  }
+
+  if (inRoot) {
+    return `:root{${resultString}}`;
   }
 
   return resultString;
@@ -37,6 +44,7 @@ export const getNonColorCssProperties = (
       this.isLeaf &&
       this.path.length > 0 &&
       this.path[0] !== "colors" &&
+      this.path[0] !== "additionalColors" &&
       this.path[0] !== "customColors" &&
       this.path[0] !== "branding" &&
       isFontFamily(this.path) &&
@@ -96,7 +104,11 @@ export const getCssThemeProperties = (theme: ThemeType): string => {
   `;
 };
 
-export const getFullColorCss = (colorsPalette:string, colorsSpeakingNamesLight:string, colorsSpeakingNamesDark:string): string => {
+export const getFullColorCss = (
+  colorsPalette: string,
+  colorsSpeakingNamesLight: string,
+  colorsSpeakingNamesDark: string,
+): string => {
   return `:root{
       ${colorsPalette}
       ${colorsSpeakingNamesLight}

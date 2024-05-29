@@ -13,15 +13,17 @@ const TokenContainer = () => {
 
   useEffect(() => {
     setColorToken(
-      Object.keys({ ...theme.colors, ...theme.customColors }).map(
-        (colorName) => ({
-          title: colorName,
-          component: <Colors colorName={colorName} />,
-          isColor: true,
-        }),
-      ),
+      Object.keys({
+        ...theme.colors,
+        ...theme.additionalColors,
+        ...theme.customColors,
+      }).map((colorName) => ({
+        title: colorName,
+        component: <Colors colorName={colorName} />,
+        isColor: true,
+      })),
     );
-  }, [t, theme.colors, theme.customColors]);
+  }, [t, theme.additionalColors, theme.colors, theme.customColors]);
 
   return (
     <div className="flex flex-col gap-fix-md">

@@ -17,7 +17,11 @@ const ColorPalettes = () => {
   const [allColors, setAllColors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    setAllColors({ ...theme.colors, ...theme.customColors });
+    setAllColors({
+      ...theme.colors,
+      ...theme.additionalColors,
+      ...theme.customColors,
+    });
   }, [theme]);
 
   return (

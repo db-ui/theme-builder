@@ -56,6 +56,11 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
               theme: { ...theme, colors },
             }));
           },
+          setAdditionalColors: (additionalColors) => {
+            set(({ theme }) => ({
+              theme: { ...theme, additionalColors },
+            }));
+          },
           setCustomColors: (customColors) => {
             set(({ theme }) => ({
               theme: { ...theme, customColors },
