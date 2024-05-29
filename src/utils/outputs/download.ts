@@ -57,6 +57,7 @@ export const downloadTheme = async (
 ) => {
   const allColors: Record<string, string> = {
     ...theme.colors,
+    ...theme.additionalColors,
     ...theme.customColors,
   };
 
@@ -134,12 +135,15 @@ export const downloadTheme = async (
       luminanceSteps,
       theme.branding.alternativeColors,
     ),
+    true,
   );
   const colorSpeakingNamesLight = getCssPropertyAsString(
     getSpeakingNames(speakingNames, allColors, false),
+    true,
   );
   const colorSpeakingNamesDark = getCssPropertyAsString(
     getSpeakingNames(speakingNames, allColors, true),
+    true,
   );
   zip.file(
     `${webFolder}/${fileName}-colors-full.css`,
@@ -170,13 +174,16 @@ export const downloadTheme = async (
         luminanceSteps,
         theme.branding.alternativeColors,
       ),
+      true,
     );
 
     const customColorsSpeakingNamesLight = getCssPropertyAsString(
       getSpeakingNames(speakingNames, theme.customColors, false),
+      true,
     );
     const customColorsSpeakingNamesDark = getCssPropertyAsString(
       getSpeakingNames(speakingNames, theme.customColors, true),
+      true,
     );
 
     let allCustomColorClasses = "";

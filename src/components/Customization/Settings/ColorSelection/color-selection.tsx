@@ -11,6 +11,7 @@ const ColorSelection = () => {
   const {
     setColors,
     theme,
+    setAdditionalColors,
     setCustomColors,
     setAlternativeColors,
     luminanceSteps,
@@ -30,6 +31,7 @@ const ColorSelection = () => {
     }) => {
       const allColors: Record<string, string> = {
         ...theme.colors,
+        ...theme.additionalColors,
         ...theme.customColors,
       };
       const currentAlt: AlternativeColor | undefined =
@@ -50,6 +52,7 @@ const ColorSelection = () => {
     },
     [
       theme.colors,
+      theme.additionalColors,
       theme.customColors,
       theme.branding.alternativeColors,
       setAlternativeColors,
@@ -111,6 +114,33 @@ const ColorSelection = () => {
             label="Critical"
             setColor={(critical) => setColors({ ...theme.colors, critical })}
           />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-fix-md">
+        <h5>{t("additional-colors")}</h5>
+        <div className="flex flex-wrap gap-fix-xs">
+          {Object.entries(theme.additionalColors).map(([name, color]) => (
+            <ColorPicker
+              key={name}
+              color={color}
+              label={name}
+              isOrigin
+              setAlternativeCustom={(custom) => {
+                setAltColor({ name, custom });
+              }}
+              setAlternativeColor={(altColor) => {
+                setAltColor({ name, altColor });
+              }}
+              setColor={(changedColor) => {
+                setAdditionalColors({
+                  ...theme.additionalColors,
+                  [name]: changedColor,
+                });
+                setAltColor({ name, currentColor: changedColor });
+              }}
+            />
+          ))}
         </div>
       </div>
 

@@ -7,6 +7,18 @@ export type DefaultColorMappingType = {
   critical: string;
 };
 
+export type AdditionalColorMappingType = {
+  yellow: string;
+  orange: string;
+  red: string;
+  pink: string;
+  violet: string;
+  blue: string;
+  cyan: string;
+  turquoise: string;
+  green: string;
+};
+
 export type ThemeTypographyType = {
   lineHeight: number;
   fontSize: string;
@@ -121,6 +133,7 @@ export type ThemeType = {
   elevation: ThemeSizing;
   border: ThemeBorder;
   colors: DefaultColorMappingType;
+  additionalColors: AdditionalColorMappingType;
   customColors?: Record<string, string>;
   transition: TransitionType;
   font: FontsType;
