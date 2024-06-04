@@ -19,7 +19,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@craftjs/core": "^0.2.6",
+    "@craftjs/core": "^0.2.7",
     "@db-ui/react-components": "0.1.5",
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.4.0",
