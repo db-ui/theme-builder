@@ -13,7 +13,6 @@ const Tabs = ({ tabs }: TabsPropsType) => {
   const { developerMode } = useThemeBuilderStore((state) => state);
 
   return (
-    /* @ts-expect-error missing prop */
     <DBTabs alignment="center" width="full" className="h-full">
       <DBTabList>
         {tabs
