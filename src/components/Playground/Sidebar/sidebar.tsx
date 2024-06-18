@@ -44,7 +44,6 @@ const Sidebar = ({ className }: SidebarType) => {
       data-density="functional"
       className={`border-l flex flex-col grow-0 shrink-0 w-[320px] overflow-hidden ${className || ""}`}
     >
-      {/* @ts-expect-error missing prop */}
       <DBTabs alignment="center" className="h-full" width="full">
         <DBTabList>
           <DBTabItem>{t("components")}</DBTabItem>
