@@ -137,31 +137,16 @@ export const downloadTheme = async (
     ),
     true,
   );
-  const colorSpeakingNamesLight = getCssPropertyAsString(
-    getSpeakingNames(speakingNames, allColors, false),
-    true,
-  );
-  const colorSpeakingNamesDark = getCssPropertyAsString(
-    getSpeakingNames(speakingNames, allColors, true),
+  const colorSpeakingNames = getCssPropertyAsString(
+    getSpeakingNames(speakingNames, allColors),
     true,
   );
   zip.file(
     `${webFolder}/${fileName}-colors-full.css`,
-    getFullColorCss(
-      colorsPalette,
-      colorSpeakingNamesLight,
-      colorSpeakingNamesDark,
-    ),
+    getFullColorCss(colorsPalette, colorSpeakingNames),
   );
   zip.file(`${webFolder}/${fileName}-palette.css`, colorsPalette);
-  zip.file(
-    `${webFolder}/${fileName}-speaking-names-light.css`,
-    colorSpeakingNamesLight,
-  );
-  zip.file(
-    `${webFolder}/${fileName}-speaking-names-dark.css`,
-    colorSpeakingNamesDark,
-  );
+  zip.file(`${webFolder}/${fileName}-speaking-names.css`, colorSpeakingNames);
   zip.file(`${webFolder}/README.md`, generateReadmeFile(fileName));
 
   // Custom Colors
@@ -177,12 +162,8 @@ export const downloadTheme = async (
       true,
     );
 
-    const customColorsSpeakingNamesLight = getCssPropertyAsString(
-      getSpeakingNames(speakingNames, theme.customColors, false),
-      true,
-    );
-    const customColorsSpeakingNamesDark = getCssPropertyAsString(
-      getSpeakingNames(speakingNames, theme.customColors, true),
+    const customColorsSpeakingNames = getCssPropertyAsString(
+      getSpeakingNames(speakingNames, theme.customColors),
       true,
     );
 
@@ -203,11 +184,7 @@ export const downloadTheme = async (
 
     zip.file(
       `${webFolder}/${customColorsFolder}/${fileName}-custom-colors-full.css`,
-      getFullColorCss(
-        customColorsPalette,
-        customColorsSpeakingNamesLight,
-        customColorsSpeakingNamesDark,
-      ),
+      getFullColorCss(customColorsPalette, customColorsSpeakingNames),
     );
 
     zip.file(
@@ -216,12 +193,8 @@ export const downloadTheme = async (
     );
 
     zip.file(
-      `${webFolder}/${customColorsFolder}/${fileName}-speaking-names-custom-colors-light.css`,
-      customColorsSpeakingNamesLight,
-    );
-    zip.file(
-      `${webFolder}/${customColorsFolder}/${fileName}-speaking-names-custom-colors-dark.css`,
-      customColorsSpeakingNamesDark,
+      `${webFolder}/${customColorsFolder}/${fileName}-speaking-names-custom-colors.css`,
+      customColorsSpeakingNames,
     );
   }
 

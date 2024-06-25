@@ -9,7 +9,7 @@ import {
 } from "./utils/outputs";
 
 const App = () => {
-  const { speakingNames, luminanceSteps, theme, darkMode } =
+  const { speakingNames, luminanceSteps, theme } =
     useThemeBuilderStore((state) => state);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const App = () => {
         luminanceSteps,
         theme.branding.alternativeColors,
       ),
-      ...getSpeakingNames(speakingNames, allColors, darkMode),
+      ...getSpeakingNames(speakingNames, allColors),
       ...getNonColorCssProperties(theme),
     };
 
@@ -38,7 +38,7 @@ const App = () => {
           .join(" "),
       );
     });
-  }, [speakingNames, theme, luminanceSteps, darkMode]);
+  }, [speakingNames, theme, luminanceSteps]);
 
   return (
     <>
