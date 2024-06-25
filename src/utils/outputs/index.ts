@@ -106,23 +106,19 @@ export const getCssThemeProperties = (theme: ThemeType): string => {
 
 export const getFullColorCss = (
   colorsPalette: string,
-  colorsSpeakingNamesLight: string,
-  colorsSpeakingNamesDark: string,
+  colorsSpeakingNames: string,
 ): string => {
   return `:root{
       ${colorsPalette}
-      ${colorsSpeakingNamesLight}
-      @media (prefers-color-scheme: dark) {
-      ${colorsSpeakingNamesLight}
-      }
+      ${colorsSpeakingNames}
       }
       
 [data-color-scheme="light"] {
-      ${colorsSpeakingNamesDark}
+	color-scheme: light;
 }
 
 [data-color-scheme="dark"] {
-      ${colorsSpeakingNamesDark}
+	color-scheme: dark;
 }
       `;
 };
@@ -293,23 +289,21 @@ export const getOriginColors = (
 
 export const getSpeakingNames = (
   speakingNames: SpeakingName[],
-  allColors: Record<string, string>,
-  darkMode: boolean,
+  allColors: Record<string, string>
 ): any => {
   let result: any = {};
   Object.entries(allColors).forEach((value) => {
     const name = value[0];
 
     if (isOriginColor(name)) {
-      const colorScheme = darkMode ? "dark" : "light";
       result = {
         ...result,
-        [`--db-${name}-on-enabled`]: `var(--db-${name}-on-${colorScheme})`,
-        [`--db-${name}-on-hover`]: `var(--db-${name}-on-hover-${colorScheme})`,
-        [`--db-${name}-on-pressed`]: `var(--db-${name}-on-pressed-${colorScheme})`,
-        [`--db-${name}-origin-enabled`]: `var(--db-${name}-origin-${colorScheme})`,
-        [`--db-${name}-origin-hover`]: `var(--db-${name}-hover-${colorScheme})`,
-        [`--db-${name}-origin-pressed`]: `var(--db-${name}-pressed-${colorScheme})`,
+        [`--db-${name}-on-enabled`]: `light-dark(var(--db-${name}-on-light),var(--db-${name}-on-dark))`,
+        [`--db-${name}-on-hover`]: `light-dark(var(--db-${name}-on-hover-light),var(--db-${name}-on-hover-dark))`,
+        [`--db-${name}-on-pressed`]: `light-dark(var(--db-${name}-on-pressed-light),var(--db-${name}-on-pressed-dark))`,
+        [`--db-${name}-origin-enabled`]: `light-dark(var(--db-${name}-origin-light),var(--db-${name}-origin-dark))`,
+        [`--db-${name}-origin-hover`]: `light-dark(var(--db-${name}-hover-light),var(--db-${name}-hover-dark))`,
+        [`--db-${name}-origin-pressed`]: `light-dark(var(--db-${name}-pressed-light),var(--db-${name}-pressed-dark))`,
       };
     }
 
@@ -319,18 +313,18 @@ export const getSpeakingNames = (
         speakingName.transparencyLight !== undefined
       ) {
         result[`--${prefix}-${name}-${speakingName.name}`] =
-          `color-mix(in srgb, transparent ${
-            darkMode
-              ? speakingName.transparencyDark
-              : speakingName.transparencyLight
+          `light-dark(color-mix(in srgb, transparent ${
+            speakingName.transparencyLight
           }%, var(--${prefix}-${name}-${
-            darkMode ? speakingName.dark : speakingName.light
-          }))`;
+            speakingName.light
+          })),color-mix(in srgb, transparent ${
+            speakingName.transparencyDark
+          }%, var(--${prefix}-${name}-${speakingName.dark})))`;
       } else {
         result[`--${prefix}-${name}-${speakingName.name}`] =
-          `var(--${prefix}-${name}-${
-            darkMode ? speakingName.dark : speakingName.light
-          })`;
+          `light-dark(var(--${prefix}-${name}-${
+            speakingName.light
+          }),var(--${prefix}-${name}-${speakingName.dark}))`;
       }
     });
   });

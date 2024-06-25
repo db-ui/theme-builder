@@ -21,10 +21,15 @@ const DefaultPage = ({
   const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
   return (
-    <div className="contents" data-density={density || "regular"}>
+    <div
+      className="contents"
+      data-density={density || "regular"}
+      data-color-scheme={darkMode ? "dark" : "light"}
+    >
       <DBPage
         className={className}
         variant="fixed"
+        data-color="neutral-bg-lvl-1"
         header={
           <DBHeader
             drawerOpen={drawerOpen}
