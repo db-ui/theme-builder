@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useCallback, useState } from "react";
-import { ColorPickerType } from "./data";
+import {useCallback, useState} from "react";
+import {ColorPickerType} from "./data";
 import "./index.scss";
-import { getContrast } from "../../../../../utils";
 import {
-  DBButton,
-  DBCheckbox,
-  DBDivider,
-  DBDrawer,
-  DBInfotext,
-  DBInput,
-  DBTooltip,
+    DBButton,
+    DBCheckbox,
+    DBDivider,
+    DBDrawer,
+    DBInfotext,
+    DBInput,
+    DBTag,
+    DBTooltip,
 } from "@db-ui/react-components";
-import { useTranslation } from "react-i18next";
-import { useThemeBuilderStore } from "../../../../../store";
-import { AlternativeColor } from "../../../../../utils/data.ts";
+import {useTranslation} from "react-i18next";
+import {useThemeBuilderStore} from "../../../../../store";
+import {AlternativeColor} from "../../../../../utils/data.ts";
 
 const ColorPicker = ({
   label,
@@ -50,30 +50,30 @@ const ColorPicker = ({
   return (
     <div className="color-picker-container">
       <div className="color-input-container">
-        <button
-          data-icon={isAddColor ? "plus" : undefined}
-          className="color-tag"
-          style={{
-            // @ts-expect-error
-            "--current-color": isOrigin
-              ? `var(--db-${label}-on-enabled)`
-              : getContrast("#fff", color) >= 4.5
-                ? "#fff"
-                : "#000",
-            backgroundColor: getColor(),
-            color: "var(--current-color)",
-            "--db-current-icon-color": "var(--current-color)",
-            borderColor: `var(--db-${label.toLowerCase()}-contrast-high-enabled)`,
-          }}
-          onClick={() => setOpen(true)}
-        >
-          {t(label)}
-          {!isAddColor && (
-            <DBTooltip placement="bottom" className="db-neutral-bg-lvl-1">
-              {t("adaptColor")}
-            </DBTooltip>
-          )}
-        </button>
+        <DBTag emphasis="strong">
+          <button
+            className="color-tag"
+            data-icon={isAddColor ? "plus" : undefined}
+            style={{
+              // @ts-expect-error
+              "--db-current-origin-color": getColor(),
+              "--db-current-icon-color": `var(--db-${label.toLowerCase()}-on-contrast-enabled)`,
+              "--db-current-color-enabled": `var(--db-${label.toLowerCase()}-on-contrast-enabled)`,
+              "--db-current-color-bg-enabled": `var(--db-${label.toLowerCase()}-contrast-high-enabled)`,
+              "--db-current-color-bg-hover": `var(--db-${label.toLowerCase()}-contrast-high-hover)`,
+              "--db-current-color-bg-pressed": `var(--db-${label.toLowerCase()}-contrast-high-pressed)`,
+              "--db-current-color-border": `var(--db-${label.toLowerCase()}-border)`,
+            }}
+            onClick={() => setOpen(true)}
+          >
+            {t(label)}
+            {!isAddColor && (
+              <DBTooltip placement="bottom" className="db-neutral-bg-lvl-1">
+                {t("adaptColor")}
+              </DBTooltip>
+            )}
+          </button>
+        </DBTag>
         <DBDrawer
           backdrop="weak"
           open={open}
