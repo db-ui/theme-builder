@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {useCallback, useState} from "react";
-import {ColorPickerType} from "./data";
+import { useCallback, useState } from "react";
+import { ColorPickerType } from "./data";
 import "./index.scss";
 import {
-    DBButton,
-    DBCheckbox,
-    DBDivider,
-    DBDrawer,
-    DBInfotext,
-    DBInput,
-    DBTag,
-    DBTooltip,
+  DBButton,
+  DBCheckbox,
+  DBDivider,
+  DBDrawer,
+  DBInfotext,
+  DBInput,
+  DBTag,
+  DBTooltip,
 } from "@db-ui/react-components";
-import {useTranslation} from "react-i18next";
-import {useThemeBuilderStore} from "../../../../../store";
-import {AlternativeColor} from "../../../../../utils/data.ts";
+import { useTranslation } from "react-i18next";
+import { useThemeBuilderStore } from "../../../../../store";
+import { AlternativeColor } from "../../../../../utils/data.ts";
 
 const ColorPicker = ({
   label,
@@ -60,8 +60,8 @@ const ColorPicker = ({
               "--db-current-icon-color": `var(--db-${label.toLowerCase()}-on-contrast-enabled)`,
               "--db-current-color-enabled": `var(--db-${label.toLowerCase()}-on-contrast-enabled)`,
               "--db-current-color-bg-enabled": `var(--db-${label.toLowerCase()}-contrast-high-enabled)`,
-              "--db-current-color-bg-hover": `var(--db-${label.toLowerCase()}-contrast-high-hover)`,
-              "--db-current-color-bg-pressed": `var(--db-${label.toLowerCase()}-contrast-high-pressed)`,
+              "--db-current-color-contrast-high-hover": `var(--db-${label.toLowerCase()}-contrast-high-hover)`,
+              "--db-current-color-contrast-high-pressed": `var(--db-${label.toLowerCase()}-contrast-high-pressed)`,
               "--db-current-color-border": `var(--db-${label.toLowerCase()}-border)`,
             }}
             onClick={() => setOpen(true)}
