@@ -50,7 +50,7 @@ const ColorPicker = ({
   return (
     <div className="color-picker-container">
       <div className="color-input-container">
-        <DBTag emphasis="strong">
+        <DBTag>
           <button
             className="color-tag"
             data-icon={isAddColor ? "plus" : undefined}
