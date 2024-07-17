@@ -23,7 +23,7 @@
     "@db-ui/react-components": "0.2.3",
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.5.1",
-    "@tiptap/extension-text-style": "^2.4.0",
+    "@tiptap/extension-text-style": "^2.5.4",
     "@tiptap/extension-underline": "^2.5.1",
     "@tiptap/pm": "^2.4.0",
     "@tiptap/react": "^2.5.4",
