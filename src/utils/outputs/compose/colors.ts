@@ -1,23 +1,25 @@
-import { AlternativeColor, HeisslufType, SpeakingName } from "../../data.ts";
-import { isOriginColor, kebabCase } from "../../index.ts";
+import { DefaultColorType, HeisslufType, SpeakingName } from "../../data.ts";
+import { kebabCase } from "../../index.ts";
 import { replacePackageName } from "./shared.ts";
-import {getOriginColorsLightAndDark, getPalette} from "../index.ts";
+import { getPalette } from "../index.ts";
+import { FALLBACK_COLOR } from "../../../constants.ts";
 
 const originAdditionalColors = [
-  { name: "onEnabled", light: 0, dark: 0 },
-  { name: "originEnabled", light: 0, dark: 0 },
-  { name: "originHover", light: 0, dark: 0 },
+  { name: "onOriginDefault", light: 0, dark: 0 },
+  { name: "onOriginHovered", light: 0, dark: 0 },
+  { name: "onOriginPressed", light: 0, dark: 0 },
+  { name: "originDefault", light: 0, dark: 0 },
+  { name: "originHovered", light: 0, dark: 0 },
   { name: "originPressed", light: 0, dark: 0 },
 ];
 
-const getComposeColorFromHex = (hex: string): string => {
+const getComposeColorFromHex = (hex: string = FALLBACK_COLOR): string => {
   return `Color(0xff${hex.replace("#", "")})`;
 };
 
 export const generateComposeColorFile = (
-  allColors: Record<string, string>,
+  allColors: Record<string, DefaultColorType>,
   luminanceSteps: number[],
-  alternativeColors: Record<string, AlternativeColor>,
 ): string => {
   let resolvedTokenFile: string = `package ${replacePackageName}.theme
   
@@ -30,30 +32,28 @@ object Colors {
     allColors,
     luminanceSteps,
   );
-  Object.entries(palette).forEach(([name, hslType]) => {
+  Object.entries(allColors).forEach(([name, color]) => {
+    const hslType = palette[name];
     hslType.forEach((hsl) => {
       const key = `${name}${hsl.index}`;
       resolvedTokenFile += `val ${key} = ${getComposeColorFromHex(hsl.hex)}\n`;
     });
 
-    if (isOriginColor(name)) {
-      const { lightOrigin, darkOrigin } = getOriginColorsLightAndDark(
-        allColors,
-        luminanceSteps,
-        alternativeColors,
-        name,
-      );
-      if (lightOrigin && darkOrigin) {
-        resolvedTokenFile += `val ${name}OnLight = ${getComposeColorFromHex(lightOrigin.onColor)}\n`;
-        resolvedTokenFile += `val ${name}OriginLight = ${getComposeColorFromHex(lightOrigin.color)}\n`;
-        resolvedTokenFile += `val ${name}HoverLight = ${getComposeColorFromHex(lightOrigin.hoverColor)}\n`;
-        resolvedTokenFile += `val ${name}PressedLight = ${getComposeColorFromHex(lightOrigin.pressedColor)}\n`;
-        resolvedTokenFile += `val ${name}OnDark = ${getComposeColorFromHex(darkOrigin.onColor)}\n`;
-        resolvedTokenFile += `val ${name}OriginDark = ${getComposeColorFromHex(darkOrigin.color)}\n`;
-        resolvedTokenFile += `val ${name}HoverDark = ${getComposeColorFromHex(darkOrigin.hoverColor)}\n`;
-        resolvedTokenFile += `val ${name}PressedDark = ${getComposeColorFromHex(darkOrigin.pressedColor)}\n`;
-      }
-    }
+    resolvedTokenFile += `val ${name}Origin = ${getComposeColorFromHex(color.origin)}\n`;
+
+    resolvedTokenFile += `val ${name}OnOriginDefaultLight = ${getComposeColorFromHex(color.onOriginLight)}\n`;
+    resolvedTokenFile += `val ${name}OnOriginHoveredLight = ${getComposeColorFromHex(color.onOriginLightHovered)}\n`;
+    resolvedTokenFile += `val ${name}OnOriginPressedLight = ${getComposeColorFromHex(color.onOriginLightPressed)}\n`;
+    resolvedTokenFile += `val ${name}OriginDefaultLight = ${getComposeColorFromHex(color.originLight)}\n`;
+    resolvedTokenFile += `val ${name}OriginHoveredLight = ${getComposeColorFromHex(color.originLightHovered)}\n`;
+    resolvedTokenFile += `val ${name}OriginPressedLight = ${getComposeColorFromHex(color.originLightPressed)}\n`;
+
+    resolvedTokenFile += `val ${name}OnOriginDefaultDark = ${getComposeColorFromHex(color.onOriginDark)}\n`;
+    resolvedTokenFile += `val ${name}OnOriginHoveredDark = ${getComposeColorFromHex(color.onOriginDarkHovered)}\n`;
+    resolvedTokenFile += `val ${name}OnOriginPressedDark = ${getComposeColorFromHex(color.onOriginDarkPressed)}\n`;
+    resolvedTokenFile += `val ${name}OriginDefaultDark = ${getComposeColorFromHex(color.originDark)}\n`;
+    resolvedTokenFile += `val ${name}OriginHoveredDark = ${getComposeColorFromHex(color.originDarkHovered)}\n`;
+    resolvedTokenFile += `val ${name}OriginPressedDark = ${getComposeColorFromHex(color.originDarkPressed)}\n`;
   });
 
   resolvedTokenFile += "}";
@@ -90,12 +90,12 @@ const generateColorSchemeDarkLight = (
       }
     }
 
-    if (isOriginColor(name)) {
-      resolvedScheme += `Colors.${name}On${colorScheme},\n`;
-      resolvedScheme += `Colors.${name}Origin${colorScheme},\n`;
-      resolvedScheme += `Colors.${name}Hover${colorScheme},\n`;
-      resolvedScheme += `Colors.${name}Pressed${colorScheme},\n`;
-    }
+    resolvedScheme += `Colors.${name}OnOriginDefault${colorScheme},\n`;
+    resolvedScheme += `Colors.${name}OnOriginHovered${colorScheme},\n`;
+    resolvedScheme += `Colors.${name}OnOriginPressed${colorScheme},\n`;
+    resolvedScheme += `Colors.${name}OriginDefault${colorScheme},\n`;
+    resolvedScheme += `Colors.${name}OriginHovered${colorScheme},\n`;
+    resolvedScheme += `Colors.${name}OriginPressed${colorScheme},\n`;
     resolvedScheme += `)\n`;
   }
 
@@ -117,7 +117,7 @@ const generateColorSchemeDarkLight = (
 export const generateColorScheme = (
   fileName: string,
   speakingNames: SpeakingName[],
-  allColors: Record<string, string>,
+  allColors: Record<string, DefaultColorType>,
 ): string => {
   const resolvedNames: Record<string, string> = {};
   const colorKeys = Object.keys(allColors);
@@ -134,9 +134,7 @@ import androidx.compose.ui.graphics.Color
 
   // 1. Generate semantic color classes like 'NeutralColors'
   for (const name of colorKeys) {
-    const allSpeakingNames = isOriginColor(name)
-      ? [...speakingNames, ...originAdditionalColors]
-      : speakingNames;
+    const allSpeakingNames = [...speakingNames, ...originAdditionalColors];
     resolvedScheme += `class ${kebabCase(name)}Colors(\n`;
     for (const speakingName of allSpeakingNames) {
       const resolvedName = `${kebabCase(speakingName.name, true)}`;

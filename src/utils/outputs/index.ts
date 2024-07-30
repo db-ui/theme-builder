@@ -1,14 +1,11 @@
 import {
-  AlternativeColor,
+  DefaultColorType,
   HeisslufType,
-  OriginColor,
   SpeakingName,
   ThemeType,
 } from "../data.ts";
 import traverse from "traverse";
-import { Hsluv } from "hsluv";
 import { getHeissluftColors } from "../generate-colors.ts";
-import { getContrast, isOriginColor } from "../index.ts";
 
 export const prefix = "db";
 
@@ -124,7 +121,7 @@ export const getFullColorCss = (
 };
 
 export const getPalette = (
-  allColors: object,
+  allColors: Record<string, DefaultColorType>,
   luminanceSteps: number[],
 ): Record<string, HeisslufType[]> =>
   Object.entries(allColors)
@@ -133,7 +130,7 @@ export const getPalette = (
       const color = value[1];
       const hslColors: HeisslufType[] = getHeissluftColors(
         name,
-        color,
+        color.origin,
         luminanceSteps,
       );
 
@@ -146,30 +143,9 @@ export const getPalette = (
       {},
     );
 
-export const getOriginColorsLightAndDark = (
-  allColors: Record<string, string>,
-  luminanceSteps: number[],
-  alternativeColors: Record<string, AlternativeColor>,
-  name: string,
-): {
-  lightOrigin: OriginColor | undefined;
-  darkOrigin: OriginColor | undefined;
-} => {
-  const altColor = alternativeColors[name];
-  if (!altColor) return { lightOrigin: undefined, darkOrigin: undefined };
-
-  const lightColor = altColor.dark ? allColors[name] : altColor.hex;
-  const darkColor = !altColor.dark ? allColors[name] : altColor.hex;
-  const lightOrigin = getOriginColors(lightColor, false, luminanceSteps);
-  const darkOrigin = getOriginColors(darkColor, true, luminanceSteps);
-
-  return { lightOrigin, darkOrigin };
-};
-
 export const getPaletteOutput = (
-  allColors: Record<string, string>,
+  allColors: Record<string, DefaultColorType>,
   luminanceSteps: number[],
-  alternativeColors: Record<string, AlternativeColor>,
 ): any => {
   const palette: Record<string, HeisslufType[]> = getPalette(
     allColors,
@@ -177,135 +153,58 @@ export const getPaletteOutput = (
   );
   const result: any = {};
   Object.entries(palette).forEach((color) => {
-    const name = color[0];
+    const name = color[0].toLowerCase();
     const hslType: HeisslufType[] = color[1];
     hslType.forEach((hsl) => {
       result[`--${prefix}-${name}-${hsl.index ?? hsl.name}`] = hsl.hex;
     });
+  });
 
-    if (isOriginColor(name)) {
-      const { lightOrigin, darkOrigin } = getOriginColorsLightAndDark(
-        allColors,
-        luminanceSteps,
-        alternativeColors,
-        name,
-      );
-      if (lightOrigin && darkOrigin) {
-        result[`--${prefix}-${name}-on-pressed-light`] =
-          lightOrigin.onColorPressed;
-        result[`--${prefix}-${name}-on-hover-light`] = lightOrigin.onColorHover;
-        result[`--${prefix}-${name}-on-light`] = lightOrigin.onColor;
-        result[`--${prefix}-${name}-origin-light`] = lightOrigin.color;
-        result[`--${prefix}-${name}-hover-light`] = lightOrigin.hoverColor;
-        result[`--${prefix}-${name}-pressed-light`] = lightOrigin.pressedColor;
-        result[`--${prefix}-${name}-on-pressed-dark`] =
-          darkOrigin.onColorPressed;
-        result[`--${prefix}-${name}-on-hover-dark`] = darkOrigin.onColorHover;
-        result[`--${prefix}-${name}-on-dark`] = darkOrigin.onColor;
-        result[`--${prefix}-${name}-origin-dark`] = darkOrigin.color;
-        result[`--${prefix}-${name}-hover-dark`] = darkOrigin.hoverColor;
-        result[`--${prefix}-${name}-pressed-dark`] = darkOrigin.pressedColor;
-      }
-    }
+  Object.entries(allColors).forEach(([unformattedName, color]) => {
+    const name = unformattedName.toLowerCase();
+    result[`--${prefix}-${name}-origin`] = color.origin;
+    result[`--${prefix}-${name}-origin-light-default`] = color.originLight;
+    result[`--${prefix}-${name}-origin-light-hovered`] = color.originLightHovered;
+    result[`--${prefix}-${name}-origin-light-pressed`] =
+      color.originLightPressed;
+    result[`--${prefix}-${name}-on-origin-light-default`] = color.onOriginLight;
+    result[`--${prefix}-${name}-on-origin-light-hovered`] =
+      color.onOriginLightHovered;
+    result[`--${prefix}-${name}-on-origin-light-pressed`] =
+      color.onOriginLightPressed;
+
+    result[`--${prefix}-${name}-origin-dark-default`] = color.originDark;
+    result[`--${prefix}-${name}-origin-dark-hovered`] = color.originDarkHovered;
+    result[`--${prefix}-${name}-origin-dark-pressed`] = color.originDarkPressed;
+    result[`--${prefix}-${name}-on-origin-dark-default`] = color.onOriginDark;
+    result[`--${prefix}-${name}-on-origin-dark-hovered`] =
+      color.onOriginDarkHovered;
+    result[`--${prefix}-${name}-on-origin-dark-pressed`] =
+      color.onOriginDarkPressed;
   });
 
   return result;
 };
 
-// We use this for hover/pressed to make sure the colors aren't to similar
-const originLuminanceMinDifference: number = 5;
-
-/**
- * if we are in light mode and the origin color has more than 20 luminance we can darken the states
- * this would be the best case, otherwise we go to a fallback
- * dark-mode is the same but inverted
- * @param color
- * @param darkMode
- * @param luminanceSteps
- */
-export const getOriginColors = (
-  color: string,
-  darkMode: boolean,
-  luminanceSteps: number[],
-): OriginColor => {
-  const hslColors: HeisslufType[] = getHeissluftColors(
-    "",
-    color,
-    luminanceSteps,
-  );
-  const hsluv = new Hsluv();
-  hsluv.hex = color;
-  hsluv.hexToHsluv();
-  const originLuminance = hsluv.hsluv_l;
-
-  const isWhiteContrastEnough = getContrast("#fff", color) >= 4.5;
-  const onColor = isWhiteContrastEnough ? "#fff" : "#000";
-  const onColorHover =
-    (isWhiteContrastEnough ? hslColors.at(-2) : hslColors[2])?.hex || "#ff69b4";
-  const onColorPressed =
-    (isWhiteContrastEnough ? hslColors.at(-3) : hslColors[3])?.hex || "#ff69b4";
-  let hoverColor: string | undefined;
-  let pressedColor: string | undefined;
-
-  const bestCompareFn = darkMode
-    ? (luminance: number) =>
-        luminance > originLuminance + originLuminanceMinDifference
-    : (luminance: number) =>
-        luminance < originLuminance - originLuminanceMinDifference;
-  const fallbackCompareFn = darkMode
-    ? (luminance: number) =>
-        luminance < originLuminance - originLuminanceMinDifference
-    : (luminance: number) =>
-        luminance > originLuminance + originLuminanceMinDifference;
-
-  let foundColors = hslColors.filter((hsl) => bestCompareFn(hsl.luminance));
-  foundColors = darkMode ? foundColors : foundColors.reverse();
-  if (foundColors.length > 2) {
-    hoverColor = foundColors[0].hex;
-    pressedColor = foundColors[1].hex;
-  }
-
-  if (!hoverColor || !pressedColor) {
-    foundColors = hslColors.filter((hsl) => fallbackCompareFn(hsl.luminance));
-    foundColors = darkMode ? foundColors.reverse() : foundColors;
-    if (foundColors.length > 2) {
-      hoverColor = foundColors[0].hex;
-      pressedColor = foundColors[1].hex;
-    } else {
-      hoverColor = "#ff69b4";
-      pressedColor = "#ff69b4";
-    }
-  }
-
-  return {
-    color,
-    onColor,
-    onColorHover,
-    onColorPressed,
-    hoverColor,
-    pressedColor,
-  };
-};
-
 export const getSpeakingNames = (
   speakingNames: SpeakingName[],
-  allColors: Record<string, string>
+  allColors: Record<string, DefaultColorType>,
 ): any => {
-  let result: any = {};
-  Object.entries(allColors).forEach((value) => {
-    const name = value[0];
-
-    if (isOriginColor(name)) {
-      result = {
-        ...result,
-        [`--db-${name}-on-enabled`]: `light-dark(var(--db-${name}-on-light),var(--db-${name}-on-dark))`,
-        [`--db-${name}-on-hover`]: `light-dark(var(--db-${name}-on-hover-light),var(--db-${name}-on-hover-dark))`,
-        [`--db-${name}-on-pressed`]: `light-dark(var(--db-${name}-on-pressed-light),var(--db-${name}-on-pressed-dark))`,
-        [`--db-${name}-origin-enabled`]: `light-dark(var(--db-${name}-origin-light),var(--db-${name}-origin-dark))`,
-        [`--db-${name}-origin-hover`]: `light-dark(var(--db-${name}-hover-light),var(--db-${name}-hover-dark))`,
-        [`--db-${name}-origin-pressed`]: `light-dark(var(--db-${name}-pressed-light),var(--db-${name}-pressed-dark))`,
-      };
-    }
+  const result: any = {};
+  Object.entries(allColors).forEach(([unformattedName]) => {
+    const name = unformattedName.toLowerCase();
+    result[`--${prefix}-${name}-origin-default`] =
+      `light-dark(var(--${prefix}-${name}-origin-light-default),var(--${prefix}-${name}-origin-dark-default))`;
+    result[`--${prefix}-${name}-origin-hovered`] =
+      `light-dark(var(--${prefix}-${name}-origin-light-hovered),var(--${prefix}-${name}-origin-dark-hovered))`;
+    result[`--${prefix}-${name}-origin-pressed`] =
+      `light-dark(var(--${prefix}-${name}-origin-light-pressed),var(--${prefix}-${name}-origin-dark-pressed))`;
+    result[`--${prefix}-${name}-on-origin-default`] =
+      `light-dark(var(--${prefix}-${name}-on-origin-light-default),var(--${prefix}-${name}-on-origin-dark-default))`;
+    result[`--${prefix}-${name}-on-origin-hovered`] =
+      `light-dark(var(--${prefix}-${name}-on-origin-light-hovered),var(--${prefix}-${name}-on-origin-dark-hovered))`;
+    result[`--${prefix}-${name}-on-origin-pressed`] =
+      `light-dark(var(--${prefix}-${name}-on-origin-light-pressed),var(--${prefix}-${name}-on-origin-dark-pressed))`;
 
     speakingNames.forEach((speakingName) => {
       if (

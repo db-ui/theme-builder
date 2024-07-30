@@ -26,7 +26,19 @@
           border: variables.$db-border-height-3xs solid
             colors.$db-current-color-border;
         }
+
+        &::after {
+          --db-current-icon-color: var(--db-warning-contrast-low-enabled);
+          --db-icon-font-family: "db-ux-filled";
+          margin-inline-start: 0;
+        }
       }
+    }
+
+    .db-drawer-content {
+      overflow-y: auto;
+      block-size: 100%;
+      margin-bottom: variables.$db-spacing-fixed-2xs;
     }
   }
 }

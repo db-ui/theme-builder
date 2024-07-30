@@ -7,24 +7,22 @@ import {
   getPaletteOutput,
   getSpeakingNames,
 } from "./utils/outputs";
+import { DefaultColorType } from "./utils/data.ts";
 
 const App = () => {
-  const { speakingNames, luminanceSteps, theme } =
-    useThemeBuilderStore((state) => state);
+  const { speakingNames, luminanceSteps, theme } = useThemeBuilderStore(
+    (state) => state,
+  );
 
   useEffect(() => {
-    const allColors: Record<string, string> = {
+    const allColors: Record<string, DefaultColorType> = {
       ...theme.colors,
       ...theme.additionalColors,
       ...theme.customColors,
     };
 
     const cssProps: any = {
-      ...getPaletteOutput(
-        allColors,
-        luminanceSteps,
-        theme.branding.alternativeColors,
-      ),
+      ...getPaletteOutput(allColors, luminanceSteps),
       ...getSpeakingNames(speakingNames, allColors),
       ...getNonColorCssProperties(theme),
     };

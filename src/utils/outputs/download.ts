@@ -1,9 +1,5 @@
 import JSZip from "jszip";
-import {
-  SpeakingName,
-  speakingNamesDefaultMapping,
-  ThemeType,
-} from "../data.ts";
+import { DefaultColorType, SpeakingName, ThemeType } from "../data.ts";
 import { generateReadmeFile } from "./web/readme.ts";
 import { generateThemeFile } from "./compose/theme.ts";
 import {
@@ -55,7 +51,7 @@ export const downloadTheme = async (
   luminanceSteps: number[],
   theme: ThemeType,
 ) => {
-  const allColors: Record<string, string> = {
+  const allColors: Record<string, DefaultColorType> = {
     ...theme.colors,
     ...theme.additionalColors,
     ...theme.customColors,
@@ -102,11 +98,7 @@ export const downloadTheme = async (
   );
   zip.file(
     `${androidDataFolder}/Colors.kt`,
-    generateComposeColorFile(
-      allColors,
-      luminanceSteps,
-      theme.branding.alternativeColors,
-    ),
+    generateComposeColorFile(allColors, luminanceSteps),
   );
   zip.file(`${androidDataFolder}/Density.kt`, generateDensityEnumFile());
 
@@ -114,13 +106,7 @@ export const downloadTheme = async (
   const utilsFolder: string = "Utils";
   zip.file(
     `${utilsFolder}/${fileName}-sketch-colors.json`,
-    getSketchColorsAsString(
-      speakingNames,
-      allColors,
-      luminanceSteps,
-      speakingNamesDefaultMapping,
-      theme.branding.alternativeColors,
-    ),
+    getSketchColorsAsString(speakingNames, allColors, luminanceSteps),
   );
   zip.file(`${utilsFolder}/${fileName}-font-faces.scss`, getFontFaces(theme));
 
@@ -130,11 +116,7 @@ export const downloadTheme = async (
   zip.file(`${webFolder}/${fileName}-theme.css`, themeProperties);
 
   const colorsPalette = getCssPropertyAsString(
-    getPaletteOutput(
-      allColors,
-      luminanceSteps,
-      theme.branding.alternativeColors,
-    ),
+    getPaletteOutput(allColors, luminanceSteps),
     true,
   );
   const colorSpeakingNames = getCssPropertyAsString(
@@ -154,11 +136,7 @@ export const downloadTheme = async (
     const customColorsFolder: string = "Custom Colors";
 
     const customColorsPalette = getCssPropertyAsString(
-      getPaletteOutput(
-        theme.customColors,
-        luminanceSteps,
-        theme.branding.alternativeColors,
-      ),
+      getPaletteOutput(theme.customColors, luminanceSteps),
       true,
     );
 

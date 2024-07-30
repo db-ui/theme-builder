@@ -1,5 +1,5 @@
 import { ColorsPropsType } from "./index.tsx";
-import { isOriginColor, kebabCase } from "../../../../../utils";
+import { kebabCase } from "../../../../../utils";
 
 const ColorPreview = ({
   colorName,
@@ -65,12 +65,10 @@ const ColorPreview = ({
 const Colors = ({ colorName }: ColorsPropsType) => (
   <div className="flex flex-col gap-fix-md">
     {/* Brand origin */}
-    {isOriginColor(colorName) && (
-      <div className="flex flex-col md:flex-row gap-fix-md">
-        <ColorPreview colorName={colorName} type="on" />
-        <ColorPreview colorName={colorName} type="origin" />
-      </div>
-    )}
+    <div className="flex flex-col md:flex-row gap-fix-md">
+      <ColorPreview colorName={colorName} type="on" />
+      <ColorPreview colorName={colorName} type="origin" />
+    </div>
     {/* On Colors */}
     <div className="flex flex-col md:flex-row gap-fix-md">
       <ColorPreview colorName={colorName} type="on-bg" />

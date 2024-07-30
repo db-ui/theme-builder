@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import chroma from "chroma-js";
 import PaletteBox from "./PaletteBox";
 import { isValidColor } from "../../../../utils";
+import {DefaultColorType} from "../../../../utils/data.ts";
 
 const ColorPalettes = () => {
   const { luminanceSteps, developerMode, theme } = useThemeBuilderStore(
@@ -14,7 +15,7 @@ const ColorPalettes = () => {
   );
   const { t } = useTranslation();
 
-  const [allColors, setAllColors] = useState<Record<string, string>>({});
+  const [allColors, setAllColors] = useState<Record<string, DefaultColorType>>({});
 
   useEffect(() => {
     setAllColors({
@@ -58,11 +59,11 @@ const ColorPalettes = () => {
         </div>
 
         {Object.entries(allColors)
-          .filter(([, value]) => isValidColor(value))
+          .filter(([, value]) => isValidColor(value.origin))
           .map(([key, value], colorIndex) => {
             const heissluftColors = getHeissluftColors(
               key,
-              value,
+              value.origin,
               luminanceSteps,
             );
             return (
