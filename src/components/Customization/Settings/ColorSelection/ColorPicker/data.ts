@@ -129,7 +129,7 @@ const getOriginBackgroundColor = (
   origin: string,
   luminanceSteps: number[],
   color: string,
-) => {
+): DefaultColorType => {
   const heissluftColors = getHeissluftColors(name, origin, luminanceSteps);
   const {
     originLightAlternative,
@@ -137,9 +137,9 @@ const getOriginBackgroundColor = (
     originBgLight,
     originBgDark,
   } = getAccessibleOriginColors(heissluftColors, color);
-  const { hoverColor: originLightHover, pressedColor: originLightPressed } =
+  const { hoverColor: originLightHovered, pressedColor: originLightPressed } =
     getHoverPressedColors(color, false);
-  const { hoverColor: originDarkHover, pressedColor: originDarkPressed } =
+  const { hoverColor: originDarkHovered, pressedColor: originDarkPressed } =
     getHoverPressedColors(color, true);
 
   return {
@@ -149,12 +149,12 @@ const getOriginBackgroundColor = (
     originLight: color,
     originLightAlternative,
     originLightAccessible: color === originLightAlternative,
-    originLightHover,
+    originLightHovered,
     originLightPressed,
     originDark: color,
     originDarkAlternative,
     originDarkAccessible: color === originDarkAlternative,
-    originDarkHover,
+    originDarkHovered,
     originDarkPressed,
   };
 };

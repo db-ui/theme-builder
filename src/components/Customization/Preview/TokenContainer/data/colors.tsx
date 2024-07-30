@@ -21,26 +21,26 @@ const ColorPreview = ({
         )}
       </p>
       <div className="flex flex-col">
-        {(isBorder ? ["enabled"] : ["enabled", "hover", "pressed"]).map(
+        {(isBorder ? ["default"] : ["default", "hovered", "pressed"]).map(
           (state) => {
             const bgColor =
               `var(--db-${colorName}-${type}` +
-              `${bgTransparent && state === "enabled" ? `-${bgTransparent}` : ""}` +
+              `${bgTransparent && state === "default" ? `-${bgTransparent}` : ""}` +
               `${isBorder ? "" : `-${state}`})`;
-            const borderColor: string = `var(--db-${colorName}-border)`;
-            let color = `var(--db-${colorName}-on-bg-enabled)`;
+            const borderColor: string = `var(--db-${colorName}-on-bg-basic-emphasis-60-default)`;
+            let color = `var(--db-${colorName}-on-bg-basic-emphasis-100-default)`;
             if (type.startsWith("on-bg")) {
-              color = `var(--db-${colorName}-bg-lvl-1-enabled)`;
+              color = `var(--db-${colorName}-bg-basic-level-1-default)`;
             } else if (type === "origin") {
-              color = `var(--db-${colorName}-on-enabled)`;
+              color = `var(--db-${colorName}-on-origin-default)`;
             } else if (type === "on") {
-              color = `var(--db-${colorName}-origin-enabled)`;
+              color = `var(--db-${colorName}-origin-default)`;
             } else if (
-              type === "contrast-high" ||
-              type === "contrast-low" ||
-              type === "border"
+              type === "inverted-contrast-high" ||
+              type === "inverted-contrast-low" ||
+              type === "inverted-contrast-max"
             ) {
-              color = `var(--db-${colorName}-on-contrast-enabled)`;
+              color = `var(--db-${colorName}-on-inverted-default)`;
             }
             return (
               <div

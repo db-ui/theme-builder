@@ -152,19 +152,19 @@ export const getPaletteOutput = (
     luminanceSteps,
   );
   const result: any = {};
-  Object.entries(palette).forEach((color) => {
-    const name = color[0].toLowerCase();
-    const hslType: HeisslufType[] = color[1];
-    hslType.forEach((hsl) => {
-      result[`--${prefix}-${name}-${hsl.index ?? hsl.name}`] = hsl.hex;
-    });
-  });
 
   Object.entries(allColors).forEach(([unformattedName, color]) => {
     const name = unformattedName.toLowerCase();
+
+    const hslType: HeisslufType[] = palette[unformattedName];
+    hslType.forEach((hsl) => {
+      result[`--${prefix}-${name}-${hsl.index ?? hsl.name}`] = hsl.hex;
+    });
+
     result[`--${prefix}-${name}-origin`] = color.origin;
     result[`--${prefix}-${name}-origin-light-default`] = color.originLight;
-    result[`--${prefix}-${name}-origin-light-hovered`] = color.originLightHovered;
+    result[`--${prefix}-${name}-origin-light-hovered`] =
+      color.originLightHovered;
     result[`--${prefix}-${name}-origin-light-pressed`] =
       color.originLightPressed;
     result[`--${prefix}-${name}-on-origin-light-default`] = color.onOriginLight;
