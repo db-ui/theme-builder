@@ -31,7 +31,7 @@
     "@types/node": "^22.0.0",
     "ace-builds": "1.35.4",
     "apca-w3": "^0.1.9",
-    "chroma-js": "^2.4.2",
+    "chroma-js": "^2.6.0",
     "dompurify": "^3.1.6",
     "hsluv": "^1.0.1",
     "html-react-parser": "^5.1.12",
