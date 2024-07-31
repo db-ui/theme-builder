@@ -113,11 +113,11 @@ export const getOriginOnColors = (
     hsluv.hsluvToHex();
   }
 
-  const color = customFgColor ?? originBgColor;
+  const color = customFgColor ?? hsluv.hex;
   const contrast = getContrast(originBgColor, color);
 
   return {
-    onOrigin: customFgColor ?? hsluv.hex,
+    onOrigin: color,
     onOriginAlternative: hsluv.hex,
     onOriginAccessible: contrast === 1 || contrast >= 4.5,
     ...getHoverPressedColors(color, darkMode),
