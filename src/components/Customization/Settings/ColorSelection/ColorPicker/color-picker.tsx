@@ -71,7 +71,7 @@ const ColorPicker = ({
                     "--db-current-color-bg-enabled": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-default)`,
                     "--db-current-color-contrast-high-hover": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-80-hovered)`,
                     "--db-current-color-contrast-high-pressed": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-80-pressed)`,
-                    "--db-current-color-border": `var(--db-${label.toLowerCase()}-on-bg-basic-60-default)`,
+                    "--db-current-color-border": `var(--db-${label.toLowerCase()}-on-bg-basic-emphasis-60-default)`,
                   }
             }
             onClick={() => setOpen(true)}
