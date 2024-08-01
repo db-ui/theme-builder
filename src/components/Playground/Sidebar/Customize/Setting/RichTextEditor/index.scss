@@ -18,7 +18,7 @@
     @extend %component-border;
 
     background-color: colors.$db-current-color-bg-transparent-semi-enabled;
-    caret-color: colors.$db-current-color-enabled;
+    caret-color: colors.$db-current-color-on-bg-enabled;
     padding: variables.$db-spacing-fixed-xs variables.$db-spacing-fixed-sm;
     display: flex;
     flex-direction: column;

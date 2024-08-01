@@ -13,7 +13,7 @@ export const generateCustomColorClass = (colorName: string): string => {
 .db-${colorName}-contrast-low,
 .db-${colorName}-contrast-low-interactive {
 	background: var(--db-current-color-bg-enabled);
-	color: var(--db-current-color-enabled);
+	color: var(--db-current-color-on-bg-enabled);
 }
 .db-${colorName}-bg [data-bg-weight="1"]:after,
 .db-${colorName}-bg [data-bg-weight="1"]:before,
