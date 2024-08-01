@@ -12,7 +12,7 @@ const BorderHeight = () => (
           className="rounded w-siz-xl"
           style={{
             height: `var(--db-border-height-${name})`,
-            border: `var(--db-border-height-${name}) solid var(--db-brand-border)`,
+            border: `var(--db-border-height-${name}) solid var(--db-brand-on-bg-basic-emphasis-60-default)`,
           }}
         />
         <DBInfotext semantic="informational" icon="none">
