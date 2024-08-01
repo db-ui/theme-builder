@@ -1,4 +1,4 @@
-import { KeyValueType } from "@db-ui/react-components/dist/shared/model";
+import { ValueLabelType } from "@db-ui/react-components/dist/shared/model";
 
 export type SelectOptionType = {
   label?: string;
@@ -25,7 +25,7 @@ export type SettingOptionType = {
   numberOptions?: NumberOptionType;
   changeType?: "props" | "custom" | "hidden";
   isHidden?: (props: Record<string, any>) => boolean;
-  dataList?: KeyValueType[];
+  dataList?: ValueLabelType[];
 };
 
 export type SettingPropsType = {
