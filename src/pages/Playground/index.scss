@@ -21,14 +21,14 @@ $selected-outline-height: 3px;
 
   .drop-container,
   .drag-container {
-    --db-current-icon-color: #{colors.$db-current-color-enabled};
+    --db-current-icon-color: #{colors.$db-current-color-on-bg-enabled};
     background-image: linear-gradient(
-        #{colors.$db-current-color-bg-enabled},
-        #{colors.$db-current-color-bg-enabled}
+        #{colors.$db-current-color-bg-lvl-1-enabled},
+        #{colors.$db-current-color-bg-lvl-1-enabled}
       ),
       linear-gradient(#c3d08b, #c3d08b);
     background-clip: content-box, padding-box;
-    color: colors.$db-current-color-enabled;
+    color: colors.$db-current-color-on-bg-enabled;
   }
 }
 
