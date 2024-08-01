@@ -28,10 +28,16 @@
         }
 
         &::after {
-          --db-current-icon-color: var(--db-warning-on-bg-basic-emphasis-70-default);
           --db-icon-font-family: "db-ux-filled";
           margin-inline-start: 0;
         }
+      }
+
+      &[data-icon-after="warning_triangle"] {
+        --db-icon-color: #{colors.$db-warning-on-bg-basic-emphasis-70-default};
+      }
+      &[data-icon-after="exclamation_mark_circle"] {
+        --db-icon-color: #{colors.$db-critical-on-bg-basic-emphasis-70-default};
       }
     }
 

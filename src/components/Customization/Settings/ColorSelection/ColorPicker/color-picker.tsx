@@ -72,9 +72,9 @@ const ColorPicker = ({
                 : {
                     // @ts-expect-error
                     "--db-current-origin-color": color.origin,
-                    "--db-icon-color": `var(--db-${label.toLowerCase()}-on-bg-inverted-contrast-high-default)`,
-                    "--db-adaptive-bg-inverted-contrast-high-hovered": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-hovered)`,
-                    "--db-adaptive-bg-inverted-contrast-high-pressed": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-pressed)`,
+                    "--db-adaptive-bg-basic-level-3-default": `var(--db-${label.toLowerCase()}-bg-basic-level-3-default)`,
+                    "--db-adaptive-bg-basic-level-3-hovered": `var(--db-${label.toLowerCase()}-bg-basic-level-3-hovered)`,
+                    "--db-adaptive-bg-basic-level-3-pressed": `var(--db-${label.toLowerCase()}-bg-basic-level-3-pressed)`,
                     "--db-adaptive-on-bg-basic-emphasis-60-default": `var(--db-${label.toLowerCase()}-on-bg-basic-emphasis-60-default)`,
                   }
             }
