@@ -43,6 +43,20 @@ const ColorPicker = ({
     () => (isAddColor ? addColor : color).origin,
     [isAddColor, addColor, color],
   );
+  const getWarningIcon = useCallback(() => {
+    if (isAddColor) {
+      return undefined;
+    } else if (!color.originDarkAccessible || !color.originLightAccessible) {
+      return "warning_triangle";
+    } else if (
+      !color.onOriginDarkAccessible ||
+      !color.onOriginLightAccessible
+    ) {
+      return "exclamation_mark_circle";
+    } else {
+      return undefined;
+    }
+  }, [isAddColor, color]);
 
   return (
     <div className="color-picker-container">
@@ -51,15 +65,7 @@ const ColorPicker = ({
           <button
             className="color-tag"
             data-icon={isAddColor ? "plus" : undefined}
-            data-icon-after={
-              isAddColor ||
-              (color.onOriginLightAccessible &&
-                color.onOriginDarkAccessible &&
-                color.originDarkAccessible &&
-                color.originLightAccessible)
-                ? undefined
-                : "warning_triangle"
-            }
+            data-icon-after={getWarningIcon()}
             style={
               isAddColor
                 ? {}
@@ -208,7 +214,7 @@ const ColorPicker = ({
                         onOrigin: onOriginLight,
                         onOriginAccessible: onOriginLightAccessible,
                         onOriginAlternative: onOriginLightAlternative,
-                        hoverColor: onOriginLightHover,
+                        hoverColor: onOriginLightHovered,
                         pressedColor: onOriginLightPressed,
                       } = getOriginOnColors(
                         color.originLight ?? FALLBACK_COLOR,
@@ -218,7 +224,7 @@ const ColorPicker = ({
                       setOriginColor({
                         ...color,
                         onOriginLight,
-                        onOriginLightHovered: onOriginLightHover,
+                        onOriginLightHovered,
                         onOriginLightPressed,
                         onOriginLightAccessible,
                         onOriginLightAlternative,
@@ -297,7 +303,7 @@ const ColorPicker = ({
                         onOrigin: onOriginDark,
                         onOriginAccessible: onOriginDarkAccessible,
                         onOriginAlternative: onOriginDarkAlternative,
-                        hoverColor: onOriginDarkHover,
+                        hoverColor: onOriginDarkHovered,
                         pressedColor: onOriginDarkPressed,
                       } = getOriginOnColors(
                         color.originDark ?? FALLBACK_COLOR,
@@ -307,7 +313,7 @@ const ColorPicker = ({
                       setOriginColor({
                         ...color,
                         onOriginDark,
-                        onOriginDarkHovered: onOriginDarkHover,
+                        onOriginDarkHovered,
                         onOriginDarkPressed,
                         onOriginDarkAccessible,
                         onOriginDarkAlternative,

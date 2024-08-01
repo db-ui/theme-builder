@@ -87,7 +87,23 @@ const getHoverPressedColors = (defaultColor: string, darkMode: boolean) => {
 };
 
 const onOriginLightLuminance = 98;
-const onOriginDarkLuminance = 5;
+const onOriginDarkLuminance = 2;
+
+const getValidColor = (
+  originBgColor: string,
+  color: string,
+  fallbackLuminance: number,
+): string | undefined => {
+  if (getContrast(originBgColor, color) < 4.5) {
+    const hsluv = new Hsluv();
+    hsluv.hex = originBgColor;
+    hsluv.hexToHsluv();
+    hsluv.hsluv_l = fallbackLuminance;
+    hsluv.hsluvToHex();
+    return hsluv.hex;
+  }
+  return undefined;
+};
 
 export const getOriginOnColors = (
   originBgColor: string,
@@ -100,27 +116,44 @@ export const getOriginOnColors = (
   const fallbackLuminance = darkMode
     ? onOriginLightLuminance
     : onOriginDarkLuminance;
+  const fallback2Luminance = darkMode ? 99 : 1;
+  const fallback3Luminance = darkMode ? 100 : 0;
+  // eslint-disable-next-line prefer-const
   let hsluv = new Hsluv();
   hsluv.hex = originBgColor;
   hsluv.hexToHsluv();
   hsluv.hsluv_l = primaryLuminance;
   hsluv.hsluvToHex();
-  if (getContrast(originBgColor, hsluv.hex) < 4.5) {
-    hsluv = new Hsluv();
-    hsluv.hex = originBgColor;
-    hsluv.hexToHsluv();
-    hsluv.hsluv_l = fallbackLuminance;
-    hsluv.hsluvToHex();
+  let color = hsluv.hex;
+  const fallbackColor1 = getValidColor(originBgColor, color, fallbackLuminance);
+  if (fallbackColor1) {
+    color = fallbackColor1;
+    const fallbackColor2 = getValidColor(
+      originBgColor,
+      color,
+      fallback2Luminance,
+    );
+    if (fallbackColor2) {
+      color = fallbackColor2;
+      const fallbackColor3 = getValidColor(
+        originBgColor,
+        color,
+        fallback3Luminance,
+      );
+      if (fallbackColor3) {
+        color = fallbackColor3;
+      }
+    }
   }
 
-  const color = customFgColor ?? hsluv.hex;
-  const contrast = getContrast(originBgColor, color);
+  const fgColor = customFgColor ?? color;
+  const contrast = getContrast(originBgColor, fgColor);
 
   return {
-    onOrigin: color,
-    onOriginAlternative: hsluv.hex,
+    onOrigin: fgColor,
+    onOriginAlternative: color,
     onOriginAccessible: contrast === 1 || contrast >= 4.5,
-    ...getHoverPressedColors(color, darkMode),
+    ...getHoverPressedColors(fgColor, darkMode),
   };
 };
 
