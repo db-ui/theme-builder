@@ -24,11 +24,11 @@
           background-color: var(--db-current-origin-color);
           border-radius: variables.$db-border-radius-full;
           border: variables.$db-border-height-3xs solid
-            colors.$db-current-color-border;
+            colors.$db-adaptive-on-bg-basic-emphasis-60-default;
         }
 
         &::after {
-          --db-current-icon-color: var(--db-warning-contrast-low-enabled);
+          --db-current-icon-color: var(--db-warning-on-bg-basic-emphasis-70-default);
           --db-icon-font-family: "db-ux-filled";
           margin-inline-start: 0;
         }

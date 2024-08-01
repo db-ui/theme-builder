@@ -72,19 +72,17 @@ const ColorPicker = ({
                 : {
                     // @ts-expect-error
                     "--db-current-origin-color": color.origin,
-                    "--db-current-icon-color": `var(--db-${label.toLowerCase()}-on-bg-inverted-contrast-high-default)`,
-                    "--db-current-color-enabled": `var(--db-${label.toLowerCase()}-on-bg-inverted-contrast-high-default)`,
-                    "--db-current-color-bg-enabled": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-default)`,
-                    "--db-current-color-contrast-high-hover": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-80-hovered)`,
-                    "--db-current-color-contrast-high-pressed": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-80-pressed)`,
-                    "--db-current-color-border": `var(--db-${label.toLowerCase()}-on-bg-basic-emphasis-60-default)`,
+                    "--db-icon-color": `var(--db-${label.toLowerCase()}-on-bg-inverted-contrast-high-default)`,
+                    "--db-adaptive-bg-inverted-contrast-high-hovered": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-hovered)`,
+                    "--db-adaptive-bg-inverted-contrast-high-pressed": `var(--db-${label.toLowerCase()}-bg-inverted-contrast-high-pressed)`,
+                    "--db-adaptive-on-bg-basic-emphasis-60-default": `var(--db-${label.toLowerCase()}-on-bg-basic-emphasis-60-default)`,
                   }
             }
             onClick={() => setOpen(true)}
           >
             {t(label)}
             {!isAddColor && (
-              <DBTooltip placement="bottom" className="db-neutral-bg-lvl-1">
+              <DBTooltip placement="bottom" className="db-neutral-bg-basic-level-1">
                 {t("adaptColor")}
               </DBTooltip>
             )}
@@ -95,7 +93,6 @@ const ColorPicker = ({
           open={open}
           onClose={() => setOpen(false)}
           drawerHeader={t("editColor", { colorName })}
-          withCloseButton
         >
           <div className="flex flex-col gap-fix-sm mt-fix-md overflow-y-auto">
             <DBInput

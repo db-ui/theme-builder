@@ -92,7 +92,7 @@ const TreeItem = ({ node }: TreeItemPropsType) => {
   const item = (
     <div
       className={` 
-      ${selected?.id === id ? "db-informational-bg-lvl-3" : ""} 
+      ${selected?.id === id ? "db-informational-bg-basic-level-3" : ""} 
       tree-item
       flex items-center justify-between w-full gap-fix-md`}
       role="button"

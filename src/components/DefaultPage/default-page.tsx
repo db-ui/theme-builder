@@ -29,7 +29,7 @@ const DefaultPage = ({
       <DBPage
         className={className}
         variant="fixed"
-        data-color="neutral-bg-lvl-1"
+        data-color="neutral-bg-basic-level-1"
         header={
           <DBHeader
             drawerOpen={drawerOpen}

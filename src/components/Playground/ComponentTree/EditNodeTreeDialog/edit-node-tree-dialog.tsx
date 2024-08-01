@@ -63,7 +63,6 @@ const EditNodeTreeDialog = ({
         backdrop="weak"
         open={open}
         onClose={onClose}
-        withCloseButton
         drawerHeader={t(create ? "add" : "pgEdit")}
       >
         <div className="flex flex-col gap-fix-md py-fix-md">

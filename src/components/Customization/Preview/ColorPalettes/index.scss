@@ -7,7 +7,7 @@
   display: flex;
   width: 100%;
   min-width: variables.$db-sizing-xl;
-  border: 1px solid colors.$db-neutral-border;
+  border: 1px solid colors.$db-adaptive-on-bg-basic-emphasis-60-default;
   border-radius: variables.$db-border-radius-md;
   padding: variables.$db-spacing-fixed-xs;
 }

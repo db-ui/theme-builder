@@ -38,7 +38,6 @@ const SelectColorDialog = ({
         onClose={() => {
           setOpen(false);
         }}
-        withCloseButton
         drawerHeader={
           <div className="flex gap-fix-3xl">
             <span className="my-auto">{t("playgroundSelectColor")}</span>
@@ -63,7 +62,7 @@ const SelectColorDialog = ({
               >
                 <DBCard
                   data-interactive="elevation"
-                  style={{backgroundColor: "var(--db-current-color-bg-enabled)"}}
+                  style={{backgroundColor: "var(--db-adaptive-bg-default)"}}
                   className={`flex-row min-h-siz-lg gap-fix-md justify-between items-center db-${color}`}
                   spacing="small"
                 >

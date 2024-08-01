@@ -9,11 +9,11 @@ const Sizing = () => (
         key={`spacing-${name}`}
       >
         <div
-          className="flex db-warning-bg-lvl-1 items-center justify-center"
+          className="flex db-warning-bg-basic-level-1 items-center justify-center"
           style={{
             width: `var(--db-spacing-fixed-${name})`,
             height: `var(--db-spacing-fixed-${name})`,
-            border: `var(--db-border-height-3xs) solid var(--db-current-color-border)`,
+            border: `var(--db-border-height-3xs) solid var(--db-adaptive-on-bg-basic-emphasis-60-default)`,
           }}
         >
           <span className="hidden">{name}</span>

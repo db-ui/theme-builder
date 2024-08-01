@@ -5,11 +5,11 @@
   @extend .db-button;
 
   &:hover {
-    background-color: colors.$db-current-color-bg-transparent-hover;
+    background-color: colors.$db-adaptive-bg-basic-transparent-hovered;
   }
 
   &:active {
-    background-color: colors.$db-current-color-bg-transparent-pressed;
+    background-color: colors.$db-adaptive-bg-basic-transparent-pressed;
   }
 
   input[type="file"] {
