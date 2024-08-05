@@ -42,11 +42,18 @@ export const getAccessibleOriginColors = (
 // We use this for hover/pressed
 const originLuminanceDifference: number = 10;
 
-const getHoverPressedColors = (defaultColor: string, darkMode: boolean) => {
+const getHoverPressedColors = (
+  defaultColor: string,
+  darkMode: boolean,
+  origin?: string,
+) => {
   let hsluv = new Hsluv();
   hsluv.hex = defaultColor;
   hsluv.hexToHsluv();
   const defaultColorLuminance = hsluv.hsluv_l;
+  hsluv.hsluvToHex();
+  hsluv.hex = origin ?? defaultColor;
+  hsluv.hexToHsluv();
 
   let hoverColorLuminance: number;
   let pressedColorLuminance: number;
@@ -76,7 +83,7 @@ const getHoverPressedColors = (defaultColor: string, darkMode: boolean) => {
   hsluv.hsluvToHex();
   const hoverColor = hsluv.hex;
   hsluv = new Hsluv();
-  hsluv.hex = defaultColor;
+  hsluv.hex = origin ?? defaultColor;
   hsluv.hexToHsluv();
 
   hsluv.hsluv_l = pressedColorLuminance;
@@ -153,7 +160,7 @@ export const getOriginOnColors = (
     onOrigin: fgColor,
     onOriginAlternative: color,
     onOriginAccessible: contrast === 1 || contrast >= 4.5,
-    ...getHoverPressedColors(fgColor, darkMode),
+    ...getHoverPressedColors(fgColor, darkMode, originBgColor),
   };
 };
 
