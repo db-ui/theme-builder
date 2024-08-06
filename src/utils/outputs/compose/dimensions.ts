@@ -23,6 +23,7 @@ object Dimensions {
       this.path.length > 0 &&
       this.path[0] !== "branding" &&
       this.path[0] !== "colors" &&
+      this.path[0] !== "additionalColors" &&
       this.path[0] !== "font" &&
       this.path[0] !== "transition" &&
       this.path[0] !== "elevation" &&

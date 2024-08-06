@@ -27,6 +27,7 @@ import {
   getSpeakingNames,
 } from "./index.ts";
 import { generateCustomColorClass } from "./web/custom-color-class.ts";
+import { generateAndroidReadmeFile } from "./compose/readme.ts";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -61,7 +62,7 @@ export const downloadTheme = async (
   const themeJsonString = JSON.stringify(theme);
   const themeProperties = getCssThemeProperties(theme);
 
-  const composeFileName = kebabCase(theme.branding.name);
+  const composeFileName = kebabCase(fileName);
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
@@ -70,7 +71,10 @@ export const downloadTheme = async (
   const androidFolder: string = "Android";
   const androidThemeFolder: string = `${androidFolder}/theme`;
   const androidDataFolder: string = `${androidThemeFolder}/data`;
-  zip.file(`${androidFolder}/README.md`, generateReadmeFile(composeFileName));
+  zip.file(
+    `${androidFolder}/README.md`,
+    generateAndroidReadmeFile(composeFileName),
+  );
   zip.file(
     `${androidThemeFolder}/${composeFileName}.kt`,
     generateThemeFile(composeFileName),
