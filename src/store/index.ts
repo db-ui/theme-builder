@@ -36,21 +36,6 @@ export const useThemeBuilderStore = create<ThemeBuilderState>()(
               speakingNames: speakingNamesDefaultMapping,
             }));
           },
-          setAlternativeColors: (alternativeColors) => {
-            set(({ theme }) => {
-              return {
-                theme: {
-                  ...theme,
-                  branding: {
-                    ...theme.branding,
-                    alternativeColors: {
-                      ...alternativeColors,
-                    },
-                  },
-                },
-              };
-            });
-          },
           setColors: (colors) => {
             set(({ theme }) => ({
               theme: { ...theme, colors },

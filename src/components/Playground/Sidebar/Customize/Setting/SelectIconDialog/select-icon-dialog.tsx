@@ -38,7 +38,6 @@ const SelectIconDialog = ({
         onClose={() => {
           setOpen(false);
         }}
-        withCloseButton
         drawerHeader={
           <div className="flex gap-fix-3xl">
             <span className="my-auto">{t("playgroundSelectIcon")}</span>
@@ -64,7 +63,7 @@ const SelectIconDialog = ({
               >
                 <DBCard
                   data-interactive="elevation"
-                  className={`items-center ${icon === "none" ? " h-full" : ""}${icon === selectedIcon ? " db-successful-bg-lvl-3" : ""}`}
+                  className={`items-center ${icon === "none" ? " h-full" : ""}${icon === selectedIcon ? " db-successful-bg-basic-level-3" : ""}`}
                   spacing="small"
                 >
                   {icon !== "none" && <DBIcon icon={icon} />}

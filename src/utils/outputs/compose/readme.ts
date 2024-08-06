@@ -1,4 +1,4 @@
-export const generateReadmeFile = (fileName: string): string => {
+export const generateAndroidReadmeFile = (fileName: string): string => {
   return `# How to use the theme
 
 1. Move the \`theme\` directory into your project
@@ -23,11 +23,14 @@ Use the tokens like this:
         Text(
             text = "Headline",
             style = DBTheme.typography.h1,
-            color = DBTheme.colors.neutral.onBgEnabled,
+            color = DBTheme.colors.neutral.onBgBasicEmphasis100,
             modifier = Modifier.padding(DBTheme.dimensions.spacing.fixedMd)
         )
 \`\`\`\`
 
-  
+## Fonts
+
+[Download](https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-2/foundation/Typografie) fonts and use the \`.ttf\` files. 
+You might rename it based on the names in \`~/theme/data/Fonts.kt\` and move the \`.ttf\` files into \`~/res/font\` folder.  
 `;
 };

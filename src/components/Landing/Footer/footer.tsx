@@ -8,7 +8,7 @@ const Footer = () => {
     <DBSection
       spacing="medium"
       width="large"
-      className="flex items-center db-brand-bg-lvl-3"
+      className="flex items-center db-brand-bg-basic-level-3"
     >
       <div className="flex flex-col gap-fix-xl items-center text-center text-balance">
         <h2 data-icon-after="heart">{t("landingMoreTitle")}</h2>

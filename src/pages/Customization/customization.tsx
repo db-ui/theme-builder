@@ -79,8 +79,8 @@ const Customization = () => {
           <Scaling label="borderRadius" params={["border", "radius"]} />
         </div>
         <div
-          className="db-neutral-bg-lvl-2 p-fix-sm md:p-res-sm
-      flex flex-col gap-res-sm w-full overflow-auto"
+          className="db-neutral-bg-basic-level-2 p-fix-sm md:p-res-sm
+      flex flex-col gap-res-sm w-full md:overflow-auto"
         >
           <Tabs tabs={tabs} />
         </div>

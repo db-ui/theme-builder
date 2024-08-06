@@ -5,7 +5,7 @@
 @use "@db-ui/components/build/styles/component";
 
 .menu-bar {
-  @extend %db-neutral-bg-lvl-1;
+  @extend %db-neutral-bg-basic-level-1;
   display: flex;
   gap: variables.$db-spacing-fixed-3xs;
   border-radius: variables.$db-border-radius-xs;
@@ -17,15 +17,15 @@
     @extend %default-interactive-component;
     @extend %component-border;
 
-    background-color: colors.$db-current-color-bg-transparent-semi-enabled;
-    caret-color: colors.$db-current-color-on-bg-enabled;
+    background-color: colors.$db-adaptive-bg-basic-transparent-semi-default;
+    caret-color: colors.$db-adaptive-on-bg-basic-emphasis-100-default;
     padding: variables.$db-spacing-fixed-xs variables.$db-spacing-fixed-sm;
     display: flex;
     flex-direction: column;
     gap: variables.$db-spacing-fixed-xs;
 
     &:hover:not(:disabled):not([aria-disabled="true"]) {
-      background-color: colors.$db-current-color-bg-transparent-hover;
+      background-color: colors.$db-adaptive-bg-basic-transparent-hovered;
     }
   }
 

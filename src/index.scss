@@ -69,7 +69,7 @@ h6 {
 
 .scale-down {
   border: variables.$db-border-height-3xs solid
-    colors.$db-neutral-contrast-low-enabled;
+    colors.$db-neutral-on-bg-basic-emphasis-70-default;
   border-radius: variables.$db-border-radius-lg;
 
   .db-page {
@@ -106,7 +106,7 @@ h6 {
 }
 
 [class*="border"] {
-  border-color: colors.$db-current-color-border;
+  border-color: colors.$db-adaptive-on-bg-basic-emphasis-60-default;
 }
 
 .db-tooltip {
@@ -130,7 +130,7 @@ h6 {
 }
 
 .brand-name {
-  color: colors.$db-brand-origin-enabled;
+  color: colors.$db-brand-origin-default;
 }
 
 .speaking-name-container {

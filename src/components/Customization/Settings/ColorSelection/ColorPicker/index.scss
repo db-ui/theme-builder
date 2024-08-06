@@ -24,9 +24,27 @@
           background-color: var(--db-current-origin-color);
           border-radius: variables.$db-border-radius-full;
           border: variables.$db-border-height-3xs solid
-            colors.$db-current-color-border;
+            colors.$db-adaptive-on-bg-basic-emphasis-60-default;
+        }
+
+        &::after {
+          --db-icon-font-family: "db-ux-filled";
+          margin-inline-start: 0;
         }
       }
+
+      &[data-icon-after="warning_triangle"] {
+        --db-icon-color: #{colors.$db-warning-on-bg-basic-emphasis-70-default};
+      }
+      &[data-icon-after="exclamation_mark_circle"] {
+        --db-icon-color: #{colors.$db-critical-on-bg-basic-emphasis-70-default};
+      }
+    }
+
+    .db-drawer-content {
+      overflow-y: auto;
+      block-size: 100%;
+      margin-bottom: variables.$db-spacing-fixed-2xs;
     }
   }
 }

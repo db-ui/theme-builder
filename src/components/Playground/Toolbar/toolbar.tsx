@@ -34,7 +34,7 @@ const Toolbar = ({ className }: ToolbarType) => {
   return (
     <div
       data-density="functional"
-      className={`flex h-siz-md db-neutral-bg-transparent-semi px-fix-sm ${className || ""}`}
+      className={`flex h-siz-md db-neutral-bg-basic-transparent-semi px-fix-sm ${className || ""}`}
     >
       <div className="flex w-full justify-between m-auto">
         <div className="flex gap-fix-sm">

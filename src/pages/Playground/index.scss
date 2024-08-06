@@ -8,7 +8,7 @@ $selected-outline-height: 3px;
   .drop-container,
   .drag-container {
     &:not(.selected):not(.hovered) {
-      outline: 1px colors.$db-neutral-contrast-high-enabled dashed;
+      outline: 1px colors.$db-neutral-bg-inverted-contrast-high-default dashed;
     }
   }
 }
@@ -21,14 +21,14 @@ $selected-outline-height: 3px;
 
   .drop-container,
   .drag-container {
-    --db-current-icon-color: #{colors.$db-current-color-on-bg-enabled};
+    --db-current-icon-color: #{colors.$db-adaptive-on-bg-basic-emphasis-100-default};
     background-image: linear-gradient(
-        #{colors.$db-current-color-bg-lvl-1-enabled},
-        #{colors.$db-current-color-bg-lvl-1-enabled}
+        #{colors.$db-adaptive-bg-basic-level-1-default},
+        #{colors.$db-adaptive-bg-basic-level-1-default}
       ),
       linear-gradient(#c3d08b, #c3d08b);
     background-clip: content-box, padding-box;
-    color: colors.$db-current-color-on-bg-enabled;
+    color: colors.$db-adaptive-on-bg-basic-emphasis-100-default;
   }
 }
 
@@ -68,13 +68,13 @@ $selected-outline-height: 3px;
 }
 
 .hovered {
-  outline: $selected-outline-height colors.$db-neutral-contrast-low-enabled
+  outline: $selected-outline-height colors.$db-neutral-on-bg-basic-emphasis-70-default
     dashed;
 }
 
 .selected {
   outline: $selected-outline-height
-    colors.$db-informational-contrast-low-enabled solid;
+    colors.$db-informational-on-bg-basic-emphasis-70-default solid;
 
   &:has(> .drag-button) {
     > .drag-button {
@@ -86,11 +86,11 @@ $selected-outline-height: 3px;
 
 .drag-button {
   @extend %db-overwrite-font-size-sm;
-  --db-current-icon-color: var(--db-informational-on-contrast-enabled);
+  --db-current-icon-color: var(--db-informational-on-bg-inverted-default);
   --db-icon-margin-start: #{variables.$db-spacing-fixed-3xs};
   font-family: var(--db-font-family-sans);
-  color: var(--db-informational-on-contrast-enabled);
-  background-color: colors.$db-informational-contrast-low-enabled;
+  color: var(--db-informational-on-bg-inverted-default);
+  background-color: colors.$db-informational-on-bg-basic-emphasis-70-default;
   position: absolute;
   z-index: 6;
   inset-block-end: 100%;
@@ -117,11 +117,11 @@ $selected-outline-height: 3px;
 
 .tree-item {
   &:hover {
-    background-color: colors.$db-current-color-bg-transparent-hover;
+    background-color: colors.$db-adaptive-bg-basic-transparent-hovered;
   }
 
   &:active {
-    background-color: colors.$db-current-color-bg-transparent-pressed;
+    background-color: colors.$db-adaptive-bg-basic-transparent-pressed;
   }
 }
 

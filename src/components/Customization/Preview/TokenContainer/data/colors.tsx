@@ -1,18 +1,16 @@
 import { ColorsPropsType } from "./index.tsx";
-import { isOriginColor, kebabCase } from "../../../../../utils";
+import { kebabCase } from "../../../../../utils";
 
 const ColorPreview = ({
   colorName,
   type,
-  isBorder,
   bgTransparent,
 }: ColorsPropsType & {
   type: string;
-  isBorder?: boolean;
   bgTransparent?: string;
 }) => {
   return (
-    <div className="flex flex-col gap-fix-md text-center">
+    <div className="flex flex-col gap-fix-md text-center h-full">
       <p className="font-bold">
         {kebabCase(
           `${type}${bgTransparent ? `-${bgTransparent}` : ""}`,
@@ -20,43 +18,40 @@ const ColorPreview = ({
           " ",
         )}
       </p>
-      <div className="flex flex-col">
-        {(isBorder ? ["enabled"] : ["enabled", "hover", "pressed"]).map(
-          (state) => {
-            const bgColor =
-              `var(--db-${colorName}-${type}` +
-              `${bgTransparent && state === "enabled" ? `-${bgTransparent}` : ""}` +
-              `${isBorder ? "" : `-${state}`})`;
-            const borderColor: string = `var(--db-${colorName}-border)`;
-            let color = `var(--db-${colorName}-on-bg-enabled)`;
-            if (type.startsWith("on-bg")) {
-              color = `var(--db-${colorName}-bg-lvl-1-enabled)`;
-            } else if (type === "origin") {
-              color = `var(--db-${colorName}-on-enabled)`;
-            } else if (type === "on") {
-              color = `var(--db-${colorName}-origin-enabled)`;
-            } else if (
-              type === "contrast-high" ||
-              type === "contrast-low" ||
-              type === "border"
-            ) {
-              color = `var(--db-${colorName}-on-contrast-enabled)`;
-            }
-            return (
-              <div
-                key={`color-preview-${colorName}-${type}-${state}`}
-                className="flex w-full md:min-w-siz-2xl h-siz-md mx-auto rounded-sm"
-                style={{
-                  backgroundColor: bgColor,
-                  border: `1px solid ${borderColor}`,
-                  color,
-                }}
-              >
-                <span className="m-auto">{state}</span>
-              </div>
-            );
-          },
-        )}
+      <div className="flex flex-col mt-auto">
+        {["default", "hovered", "pressed"].map((state) => {
+          const bgColor =
+            `var(--db-${colorName}-${type}` +
+            `${bgTransparent && state === "default" ? `-${bgTransparent}` : ""}-${state}`;
+          const borderColor: string = `var(--db-${colorName}-on-bg-basic-emphasis-60-default)`;
+          let color = `var(--db-${colorName}-on-bg-basic-emphasis-100-default)`;
+          if (type.startsWith("on-bg")) {
+            color = `var(--db-${colorName}-bg-basic-level-1-default)`;
+          } else if (type === "origin") {
+            color = `var(--db-${colorName}-on-origin-default)`;
+          } else if (type === "on-origin") {
+            color = `var(--db-${colorName}-origin-default)`;
+          } else if (
+            type === "bg-inverted-contrast-high" ||
+            type === "bg-inverted-contrast-low" ||
+            type === "bg-inverted-contrast-max"
+          ) {
+            color = `var(--db-${colorName}-on-bg-inverted-default)`;
+          }
+          return (
+            <div
+              key={`color-preview-${colorName}-${type}-${state}`}
+              className="flex w-full md:min-w-siz-2xl h-siz-md mx-auto rounded-sm"
+              style={{
+                backgroundColor: bgColor,
+                border: `1px solid ${borderColor}`,
+                color,
+              }}
+            >
+              <span className="m-auto">{state}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -64,40 +59,41 @@ const ColorPreview = ({
 
 const Colors = ({ colorName }: ColorsPropsType) => (
   <div className="flex flex-col gap-fix-md">
-    {/* Brand origin */}
-    {isOriginColor(colorName) && (
-      <div className="flex flex-col md:flex-row gap-fix-md">
-        <ColorPreview colorName={colorName} type="on" />
-        <ColorPreview colorName={colorName} type="origin" />
-      </div>
-    )}
-    {/* On Colors */}
-    <div className="flex flex-col md:flex-row gap-fix-md">
-      <ColorPreview colorName={colorName} type="on-bg" />
-      <ColorPreview colorName={colorName} type="on-bg-weak" />
-      <ColorPreview colorName={colorName} type="on-contrast" />
+    {/* origin */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-fix-md">
+      <ColorPreview colorName={colorName} type="on-origin" />
+      <ColorPreview colorName={colorName} type="origin" />
     </div>
-    {/* Contrast Colors */}
-    <div className="flex flex-col md:flex-row gap-fix-md">
-      <ColorPreview colorName={colorName} type="contrast-high" />
-      <ColorPreview colorName={colorName} type="contrast-low" />
-      <ColorPreview colorName={colorName} type="border" isBorder />
+    {/* Inverted Colors */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-fix-md">
+      <ColorPreview colorName={colorName} type="bg-inverted-contrast-max" />
+      <ColorPreview colorName={colorName} type="bg-inverted-contrast-high" />
+      <ColorPreview colorName={colorName} type="bg-inverted-contrast-low" />
     </div>
-    {/* BAckgrounds */}
-    <div className="flex flex-col md:flex-row gap-fix-md">
-      <ColorPreview colorName={colorName} type="bg-lvl-1" />
-      <ColorPreview colorName={colorName} type="bg-lvl-2" />
-      <ColorPreview colorName={colorName} type="bg-lvl-3" />
+    {/* Basic backgrounds */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-fix-md">
+      <ColorPreview colorName={colorName} type="bg-basic-level-1" />
+      <ColorPreview colorName={colorName} type="bg-basic-level-2" />
+      <ColorPreview colorName={colorName} type="bg-basic-level-3" />
       <ColorPreview
         colorName={colorName}
-        type="bg-transparent"
+        type="bg-basic-transparent"
         bgTransparent="full"
       />
       <ColorPreview
         colorName={colorName}
-        type="bg-transparent"
+        type="bg-basic-transparent"
         bgTransparent="semi"
       />
+    </div>
+    {/* On Basic Colors */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-fix-md">
+      <ColorPreview colorName={colorName} type="on-bg-basic-emphasis-100" />
+      <ColorPreview colorName={colorName} type="on-bg-basic-emphasis-90" />
+      <ColorPreview colorName={colorName} type="on-bg-basic-emphasis-80" />
+      <ColorPreview colorName={colorName} type="on-bg-basic-emphasis-70" />
+      <ColorPreview colorName={colorName} type="on-bg-basic-emphasis-60" />
+      <ColorPreview colorName={colorName} type="on-bg-basic-emphasis-50" />
     </div>
   </div>
 );

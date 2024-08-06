@@ -1,165 +1,189 @@
 export const generateCustomColorClass = (colorName: string): string => {
-  return `.db-${colorName}-bg,
-.db-${colorName}-bg [data-bg-weight="1"],
-.db-${colorName}-bg [data-bg-weight="2"],
-.db-${colorName}-bg [data-bg-weight="3"],
-.db-${colorName}-bg-lvl-1,
-.db-${colorName}-bg-lvl-2,
-.db-${colorName}-bg-lvl-3,
-.db-${colorName}-bg-transparent-full,
-.db-${colorName}-bg-transparent-semi,
-.db-${colorName}-contrast-high,
-.db-${colorName}-contrast-high-interactive,
-.db-${colorName}-contrast-low,
-.db-${colorName}-contrast-low-interactive {
-	background: var(--db-current-color-bg-enabled);
-	color: var(--db-current-color-on-bg-enabled);
+  return `[data-container-color=${colorName}],
+.db-container-color-${colorName}, [data-color=${colorName}-bg-basic-level-3],
+.db-${colorName}-bg-basic-level-3, [data-color=${colorName}-bg-basic-level-2],
+.db-${colorName}-bg-basic-level-2, [data-color=${colorName}-bg-basic-level-1],
+.db-${colorName}-bg-basic-level-1 {
+  --db-adaptive-bg-basic-level-1-default: var(
+  	--db-${colorName}-bg-basic-level-1-default
+  );
+  --db-adaptive-bg-basic-level-1-hovered: var(
+  	--db-${colorName}-bg-basic-level-1-hovered
+  );
+  --db-adaptive-bg-basic-level-1-pressed: var(
+  	--db-${colorName}-bg-basic-level-1-pressed
+  );
+  --db-adaptive-bg-basic-level-2-default: var(
+  	--db-${colorName}-bg-basic-level-2-default
+  );
+  --db-adaptive-bg-basic-level-2-hovered: var(
+  	--db-${colorName}-bg-basic-level-2-hovered
+  );
+  --db-adaptive-bg-basic-level-2-pressed: var(
+  	--db-${colorName}-bg-basic-level-2-pressed
+  );
+  --db-adaptive-bg-basic-level-3-default: var(
+  	--db-${colorName}-bg-basic-level-3-default
+  );
+  --db-adaptive-bg-basic-level-3-hovered: var(
+  	--db-${colorName}-bg-basic-level-3-hovered
+  );
+  --db-adaptive-bg-basic-level-3-pressed: var(
+  	--db-${colorName}-bg-basic-level-3-pressed
+  );
+  --db-adaptive-bg-basic-transparent-full-default: var(
+  	--db-${colorName}-bg-basic-transparent-full-default
+  );
+  --db-adaptive-bg-basic-transparent-semi-default: var(
+  	--db-${colorName}-bg-basic-transparent-semi-default
+  );
+  --db-adaptive-bg-basic-transparent-hovered: var(
+  	--db-${colorName}-bg-basic-transparent-hovered
+  );
+  --db-adaptive-bg-basic-transparent-pressed: var(
+  	--db-${colorName}-bg-basic-transparent-pressed
+  );
+  --db-adaptive-on-bg-basic-emphasis-100-default: var(
+  	--db-${colorName}-on-bg-basic-emphasis-100-default
+  );
+  --db-adaptive-on-bg-basic-emphasis-100-hovered: var(
+  	--db-${colorName}-on-bg-basic-emphasis-100-hovered
+  );
+  --db-adaptive-on-bg-basic-emphasis-100-pressed: var(
+  	--db-${colorName}-on-bg-basic-emphasis-100-pressed
+  );
+  --db-adaptive-on-bg-basic-emphasis-90-default: var(
+  	--db-${colorName}-on-bg-basic-emphasis-90-default
+  );
+  --db-adaptive-on-bg-basic-emphasis-90-hovered: var(
+  	--db-${colorName}-on-bg-basic-emphasis-90-hovered
+  );
+  --db-adaptive-on-bg-basic-emphasis-90-pressed: var(
+  	--db-${colorName}-on-bg-basic-emphasis-90-pressed
+  );
+  --db-adaptive-on-bg-basic-emphasis-80-default: var(
+  	--db-${colorName}-on-bg-basic-emphasis-80-default
+  );
+  --db-adaptive-on-bg-basic-emphasis-80-hovered: var(
+  	--db-${colorName}-on-bg-basic-emphasis-80-hovered
+  );
+  --db-adaptive-on-bg-basic-emphasis-80-pressed: var(
+  	--db-${colorName}-on-bg-basic-emphasis-80-pressed
+  );
+  --db-adaptive-on-bg-basic-emphasis-70-default: var(
+  	--db-${colorName}-on-bg-basic-emphasis-70-default
+  );
+  --db-adaptive-on-bg-basic-emphasis-70-hovered: var(
+  	--db-${colorName}-on-bg-basic-emphasis-70-hovered
+  );
+  --db-adaptive-on-bg-basic-emphasis-70-pressed: var(
+  	--db-${colorName}-on-bg-basic-emphasis-70-pressed
+  );
+  --db-adaptive-on-bg-basic-emphasis-60-default: var(
+  	--db-${colorName}-on-bg-basic-emphasis-60-default
+  );
+  --db-adaptive-on-bg-basic-emphasis-60-hovered: var(
+  	--db-${colorName}-on-bg-basic-emphasis-60-hovered
+  );
+  --db-adaptive-on-bg-basic-emphasis-60-pressed: var(
+  	--db-${colorName}-on-bg-basic-emphasis-60-pressed
+  );
+  --db-adaptive-on-bg-basic-emphasis-50-default: var(
+  	--db-${colorName}-on-bg-basic-emphasis-50-default
+  );
+  --db-adaptive-on-bg-basic-emphasis-50-hovered: var(
+  	--db-${colorName}-on-bg-basic-emphasis-50-hovered
+  );
+  --db-adaptive-on-bg-basic-emphasis-50-pressed: var(
+  	--db-${colorName}-on-bg-basic-emphasis-50-pressed
+  );
+  --db-adaptive-bg-inverted-contrast-max-default: var(
+  	--db-${colorName}-bg-inverted-contrast-max-default
+  );
+  --db-adaptive-bg-inverted-contrast-max-hovered: var(
+  	--db-${colorName}-bg-inverted-contrast-max-hovered
+  );
+  --db-adaptive-bg-inverted-contrast-max-pressed: var(
+  	--db-${colorName}-bg-inverted-contrast-max-pressed
+  );
+  --db-adaptive-bg-inverted-contrast-high-default: var(
+  	--db-${colorName}-bg-inverted-contrast-high-default
+  );
+  --db-adaptive-bg-inverted-contrast-high-hovered: var(
+  	--db-${colorName}-bg-inverted-contrast-high-hovered
+  );
+  --db-adaptive-bg-inverted-contrast-high-pressed: var(
+  	--db-${colorName}-bg-inverted-contrast-high-pressed
+  );
+  --db-adaptive-bg-inverted-contrast-low-default: var(
+  	--db-${colorName}-bg-inverted-contrast-low-default
+  );
+  --db-adaptive-bg-inverted-contrast-low-hovered: var(
+  	--db-${colorName}-bg-inverted-contrast-low-hovered
+  );
+  --db-adaptive-bg-inverted-contrast-low-pressed: var(
+  	--db-${colorName}-bg-inverted-contrast-low-pressed
+  );
+  --db-adaptive-on-bg-inverted-default: var(
+  	--db-${colorName}-on-bg-inverted-default
+  );
+  --db-adaptive-on-bg-inverted-hovered: var(
+  	--db-${colorName}-on-bg-inverted-hovered
+  );
+  --db-adaptive-on-bg-inverted-pressed: var(
+  	--db-${colorName}-on-bg-inverted-pressed
+  );
+  --db-adaptive-origin-default: var(--db-${colorName}-origin-default);
+  --db-adaptive-origin-hovered: var(--db-${colorName}-origin-hovered);
+  --db-adaptive-origin-pressed: var(--db-${colorName}-origin-pressed);
+  --db-adaptive-on-origin-default: var(
+  	--db-${colorName}-on-origin-default
+  );
+  --db-adaptive-on-origin-hovered: var(
+  	--db-${colorName}-on-origin-hovered
+  );
+  --db-adaptive-on-origin-pressed: var(
+  	--db-${colorName}-on-origin-pressed
+  );
 }
-.db-${colorName}-bg [data-bg-weight="1"]:after,
-.db-${colorName}-bg [data-bg-weight="1"]:before,
-.db-${colorName}-bg [data-bg-weight="2"]:after,
-.db-${colorName}-bg [data-bg-weight="2"]:before,
-.db-${colorName}-bg [data-bg-weight="3"]:after,
-.db-${colorName}-bg [data-bg-weight="3"]:before,
-.db-${colorName}-bg-lvl-1:after,
-.db-${colorName}-bg-lvl-1:before,
-.db-${colorName}-bg-lvl-2:after,
-.db-${colorName}-bg-lvl-2:before,
-.db-${colorName}-bg-lvl-3:after,
-.db-${colorName}-bg-lvl-3:before,
-.db-${colorName}-bg-transparent-full:after,
-.db-${colorName}-bg-transparent-full:before,
-.db-${colorName}-bg-transparent-semi:after,
-.db-${colorName}-bg-transparent-semi:before,
-.db-${colorName}-bg:after,
-.db-${colorName}-bg:before,
-.db-${colorName}-contrast-high-interactive:after,
-.db-${colorName}-contrast-high-interactive:before,
-.db-${colorName}-contrast-high:after,
-.db-${colorName}-contrast-high:before,
-.db-${colorName}-contrast-low-interactive:after,
-.db-${colorName}-contrast-low-interactive:before,
-.db-${colorName}-contrast-low:after,
-.db-${colorName}-contrast-low:before {
-	color: var(--db-current-icon-color, inherit);
+
+[data-color=${colorName}-bg-basic-level-1],
+.db-${colorName}-bg-basic-level-1 {
+  background-color: var(--db-${colorName}-bg-basic-level-1-default);
+  color: var(--db-${colorName}-on-bg-basic-emphasis-100-default);
 }
-.db-${colorName}-contrast-high,
-.db-${colorName}-contrast-high-interactive {
-	--db-current-icon-color: var(--db-${colorName}-on-contrast-enabled);
-	--db-current-color-enabled: var(--db-${colorName}-on-contrast-enabled);
-	--db-current-color-bg-enabled: var(--db-${colorName}-contrast-high-enabled);
-	--db-current-color-bg-hover: var(--db-${colorName}-contrast-high-hover);
-	--db-current-color-bg-pressed: var(--db-${colorName}-contrast-high-pressed);
-	--db-current-color-border: var(--db-${colorName}-contrast-high-enabled);
+[data-color=${colorName}-bg-basic-level-1]::before,
+.db-${colorName}-bg-basic-level-1::before, [data-color=${colorName}-bg-basic-level-1]::after,
+.db-${colorName}-bg-basic-level-1::after {
+  --db-icon-color: var(--db-${colorName}-on-bg-basic-emphasis-100-default);
 }
-.db-${colorName}-contrast-high-interactive:hover {
-	background: var(--db-${colorName}-contrast-high-hover);
+
+[data-color=${colorName}-bg-basic-level-2],
+.db-${colorName}-bg-basic-level-2 {
+  background-color: var(--db-${colorName}-bg-basic-level-2-default);
+  color: var(--db-${colorName}-on-bg-basic-emphasis-100-default);
 }
-.db-${colorName}-contrast-high-interactive:active {
-	background: var(--db-${colorName}-contrast-high-pressed);
+[data-color=${colorName}-bg-basic-level-2]::before,
+.db-${colorName}-bg-basic-level-2::before, [data-color=${colorName}-bg-basic-level-2]::after,
+.db-${colorName}-bg-basic-level-2::after {
+  --db-icon-color: var(--db-${colorName}-on-bg-basic-emphasis-100-default);
 }
-.db-${colorName}-contrast-low,
-.db-${colorName}-contrast-low-interactive {
-	--db-current-icon-color: var(--db-${colorName}-on-contrast-enabled);
-	--db-current-color-enabled: var(--db-${colorName}-on-contrast-enabled);
-	--db-current-color-bg-enabled: var(--db-${colorName}-contrast-low-enabled);
-	--db-current-color-bg-hover: var(--db-${colorName}-contrast-low-hover);
-	--db-current-color-bg-pressed: var(--db-${colorName}-contrast-low-pressed);
-	--db-current-color-border: var(--db-${colorName}-contrast-low-enabled);
+
+[data-color=${colorName}-bg-basic-level-3],
+.db-${colorName}-bg-basic-level-3 {
+  background-color: var(--db-${colorName}-bg-basic-level-3-default);
+  color: var(--db-${colorName}-on-bg-basic-emphasis-100-default);
 }
-.db-${colorName}-contrast-low-interactive:hover {
-	background: var(--db-${colorName}-contrast-low-hover);
+[data-color=${colorName}-bg-basic-level-3]::before,
+.db-${colorName}-bg-basic-level-3::before, [data-color=${colorName}-bg-basic-level-3]::after,
+.db-${colorName}-bg-basic-level-3::after {
+  --db-icon-color: var(--db-${colorName}-on-bg-basic-emphasis-100-default);
 }
-.db-${colorName}-contrast-low-interactive:active {
-	background: var(--db-${colorName}-contrast-low-pressed);
-}
-.db-${colorName}-bg,
-.db-${colorName}-bg [data-bg-weight="1"],
-.db-${colorName}-bg [data-bg-weight="2"],
-.db-${colorName}-bg [data-bg-weight="3"],
-.db-${colorName}-bg-lvl-1,
-.db-${colorName}-bg-lvl-2,
-.db-${colorName}-bg-lvl-3,
-.db-${colorName}-bg-transparent-full,
-.db-${colorName}-bg-transparent-semi {
-	--db-current-color-bg-transparent-full-enabled: var(
-		--db-${colorName}-bg-transparent-full-enabled
-	);
-	--db-current-color-bg-transparent-semi-enabled: var(
-		--db-${colorName}-bg-transparent-semi-enabled
-	);
-	--db-current-color-bg-transparent-hover: var(
-		--db-${colorName}-bg-transparent-hover
-	);
-	--db-current-color-bg-transparent-pressed: var(
-		--db-${colorName}-bg-transparent-pressed
-	);
-	--db-current-color-enabled: var(--db-${colorName}-on-bg-enabled);
-	--db-current-color-icon: var(--db-${colorName}-on-bg-enabled);
-	--db-current-color-hover: var(--db-${colorName}-on-bg-hover);
-	--db-current-color-pressed: var(--db-${colorName}-on-bg-pressed);
-	--db-current-color-bg-lvl-1-enabled: var(--db-${colorName}-bg-lvl-1-enabled);
-	--db-current-color-bg-lvl-2-enabled: var(--db-${colorName}-bg-lvl-2-enabled);
-	--db-current-color-bg-lvl-3-enabled: var(--db-${colorName}-bg-lvl-3-enabled);
-	--db-current-color-contrast-low-enabled: var(
-		--db-${colorName}-contrast-low-enabled
-	);
-	--db-current-color-border: var(--db-${colorName}-border);
-	--db-current-color-bg-lvl-1-hover: var(--db-${colorName}-bg-lvl-1-hover);
-	--db-current-color-bg-lvl-1-pressed: var(--db-${colorName}-bg-lvl-1-pressed);
-	--db-current-color-bg-lvl-2-hover: var(--db-${colorName}-bg-lvl-2-hover);
-	--db-current-color-bg-lvl-2-pressed: var(--db-${colorName}-bg-lvl-2-pressed);
-	--db-current-color-bg-lvl-3-hover: var(--db-${colorName}-bg-lvl-3-hover);
-	--db-current-color-bg-lvl-3-pressed: var(--db-${colorName}-bg-lvl-3-pressed);
-	--db-current-color-on-contrast-enabled: var(
-		--db-${colorName}-on-contrast-enabled
-	);
-	--db-current-color-contrast-high-enabled: var(
-		--db-${colorName}-contrast-high-enabled
-	);
-	--db-current-color-contrast-high-hover: var(
-		--db-${colorName}-contrast-high-hover
-	);
-	--db-current-color-contrast-high-pressed: var(
-		--db-${colorName}-contrast-high-pressed
-	);
-}
-.db-${colorName}-bg [data-emphasis="weak"][data-bg-weight="1"],
-.db-${colorName}-bg [data-emphasis="weak"][data-bg-weight="2"],
-.db-${colorName}-bg [data-emphasis="weak"][data-bg-weight="3"],
-[data-emphasis="weak"].db-${colorName}-bg,
-[data-emphasis="weak"].db-${colorName}-bg-lvl-1,
-[data-emphasis="weak"].db-${colorName}-bg-lvl-2,
-[data-emphasis="weak"].db-${colorName}-bg-lvl-3,
-[data-emphasis="weak"].db-${colorName}-bg-transparent-full,
-[data-emphasis="weak"].db-${colorName}-bg-transparent-semi {
-	--db-current-color-enabled: var(--db-${colorName}-on-bg-weak-enabled);
-	--db-current-color-hover: var(--db-${colorName}-on-bg-weak-hover);
-	--db-current-color-pressed: var(--db-${colorName}-on-bg-weak-pressed);
-	color: var(--db-current-color-enabled);
-}
-.db-${colorName}-bg,
-.db-${colorName}-bg [data-bg-weight="1"],
-.db-${colorName}-bg-lvl-1 {
-	--db-current-color-bg-enabled: var(--db-current-color-bg-lvl-1-enabled);
-}
-.db-${colorName}-bg [data-bg-weight="2"],
-.db-${colorName}-bg-lvl-2 {
-	--db-current-color-bg-enabled: var(--db-current-color-bg-lvl-2-enabled);
-}
-.db-${colorName}-bg [data-bg-weight="3"],
-.db-${colorName}-bg-lvl-3 {
-	--db-current-color-bg-enabled: var(--db-current-color-bg-lvl-3-enabled);
-}
-.db-${colorName}-bg-transparent-full {
-	--db-current-color-bg-enabled: var(
-		--db-current-color-bg-transparent-full-enabled
-	);
-}
-.db-${colorName}-bg-transparent-semi {
-	--db-current-color-bg-enabled: var(
-		--db-current-color-bg-transparent-semi-enabled
-	);
+
+[data-container-color=${colorName}],
+.db-container-color-${colorName} {
+  color: var(--db-adaptive-on-bg-basic-emphasis-100-default);
+  background-color: var(--db-adaptive-bg-basic-level-1-default);
 }
 `;
 };

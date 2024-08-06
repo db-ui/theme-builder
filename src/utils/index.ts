@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import { BASE_PATH } from "../constants.ts";
+import { BASE_PATH, FALLBACK_COLOR } from "../constants.ts";
 
 export const getThemeImage = (image: string): string => {
   if (image.startsWith("data:image")) {
@@ -14,15 +14,13 @@ export const isValidColor = (color: string): boolean => chroma.valid(color);
 export const getLuminance = (color: string): number =>
   chroma.valid(color) ? chroma.hex(color).luminance() : -1;
 
-export const getContrast = (color: string, bgColor: string): number =>
+export const getContrast = (
+  color: string = FALLBACK_COLOR,
+  bgColor: string = FALLBACK_COLOR,
+): number =>
   chroma.valid(color) && chroma.valid(bgColor)
     ? chroma.contrast(color, bgColor)
     : -1;
-
-export const isOriginColor = (name: string): boolean =>
-  !["neutral", "informational", "successful", "warning", "critical"].includes(
-    name,
-  );
 
 export const kebabCase = (
   input: string,
