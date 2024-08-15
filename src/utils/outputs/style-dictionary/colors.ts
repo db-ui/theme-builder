@@ -97,7 +97,7 @@ export const getSDSpeakingColors = (
       const themeObj: any = {
         origin: {
           default: {
-            value: `colors.origin.${theme}.default.value`,
+            value: `{colors.origin.${theme}.default.value}`,
           },
           hovered: {
             value: `colors.origin.${theme}.hovered.value`,
