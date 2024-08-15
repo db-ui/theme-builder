@@ -24,9 +24,13 @@ export const getSDColorPalette = (
 
     colorValues.origin = {
       base: {
+        comment: "This is just to resolve the original origin color",
         value: color.origin,
       },
-      light: {
+    };
+
+    colorValues.light = {
+      origin: {
         default: {
           value: color.originLight,
         },
@@ -37,7 +41,23 @@ export const getSDColorPalette = (
           value: color.originLightPressed,
         },
       },
-      dark: {
+      on: {
+        origin: {
+          default: {
+            value: color.onOriginLight,
+          },
+          hovered: {
+            value: color.onOriginLightHovered,
+          },
+          pressed: {
+            value: color.onOriginLightPressed,
+          },
+        },
+      },
+    };
+
+    colorValues.dark = {
+      origin: {
         default: {
           value: color.originDark,
         },
@@ -48,29 +68,17 @@ export const getSDColorPalette = (
           value: color.originDarkPressed,
         },
       },
-    };
-
-    colorValues.onOrigin = {
-      light: {
-        default: {
-          value: color.onOriginLight,
-        },
-        hovered: {
-          value: color.onOriginLightHovered,
-        },
-        pressed: {
-          value: color.onOriginLightPressed,
-        },
-      },
-      dark: {
-        default: {
-          value: color.onOriginDark,
-        },
-        hovered: {
-          value: color.onOriginDarkHovered,
-        },
-        pressed: {
-          value: color.onOriginDarkPressed,
+      on: {
+        origin: {
+          default: {
+            value: color.onOriginDark,
+          },
+          hovered: {
+            value: color.onOriginDarkHovered,
+          },
+          pressed: {
+            value: color.onOriginDarkPressed,
+          },
         },
       },
     };
@@ -85,36 +93,36 @@ export const getSDSpeakingColors = (
   speakingNames: SpeakingName[],
   allColors: Record<string, DefaultColorType>,
 ): any => {
-  const colors: any = {};
+  const colors: any = { light: {}, dark: {} };
   const colorTheme = ["light", "dark"];
   for (const [unformattedName] of Object.entries(allColors)) {
     const name = unformattedName.toLowerCase();
-
-    colors[name] = {};
 
     for (const theme of colorTheme) {
       const isDark = theme === "dark";
       const themeObj: any = {
         origin: {
           default: {
-            value: `{colors.origin.${theme}.default.value}`,
+            value: `{colors.${theme}.origin.default.value}`,
           },
           hovered: {
-            value: `colors.origin.${theme}.hovered.value`,
+            value: `{colors.${theme}.origin.hovered.value}`,
           },
           pressed: {
-            value: `colors.origin.${theme}.pressed.value`,
+            value: `{colors.${theme}.origin.pressed.value}`,
           },
         },
-        onOrigin: {
-          default: {
-            value: `colors.onOrigin.${theme}.default.value`,
-          },
-          hovered: {
-            value: `colors.onOrigin.${theme}.hovered.value`,
-          },
-          pressed: {
-            value: `colors.onOrigin.${theme}.pressed.value`,
+        on: {
+          origin: {
+            default: {
+              value: `{colors.${theme}.on.origin.default.value}`,
+            },
+            hovered: {
+              value: `{colors.${theme}.on.origin.hovered.value}`,
+            },
+            pressed: {
+              value: `{colors.${theme}.on.origin.pressed.value}`,
+            },
           },
         },
       };
@@ -125,7 +133,7 @@ export const getSDSpeakingColors = (
         setObjectByPath(
           themeObj,
           `${dotName}.value`,
-          `colors.${name}.${isDark ? speakingName.dark : speakingName.light}.value`,
+          `{colors.${name}.${isDark ? speakingName.dark : speakingName.light}.value}`,
         );
 
         if (
@@ -142,7 +150,7 @@ export const getSDSpeakingColors = (
         }
       }
 
-      colors[name][theme] = themeObj;
+      colors[theme][name] = themeObj;
     }
   }
   return { colors };
