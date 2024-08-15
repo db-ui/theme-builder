@@ -19,15 +19,20 @@ import { generateDensityEnumFile } from "./compose/density.ts";
 import { getSketchColorsAsString } from "./sketch.ts";
 import { getFontFaces } from "./web/fonts.ts";
 import { kebabCase } from "../index.ts";
+import { generateCustomColorClass } from "./web/custom-color-class.ts";
+import { generateAndroidReadmeFile } from "./compose/readme.ts";
 import {
   getCssPropertyAsString,
   getCssThemeProperties,
   getFullColorCss,
   getPaletteOutput,
   getSpeakingNames,
-} from "./index.ts";
-import { generateCustomColorClass } from "./web/custom-color-class.ts";
-import { generateAndroidReadmeFile } from "./compose/readme.ts";
+} from "./web";
+import {
+  getSDColorPalette,
+  getSDSpeakingColors,
+} from "./style-dictionary/colors.ts";
+import { getDBNonColorToken } from "./style-dictionary";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -66,6 +71,33 @@ export const downloadTheme = async (
 
   const zip = new JSZip();
   zip.file(`${fileName}.json`, themeJsonString);
+
+  // Style dictionary
+
+  const sdFolder: string = "StyleDictionary";
+  zip.file(
+    `${sdFolder}/palette-colors.json`,
+    JSON.stringify(getSDColorPalette(allColors, luminanceSteps)),
+  );
+  zip.file(
+    `${sdFolder}/speaking-colors.json`,
+    JSON.stringify(getSDSpeakingColors(speakingNames, allColors)),
+  );
+  const token = getDBNonColorToken(theme);
+  const tokenProps = [
+    "spacing",
+    "sizing",
+    "border",
+    "elevation",
+    "transition",
+    "font",
+  ];
+  for (const prop of tokenProps) {
+    zip.file(
+      `${sdFolder}/${prop}s.json`,
+      JSON.stringify({ [prop]: token[prop] }),
+    );
+  }
 
   //Android
   const androidFolder: string = "Android";
