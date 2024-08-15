@@ -103,25 +103,25 @@ export const getSDSpeakingColors = (
       const themeObj: any = {
         origin: {
           default: {
-            value: `{colors.${theme}.origin.default.value}`,
+            value: `{colors.${name}.${theme}.origin.default.value}`,
           },
           hovered: {
-            value: `{colors.${theme}.origin.hovered.value}`,
+            value: `{colors.${name}.${theme}.origin.hovered.value}`,
           },
           pressed: {
-            value: `{colors.${theme}.origin.pressed.value}`,
+            value: `{colors.${name}.${theme}.origin.pressed.value}`,
           },
         },
         on: {
           origin: {
             default: {
-              value: `{colors.${theme}.on.origin.default.value}`,
+              value: `{colors.${name}.${theme}.on.origin.default.value}`,
             },
             hovered: {
-              value: `{colors.${theme}.on.origin.hovered.value}`,
+              value: `{colors.${name}.${theme}.on.origin.hovered.value}`,
             },
             pressed: {
-              value: `{colors.${theme}.on.origin.pressed.value}`,
+              value: `{colors.${name}.${theme}.on.origin.pressed.value}`,
             },
           },
         },
