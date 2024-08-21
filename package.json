@@ -22,7 +22,7 @@
     "@craftjs/core": "^0.2.10",
     "@db-ui/react-components": "0.3.5",
     "@redux-devtools/extension": "^3.3.0",
-    "@tiptap/extension-color": "^2.6.4",
+    "@tiptap/extension-color": "^2.6.5",
     "@tiptap/extension-text-style": "^2.6.4",
     "@tiptap/extension-underline": "^2.6.4",
     "@tiptap/pm": "^2.5.8",
