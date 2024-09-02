@@ -2,12 +2,12 @@ import { Outlet } from "react-router-dom";
 import Notifications from "./components/Notifications";
 import { useThemeBuilderStore } from "./store";
 import { useEffect } from "react";
+import { DefaultColorType } from "./utils/data.ts";
 import {
   getNonColorCssProperties,
   getPaletteOutput,
   getSpeakingNames,
-} from "./utils/outputs";
-import { DefaultColorType } from "./utils/data.ts";
+} from "./utils/outputs/web";
 
 const App = () => {
   const { speakingNames, luminanceSteps, theme } = useThemeBuilderStore(
