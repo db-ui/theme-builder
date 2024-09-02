@@ -26,6 +26,19 @@ export const getCssPropertyAsString = (
   return resultString;
 };
 
+export const getTypedCssPropertyAsString = (
+  properties: any,
+  type: string,
+): string => {
+  let resultString = "";
+
+  for (const [key, value] of Object.entries(properties)) {
+    resultString += `@property ${key} { syntax: "<${type}>"; initial-value: ${value}; }\n`;
+  }
+
+  return resultString;
+};
+
 const nonRemProperties = ["opacity", "elevation", "transition", "font"];
 
 const isFontFamily = (path: string[]): boolean =>
