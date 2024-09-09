@@ -118,10 +118,8 @@ export const getFullColorCss = (
   colorsPalette: string,
   colorsSpeakingNames: string,
 ): string => {
-  return `:root{
-      ${colorsPalette}
+  return `${colorsPalette}
       ${colorsSpeakingNames}
-      }
       
 [data-color-scheme="light"] {
 	color-scheme: light;
