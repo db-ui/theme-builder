@@ -94,10 +94,8 @@ Error generating stack: `+s.message+`
 `;return r},iie=["opacity","elevation","transition","font"],sie=e=>e[0]==="font"&&e[1]==="family"||e[0]!=="font",h6=(e,t)=>{const r={};return Yu(e).forEach(function(n){if(this.isLeaf&&this.path.length>0&&this.path[0]!=="colors"&&this.path[0]!=="additionalColors"&&this.path[0]!=="customColors"&&this.path[0]!=="branding"&&sie(this.path)&&!this.path.includes("_scale")){const i=`--${lt}-${this.path.map(s=>s.toLowerCase()).map(s=>s==="lineheight"?"line-height":s==="fontsize"?"font-size":s).join("-")}`;if(r[i]=!iie.includes(this.path[0])&&(typeof n=="string"||n instanceof String)?`${n}rem`:n,this.path.at(-1)==="fontSize"){const s=[...this.path];s[s.length-1]="lineHeight";const o=Number(n),a=Number(Yu(e).get(s)),l=this.path.filter(c=>c!=="typography"&&c!=="fontSize").join("-"),u=o*a;r[`--${lt}-base-icon-weight-${l}`]=u*16,r[`--${lt}-base-icon-font-size-${l}`]=`${u}rem`}}}),t?KE(r):r},oie=e=>`:root{
     ${h6(e,!0)}
   }
-  `,VP=(e,t)=>`:root{
-      ${e}
+  `,VP=(e,t)=>`${e}
       ${t}
-      }
       
 [data-color-scheme="light"] {
 	color-scheme: light;
