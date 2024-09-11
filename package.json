@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@craftjs/core": "^0.2.10",
-    "@db-ui/react-components": "0.3.8",
+    "@db-ui/react-components": "0.3.9",
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.6.6",
     "@tiptap/extension-text-style": "^2.6.6",
@@ -36,7 +36,7 @@
     "hsluv": "^1.0.1",
     "html-react-parser": "^5.1.15",
     "husky": "9.1.5",
-    "i18next": "23.15.0",
+    "i18next": "23.15.1",
     "i18next-browser-languagedetector": "8.0.0",
     "i18next-http-backend": "2.6.1",
     "jszip": "^3.10.1",
@@ -70,7 +70,7 @@
     "postcss": "^8.4.45",
     "sass": "^1.78.0",
     "tailwindcss": "^3.4.10",
-    "typescript": "^5.5.4",
+    "typescript": "^5.6.2",
     "vite": "^5.4.3"
   }
 }
