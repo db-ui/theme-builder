@@ -33,7 +33,7 @@ export const getTypedCssPropertyAsString = (
   let resultString = "";
 
   for (const [key, value] of Object.entries(properties)) {
-    resultString += `@property ${key} { syntax: "<${type}>"; initial-value: ${value}; }\n`;
+    resultString += `@property ${key} { syntax: "<${type}>"; initial-value: ${value}; inherits: true; }\n`;
   }
 
   return resultString;
