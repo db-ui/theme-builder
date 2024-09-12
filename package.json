@@ -34,7 +34,7 @@
     "chroma-js": "^3.1.1",
     "dompurify": "^3.1.6",
     "hsluv": "^1.0.1",
-    "html-react-parser": "^5.1.15",
+    "html-react-parser": "^5.1.16",
     "husky": "9.1.5",
     "i18next": "23.15.1",
     "i18next-browser-languagedetector": "8.0.0",
