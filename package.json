@@ -34,8 +34,8 @@
     "chroma-js": "^3.1.1",
     "dompurify": "^3.1.6",
     "hsluv": "^1.0.1",
-    "html-react-parser": "^5.1.15",
-    "husky": "9.1.5",
+    "html-react-parser": "^5.1.16",
+    "husky": "9.1.6",
     "i18next": "23.15.1",
     "i18next-browser-languagedetector": "8.0.0",
     "i18next-http-backend": "2.6.1",
@@ -69,7 +69,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.45",
     "sass": "^1.78.0",
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "^3.4.11",
     "typescript": "^5.6.2",
     "vite": "^5.4.4"
   }
