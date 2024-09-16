@@ -21,6 +21,7 @@ import { getFontFaces } from "./web/fonts.ts";
 import { kebabCase } from "../index.ts";
 import {
   getCssPropertyAsString,
+  getTypedCssPropertyAsString,
   getCssThemeProperties,
   getFullColorCss,
   getPaletteOutput,
@@ -119,9 +120,9 @@ export const downloadTheme = async (
 
   zip.file(`${webFolder}/${fileName}-theme.css`, themeProperties);
 
-  const colorsPalette = getCssPropertyAsString(
+  const colorsPalette = getTypedCssPropertyAsString(
     getPaletteOutput(allColors, luminanceSteps),
-    true,
+    "color",
   );
   const colorSpeakingNames = getCssPropertyAsString(
     getSpeakingNames(speakingNames, allColors),
@@ -139,9 +140,9 @@ export const downloadTheme = async (
   if (theme.customColors) {
     const customColorsFolder: string = "Custom Colors";
 
-    const customColorsPalette = getCssPropertyAsString(
+    const customColorsPalette = getTypedCssPropertyAsString(
       getPaletteOutput(theme.customColors, luminanceSteps),
-      true,
+      "color",
     );
 
     const customColorsSpeakingNames = getCssPropertyAsString(
