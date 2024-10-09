@@ -1,5 +1,3 @@
-import { replacePackageName } from "./shared.ts";
-
 export const generateSwiftUIThemeFile = (fileName: string): string => {
   return `
 import SwiftUI

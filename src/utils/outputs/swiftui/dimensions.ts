@@ -58,17 +58,17 @@ export const generateSwiftUIDimensionsScheme = (
   device: string,
 ): string => {
   for (const [type, values] of Object.entries(dimensionTypes)) {
-    resolvedTokenFile += `var ${type}Dimensions${density}${device} = ${kebabCase(type)}Dimensions(`;
-    values.forEach((value, index) => {
+    resolvedTokenFile += `let ${type}Dimensions${density}${device} = ${kebabCase(type)}Dimensions(\n`;
+    for (const value of values) {
       const resolvedValue = value === "base" ? "" : `-${value}`;
       const resolvedDevice = value === "responsive" ? `-${device}` : "";
       const resolvedDensity = type === "border" ? "" : `-${density}`;
 
-      shirtSizes.forEach((size, shirtIndex) => {
-        resolvedTokenFile += `${kebabCase(`${value}-${size}`, true)}: Dimensions.${kebabCase(`${type}${resolvedValue}${resolvedDensity}${resolvedDevice}-${size}`, true)}`;
+      for (const size of shirtSizes) {
+        resolvedTokenFile += `    ${kebabCase(`${value}-${size}`, true)}: Dimensions.${kebabCase(`${type}${resolvedValue}${resolvedDensity}${resolvedDevice}-${size}`, true)}`;
         resolvedTokenFile += `,\n`
-      });
-    });
+      }
+    }
     resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
     resolvedTokenFile += `\n)\n`;
   }

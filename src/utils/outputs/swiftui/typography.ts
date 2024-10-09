@@ -1,4 +1,4 @@
-import { FontType, ThemeType } from "../../data.ts";
+import { ThemeType } from "../../data.ts";
 import traverse from "traverse";
 import { kebabCase } from "../../index.ts";
 import {
@@ -7,40 +7,52 @@ import {
   shirtSizes,
 } from "./shared.ts";
 
-export const generateSwiftUIFontFamilyFile = (headlineFont: [string, FontType][], sansFont: [string, FontType][]): string => {
-  let resolvedTokenFile = `import SwiftUI
+export const generateSwiftUIFontFamilyFile = (): string => {
+  return `import SwiftUI
 struct DBFont {
   let name: String
+  private let publicName: String
   
-  private init(named name: String) {
+  private init(named name: String, publicName: String) {
       self.name = name
+      self.publicName = publicName
       do {
           try registerFont(fontName: name)
           print("Registered Font \\(name)")
       } catch {
           let reason = error.localizedDescription
-          fatalError("Failed to register font: \(reason)")
+          fatalError("Failed to register font: \\(reason)")
       }
   }
 
-  static let dbFlex = DBFont(named: "DBNeoScreenFlex")
+  public func font(size: CGFloat) -> Font {
+      Font.custom(publicName, size: size)
+  }
+
+  static let dbFlex = DBFont(named: "DBNeoScreenFlex", publicName: "DB Neo Screen Flex")
 
 }
 
 public enum FontError: Swift.Error {
-   case failedToRegisterFont
+    case failedToRegisterFont
 }
 
 func registerFont(fontName: String) throws {
-    guard let asset = NSDataAsset(name: "Fonts/\(fontName)", bundle: Bundle.main),
-          let provider = CGDataProvider(data: asset.data as NSData),
-          let font = CGFont(provider),
-          CTFontManagerRegisterGraphicsFont(font, nil) else {
+    guard let fontURL = Bundle.module.url(forResource: "\\(fontName)", withExtension: "ttf") else {
         throw FontError.failedToRegisterFont
     }
+    
+    let fontURLs = [fontURL] as CFArray
+    
+    CTFontManagerRegisterFontURLs(fontURLs, .process, true) { errors, done in
+        let errors = errors as! [CFError]
+        guard errors.isEmpty else {
+            preconditionFailure(errors.map(\\.localizedDescription).joined())
+        }
+        return true
+    }
 }
-`
-  return resolvedTokenFile
+`;
 }
 
 export const generateSwiftUITypographyFile = (theme: ThemeType): string => {
@@ -75,7 +87,7 @@ let dbTypography: [String: CGFloat] = [
 
       resolvedTokenFile += `    "${key}": ${finalValue},\n`;
     }
-  });;
+  });
 
   resolvedTokenFile += `]\n`
 
@@ -209,7 +221,7 @@ extension Typography {
   resolvedTokenFile += `func getFonts(typo: DeutscheBahnThemeTypography) -> ${fileName}Fonts { 
     .init(\n`;
   for (const [font, size] of Object.entries(fontsTypes)) {
-    resolvedTokenFile += `        ${font}: DBFont.flex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}),\n`;
+    resolvedTokenFile += `        ${font}: DBFont.dbFlex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}),\n`;
   }
   resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
   resolvedTokenFile += `\n    )\n}\n\n`;

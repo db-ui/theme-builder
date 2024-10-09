@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 export const densities = ["Functional", "Regular", "Expressive"];
 
 export const devices = ["Mobile", "Tablet"];

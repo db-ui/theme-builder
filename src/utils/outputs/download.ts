@@ -36,7 +36,7 @@ import { generateSwiftUIDensityEnumFile } from "./swiftui/density.ts";
 import { generateSwiftUIThemeFile } from "./swiftui/theme.ts";
 import { generateStaticSwiftUIFiles } from "./swiftui/shared.ts";
 import { generateSwiftUIElevationsFile } from "./swiftui/elevation.ts";
-import { generateSwiftUIFontFamilyFile, generateSwiftUITypographyFile, generateSwiftUITypographyScheme, generateSwiftUITypographySchemeFile } from "./swiftui/typography.ts";
+import { generateSwiftUIFontFamilyFile, generateSwiftUITypographyFile, generateSwiftUITypographySchemeFile } from "./swiftui/typography.ts";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -145,7 +145,7 @@ export const downloadTheme = async (
     `${iOSThemeFolder}/${iOSFileName}Typography.swift`,
     generateSwiftUITypographySchemeFile(iOSFileName),
   );
-  zip.file(`${iOSDataFolder}/Fonts.swift`, generateSwiftUIFontFamilyFile(Object.entries(theme.font.head), Object.entries(theme.font.sans)));
+  zip.file(`${iOSDataFolder}/Fonts.swift`, generateSwiftUIFontFamilyFile());
   zip.file(
     `${iOSDataFolder}/Dimensions.swift`,
     generateSwiftUIDimensionsFile(theme),

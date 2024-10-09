@@ -24,7 +24,7 @@ struct DBElevation {\n`;
   Object.entries(allElevations).forEach(([name, elevation]) => {
     if (!name.includes("_scale")) {
         resolvedString += `    static let ${name.toLowerCase()} = DBSubElevation(`;
-        let shadows = elevation.toString().replaceAll("  ", " ").replaceAll("rgba(", "").replaceAll ("), ", "#").replaceAll(")", "").replaceAll(",", "").split("#")
+        const shadows = elevation.toString().replaceAll("  ", " ").replaceAll("rgba(", "").replaceAll ("), ", "#").replaceAll(")", "").replaceAll(",", "").split("#")
         resolvedString += `
         first: .init(
             x: ${shadows[0].split(' ')[0]}, 

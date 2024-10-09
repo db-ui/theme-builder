@@ -22,11 +22,6 @@ export const generateSwiftUIColorFile = (
 ): string => {
   let resolvedTokenFile: string = `import SwiftUI
 
-enum ColorScheme {
-    case light
-    case dark
-}
-
 let dbColors: [String: Color] = [
 `;
 
