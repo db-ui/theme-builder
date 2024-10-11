@@ -3,13 +3,15 @@ import traverse from "traverse";
 import { kebabCase } from "../../index.ts";
 import {
   densities,
+  designSystemName,
   devices,
   replacePackageName,
+  replacePackagePath,
   shirtSizes,
 } from "./shared.ts";
 
 export const generateFontFamilyFile = (): string => {
-  return `package ${replacePackageName}.theme  
+  return `package ${replacePackageName}${replacePackagePath}.core
 
 import ${replacePackageName}.R
 import androidx.compose.ui.text.font.FontFamily
@@ -17,48 +19,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.Font
 
 object Fonts {
-// Required  
-val sansRegular = FontFamily(
-    Font(R.font.sans_regular, FontWeight.Normal)
-)
-
-val headBlack = FontFamily(
-    Font(R.font.head_black, FontWeight.Black)
-)
-
-// Optional 
-val headLight = FontFamily(
-    Font(R.font.head_light, FontWeight.Light)
-)
-val headRegular = FontFamily(
-    Font(R.font.head_regular, FontWeight.Normal)
-)
- 
-val sansDigital = FontFamily(
-    Font(R.font.sans_digital, FontWeight.Light)
-)
- 
-val sansMedium = FontFamily(
-    Font(R.font.sans_medium, FontWeight.Medium)
-)
- 
-val sansSemiBold = FontFamily(
-    Font(R.font.sans_semibold, FontWeight.SemiBold)
-)
- 
-val sansBold = FontFamily(
-    Font(R.font.sans_bold, FontWeight.Bold)
-)
+    val dbFlex = FontFamily(
+        Font(R.font.db_neo_screen_flex, FontWeight.Normal)
+    )
 }
 `;
 };
 
-export const generateComposeTypographyFile = (theme: ThemeType): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}.theme  
-  
-import androidx.compose.ui.unit.sp
-object Typography {
+export const generateComposeTypographyFile = (brandName:string, theme: ThemeType): string => {
+  let resolvedTokenFile: string = `package ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data
 
+import androidx.compose.ui.unit.sp
+
+val ${brandName}TypographyMap = mapOf(
 `;
 
   traverse(theme).forEach(function (value) {
@@ -85,11 +58,11 @@ object Typography {
         finalValue = `${Number(traverse(theme).get(fontSizePath)) * value * 16}.sp`;
       }
 
-      resolvedTokenFile += `val ${key} = ${finalValue}\n`;
+      resolvedTokenFile += `\t"${key}" to ${finalValue},\n`;
     }
   });
 
-  resolvedTokenFile += "}";
+  resolvedTokenFile += ")\n";
 
   return resolvedTokenFile;
 };
@@ -117,64 +90,80 @@ const fontsTypes: Record<string, string> = {
 };
 
 export const generateTypographyScheme = (
-  fileName: string,
   resolvedTokenFile: string,
   density: string,
   device: string,
 ): string => {
+  resolvedTokenFile += `
+fun getTypography${density}${device}(
+    typographyMap: Map<String, TextUnit>,
+): ${designSystemName}Typography = ${designSystemName}Typography(`;
   for (const variant of typoVariants) {
-    resolvedTokenFile += `val ${variant}Typography${density}${device} = ${kebabCase(variant)}Typography(`;
-    for (const type of typoTypes) {
-      for (const size of shirtSizes) {
-        resolvedTokenFile += `Typography.${kebabCase(`${variant}-${type}-${density}-${device}-${size}`, true)},\n`;
-      }
-    }
-    resolvedTokenFile += `)\n`;
+    resolvedTokenFile += `\n\t${variant} = Typography.create(typographyMap, "${variant}", "${density}", "${device}"),`;
   }
-
-  resolvedTokenFile += `fun getTypography${density}${device}(`;
-
-  for (const variant of typoVariants) {
-    resolvedTokenFile += `${variant}: ${kebabCase(variant)}Typography = ${variant}Typography${density}${device},\n`;
-  }
-  resolvedTokenFile += `\n):${fileName}Typography = ${fileName}Typography(\n`;
-  for (const variant of typoVariants) {
-    resolvedTokenFile += `${variant}=${variant},\n`;
-  }
-  resolvedTokenFile += `)\n`;
+  resolvedTokenFile += "\n)\n\n";
 
   return resolvedTokenFile;
 };
 
-export const generateTypographySchemeFile = (fileName: string): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}.theme
+export const generateTypographySchemeFile = (brandName: string): string => {
+  let resolvedTokenFile: string = `package ${replacePackageName}${replacePackagePath}
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import ${replacePackageName}${replacePackagePath}.core.Fonts
+import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
 `;
 
-  for (const variant of typoVariants) {
-    resolvedTokenFile += `data class ${kebabCase(variant)}Typography(\n`;
+    resolvedTokenFile += `\nclass Typography private constructor(\n`;
     for (const size of shirtSizes) {
       for (const type of typoTypes) {
-        resolvedTokenFile += `val ${kebabCase(`${type}-${size}`, true)}: TextUnit,\n`;
+        resolvedTokenFile += `\tval ${kebabCase(`${type}-${size}`, true)}: TextUnit,\n`;
       }
     }
-    resolvedTokenFile += ")\n";
-  }
+    resolvedTokenFile += `) {
+    companion object {
+        fun create(
+            typographyMap: Map<String, TextUnit>,
+            typoVariant: String,
+            density: String,
+            device: String,
+        ): Typography {
+            return Typography(
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}3xs"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}3xs"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}2xs"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}2xs"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}Xs"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}Xs"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}Sm"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}Sm"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}Md"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}Md"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}Lg"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}Lg"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}Xl"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}Xl"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}2xl"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}2xl"),
+                typographyMap.getValue("\${typoVariant}LineHeight$density\${device}3xl"),
+                typographyMap.getValue("\${typoVariant}FontSize$density\${device}3xl"),
+            )
+        }
+    }
+}\n`;
 
-  resolvedTokenFile += `data class ${fileName}Typography(\n`;
+  resolvedTokenFile += `\ndata class ${designSystemName}Typography(\n`;
   for (const variant of typoVariants) {
-    resolvedTokenFile += `val ${variant}: ${kebabCase(variant)}Typography,\n`;
+    resolvedTokenFile += `\tval ${variant}: Typography,\n`;
   }
-  resolvedTokenFile += ")\n";
+  resolvedTokenFile += ")\n\n";
 
   for (const density of densities) {
     for (const device of devices) {
       resolvedTokenFile = generateTypographyScheme(
-        fileName,
         resolvedTokenFile,
         density,
         device,
@@ -182,25 +171,33 @@ import androidx.compose.ui.text.font.FontWeight
     }
   }
 
-  resolvedTokenFile += `data class ${fileName}TextStyles(\n`;
+  resolvedTokenFile += `data class ${designSystemName}TextStyles(\n`;
   for (const [font] of Object.entries(fontsTypes)) {
-    resolvedTokenFile += `val ${font}: TextStyle,\n`;
+    resolvedTokenFile += `\tval ${font}: TextStyle,\n`;
   }
-  resolvedTokenFile += ")\n";
+  resolvedTokenFile += ")\n\n";
 
-  resolvedTokenFile += `fun getTextStyles(typo: DBThemeTypography): ${fileName}TextStyles = ${fileName}TextStyles(`;
+  resolvedTokenFile += `fun getTextStyles(typo: ${designSystemName}Typography): ${designSystemName}TextStyles =
+    ${designSystemName}TextStyles(`;
   for (const [font, size] of Object.entries(fontsTypes)) {
-    resolvedTokenFile += `TextStyle(
-            fontFamily = Fonts.${font.includes("body") ? "sansRegular" : "headBlack"},
+    resolvedTokenFile += `
+        TextStyle(
+            fontFamily = Fonts.dbFlex,
             fontWeight = FontWeight.${font.includes("body") ? "Normal" : "Black"},
             fontSize = typo.${font.includes("body") ? "body" : "headline"}.fontSize${size},
             lineHeight = typo.${font.includes("body") ? "body" : "headline"}.lineHeight${size}
-        ),\n`;
+        ),`;
   }
-  resolvedTokenFile += ")\n";
+  resolvedTokenFile += "\n\t)\n";
 
   resolvedTokenFile += `
-val LocalTypography = staticCompositionLocalOf { getTextStyles(getTypographyRegularMobile()) }
+val LocalTypography = staticCompositionLocalOf {
+    getTextStyles(
+        getTypographyRegularMobile(
+            ${brandName}TypographyMap
+        )
+    )
+}
 `;
 
   return resolvedTokenFile;
