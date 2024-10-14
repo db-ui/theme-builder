@@ -60,7 +60,7 @@ export const generateDimensionsScheme = (
 ): string => {
   const params = [density, device]
 
-  resolvedTokenFile += `fun getDimensions${density}${device}(
+  resolvedTokenFile += `internal fun getDimensions${density}${device}(
     dimensionsMap: Map<String, Dp>,
 ): ${designSystemName}Dimensions = ${designSystemName}Dimensions(`;
   for (const type of Object.keys(dimensionTypes)) {
@@ -91,7 +91,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Dimensi
       }
     }
     resolvedTokenFile += "\n) {";
-    resolvedTokenFile += `\n\tconstructor(dimensionsMap: Map<String, Dp>, ${params.map(param => `${param}: String`).join(", ")}) : this(`;
+    resolvedTokenFile += `\n\tinternal constructor(dimensionsMap: Map<String, Dp>, ${params.map(param => `${param}: String`).join(", ")}) : this(`;
     for(const value of values) {
       for(const size of shirtSizes) {
         const resolvedValue = value === "base" ? "" : `-${value}`;

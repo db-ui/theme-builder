@@ -69,7 +69,7 @@ const generateColorSchemeDarkLightObjects = (
 ): string => {
   const colorScheme = kebabCase(darkMode ? "dark" : "light");
 
-  resolvedScheme += `fun getColorScheme${colorScheme}(colorMap: Map<String, Color>): ${designSystemName}ColorScheme =
+  resolvedScheme += `internal fun getColorScheme${colorScheme}(colorMap: Map<String, Color>): ${designSystemName}ColorScheme =
 \t${designSystemName}ColorScheme(\n`;
   for (const name of colorKeys) {
     resolvedScheme += `\t\t${name} = AdaptiveColors.${colorScheme.toLowerCase()}(colorMap, "${name}"),\n`;
@@ -124,7 +124,7 @@ val LocalActiveColor =\n\tstaticCompositionLocalOf { getColorSchemeLight(${brand
 const generateConstructorsDarkLight = (speakingNames: SpeakingName[], resolvedScheme:string): string => {
 
   const colorSchemes = ["dark", "light"];
-  resolvedScheme += `\tcompanion object {\n`;
+  resolvedScheme += `\tinternal companion object {\n`;
 
   for (const colorScheme of colorSchemes) {
     resolvedScheme += `\t\tfun ${colorScheme}(colorMap: Map<String, Color>, colorName: String) = AdaptiveColors(\n`;

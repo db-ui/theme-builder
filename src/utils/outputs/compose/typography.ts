@@ -94,7 +94,7 @@ export const generateTypographyScheme = (
   device: string,
 ): string => {
   resolvedTokenFile += `
-fun getTypography${density}${device}(
+internal fun getTypography${density}${device}(
     typographyMap: Map<String, TextUnit>,
 ): ${designSystemName}Typography = ${designSystemName}Typography(`;
   for (const variant of typoVariants) {
@@ -123,7 +123,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Typogra
       }
     }
     resolvedTokenFile += `) {
-    companion object {
+    internal companion object {
         fun create(
             typographyMap: Map<String, TextUnit>,
             typoVariant: String,
@@ -176,7 +176,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Typogra
   }
   resolvedTokenFile += ")\n\n";
 
-  resolvedTokenFile += `fun getTextStyles(typo: ${designSystemName}Typography): ${designSystemName}TextStyles =
+  resolvedTokenFile += `internal fun getTextStyles(typo: ${designSystemName}Typography): ${designSystemName}TextStyles =
     ${designSystemName}TextStyles(`;
   for (const [font, size] of Object.entries(fontsTypes)) {
     resolvedTokenFile += `

@@ -70,14 +70,14 @@ fun Modifier.boxShadow(
     }.let { modifier -> if (clip) modifier.clip(shape) else modifier }
 }
 
-data class ElevationConfig(
+internal data class ElevationConfig(
     val offset: DpOffset,
     val blur: Dp,
     val spread: Dp,
     val color: Color,
 )
 
-enum class Elevation(val config: List<ElevationConfig>) {
+enum class Elevation(internal val config: List<ElevationConfig>) {
 `;
 
   Object.entries(allElevations).forEach(([name, elevationScheme]) => {

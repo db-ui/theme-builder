@@ -4,7 +4,7 @@ export const generateDensityEnumFile = (): string => {
   return `package ${replacePackageName}.core
 
 enum class Density {
-    ${densities.map((density) => density.toUpperCase()).join(",")}
+    ${densities.map((density) => density.toUpperCase()).join(", ")}
 }
 `;
 };
