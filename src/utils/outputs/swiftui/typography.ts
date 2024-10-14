@@ -3,6 +3,7 @@ import traverse from "traverse";
 import { kebabCase } from "../../index.ts";
 import {
   densities,
+  designSystemName,
   devices,
   shirtSizes,
 } from "./shared.ts";
@@ -55,10 +56,10 @@ func registerFont(fontName: String) throws {
 `;
 }
 
-export const generateSwiftUITypographyFile = (theme: ThemeType): string => {
+export const generateSwiftUITypographyFile = (fileName: string, theme: ThemeType): string => {
   let resolvedTokenFile: string = `import SwiftUI
   
-let dbTypography: [String: CGFloat] = [
+let ${fileName}Typography: [String: CGFloat] = [
 `;
 
   traverse(theme).forEach(function (value) {
@@ -122,27 +123,25 @@ export const generateSwiftUITypographyScheme = (
   density: string,
   device: string,
 ): string => {
+  console.log(fileName)
+  
+  resolvedTokenFile += `extension ${designSystemName}Typography {\n`
   for (const variant of typoVariants) {
-    resolvedTokenFile += `let ${variant}Typography${density}${device}: Typography = .init(\n`;
-    resolvedTokenFile += `    variant: TypographyVariant.${variant.toLowerCase()},\n`
-    resolvedTokenFile += `    density: Density.${density.toLowerCase()},\n`
-    resolvedTokenFile += `    device: DeviceType.${device.toLowerCase()}\n`
-    resolvedTokenFile += `\n)\n\n`
+    resolvedTokenFile += `    private static func ${variant}Typography${density}${device}(sizes: [String: CGFloat]) -> Typography { .init(\n`;
+    resolvedTokenFile += `        variant: TypographyVariant.${variant.toLowerCase()},\n`
+    resolvedTokenFile += `        density: Density.${density.toLowerCase()},\n`
+    resolvedTokenFile += `        device: DeviceType.${device.toLowerCase()},\n`
+    resolvedTokenFile += `        sizes: sizes\n`
+    resolvedTokenFile += `\n      )\n    }\n\n`
   } 
 
-  resolvedTokenFile += `func getTypography${density}${device}(`;
-
-  for (const variant of typoVariants) {
-    resolvedTokenFile += `${variant}: Typography = ${variant}Typography${density}${device},\n`;
-  }
-  resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
-  resolvedTokenFile += `) -> ${fileName}Typography {
+  resolvedTokenFile += `    static func getTypography${density}${device}(sizes: [String: CGFloat]) -> ${designSystemName}Typography {
     .init(\n`;
   for (const variant of typoVariants) {
-    resolvedTokenFile += `        ${variant}: ${variant},\n`;
+    resolvedTokenFile += `        ${variant}: ${variant}Typography${density}${device}(sizes: sizes),\n`;
   }
   resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
-  resolvedTokenFile += `\n    )\n}\n\n`;
+  resolvedTokenFile += `\n        )\n    }\n}\n\n`;
 
   return resolvedTokenFile;
 };
@@ -159,7 +158,7 @@ export const generateSwiftUITypographySchemeFile = (fileName: string): string =>
   }
   resolvedTokenFile += "}\n\n";
 
-  resolvedTokenFile += `struct ${fileName}Typography {\n`;
+  resolvedTokenFile += `struct ${designSystemName}Typography {\n`;
   for (const variant of typoVariants) {
     resolvedTokenFile += `    let ${variant}: Typography\n`;
   }
@@ -188,43 +187,45 @@ enum TypographyVariant: String {
 }
 
 extension Typography {
-    init(variant: TypographyVariant, density: Density, device: DeviceType) {
-        lineHeight3xs = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)3xs", default: 12]
-        lineHeight2xs = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)2xs", default: 12]
-        lineHeightXs = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Xs", default: 12]
-        lineHeightSm = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Sm", default: 12]
-        lineHeightMd = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Md", default: 12]
-        lineHeightLg = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Lg", default: 12]
-        lineHeightXl = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Xl", default: 12]
-        lineHeight2xl = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)2xl", default: 12]
-        lineHeight3xl = dbTypography["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)3xl", default: 12]
+    init(variant: TypographyVariant, density: Density, device: DeviceType, sizes: [String: CGFloat]) {
+        lineHeight3xs = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)3xs", default: 12]
+        lineHeight2xs = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)2xs", default: 12]
+        lineHeightXs = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Xs", default: 12]
+        lineHeightSm = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Sm", default: 12]
+        lineHeightMd = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Md", default: 12]
+        lineHeightLg = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Lg", default: 12]
+        lineHeightXl = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Xl", default: 12]
+        lineHeight2xl = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)2xl", default: 12]
+        lineHeight3xl = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)3xl", default: 12]
         
-        fontSize3xs = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)3xs", default: 12]
-        fontSize2xs = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)2xs", default: 12]
-        fontSizeXs = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)2xs", default: 12]
-        fontSizeSm = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Sm", default: 12]
-        fontSizeMd = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Md", default: 12]
-        fontSizeLg = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Lg", default: 12]
-        fontSizeXl = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Xl", default: 12]
-        fontSize2xl = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)2xl", default: 12]
-        fontSize3xl = dbTypography["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)3xl", default: 12]
+        fontSize3xs = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)3xs", default: 12]
+        fontSize2xs = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)2xs", default: 12]
+        fontSizeXs = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)2xs", default: 12]
+        fontSizeSm = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Sm", default: 12]
+        fontSizeMd = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Md", default: 12]
+        fontSizeLg = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Lg", default: 12]
+        fontSizeXl = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)Xl", default: 12]
+        fontSize2xl = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)2xl", default: 12]
+        fontSize3xl = sizes["\\(variant)FontSize\\(density.rawValue)\\(device.rawValue)3xl", default: 12]
     }
 }
-  `
 
-  resolvedTokenFile += `struct ${fileName}Fonts{\n`;
+`
+
+  resolvedTokenFile += `struct ${designSystemName}Fonts{\n`;
   for (const [font] of Object.entries(fontsTypes)) {
-    resolvedTokenFile += `let ${font}: Font\n`;
+    resolvedTokenFile += `    let ${font}: Font\n`;
   }
-  resolvedTokenFile += "}\n\n";
+  resolvedTokenFile += `\n\n`;
 
-  resolvedTokenFile += `func getFonts(typo: DeutscheBahnThemeTypography) -> ${fileName}Fonts { 
-    .init(\n`;
+  resolvedTokenFile += `    static func getFonts(typo: ${designSystemName}Typography) -> ${designSystemName}Fonts { 
+      .init(\n`;
   for (const [font, size] of Object.entries(fontsTypes)) {
-    resolvedTokenFile += `        ${font}: DBFont.dbFlex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}),\n`;
+    resolvedTokenFile += `            ${font}: .init(font: DBFont.dbFlex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}), uiFont: DBFont.dbFlex.uiFont(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}), lineHeight: typo.${font.includes("body") ? "body" : "headline"}.lineHeight${size}, fontWeight: ${font.includes("body") ? ".regular" : ".black"}),\n`
+    // resolvedTokenFile += `            ${font}: DBFont.dbFlex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}).weight(${font.includes("body") ? ".regular" : ".black"}),\n`;
   }
   resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
-  resolvedTokenFile += `\n    )\n}\n\n`;
+  resolvedTokenFile += `\n        )\n    }\n}\n`;
 
   return resolvedTokenFile;
 };

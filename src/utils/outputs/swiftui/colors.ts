@@ -2,6 +2,7 @@ import { DefaultColorType, HeisslufType, SpeakingName } from "../../data.ts";
 import { kebabCase } from "../../index.ts";
 import { getPalette } from "../index.ts";
 import { FALLBACK_COLOR } from "../../../constants.ts";
+import { designSystemName } from "./shared.ts";
 
 const originAdditionalColors = [
   { name: "onOriginDefault", light: 0, dark: 0 },
@@ -17,12 +18,13 @@ const getSwiftUIColorFromHex = (hex: string = FALLBACK_COLOR): string => {
 };
 
 export const generateSwiftUIColorFile = (
+  fileName: string,
   allColors: Record<string, DefaultColorType>,
   luminanceSteps: number[],
 ): string => {
   let resolvedTokenFile: string = `import SwiftUI
 
-let dbColors: [String: Color] = [
+let ${fileName}Colors: [String: Color] = [
 `;
 
   const palette: Record<string, HeisslufType[]> = getPalette(
@@ -54,21 +56,7 @@ let dbColors: [String: Color] = [
   });
 
   resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
-  resolvedTokenFile += `\n]
-  
-extension Color {
-  init(hex: Int, opacity: Double = 1) {
-      self.init(
-          .sRGB,
-          red: Double((hex >> 16) & 0xff) / 255,
-          green: Double((hex >> 08) & 0xff) / 255,
-          blue: Double((hex >> 00) & 0xff) / 255,
-          opacity: opacity
-      )
-  }
-}
-
-  `;
+  resolvedTokenFile += `\n]\n`;
 
   return resolvedTokenFile;
 };
@@ -93,18 +81,18 @@ const generateSwiftUIAdaptiveColorsExtension = (
           (speakingName.transparencyDark !== undefined
             ? speakingName.transparencyDark
             : speakingName.transparencyLight || 0) / 100;
-        resolvedScheme += `          self.${resolvedName} = dbColors["\\(colorName)${color}", default: .clear].opacity(${transparency})\n`; // DBColors.${color}.opacity(${transparency})\n`;
+        resolvedScheme += `          self.${resolvedName} = colors["\\(colorName)${color}", default: .clear].opacity(${transparency})\n`; // DBColors.${color}.opacity(${transparency})\n`;
       } else {
-        resolvedScheme += `          self.${resolvedName} = dbColors["\\(colorName)${color}", default: .clear]\n`;
+        resolvedScheme += `          self.${resolvedName} = colors["\\(colorName)${color}", default: .clear]\n`;
       }
     }
 
-    resolvedScheme += `          self.onOriginDefault = dbColors["\\(colorName)${name}${colorScheme}", default: .clear]\n`;
-    resolvedScheme += `          self.onOriginHovered = dbColors["\\(colorName)${name}OnOriginHovered${colorScheme}", default: .clear]\n`;
-    resolvedScheme += `          self.onOriginPressed = dbColors["\\(colorName)${name}OnOriginPressed${colorScheme}", default: .clear]\n`;
-    resolvedScheme += `          self.originDefault = dbColors["\\(colorName)${name}OriginDefault${colorScheme}", default: .clear]\n`;
-    resolvedScheme += `          self.originHovered = dbColors["\\(colorName)${name}OriginHovered${colorScheme}", default: .clear]\n`;
-    resolvedScheme += `          self.originPressed = dbColors["\\(colorName)${name}OriginPressed${colorScheme}", default: .clear]\n`;
+    resolvedScheme += `          self.onOriginDefault = colors["\\(colorName)${name}${colorScheme}", default: .clear]\n`;
+    resolvedScheme += `          self.onOriginHovered = colors["\\(colorName)${name}OnOriginHovered${colorScheme}", default: .clear]\n`;
+    resolvedScheme += `          self.onOriginPressed = colors["\\(colorName)${name}OnOriginPressed${colorScheme}", default: .clear]\n`;
+    resolvedScheme += `          self.originDefault = colors["\\(colorName)${name}OriginDefault${colorScheme}", default: .clear]\n`;
+    resolvedScheme += `          self.originHovered = colors["\\(colorName)${name}OriginHovered${colorScheme}", default: .clear]\n`;
+    resolvedScheme += `          self.originPressed = colors["\\(colorName)${name}OriginPressed${colorScheme}", default: .clear]\n`;
   return resolvedScheme;
 };
 
@@ -115,32 +103,25 @@ const generateSwiftUIColorSchemeDarkLight = (
   darkMode?: boolean,
 ): string => {
   const colorScheme = kebabCase(darkMode ? "dark" : "light");
+  console.log(fileName)
 
-  for (const name of colorKeys) {
+  resolvedScheme += `\nfunc getColorScheme${colorScheme}(colors: [String: Color]) -> ${designSystemName}ColorScheme {\n`
+    for (const name of colorKeys) {
     resolvedScheme += `
-let ${name.toLowerCase()}Colors${colorScheme}: AdaptiveColors = .init(.${colorScheme.toLowerCase()}, colorName: "${name.toLowerCase()}")\n`;
+    var ${name.toLowerCase()}Colors${colorScheme}: AdaptiveColors {
+        .init(.${colorScheme.toLowerCase()}, colorName: "${name.toLowerCase()}", colors: colors)
+    }\n\n`;
   }
-
-  resolvedScheme += `\nfunc getColorScheme${colorScheme}(\n`;
-
+  resolvedScheme += `
+    return .init(\n`;
   colorKeys.forEach((name, index) => {
-    resolvedScheme += `  ${name}: AdaptiveColors = ${name.toLowerCase()}Colors${colorScheme}`;
-     // if not last element:
-     if (index < colorKeys.length - 1) {
-      resolvedScheme += `,\n`
-    }
-  });
-  resolvedScheme += `\n) -> ${fileName}ColorScheme {
-    .init(\n`;
-  colorKeys.forEach((name, index) => {
-    resolvedScheme += `        ${name}: ${name}`;
+    resolvedScheme += `        ${name}: ${name}Colors${colorScheme}`;
     // if not last element:
     if (index < colorKeys.length - 1) {
       resolvedScheme += `,\n`
     }
   });
-  resolvedScheme += `\n)
-  \n}\n`;
+  resolvedScheme += `\n    )\n}\n`;
 
   return resolvedScheme;
 };
@@ -154,6 +135,18 @@ export const generateSwiftUIColorScheme = (
   const colorKeys = Object.keys(allColors);
   let resolvedScheme: string = `import SwiftUI
 
+extension Color {
+  init(hex: Int, opacity: Double = 1) {
+      self.init(
+          .sRGB,
+          red: Double((hex >> 16) & 0xff) / 255,
+          green: Double((hex >> 08) & 0xff) / 255,
+          blue: Double((hex >> 00) & 0xff) / 255,
+          opacity: opacity
+      )
+  }
+}
+
 `;
 
   // 1. Generate generic AdaptiveColors protocol'
@@ -163,13 +156,39 @@ export const generateSwiftUIColorScheme = (
   for (const speakingName of allSpeakingNames) {
     const resolvedName = `${kebabCase(speakingName.name, true)}`;
     resolvedNames[`${name}${speakingName.name}`] = resolvedName;
-    resolvedScheme += `  let ${resolvedName}: Color\n`;
+    resolvedScheme += `    let ${resolvedName}: Color\n\n`;
   }
 
-  resolvedScheme += `}\n`;
+  resolvedScheme += `    init(_ scheme: DBColorScheme, colorName: String, colors: [String: Color]) {
+      switch scheme {
+        case .dark:
+`;
+
+  resolvedScheme = generateSwiftUIAdaptiveColorsExtension(
+    speakingNames,
+    resolvedScheme,
+    true
+  );
+
+  resolvedScheme += `
+        case .light:
+`;
+
+  resolvedScheme = generateSwiftUIAdaptiveColorsExtension(
+    speakingNames,
+    resolvedScheme,
+    false
+  );
+
+  resolvedScheme += `
+        }
+    }
+`
+
+  resolvedScheme += `}\n\n`;
 
   // 2. Generate ColorSchemes for semantic colors
-  resolvedScheme += `struct ${fileName}ColorScheme {\n`;
+  resolvedScheme += `struct ${designSystemName}ColorScheme {\n`;
   for (const name of colorKeys) {
     resolvedScheme += ` let ${name}: AdaptiveColors\n`;
   }
@@ -196,32 +215,6 @@ enum DBColorScheme {
     case dark
 }
 
-extension AdaptiveColors {
-  init(_ scheme: DBColorScheme, colorName: String) {
-      switch scheme {
-        case .dark:
-`;
-
-  resolvedScheme = generateSwiftUIAdaptiveColorsExtension(
-    speakingNames,
-    resolvedScheme,
-    true
-  );
-
-  resolvedScheme += `
-        case .light:
-`;
-
-  resolvedScheme = generateSwiftUIAdaptiveColorsExtension(
-    speakingNames,
-    resolvedScheme,
-    false
-  );
-
-  resolvedScheme += `
-        }
-    }
-}
 `;
 
   return resolvedScheme;

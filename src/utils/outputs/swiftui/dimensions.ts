@@ -3,15 +3,16 @@ import traverse from "traverse";
 import { kebabCase } from "../../index.ts";
 import {
   densities,
+  designSystemName,
   devices,
   shirtSizes,
 } from "./shared.ts";
 
-export const generateSwiftUIDimensionsFile = (theme: ThemeType): string => {
+export const generateSwiftUIDimensionsFile = (fileName: string, theme: ThemeType): string => {
   let resolvedTokenFile: string = `
 import SwiftUI
 
-struct Dimensions {
+struct ${fileName}Dimensions: Dimensions {
 `;
 
   traverse(theme).forEach(function (value) {
@@ -36,7 +37,7 @@ struct Dimensions {
           ? `${Number(value) * 16 || `.nan`}`
           : value;
 
-      resolvedTokenFile += `  static let ${key}: CGFloat = ${finalValue}\n`;
+      resolvedTokenFile += `  let ${key}: CGFloat = ${finalValue}\n`;
     }
   });
 
@@ -57,34 +58,36 @@ export const generateSwiftUIDimensionsScheme = (
   density: string,
   device: string,
 ): string => {
+  console.log(fileName)
+
   for (const [type, values] of Object.entries(dimensionTypes)) {
-    resolvedTokenFile += `let ${type}Dimensions${density}${device} = ${kebabCase(type)}Dimensions(\n`;
+    resolvedTokenFile += `    private static func get${kebabCase(type)}Dimensions${density}${device}(dimensions: Dimensions) -> ${kebabCase(type)}Dimensions {\n      .init(\n`;
     for (const value of values) {
       const resolvedValue = value === "base" ? "" : `-${value}`;
       const resolvedDevice = value === "responsive" ? `-${device}` : "";
       const resolvedDensity = type === "border" ? "" : `-${density}`;
 
       for (const size of shirtSizes) {
-        resolvedTokenFile += `    ${kebabCase(`${value}-${size}`, true)}: Dimensions.${kebabCase(`${type}${resolvedValue}${resolvedDensity}${resolvedDevice}-${size}`, true)}`;
+        resolvedTokenFile += `          ${kebabCase(`${value}-${size}`, true)}: dimensions.${kebabCase(`${type}${resolvedValue}${resolvedDensity}${resolvedDevice}-${size}`, true)}`;
         resolvedTokenFile += `,\n`
       }
     }
     resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
-    resolvedTokenFile += `\n)\n`;
+    resolvedTokenFile += `\n        )\n     }\n\n`;
   }
 
-  resolvedTokenFile += `func getDimensions${density}${device}(`;
+  resolvedTokenFile += `    static func getDimensions${density}${device}(`;
 
+  // for (const type of Object.keys(dimensionTypes)) {
+  //   resolvedTokenFile += `      ${type}: ${kebabCase(type)}Dimensions,\n`;
+  // }
+  resolvedTokenFile += `dimensions: Dimensions`
+  resolvedTokenFile += `) -> ${designSystemName}Dimensions {\n      .init(\n`;
   for (const type of Object.keys(dimensionTypes)) {
-    resolvedTokenFile += `${type}: ${kebabCase(type)}Dimensions = ${type}Dimensions${density}${device},\n`;
+    resolvedTokenFile += `        ${type}: get${kebabCase(type)}Dimensions${density}${device}(dimensions: dimensions),\n`;
   }
   resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
-  resolvedTokenFile += `\n) -> ${fileName}Dimensions { ${fileName}Dimensions(\n`;
-  for (const type of Object.keys(dimensionTypes)) {
-    resolvedTokenFile += `${type}: ${type},\n`;
-  }
-  resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
-  resolvedTokenFile += `\n)\n}\n`;
+  resolvedTokenFile += `\n      )\n    }\n\n`;
 
   return resolvedTokenFile;
 };
@@ -106,11 +109,19 @@ import SwiftUI
     resolvedTokenFile += "}\n";
   }
 
-  resolvedTokenFile += `struct ${fileName}Dimensions {\n`;
+  resolvedTokenFile += `struct ${designSystemName}Dimensions {\n`;
   for (const type of Object.keys(dimensionTypes)) {
-    resolvedTokenFile += `  var ${type}: ${kebabCase(type)}Dimensions\n`;
+    resolvedTokenFile += `  var ${type}: ${kebabCase(type)}Dimensions\n\n`;
   }
-  resolvedTokenFile += "}\n";
+
+  resolvedTokenFile += `
+    init(spacing: SpacingDimensions, sizing: SizingDimensions, border: BorderDimensions) {
+        self.spacing = spacing
+        self.sizing = sizing
+        self.border = border
+    }
+
+`
 
   for (const density of densities) {
     for (const device of devices) {
@@ -122,6 +133,8 @@ import SwiftUI
       );
     }
   }
+
+  resolvedTokenFile += "\n}\n";
 
   return resolvedTokenFile;
 };
