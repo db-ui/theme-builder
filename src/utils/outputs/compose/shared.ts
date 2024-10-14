@@ -1,6 +1,5 @@
 export const designSystemName = "DesignSystem";
-export const replacePackageName = "com.dbsystel.dbuxdsv3";
-export const replacePackagePath = ".feature.foundation.theme";
+export const replacePackageName = "replace";
 
 export const densities = ["Functional", "Regular", "Expressive"];
 

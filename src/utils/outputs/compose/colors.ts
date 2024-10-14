@@ -1,6 +1,6 @@
 import { DefaultColorType, HeisslufType, SpeakingName } from "../../data.ts";
 import { kebabCase } from "../../index.ts";
-import { designSystemName, replacePackageName, replacePackagePath } from "./shared.ts";
+import { designSystemName, replacePackageName } from "./shared.ts";
 import { getPalette } from "../index.ts";
 import { FALLBACK_COLOR } from "../../../constants.ts";
 
@@ -22,7 +22,7 @@ export const generateComposeColorFile = (
   allColors: Record<string, DefaultColorType>,
   luminanceSteps: number[],
 ): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data
+  let resolvedTokenFile: string = `package ${replacePackageName}.${brandName.toLowerCase()}.data
   
 import androidx.compose.ui.graphics.Color
 
@@ -84,11 +84,11 @@ export const generateColorScheme = (
   allColors: Record<string, DefaultColorType>,
 ): string => {
   const colorKeys = Object.keys(allColors);
-  let resolvedScheme: string = `package ${replacePackageName}${replacePackagePath}
+  let resolvedScheme: string = `package ${replacePackageName}
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data.${brandName}ColorMap
+import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}ColorMap
 
 `;
 

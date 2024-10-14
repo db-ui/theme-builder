@@ -1,11 +1,11 @@
 import { ThemeSizing } from "../../data.ts";
-import { replacePackageName, replacePackagePath } from "./shared.ts";
+import { replacePackageName } from "./shared.ts";
 
 export const generateComposeElevationFile = (
   allElevations: ThemeSizing,
 ): string => {
 
-  let resolvedTokenFile = `package ${replacePackageName}${replacePackagePath}.core
+  let resolvedTokenFile = `package ${replacePackageName}.core
   
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip

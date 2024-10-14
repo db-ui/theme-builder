@@ -6,12 +6,11 @@ import {
   designSystemName,
   devices,
   replacePackageName,
-  replacePackagePath,
   shirtSizes,
 } from "./shared.ts";
 
 export const generateComposeDimensionsFile = (brandName: string, theme: ThemeType): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data
+  let resolvedTokenFile: string = `package ${replacePackageName}.${brandName.toLowerCase()}.data
   
 import androidx.compose.ui.unit.dp
 
@@ -74,11 +73,11 @@ export const generateDimensionsScheme = (
 };
 
 export const generateDimensionsSchemeFile = (brandName: string): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}${replacePackagePath}
+  let resolvedTokenFile: string = `package ${replacePackageName}
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
-import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data.${brandName}DimensionsMap
+import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}DimensionsMap
 
 `;
 

@@ -79,7 +79,7 @@ export const downloadTheme = async (
   const androidDataFolder: string = `${androidBrandFolder}/data`;
   zip.file(
     `${androidFolder}/README.md`,
-    generateAndroidReadmeFile(composeFileName),
+    generateAndroidReadmeFile(),
   );
   zip.file(
     `${androidThemeFolder}/${designSystemName}Theme.kt`,

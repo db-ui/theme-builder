@@ -6,12 +6,11 @@ import {
   designSystemName,
   devices,
   replacePackageName,
-  replacePackagePath,
   shirtSizes,
 } from "./shared.ts";
 
 export const generateFontFamilyFile = (): string => {
-  return `package ${replacePackageName}${replacePackagePath}.core
+  return `package ${replacePackageName}.core
 
 import ${replacePackageName}.R
 import androidx.compose.ui.text.font.FontFamily
@@ -27,7 +26,7 @@ object Fonts {
 };
 
 export const generateComposeTypographyFile = (brandName:string, theme: ThemeType): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data
+  let resolvedTokenFile: string = `package ${replacePackageName}.${brandName.toLowerCase()}.data
 
 import androidx.compose.ui.unit.sp
 
@@ -107,14 +106,14 @@ fun getTypography${density}${device}(
 };
 
 export const generateTypographySchemeFile = (brandName: string): string => {
-  let resolvedTokenFile: string = `package ${replacePackageName}${replacePackagePath}
+  let resolvedTokenFile: string = `package ${replacePackageName}
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
-import ${replacePackageName}${replacePackagePath}.core.Fonts
-import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
+import ${replacePackageName}.core.Fonts
+import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
 `;
 
     resolvedTokenFile += `\nclass Typography private constructor(\n`;

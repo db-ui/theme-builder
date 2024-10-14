@@ -1,12 +1,12 @@
-import { designSystemName, replacePackageName, replacePackagePath } from "./shared.ts";
+import { designSystemName, replacePackageName } from "./shared.ts";
 
 export const generateBrandThemeFile = (brandName: string): string => {
-    return `package ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}
+    return `package ${replacePackageName}.${brandName.toLowerCase()}
 
-import ${replacePackageName}${replacePackagePath}.Theme
-import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data.${brandName}ColorMap
-import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data.${brandName}DimensionsMap
-import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
+import ${replacePackageName}.Theme
+import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}ColorMap
+import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}DimensionsMap
+import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
 
 object ${brandName}Theme : Theme {
     override val colorMap = ${brandName}ColorMap
@@ -17,7 +17,7 @@ object ${brandName}Theme : Theme {
 }
 
 export const generateThemeFile = (fileName: string, brandName: string): string => {
-  return `package ${replacePackageName}${replacePackagePath}
+  return `package ${replacePackageName}
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -33,8 +33,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.core.view.WindowCompat
-import ${replacePackageName}${replacePackagePath}.core.Density
-import ${replacePackageName}${replacePackagePath}.${brandName.toLowerCase()}.${fileName}
+import ${replacePackageName}.core.Density
+import ${replacePackageName}.${brandName.toLowerCase()}.${fileName}
 
 
 object ${designSystemName}Theme {
