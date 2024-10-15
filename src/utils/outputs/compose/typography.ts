@@ -4,6 +4,7 @@ import { kebabCase } from "../../index.ts";
 import {
   densities,
   designSystemName,
+  designSystemShortName,
   devices,
   replacePackageName,
   shirtSizes,
@@ -17,8 +18,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.Font
 
-object Fonts {
-    val dbFlex = FontFamily(
+internal object ${designSystemShortName}Font {
+    val ${designSystemShortName.toLowerCase()}NeoScreenFlex = FontFamily(
         Font(R.font.db_neo_screen_flex, FontWeight.Normal)
     )
 }
@@ -94,13 +95,13 @@ export const generateTypographyScheme = (
   device: string,
 ): string => {
   resolvedTokenFile += `
-internal fun getTypography${density}${device}(
-    typographyMap: Map<String, TextUnit>,
-): ${designSystemName}Typography = ${designSystemName}Typography(`;
+\t\tfun getTypography${density}${device}(
+\t\t\ttypographyMap: Map<String, TextUnit>,
+\t\t): ${designSystemName}Typography = ${designSystemName}Typography(`;
   for (const variant of typoVariants) {
-    resolvedTokenFile += `\n\t${variant} = Typography.create(typographyMap, "${variant}", "${density}", "${device}"),`;
+    resolvedTokenFile += `\n\t\t\t${variant} = ${designSystemShortName}Typography.create(typographyMap, "${variant}", "${density}", "${device}"),`;
   }
-  resolvedTokenFile += "\n)\n\n";
+  resolvedTokenFile += "\n\t\t)\n";
 
   return resolvedTokenFile;
 };
@@ -112,11 +113,11 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
-import ${replacePackageName}.core.Fonts
+import ${replacePackageName}.core.${designSystemShortName}Font
 import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
 `;
 
-    resolvedTokenFile += `\nclass Typography private constructor(\n`;
+    resolvedTokenFile += `\nclass ${designSystemShortName}Typography private constructor(\n`;
     for (const size of shirtSizes) {
       for (const type of typoTypes) {
         resolvedTokenFile += `\tval ${kebabCase(`${type}-${size}`, true)}: TextUnit,\n`;
@@ -129,8 +130,8 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Typogra
             typoVariant: String,
             density: String,
             device: String,
-        ): Typography {
-            return Typography(
+        ): ${designSystemShortName}Typography {
+            return ${designSystemShortName}Typography(
                 typographyMap.getValue("\${typoVariant}LineHeight$density\${device}3xs"),
                 typographyMap.getValue("\${typoVariant}FontSize$density\${device}3xs"),
                 typographyMap.getValue("\${typoVariant}LineHeight$density\${device}2xs"),
@@ -156,9 +157,9 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Typogra
 
   resolvedTokenFile += `\ndata class ${designSystemName}Typography(\n`;
   for (const variant of typoVariants) {
-    resolvedTokenFile += `\tval ${variant}: Typography,\n`;
+    resolvedTokenFile += `\tval ${variant}: ${designSystemShortName}Typography,\n`;
   }
-  resolvedTokenFile += ")\n\n";
+  resolvedTokenFile += ") {\n\tinternal companion object {\n";
 
   for (const density of densities) {
     for (const device of devices) {
@@ -169,30 +170,31 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Typogra
       );
     }
   }
+  resolvedTokenFile += "\t}\n}\n\n";
 
   resolvedTokenFile += `data class ${designSystemName}TextStyles(\n`;
   for (const [font] of Object.entries(fontsTypes)) {
     resolvedTokenFile += `\tval ${font}: TextStyle,\n`;
   }
-  resolvedTokenFile += ")\n\n";
+  resolvedTokenFile += ") {\n\tinternal companion object {\n";
 
-  resolvedTokenFile += `internal fun getTextStyles(typo: ${designSystemName}Typography): ${designSystemName}TextStyles =
-    ${designSystemName}TextStyles(`;
+  resolvedTokenFile += `\t\tfun getTextStyles(typo: ${designSystemName}Typography): ${designSystemName}TextStyles =
+\t\t\t${designSystemName}TextStyles(`;
   for (const [font, size] of Object.entries(fontsTypes)) {
     resolvedTokenFile += `
-        TextStyle(
-            fontFamily = Fonts.dbFlex,
-            fontWeight = FontWeight.${font.includes("body") ? "Normal" : "Black"},
-            fontSize = typo.${font.includes("body") ? "body" : "headline"}.fontSize${size},
-            lineHeight = typo.${font.includes("body") ? "body" : "headline"}.lineHeight${size}
-        ),`;
+\t\t\tTextStyle(
+\t\t\t\tfontFamily = ${designSystemShortName}Font.${designSystemShortName.toLowerCase()}NeoScreenFlex,
+\t\t\t\tfontWeight = FontWeight.${font.includes("body") ? "Normal" : "Black"},
+\t\t\t\tfontSize = typo.${font.includes("body") ? "body" : "headline"}.fontSize${size},
+\t\t\t\tlineHeight = typo.${font.includes("body") ? "body" : "headline"}.lineHeight${size}
+\t\t\t),`;
   }
-  resolvedTokenFile += "\n\t)\n";
+  resolvedTokenFile += "\n\t\t\t)\n\t}\n}\n\n";
 
   resolvedTokenFile += `
 val LocalTypography = staticCompositionLocalOf {
-    getTextStyles(
-        getTypographyRegularMobile(
+    ${designSystemName}TextStyles.getTextStyles(
+        ${designSystemName}Typography.getTypographyRegularMobile(
             ${brandName}TypographyMap
         )
     )

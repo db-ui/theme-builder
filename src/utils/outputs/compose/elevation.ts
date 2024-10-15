@@ -1,5 +1,5 @@
 import { ThemeSizing } from "../../data.ts";
-import { replacePackageName } from "./shared.ts";
+import { designSystemShortName, replacePackageName } from "./shared.ts";
 
 export const generateComposeElevationFile = (
   allElevations: ThemeSizing,
@@ -22,14 +22,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 
-fun Modifier.boxShadow(
+fun Modifier.${designSystemShortName.toLowerCase()}Shadow(
+    elevation: ${designSystemShortName}Elevation,
     shape: Shape = RectangleShape,
     clip: Boolean = true,
-    elevation: Elevation,
 ): Modifier {
     return drawWithCache {
         onDrawWithContent {
-            fun drawShadow(config: ElevationConfig) {
+            fun drawShadow(config: ${designSystemShortName}ElevationShadowConfig) {
                 drawIntoCanvas { canvas ->
                     val spreadRadiusPx = config.spread.toPx()
                     val hasSpreadRadius = spreadRadiusPx != 0f
@@ -70,14 +70,14 @@ fun Modifier.boxShadow(
     }.let { modifier -> if (clip) modifier.clip(shape) else modifier }
 }
 
-internal data class ElevationConfig(
+internal data class ${designSystemShortName}ElevationShadowConfig(
     val offset: DpOffset,
     val blur: Dp,
     val spread: Dp,
     val color: Color,
 )
 
-enum class Elevation(internal val config: List<ElevationConfig>) {
+enum class ${designSystemShortName}Elevation(internal val config: List<${designSystemShortName}ElevationShadowConfig>) {
 `;
 
   Object.entries(allElevations).forEach(([name, elevationScheme]) => {
@@ -99,7 +99,7 @@ enum class Elevation(internal val config: List<ElevationConfig>) {
       const alpha = elevationValues[7]
 
       resolvedTokenFile += `
-            ElevationConfig(DpOffset(${horizontal}.dp, ${vertical}.dp), ${blur}.dp, ${spread.startsWith("-") ? "(" + spread + ")" : spread}.dp, Color(${red}f, ${green}f, ${blue}f, ${alpha}f)),`;
+            ${designSystemShortName}ElevationShadowConfig(DpOffset(${horizontal}.dp, ${vertical}.dp), ${blur}.dp, ${spread.startsWith("-") ? "(" + spread + ")" : spread}.dp, Color(${red}f, ${green}f, ${blue}f, ${alpha}f)),`;
     }
     resolvedTokenFile += `\n        ),\n    ),\n`;
   });

@@ -30,7 +30,7 @@ import {
 import { generateCustomColorClass } from "./web/custom-color-class.ts";
 import { generateAndroidReadmeFile } from "./compose/readme.ts";
 import { generateComposeElevationFile } from "./compose/elevation.ts";
-import { designSystemName } from "./compose/shared.ts";
+import { designSystemName, designSystemShortName } from "./compose/shared.ts";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -97,28 +97,28 @@ export const downloadTheme = async (
     `${androidThemeFolder}/${designSystemName}Typography.kt`,
     generateTypographySchemeFile(brandName),
   );
-  zip.file(`${androidCoreFolder}/Fonts.kt`, generateFontFamilyFile());
+  zip.file(`${androidCoreFolder}/${designSystemShortName}Font.kt`, generateFontFamilyFile());
   zip.file(
-    `${androidDataFolder}/Dimensions.kt`,
+    `${androidDataFolder}/${brandName}Dimensions.kt`,
     generateComposeDimensionsFile(brandName, theme),
   );
   zip.file(
-    `${androidCoreFolder}/Elevations.kt`,
+    `${androidCoreFolder}/${designSystemShortName}Elevations.kt`,
     generateComposeElevationFile(theme.elevation),
   )
   zip.file(
-    `${androidDataFolder}/Typography.kt`,
+    `${androidDataFolder}/${brandName}Typography.kt`,
     generateComposeTypographyFile(brandName, theme),
   );
   zip.file(
-    `${androidDataFolder}/Colors.kt`,
+    `${androidDataFolder}/${brandName}Colors.kt`,
     generateComposeColorFile(brandName, allColors, luminanceSteps),
   );
   zip.file(
     `${androidBrandFolder}/${brandName}Theme.kt`,
     generateBrandThemeFile(brandName),
   );
-  zip.file(`${androidCoreFolder}/Density.kt`, generateDensityEnumFile());
+  zip.file(`${androidCoreFolder}/${designSystemShortName}Density.kt`, generateDensityEnumFile());
 
   // Utils
   const utilsFolder: string = "Utils";

@@ -1,14 +1,14 @@
-import { designSystemName, replacePackageName } from "./shared.ts";
+import { designSystemName, designSystemShortName, replacePackageName } from "./shared.ts";
 
 export const generateBrandThemeFile = (brandName: string): string => {
     return `package ${replacePackageName}.${brandName.toLowerCase()}
 
-import ${replacePackageName}.Theme
+import ${replacePackageName}.${designSystemShortName}Theme
 import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}ColorMap
 import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}DimensionsMap
 import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
 
-object ${brandName}Theme : Theme {
+object ${brandName}Theme : ${designSystemShortName}Theme {
     override val colorMap = ${brandName}ColorMap
     override val dimensionsMap = ${brandName}DimensionsMap
     override val typographyMap = ${brandName}TypographyMap
@@ -33,7 +33,22 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.core.view.WindowCompat
-import ${replacePackageName}.core.Density
+import ${replacePackageName}.${designSystemName}ColorScheme.Companion.getColorSchemeDark
+import ${replacePackageName}.${designSystemName}ColorScheme.Companion.getColorSchemeLight
+import ${replacePackageName}.${designSystemName}Dimensions.Companion.getDimensionsExpressiveMobile
+import ${replacePackageName}.${designSystemName}Dimensions.Companion.getDimensionsExpressiveTablet
+import ${replacePackageName}.${designSystemName}Dimensions.Companion.getDimensionsFunctionalMobile
+import ${replacePackageName}.${designSystemName}Dimensions.Companion.getDimensionsFunctionalTablet
+import ${replacePackageName}.${designSystemName}Dimensions.Companion.getDimensionsRegularMobile
+import ${replacePackageName}.${designSystemName}Dimensions.Companion.getDimensionsRegularTablet
+import ${replacePackageName}.${designSystemName}TextStyles.Companion.getTextStyles
+import ${replacePackageName}.${designSystemName}Typography.Companion.getTypographyExpressiveMobile
+import ${replacePackageName}.${designSystemName}Typography.Companion.getTypographyExpressiveTablet
+import ${replacePackageName}.${designSystemName}Typography.Companion.getTypographyFunctionalMobile
+import ${replacePackageName}.${designSystemName}Typography.Companion.getTypographyFunctionalTablet
+import ${replacePackageName}.${designSystemName}Typography.Companion.getTypographyRegularMobile
+import ${replacePackageName}.${designSystemName}Typography.Companion.getTypographyRegularTablet
+import ${replacePackageName}.core.${designSystemShortName}Density
 import ${replacePackageName}.${brandName.toLowerCase()}.${fileName}
 
 
@@ -43,7 +58,7 @@ object ${designSystemName}Theme {
         @ReadOnlyComposable
         get() = LocalColors.current
 
-    val activeColor: AdaptiveColors
+    val activeColor: ${designSystemShortName}ColorVariant
         @Composable
         @ReadOnlyComposable
         get() = LocalActiveColor.current
@@ -59,50 +74,50 @@ object ${designSystemName}Theme {
         get() = LocalTypography.current
 }
 
-interface Theme {
+interface ${designSystemShortName}Theme {
     val colorMap: Map<String, Color>
     val dimensionsMap: Map<String, Dp>
     val typographyMap: Map<String, TextUnit>
 }
 
-internal val LocalTheme = staticCompositionLocalOf<Theme> { ${fileName} }
+internal val LocalTheme = staticCompositionLocalOf<${designSystemShortName}Theme> { ${fileName} }
 
 @Composable
 fun ${designSystemName}Theme(
-    theme: Theme = ${fileName},
-    density: Density = Density.REGULAR,
+    theme: ${designSystemShortName}Theme = ${fileName},
+    density: ${designSystemShortName}Density = ${designSystemShortName}Density.REGULAR,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val configuration = LocalConfiguration.current
+    val isTablet = LocalConfiguration.current.screenWidthDp > 768
     // typography
-    val typography: ${designSystemName}TextStyles = when {
-        configuration.screenWidthDp > 768 ->
+    val typography: ${designSystemName}TextStyles = when(isTablet) {
+        true ->
             when (density) {
-                Density.FUNCTIONAL -> getTextStyles(getTypographyFunctionalTablet(theme.typographyMap))
-                Density.EXPRESSIVE -> getTextStyles(getTypographyExpressiveTablet(theme.typographyMap))
+                ${designSystemShortName}Density.FUNCTIONAL -> getTextStyles(getTypographyFunctionalTablet(theme.typographyMap))
+                ${designSystemShortName}Density.EXPRESSIVE -> getTextStyles(getTypographyExpressiveTablet(theme.typographyMap))
                 else -> getTextStyles(getTypographyRegularTablet(theme.typographyMap))
             }
 
         else -> when (density) {
-            Density.FUNCTIONAL -> getTextStyles(getTypographyFunctionalMobile(theme.typographyMap))
-            Density.EXPRESSIVE -> getTextStyles(getTypographyExpressiveMobile(theme.typographyMap))
+            ${designSystemShortName}Density.FUNCTIONAL -> getTextStyles(getTypographyFunctionalMobile(theme.typographyMap))
+            ${designSystemShortName}Density.EXPRESSIVE -> getTextStyles(getTypographyExpressiveMobile(theme.typographyMap))
             else -> getTextStyles(getTypographyRegularMobile(theme.typographyMap))
         }
     }
 
     // screen
-    val dimensions: ${designSystemName}Dimensions = when {
-        configuration.screenWidthDp > 768 ->
+    val dimensions: ${designSystemName}Dimensions = when(isTablet) {
+        true ->
             when (density) {
-                Density.FUNCTIONAL -> getDimensionsFunctionalTablet(theme.dimensionsMap)
-                Density.EXPRESSIVE -> getDimensionsExpressiveTablet(theme.dimensionsMap)
+                ${designSystemShortName}Density.FUNCTIONAL -> getDimensionsFunctionalTablet(theme.dimensionsMap)
+                ${designSystemShortName}Density.EXPRESSIVE -> getDimensionsExpressiveTablet(theme.dimensionsMap)
                 else -> getDimensionsRegularTablet(theme.dimensionsMap)
             }
 
         else -> when (density) {
-            Density.FUNCTIONAL -> getDimensionsFunctionalMobile(theme.dimensionsMap)
-            Density.EXPRESSIVE -> getDimensionsExpressiveMobile(theme.dimensionsMap)
+            ${designSystemShortName}Density.FUNCTIONAL -> getDimensionsFunctionalMobile(theme.dimensionsMap)
+            ${designSystemShortName}Density.EXPRESSIVE -> getDimensionsExpressiveMobile(theme.dimensionsMap)
             else -> getDimensionsRegularMobile(theme.dimensionsMap)
         }
     }
@@ -126,7 +141,7 @@ fun ${designSystemName}Theme(
         LocalTheme provides theme,
         LocalColors provides colorScheme,
         LocalDimensions provides dimensions,
-        LocalTypography provides typography
+        LocalTypography provides typography,
     ) {
         content()
     }

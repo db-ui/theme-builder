@@ -1,6 +1,6 @@
 import { DefaultColorType, HeisslufType, SpeakingName } from "../../data.ts";
 import { kebabCase } from "../../index.ts";
-import { designSystemName, replacePackageName } from "./shared.ts";
+import { designSystemName, designSystemShortName, replacePackageName } from "./shared.ts";
 import { getPalette } from "../index.ts";
 import { FALLBACK_COLOR } from "../../../constants.ts";
 
@@ -69,12 +69,12 @@ const generateColorSchemeDarkLightObjects = (
 ): string => {
   const colorScheme = kebabCase(darkMode ? "dark" : "light");
 
-  resolvedScheme += `internal fun getColorScheme${colorScheme}(colorMap: Map<String, Color>): ${designSystemName}ColorScheme =
-\t${designSystemName}ColorScheme(\n`;
+  resolvedScheme += `\t\tfun getColorScheme${colorScheme}(colorMap: Map<String, Color>): ${designSystemName}ColorScheme =
+\t\t\t${designSystemName}ColorScheme(\n`;
   for (const name of colorKeys) {
-    resolvedScheme += `\t\t${name} = AdaptiveColors.${colorScheme.toLowerCase()}(colorMap, "${name}"),\n`;
+    resolvedScheme += `\t\t\t\t${name} = ${designSystemShortName}ColorVariant.${colorScheme.toLowerCase()}(colorMap, "${name}"),\n`;
   }
-  resolvedScheme += "\t)\n\n";
+  resolvedScheme += "\t\t\t)\n\n";
   return resolvedScheme;
 };
 
@@ -95,7 +95,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}ColorMa
 resolvedScheme += getInterfaceConstruct()
   // 1. Generate semantic color classes like 'NeutralColors'
   const allSpeakingNames = [...speakingNames, ...originAdditionalColors];
-  resolvedScheme += `class AdaptiveColors private constructor(\n`;
+  resolvedScheme += `class ${designSystemShortName}ColorVariant private constructor(\n`;
   for (const speakingName of allSpeakingNames) {
     const resolvedName = `${kebabCase(speakingName.name, true)}`;
     resolvedScheme += `\tval ${resolvedName}: Color,\n`;
@@ -107,15 +107,15 @@ resolvedScheme += getInterfaceConstruct()
 
   resolvedScheme += `class ${designSystemName}ColorScheme(\n`;
   for (const name of colorKeys) {
-    resolvedScheme += `\tval ${name}: AdaptiveColors,\n`;
+    resolvedScheme += `\tval ${name}: ${designSystemShortName}ColorVariant,\n`;
   }
-  resolvedScheme += `)\n\n`;
-
+  resolvedScheme += `) {\n\tinternal companion object {\n`;
   resolvedScheme = generateColorSchemeDarkLightObjects(colorKeys, resolvedScheme, true)
   resolvedScheme = generateColorSchemeDarkLightObjects(colorKeys, resolvedScheme, false)
+  resolvedScheme += `\t}\n}\n\n`;
   
-  resolvedScheme += `val LocalColors = staticCompositionLocalOf { getColorSchemeLight(${brandName}ColorMap) }
-val LocalActiveColor =\n\tstaticCompositionLocalOf { getColorSchemeLight(${brandName}ColorMap).neutral }
+  resolvedScheme += `val LocalColors =\n\tstaticCompositionLocalOf { ${designSystemName}ColorScheme.getColorSchemeLight(${brandName}ColorMap) }
+val LocalActiveColor =\n\tstaticCompositionLocalOf { ${designSystemName}ColorScheme.getColorSchemeLight(${brandName}ColorMap).neutral }
 `;
 
   return resolvedScheme;
@@ -127,7 +127,7 @@ const generateConstructorsDarkLight = (speakingNames: SpeakingName[], resolvedSc
   resolvedScheme += `\tinternal companion object {\n`;
 
   for (const colorScheme of colorSchemes) {
-    resolvedScheme += `\t\tfun ${colorScheme}(colorMap: Map<String, Color>, colorName: String) = AdaptiveColors(\n`;
+    resolvedScheme += `\t\tfun ${colorScheme}(colorMap: Map<String, Color>, colorName: String) = ${designSystemShortName}ColorVariant(\n`;
     for (const speakingName of speakingNames) {
       let transparency = "";
       if (colorScheme == "light" && speakingName.transparencyLight !== undefined) {

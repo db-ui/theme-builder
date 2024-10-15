@@ -4,6 +4,7 @@ import { kebabCase } from "../../index.ts";
 import {
   densities,
   designSystemName,
+  designSystemShortName,
   devices,
   replacePackageName,
   shirtSizes,
@@ -60,14 +61,14 @@ export const generateDimensionsScheme = (
 ): string => {
   const params = [density, device]
 
-  resolvedTokenFile += `internal fun getDimensions${density}${device}(
-    dimensionsMap: Map<String, Dp>,
-): ${designSystemName}Dimensions = ${designSystemName}Dimensions(`;
+  resolvedTokenFile += `\t\tfun getDimensions${density}${device}(
+\t\t\tdimensionsMap: Map<String, Dp>,
+\t\t): ${designSystemName}Dimensions = ${designSystemName}Dimensions(`;
   for (const type of Object.keys(dimensionTypes)) {
-    resolvedTokenFile += `\n\t${type} = ${kebabCase(type)}Dimensions(dimensionsMap, ${params.map(param => `"${param}"`).join(", ")}),`;
+    resolvedTokenFile += `\n\t\t\t${type} = ${designSystemShortName}${kebabCase(type)}Dimensions(dimensionsMap, ${params.map(param => `"${param}"`).join(", ")}),`;
     params.pop()
   }
-  resolvedTokenFile += `\n)\n\n`;
+  resolvedTokenFile += `\n\t\t)\n\n`;
 
   return resolvedTokenFile;
 };
@@ -83,7 +84,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Dimensi
 
   const params = ["density", "device"]
   for (const [type, values] of Object.entries(dimensionTypes)) {
-    resolvedTokenFile += `class ${kebabCase(type)}Dimensions private constructor(`;
+    resolvedTokenFile += `class ${designSystemShortName}${kebabCase(type)}Dimensions private constructor(`;
     for (const value of values) {
       for (const size of shirtSizes) {
         // val fixedXl: Dp = Dimensions.spacingFixedXl,
@@ -107,9 +108,9 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Dimensi
 
   resolvedTokenFile += `data class ${designSystemName}Dimensions(`;
   for (const type of Object.keys(dimensionTypes)) {
-    resolvedTokenFile += `\n\tval ${type}: ${kebabCase(type)}Dimensions,`;
+    resolvedTokenFile += `\n\tval ${type}: ${designSystemShortName}${kebabCase(type)}Dimensions,`;
   }
-  resolvedTokenFile += "\n)\n\n";
+  resolvedTokenFile += "\n) {\n\tinternal companion object {\n";
 
   for (const density of densities) {
     for (const device of devices) {
@@ -120,11 +121,12 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Dimensi
       );
     }
   }
+  resolvedTokenFile +="\t}\n}\n\n"
 
   resolvedTokenFile += `val LocalDimensions = staticCompositionLocalOf {
-    getDimensionsRegularMobile(
-        ${brandName}DimensionsMap
-    )
+\t${designSystemName}Dimensions.getDimensionsRegularMobile(
+\t\t${brandName}DimensionsMap
+\t)
 }
 `;
 
