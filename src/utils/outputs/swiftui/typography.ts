@@ -10,48 +10,53 @@ import {
 
 export const generateSwiftUIFontFamilyFile = (): string => {
   return `import SwiftUI
-struct DBFont {
-  let name: String
-  private let publicName: String
-  
-  private init(named name: String, publicName: String) {
-      self.name = name
-      self.publicName = publicName
-      do {
-          try registerFont(fontName: name)
-          print("Registered Font \\(name)")
-      } catch {
-          let reason = error.localizedDescription
-          fatalError("Failed to register font: \\(reason)")
-      }
-  }
+import UIKit
 
-  public func font(size: CGFloat) -> Font {
-      Font.custom(publicName, size: size)
-  }
-
-  static let dbFlex = DBFont(named: "DBNeoScreenFlex", publicName: "DB Neo Screen Flex")
-
-}
-
-public enum FontError: Swift.Error {
-    case failedToRegisterFont
-}
-
-func registerFont(fontName: String) throws {
-    guard let fontURL = Bundle.module.url(forResource: "\\(fontName)", withExtension: "ttf") else {
-        throw FontError.failedToRegisterFont
-    }
+struct DSFont {
+    let name: String
+    private let publicName: String
     
-    let fontURLs = [fontURL] as CFArray
-    
-    CTFontManagerRegisterFontURLs(fontURLs, .process, true) { errors, done in
-        let errors = errors as! [CFError]
-        guard errors.isEmpty else {
-            preconditionFailure(errors.map(\\.localizedDescription).joined())
+    private init(named name: String, publicName: String) {
+        self.name = name
+        self.publicName = publicName
+        do {
+            try registerFont(fontName: name)
+            print("Registered Font \\(name)")
+        } catch {
+            let reason = error.localizedDescription
+            fatalError("Failed to register font: \\(reason)")
         }
-        return true
     }
+    
+    private enum FontError: Swift.Error {
+        case failedToRegisterFont
+    }
+
+    private func registerFont(fontName: String) throws {
+        guard let fontURL = Bundle.module.url(forResource: "\\(fontName)", withExtension: "ttf") else {
+            throw FontError.failedToRegisterFont
+        }
+        
+        let fontURLs = [fontURL] as CFArray
+        
+        CTFontManagerRegisterFontURLs(fontURLs, .process, true) { errors, done in
+            let errors = errors as! [CFError]
+            guard errors.isEmpty else {
+                preconditionFailure(errors.map(\\.localizedDescription).joined())
+            }
+            return true
+        }
+    }
+    
+    func font(size: CGFloat) -> Font {
+        Font.custom(publicName, size: size)
+    }
+    
+    func uiFont(size: CGFloat) -> UIFont {
+        UIFont(name: publicName, size: size)!
+    }
+    
+    static let dbNeoScreenFlex = DSFont(named: "DBNeoScreenFlex", publicName: "DB Neo Screen Flex")
 }
 `;
 }
@@ -127,10 +132,10 @@ export const generateSwiftUITypographyScheme = (
   
   resolvedTokenFile += `extension ${designSystemName}Typography {\n`
   for (const variant of typoVariants) {
-    resolvedTokenFile += `    private static func ${variant}Typography${density}${device}(sizes: [String: CGFloat]) -> Typography { .init(\n`;
-    resolvedTokenFile += `        variant: TypographyVariant.${variant.toLowerCase()},\n`
-    resolvedTokenFile += `        density: Density.${density.toLowerCase()},\n`
-    resolvedTokenFile += `        device: DeviceType.${device.toLowerCase()},\n`
+    resolvedTokenFile += `    private static func ${variant}Typography${density}${device}(sizes: [String: CGFloat]) -> DSTypography { .init(\n`;
+    resolvedTokenFile += `        variant: DSTypographyVariant.${variant.toLowerCase()},\n`
+    resolvedTokenFile += `        density: DSDensity.${density.toLowerCase()},\n`
+    resolvedTokenFile += `        device: DSDeviceType.${device.toLowerCase()},\n`
     resolvedTokenFile += `        sizes: sizes\n`
     resolvedTokenFile += `\n      )\n    }\n\n`
   } 
@@ -147,10 +152,9 @@ export const generateSwiftUITypographyScheme = (
 };
 
 export const generateSwiftUITypographySchemeFile = (fileName: string): string => {
-  let resolvedTokenFile: string = `import SwiftUI
-`;
+  let resolvedTokenFile: string = `import SwiftUI\n\n`;
 
-  resolvedTokenFile += `struct Typography {\n`;
+  resolvedTokenFile += `struct DSTypography {\n`;
   for (const type of typoTypes) {
     for (const size of shirtSizes) {
       resolvedTokenFile += `    let ${kebabCase(`${type}-${size}`, true)}: CGFloat\n`;
@@ -160,7 +164,7 @@ export const generateSwiftUITypographySchemeFile = (fileName: string): string =>
 
   resolvedTokenFile += `struct ${designSystemName}Typography {\n`;
   for (const variant of typoVariants) {
-    resolvedTokenFile += `    let ${variant}: Typography\n`;
+    resolvedTokenFile += `    let ${variant}: DSTypography\n`;
   }
   resolvedTokenFile += "}\n\n";
 
@@ -176,18 +180,18 @@ export const generateSwiftUITypographySchemeFile = (fileName: string): string =>
   }
 
   resolvedTokenFile += `
-enum DeviceType: String {
+enum DSDeviceType: String {
     case mobile = "Mobile"
     case tablet = "Tablet"
 }
 
-enum TypographyVariant: String {
+enum DSTypographyVariant: String {
     case body
     case headline
 }
 
-extension Typography {
-    init(variant: TypographyVariant, density: Density, device: DeviceType, sizes: [String: CGFloat]) {
+extension DSTypography {
+    init(variant: DSTypographyVariant, density: DSDensity, device: DSDeviceType, sizes: [String: CGFloat]) {
         lineHeight3xs = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)3xs", default: 12]
         lineHeight2xs = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)2xs", default: 12]
         lineHeightXs = sizes["\\(variant)LineHeight\\(density.rawValue)\\(device.rawValue)Xs", default: 12]
@@ -210,22 +214,48 @@ extension Typography {
     }
 }
 
+public struct DSTextStyle {
+    public let font: Font
+    let uiFont: UIFont
+    public let lineHeight: CGFloat
+    public let fontWeight: Font.Weight
+}
+
 `
 
-  resolvedTokenFile += `struct ${designSystemName}Fonts{\n`;
+  resolvedTokenFile += `public struct ${designSystemName}TextStyles{\n`;
   for (const [font] of Object.entries(fontsTypes)) {
-    resolvedTokenFile += `    let ${font}: Font\n`;
+    resolvedTokenFile += `    public let ${font}: DSTextStyle\n`;
   }
   resolvedTokenFile += `\n\n`;
 
-  resolvedTokenFile += `    static func getFonts(typo: ${designSystemName}Typography) -> ${designSystemName}Fonts { 
+  resolvedTokenFile += `    static func getFonts(typo: ${designSystemName}Typography) -> ${designSystemName}TextStyles { 
       .init(\n`;
   for (const [font, size] of Object.entries(fontsTypes)) {
-    resolvedTokenFile += `            ${font}: .init(font: DBFont.dbFlex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}), uiFont: DBFont.dbFlex.uiFont(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}), lineHeight: typo.${font.includes("body") ? "body" : "headline"}.lineHeight${size}, fontWeight: ${font.includes("body") ? ".regular" : ".black"}),\n`
-    // resolvedTokenFile += `            ${font}: DBFont.dbFlex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}).weight(${font.includes("body") ? ".regular" : ".black"}),\n`;
+    resolvedTokenFile += `            ${font}: .init(font: DSFont.dbNeoScreenFlex.font(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}), uiFont: DSFont.dbNeoScreenFlex.uiFont(size: typo.${font.includes("body") ? "body" : "headline"}.fontSize${size}), lineHeight: typo.${font.includes("body") ? "body" : "headline"}.lineHeight${size}, fontWeight: ${font.includes("body") ? ".regular" : ".black"}),\n`
   }
   resolvedTokenFile = resolvedTokenFile.substring(0, resolvedTokenFile.lastIndexOf(','));
   resolvedTokenFile += `\n        )\n    }\n}\n`;
+
+  resolvedTokenFile += `
+struct TextStyleViewModifier: ViewModifier {
+    let font: DSTextStyle
+    
+    func body(content: Content) -> some View {
+        content
+            .font(font.font)
+            .fontWeight(font.fontWeight)
+            .lineSpacing(font.lineHeight - font.uiFont.lineHeight)
+            .padding(.vertical, (font.lineHeight - font.uiFont.lineHeight) / 2)
+    }
+}
+
+extension View {
+    public func dsTextStyle(_ font: DSTextStyle) -> some View {
+        modifier(TextStyleViewModifier(font: font))
+    }
+}
+`;
 
   return resolvedTokenFile;
 };

@@ -61,7 +61,7 @@ let ${fileName}Colors: [String: Color] = [
   return resolvedTokenFile;
 };
 
-const generateSwiftUIAdaptiveColorsExtension = (
+const generateSwiftUIColorVariantExtension = (
   speakingNames: SpeakingName[],
   resolvedScheme: string,
   darkMode: boolean
@@ -102,26 +102,27 @@ const generateSwiftUIColorSchemeDarkLight = (
   resolvedScheme: string,
   darkMode?: boolean,
 ): string => {
-  const colorScheme = kebabCase(darkMode ? "dark" : "light");
   console.log(fileName)
+  const colorScheme = kebabCase(darkMode ? "dark" : "light");
 
-  resolvedScheme += `\nfunc getColorScheme${colorScheme}(colors: [String: Color]) -> ${designSystemName}ColorScheme {\n`
+  resolvedScheme += `\n    static func getColorScheme${colorScheme}(colors: [String: Color]) -> ${designSystemName}ColorScheme {\n`
     for (const name of colorKeys) {
     resolvedScheme += `
-    var ${name.toLowerCase()}Colors${colorScheme}: AdaptiveColors {
-        .init(.${colorScheme.toLowerCase()}, colorName: "${name.toLowerCase()}", colors: colors)
-    }\n\n`;
-  }
+        var ${name.toLowerCase()}Colors${colorScheme}: DSColorVariant {
+            .init(.${colorScheme.toLowerCase()}, colorName: "${name.toLowerCase()}", colors: colors)
+        }\n`;
+    }
   resolvedScheme += `
-    return .init(\n`;
+
+        return .init(\n`;
   colorKeys.forEach((name, index) => {
-    resolvedScheme += `        ${name}: ${name}Colors${colorScheme}`;
+    resolvedScheme += `            ${name}: ${name}Colors${colorScheme}`;
     // if not last element:
     if (index < colorKeys.length - 1) {
       resolvedScheme += `,\n`
     }
   });
-  resolvedScheme += `\n    )\n}\n`;
+  resolvedScheme += `\n        )\n    }\n`;
 
   return resolvedScheme;
 };
@@ -149,51 +150,42 @@ extension Color {
 
 `;
 
-  // 1. Generate generic AdaptiveColors protocol'
+  // 1. Generate generic DSColorVariant protocol'
   const name = colorKeys[0]
   const allSpeakingNames = [...speakingNames, ...originAdditionalColors];
-  resolvedScheme += `struct AdaptiveColors {\n`;
+  resolvedScheme += `public struct DSColorVariant {\n`;
   for (const speakingName of allSpeakingNames) {
     const resolvedName = `${kebabCase(speakingName.name, true)}`;
     resolvedNames[`${name}${speakingName.name}`] = resolvedName;
-    resolvedScheme += `    let ${resolvedName}: Color\n\n`;
+    resolvedScheme += `    public let ${resolvedName}: Color\n`;
   }
 
-  resolvedScheme += `    init(_ scheme: DBColorScheme, colorName: String, colors: [String: Color]) {
+  resolvedScheme += `\n    init(_ scheme: DSColorScheme, colorName: String, colors: [String: Color]) {
       switch scheme {
         case .dark:
 `;
 
-  resolvedScheme = generateSwiftUIAdaptiveColorsExtension(
+  resolvedScheme = generateSwiftUIColorVariantExtension(
     speakingNames,
     resolvedScheme,
     true
   );
 
-  resolvedScheme += `
-        case .light:
-`;
+  resolvedScheme += `\n        case .light:\n`;
 
-  resolvedScheme = generateSwiftUIAdaptiveColorsExtension(
+  resolvedScheme = generateSwiftUIColorVariantExtension(
     speakingNames,
     resolvedScheme,
     false
   );
 
-  resolvedScheme += `
-        }
-    }
-`
-
-  resolvedScheme += `}\n\n`;
+  resolvedScheme += `\n        }\n    }\n}\n\n`;
 
   // 2. Generate ColorSchemes for semantic colors
-  resolvedScheme += `struct ${designSystemName}ColorScheme {\n`;
+  resolvedScheme += `public struct ${designSystemName}ColorScheme {\n`;
   for (const name of colorKeys) {
-    resolvedScheme += ` let ${name}: AdaptiveColors\n`;
+    resolvedScheme += `    public let ${name}: DSColorVariant\n`;
   }
-
-  resolvedScheme += `}\n`;
 
   resolvedScheme = generateSwiftUIColorSchemeDarkLight(
     fileName,
@@ -209,8 +201,10 @@ extension Color {
     false,
   );
 
+  resolvedScheme += `\n}\n\n`;
+
   resolvedScheme += `
-enum DBColorScheme {
+enum DSColorScheme {
     case light
     case dark
 }

@@ -17,76 +17,75 @@ export const shirtSizes = [
 ];
 
 export const generateStaticSwiftUIFiles = (): string => {
-  return `
-import SwiftUI
+  return `import SwiftUI
 
-struct BasicColor {
-    var text: TextColor
-    var icon: IconColor
-    var border: BorderColor
-    var background: BackgroundColor
+public struct BasicColor {
+    public var text: TextColor
+    public var icon: IconColor
+    public var border: BorderColor
+    public var background: BackgroundColor
 }
 
-struct InvertedBackgroundColor {
-    var contrastMax: StateColor
-    var contrastHigh: StateColor
-    var contrastLow: StateColor
+public struct InvertedBackgroundColor {
+    public var contrastMax: StateColor
+    public var contrastHigh: StateColor
+    public var contrastLow: StateColor
 }
 
-struct InvertedColor {
-    var background: InvertedBackgroundColor
-    var onBackground: StateColor
+public struct InvertedColor {
+    public var background: InvertedBackgroundColor
+    public var onBackground: StateColor
 }
 
-struct OriginColor {
-    var origin: StateColor
-    var onOrigin: StateColor
+public struct OriginColor {
+    public var origin: StateColor
+    public var onOrigin: StateColor
 }
 
-struct TextColor {
-    var \`default\`: StateColor
-    var emphasis100: StateColor
-    var emphasis90: StateColor
-    var emphasis80: StateColor
+public struct TextColor {
+    public var \`default\`: StateColor
+    public var emphasis100: StateColor
+    public var emphasis90: StateColor
+    public var emphasis80: StateColor
 }
 
-struct IconColor {
-    var \`default\`: StateColor
-    var emphasis100: StateColor
-    var emphasis90: StateColor
-    var emphasis80: StateColor
-    var emphasis70: StateColor
+public struct IconColor {
+    public var \`default\`: StateColor
+    public var emphasis100: StateColor
+    public var emphasis90: StateColor
+    public var emphasis80: StateColor
+    public var emphasis70: StateColor
 }
 
-struct BorderColor {
-    var \`default\`: StateColor
-    var emphasis100: StateColor
-    var emphasis70: StateColor
-    var emphasis60: StateColor
-    var emphasis50: StateColor
+public struct BorderColor {
+    public var \`default\`: StateColor
+    public var emphasis100: StateColor
+    public var emphasis70: StateColor
+    public var emphasis60: StateColor
+    public var emphasis50: StateColor
 }
 
-struct BackgroundColor {
-    var transparent: TransparentColor
-    var level1: StateColor
-    var level2: StateColor
-    var level3: StateColor
+public struct BackgroundColor {
+    public var transparent: TransparentColor
+    public var level1: StateColor
+    public var level2: StateColor
+    public var level3: StateColor
 }
 
-struct TransparentColor {
-    var full: Color
-    var semi: Color
-    var hovered: Color
-    var pressed: Color
+public struct TransparentColor {
+    public var full: Color
+    public var semi: Color
+    public var hovered: Color
+    public var pressed: Color
 }
 
-struct StateColor {
-    var \`default\`: Color
-    var hovered: Color
-    var pressed: Color
+public struct StateColor {
+    public var \`default\`: Color
+    public var hovered: Color
+    public var pressed: Color
 }
 
-extension AdaptiveColors {
+extension DSColorVariant {
     
     public var basic: BasicColor {
         .init(

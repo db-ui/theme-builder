@@ -5,13 +5,34 @@ export const generateSwiftUIElevationsFile = (
 ): string => {
   let resolvedString: string = `import SwiftUI
 
-struct DBSubElevation {
-    let first: DBElevationShadow
-    let second: DBElevationShadow
-    let third: DBElevationShadow
+struct DSShadowViewModifier: ViewModifier {
+    
+    let elevation: DSSubElevation
+    
+    func body(content: Content) -> some View {
+        content
+            .background(
+                content
+                    .shadow(color: elevation.first.color, radius: elevation.first.spread, x: elevation.first.x, y: elevation.first.y)
+                    .shadow(color: elevation.second.color, radius: elevation.second.spread, x: elevation.second.x, y: elevation.second.y)
+                    .shadow(color: elevation.third.color, radius: elevation.third.spread, x: elevation.third.x, y: elevation.third.y)
+            )
+    }
 }
 
-struct DBElevationShadow {
+extension View {
+    func dsShadow(elevation: DSSubElevation = DSElevation.sm) -> some View {
+        self.modifier(DSShadowViewModifier(elevation: elevation))
+    }
+}
+
+struct DSSubElevation {
+    let first: DSElevationShadowConfig
+    let second: DSElevationShadowConfig
+    let third: DSElevationShadowConfig
+}
+
+struct DSElevationShadowConfig {
     let x: CGFloat
     let y: CGFloat
     let blur: CGFloat
@@ -19,11 +40,11 @@ struct DBElevationShadow {
     let color: Color
 }
   
-struct DBElevation {\n`;
+public struct DSElevation {\n`;
 
   Object.entries(allElevations).forEach(([name, elevation]) => {
     if (!name.includes("_scale")) {
-        resolvedString += `    static let ${name.toLowerCase()} = DBSubElevation(`;
+        resolvedString += `    static let ${name.toLowerCase()} = DSSubElevation(`;
         const shadows = elevation.toString().replaceAll("  ", " ").replaceAll("rgba(", "").replaceAll ("), ", "#").replaceAll(")", "").replaceAll(",", "").split("#")
         resolvedString += `
         first: .init(

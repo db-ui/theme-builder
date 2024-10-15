@@ -1,95 +1,98 @@
 import { designSystemName } from "./shared";
 
 export const generateSwiftUIDesignSystemThemeFile = (fileName: string): string => {
+    console.log(fileName)
     return `
 import SwiftUI
 
-// Design System Theme File
-// import SwiftUI
+struct ThemeModifier: ViewModifier {
+    @Environment(\\.colorScheme) var systemColorScheme
+    
+    var theme: DSTheme
+    
+    func body(content: Content) -> some View {
+        var changedTheme = theme
+        changedTheme.fonts = adaptiveFonts
+        changedTheme.dimensions = adaptiveDimensions
+        
+        return content
+            .theme(changedTheme)
+    }
+    
+    var adaptiveFonts: DesignSystemTextStyles {
+        // TODO: Use dimensions environment variable
+        let typography = UIDevice.current.userInterfaceIdiom == .pad ? DesignSystemTypography.getTypographyRegularTablet(sizes: DeutscheBahnTypography) : DesignSystemTypography.getTypographyRegularMobile(sizes: DeutscheBahnTypography)
+        return DesignSystemTextStyles.getFonts(typo: typography)
+    }
+    
+    var adaptiveDimensions: DesignSystemDimensions {
+        UIDevice.current.userInterfaceIdiom == .pad ? DesignSystemDimensions.getDimensionsRegularTablet(dimensions: DeutscheBahnDimensions()) : DesignSystemDimensions.getDimensionsRegularMobile(dimensions: DeutscheBahnDimensions())
+    }
+}
 
-// private var DarkColorScheme = getColorSchemeDark()
+extension EnvironmentValues {
+    @Entry public var theme: DSTheme = DeutscheBahnTheme()
+}
 
-// private var LightColorScheme = getColorSchemeLight()
+extension View {
+    public func dsTheme(_ theme: DSTheme = DeutscheBahnTheme()) -> some View {
+        modifier(ThemeModifier(theme: theme))
+    }
+    
+    public func theme(_ theme: DSTheme) -> some View {
+        environment(\\.theme, theme)
+    }
+    
+    public func activeColorScheme(_ colorScheme: DSColorVariant) -> some View {
+        modifier(ActiveColorViewModifier(color: colorScheme))
+    }
+    
+    public func dsExpressive() -> some View {
+        modifier(DimensionsViewModifier(dimensions: DesignSystemDimensions.getDimensionsExpressiveMobile(dimensions: DeutscheBahnDimensions())))
+    }
+    
+    public func dsFunctional() -> some View {
+        modifier(DimensionsViewModifier(dimensions:
+                                            UIDevice.current.userInterfaceIdiom == .pad ? DesignSystemDimensions.getDimensionsFunctionalTablet(dimensions: DeutscheBahnDimensions()) :
+                                            DesignSystemDimensions.getDimensionsFunctionalMobile(dimensions: DeutscheBahnDimensions())))
+    }
+}
 
+struct ActiveColorViewModifier: ViewModifier {
+    @Environment(\\.theme) var theme
+    
+    var color: DSColorVariant
+    
+    func body(content: Content) -> some View {
+        var changedTheme = theme
+        changedTheme.activeColor = color
+        
+        return content
+            .theme(changedTheme)
+    }
+}
 
-// struct ${fileName} {
-//     val colors: ${fileName}ColorScheme
-//         @Composable
-//         @ReadOnlyComposable
-//         get() = LocalColors.current
+struct DimensionsViewModifier: ViewModifier {
+    @Environment(\\.theme) var theme
+    
+    var dimensions: DesignSystemDimensions
+    
+    func body(content: Content) -> some View {
+        var changedTheme = theme
+        changedTheme.dimensions = dimensions
+        
+        return content
+            .theme(changedTheme)
+    }
+}
 
-//     val dimensions: ${fileName}Dimensions
-//         @Composable
-//         @ReadOnlyComposable
-//         get() = LocalDimensions.current
+public protocol DSTheme {
+    var colorScheme: DesignSystemColorScheme { get set }
+    var activeColor: DSColorVariant { get set }
+    var fonts: DesignSystemTextStyles { get set }
+    var dimensions: DesignSystemDimensions { get set }
+}
 
-//     val typography: ${fileName}TextStyles
-//         @Composable
-//         @ReadOnlyComposable
-//         get() = LocalTypography.current
-// }
-
-// func ${fileName}(
-//     density: Density = .regular,
-//     darkTheme: Boolean = isSystemInDarkTheme(),
-//     content: @Composable () -> Unit
-// ) {
-//     val configuration = LocalConfiguration.current
-//     // typography
-//     val typography: ${fileName}TextStyles = when {
-//         configuration.screenWidthDp > 768 ->
-//             when (density) {
-//                 Density.FUNCTIONAL -> getTextStyles(getTypographyFunctionalTablet())
-//                 Density.EXPRESSIVE -> getTextStyles(getTypographyExpressiveTablet())
-//                 else -> getTextStyles(getTypographyRegularTablet())
-//             }
-
-//         else -> when (density) {
-//             Density.FUNCTIONAL -> getTextStyles(getTypographyFunctionalMobile())
-//             Density.EXPRESSIVE -> getTextStyles(getTypographyExpressiveMobile())
-//             else -> getTextStyles(getTypographyRegularMobile())
-//         }
-//     }
-
-//     // screen
-//     val dimensions: ${fileName}Dimensions = when {
-//         configuration.screenWidthDp > 768 ->
-//             when (density) {
-//                 Density.FUNCTIONAL -> getDimensionsFunctionalTablet()
-//                 Density.EXPRESSIVE -> getDimensionsExpressiveTablet()
-//                 else -> getDimensionsRegularTablet()
-//             }
-
-//         else -> when (density) {
-//             Density.FUNCTIONAL -> getDimensionsFunctionalMobile()
-//             Density.EXPRESSIVE -> getDimensionsExpressiveMobile()
-//             else -> getDimensionsRegularMobile()
-//         }
-//     }
-
-//     // colors
-//     val colorScheme: ${fileName}ColorScheme = when {
-//         darkTheme -> DarkColorScheme
-//         else -> LightColorScheme
-//     }
-//     val view = LocalView.current
-//     if (!view.isInEditMode) {
-//         SideEffect {
-//             val window = (view.context as Activity).window
-//             window.statusBarColor = colorScheme.neutral.bgBasicLevel1Default.toArgb()
-//             window.navigationBarColor = colorScheme.neutral.bgBasicLevel1Default.toArgb()
-//             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-//         }
-//     }
-
-//     CompositionLocalProvider(
-//         LocalColors provides colorScheme,
-//         LocalDimensions provides dimensions,
-//         LocalTypography provides typography
-//     ) {
-//         content()
-//     }
-// }
 `;
 }
 
@@ -97,17 +100,17 @@ export const generateSwiftUIThemeFile = (themeName: string): string => {
   return `
 import SwiftUI
 
-struct ${themeName}Theme: Theme {
-    var colorScheme: ${designSystemName}ColorScheme
-    var activeColor: AdaptiveColors
-    var dimensions: ${designSystemName}Dimensions
-    var fonts: ${designSystemName}Fonts
+public struct ${themeName}Theme: DSTheme {
+    public var colorScheme: ${designSystemName}ColorScheme
+    public var activeColor: DSColorVariant
+    public var dimensions: ${designSystemName}Dimensions
+    public var fonts: ${designSystemName}TextStyles
     
-    init(_ colorScheme: ColorScheme = .light) {
-        self.colorScheme = colorScheme == .light ? getColorSchemeLight(colors: ${themeName}Colors) : getColorSchemeDark(colors: ${themeName}Colors)
+    public init(_ colorScheme: ColorScheme = .light) {
+        self.colorScheme = colorScheme == .light ? DesignSystemColorScheme.getColorSchemeLight(colors: ${themeName}Colors) : DesignSystemColorScheme.getColorSchemeDark(colors: ${themeName}Colors)
         self.activeColor = self.colorScheme.brand
         self.dimensions = ${designSystemName}Dimensions.getDimensionsFunctionalMobile(dimensions: ${themeName}Dimensions())
-        self.fonts = ${designSystemName}Fonts.getTypographyFunctionalMobile(sizes: ${themeName}Typography)
+        self.fonts = DesignSystemTextStyles.getFonts(typo: ${designSystemName}Typography.getTypographyFunctionalMobile(sizes: ${themeName}Typography))
     }
 }
 `
