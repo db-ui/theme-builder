@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@craftjs/core": "^0.2.10",
-    "@db-ui/react-components": "0.4.6",
+    "@db-ui/react-components": "0.4.7",
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.8.0",
     "@tiptap/extension-text-style": "^2.8.0",
