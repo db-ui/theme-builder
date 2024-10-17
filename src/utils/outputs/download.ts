@@ -1,7 +1,7 @@
 import JSZip from "jszip";
 import { DefaultColorType, SpeakingName, ThemeType } from "../data.ts";
 import { generateReadmeFile } from "./web/readme.ts";
-import { generateThemeFile } from "./compose/theme.ts";
+import { generateBrandThemeFile, generateThemeFile } from "./compose/theme.ts";
 import {
   generateColorScheme,
   generateComposeColorFile,
@@ -29,6 +29,8 @@ import {
 } from "./index.ts";
 import { generateCustomColorClass } from "./web/custom-color-class.ts";
 import { generateAndroidReadmeFile } from "./compose/readme.ts";
+import { generateComposeElevationFile } from "./compose/elevation.ts";
+import { designSystemName, designSystemShortName } from "./compose/shared.ts";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -63,6 +65,7 @@ export const downloadTheme = async (
   const themeJsonString = JSON.stringify(theme);
   const themeProperties = getCssThemeProperties(theme);
 
+  const brandName = kebabCase(theme.branding.name)
   const composeFileName = kebabCase(fileName);
 
   const zip = new JSZip();
@@ -71,41 +74,51 @@ export const downloadTheme = async (
   //Android
   const androidFolder: string = "Android";
   const androidThemeFolder: string = `${androidFolder}/theme`;
-  const androidDataFolder: string = `${androidThemeFolder}/data`;
+  const androidCoreFolder: string = `${androidThemeFolder}/core`;
+  const androidBrandFolder: string = `${androidThemeFolder}/${kebabCase(theme.branding.name).toLowerCase()}`;
+  const androidDataFolder: string = `${androidBrandFolder}/data`;
   zip.file(
     `${androidFolder}/README.md`,
-    generateAndroidReadmeFile(composeFileName),
+    generateAndroidReadmeFile(),
   );
   zip.file(
-    `${androidThemeFolder}/${composeFileName}.kt`,
-    generateThemeFile(composeFileName),
+    `${androidThemeFolder}/${designSystemName}Theme.kt`,
+    generateThemeFile(composeFileName, brandName),
   );
   zip.file(
-    `${androidThemeFolder}/${composeFileName}ColorScheme.kt`,
-    generateColorScheme(composeFileName, speakingNames, allColors),
+    `${androidThemeFolder}/${designSystemName}ColorScheme.kt`,
+    generateColorScheme(brandName, speakingNames, allColors),
   );
   zip.file(
-    `${androidThemeFolder}/${composeFileName}Dimensions.kt`,
-    generateDimensionsSchemeFile(composeFileName),
+    `${androidThemeFolder}/${designSystemName}Dimensions.kt`,
+    generateDimensionsSchemeFile(brandName),
   );
   zip.file(
-    `${androidThemeFolder}/${composeFileName}Typography.kt`,
-    generateTypographySchemeFile(composeFileName),
+    `${androidThemeFolder}/${designSystemName}Typography.kt`,
+    generateTypographySchemeFile(brandName),
   );
-  zip.file(`${androidDataFolder}/Fonts.kt`, generateFontFamilyFile());
+  zip.file(`${androidCoreFolder}/${designSystemShortName}Font.kt`, generateFontFamilyFile());
   zip.file(
-    `${androidDataFolder}/Dimensions.kt`,
-    generateComposeDimensionsFile(theme),
-  );
-  zip.file(
-    `${androidDataFolder}/Typography.kt`,
-    generateComposeTypographyFile(theme),
+    `${androidDataFolder}/${brandName}Dimensions.kt`,
+    generateComposeDimensionsFile(brandName, theme),
   );
   zip.file(
-    `${androidDataFolder}/Colors.kt`,
-    generateComposeColorFile(allColors, luminanceSteps),
+    `${androidCoreFolder}/${designSystemShortName}Elevations.kt`,
+    generateComposeElevationFile(theme.elevation),
+  )
+  zip.file(
+    `${androidDataFolder}/${brandName}Typography.kt`,
+    generateComposeTypographyFile(brandName, theme),
   );
-  zip.file(`${androidDataFolder}/Density.kt`, generateDensityEnumFile());
+  zip.file(
+    `${androidDataFolder}/${brandName}Colors.kt`,
+    generateComposeColorFile(brandName, allColors, luminanceSteps),
+  );
+  zip.file(
+    `${androidBrandFolder}/${brandName}Theme.kt`,
+    generateBrandThemeFile(brandName),
+  );
+  zip.file(`${androidCoreFolder}/${designSystemShortName}Density.kt`, generateDensityEnumFile());
 
   // Utils
   const utilsFolder: string = "Utils";

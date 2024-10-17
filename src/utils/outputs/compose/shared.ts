@@ -1,3 +1,5 @@
+export const designSystemName = "DesignSystem";
+export const designSystemShortName = "DS";
 export const replacePackageName = "replace";
 
 export const densities = ["Functional", "Regular", "Expressive"];
