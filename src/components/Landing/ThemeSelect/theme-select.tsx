@@ -40,9 +40,9 @@ const ThemeSelect = () => {
           <h1>
             <span className="brand-name">{theme.branding.name}</span>
             <br />
-            Design System Platform
+            {t("product")}
           </h1>
-          <h4 data-variant="light">By all, for all</h4>
+          <h4 data-variant="light">{t("claim")}</h4>
           <p>{t("landingDesignSystemText")}</p>
           <div className="grid grid-cols-4 gap-fix-md">
             {Object.entries(themes).map(([key, theme]) => (
