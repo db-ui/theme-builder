@@ -18,7 +18,6 @@ const Demo = ({ linkToDemo, density }: DemoPropsType) => {
             to={linkToDemo ? "/demo" : "/"}
             className="db-button"
             data-variant="brand"
-            target="_blank"
           >
             {linkToDemo ? t("openDemo") : t("openMainPage")}
           </Link>
