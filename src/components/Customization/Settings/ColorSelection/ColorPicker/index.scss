@@ -33,7 +33,7 @@
         }
       }
 
-      &[data-icon-after="warning_triangle"] {
+      &[data-icon-after="exclamation_mark_triangle"] {
         --db-icon-color: #{colors.$db-warning-on-bg-basic-emphasis-70-default};
       }
       &[data-icon-after="exclamation_mark_circle"] {
