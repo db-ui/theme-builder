@@ -28,7 +28,7 @@ const Demo = ({ linkToDemo, density }: DemoPropsType) => {
         <div className="flex flex-col md:flex-row h-full">
           <Sidenav />
           <div className="flex flex-col gap-fix-md py-fix-md px-res-sm db-neutral-bg-basic-level-2 w-full h-full overflow-y-auto">
-            <h1>{t("dashboard")}</h1>
+            <h1>{t("Dashboard")}</h1>
             <div className="demo-dashboard grid gap-fix-md h-full">
               <DBCard
                 spacing="small"
