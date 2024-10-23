@@ -125,7 +125,7 @@ export const downloadTheme = async (
   const iOSDataFolder: string = `${iOSThemeFolder}/data`;
   zip.file(
     `${iOSFolder}/README.md`,
-    generateSwiftUIReadmeFile(iOSFileName),
+    generateSwiftUIReadmeFile(),
   );
   zip.file(
     `${iOSFolder}/${designSystemName}ColorScheme.swift`,

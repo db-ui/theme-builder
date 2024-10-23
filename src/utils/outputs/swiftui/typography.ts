@@ -21,7 +21,6 @@ struct DSFont {
         self.publicName = publicName
         do {
             try registerFont(fontName: name)
-            print("Registered Font \\(name)")
         } catch {
             let reason = error.localizedDescription
             fatalError("Failed to register font: \\(reason)")
