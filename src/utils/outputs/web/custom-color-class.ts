@@ -109,20 +109,20 @@ export const generateCustomColorClass = (colorName: string): string => {
   --db-adaptive-bg-inverted-contrast-high-default: var(
   	--db-${colorName}-bg-inverted-contrast-high-default
   );
-  --db-adaptive-bg-inverted-contrast-high-hovered: var(
-  	--db-${colorName}-bg-inverted-contrast-high-hovered
+  --db-adaptive-bg-inverted-bg-inverted-contrast-high-hovered: var(
+  	--db-${colorName}-bg-inverted-bg-inverted-contrast-high-hovered
   );
-  --db-adaptive-bg-inverted-contrast-high-pressed: var(
-  	--db-${colorName}-bg-inverted-contrast-high-pressed
+  --db-adaptive-bg-inverted-bg-inverted-contrast-high-pressed: var(
+  	--db-${colorName}-bg-inverted-bg-inverted-contrast-high-pressed
   );
   --db-adaptive-bg-inverted-contrast-low-default: var(
   	--db-${colorName}-bg-inverted-contrast-low-default
   );
-  --db-adaptive-bg-inverted-contrast-low-hovered: var(
-  	--db-${colorName}-bg-inverted-contrast-low-hovered
+  --db-adaptive-bg-inverted-bg-inverted-contrast-low-hovered: var(
+  	--db-${colorName}-bg-inverted-bg-inverted-contrast-low-hovered
   );
-  --db-adaptive-bg-inverted-contrast-low-pressed: var(
-  	--db-${colorName}-bg-inverted-contrast-low-pressed
+  --db-adaptive-bg-inverted-bg-inverted-contrast-low-pressed: var(
+  	--db-${colorName}-bg-inverted-bg-inverted-contrast-low-pressed
   );
   --db-adaptive-on-bg-inverted-default: var(
   	--db-${colorName}-on-bg-inverted-default
