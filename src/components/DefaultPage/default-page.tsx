@@ -4,6 +4,7 @@ import { DefaultPagePropsType } from "./data.ts";
 import { PropsWithChildren, useState } from "react";
 import { getThemeImage } from "../../utils";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const DefaultPage = ({
   name,
@@ -16,7 +17,7 @@ const DefaultPage = ({
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const { t } = useTranslation();
   const { theme, darkMode, developerMode } = useThemeBuilderStore(
-    (state) => state,
+    (state) => state
   );
   const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
@@ -36,15 +37,17 @@ const DefaultPage = ({
             onToggle={() => setDrawerOpen(!drawerOpen)}
             brand={
               <div className="db-brand">
-                <img
-                  className="logo"
-                  src={getThemeImage(
-                    darkMode && theme.branding.image.dark
-                      ? theme.branding.image.dark
-                      : theme.branding.image.light,
-                  )}
-                  alt="brand"
-                />
+                <Link to={"/"}>
+                  <img
+                    className="logo"
+                    src={getThemeImage(
+                      darkMode && theme.branding.image.dark
+                        ? theme.branding.image.dark
+                        : theme.branding.image.light
+                    )}
+                    alt="brand"
+                  />
+                </Link>
                 {name}
               </div>
             }

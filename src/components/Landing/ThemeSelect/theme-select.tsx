@@ -77,7 +77,7 @@ const ThemeSelect = () => {
                 </DBCard>
               </button>
             ))}
-            <Link className="no-underline" to="/customization" target="_blank">
+            <Link className="no-underline" to="/customization">
               <DBCard
                 className="items-center justify-center min-h-siz-xl"
                 spacing="small"
