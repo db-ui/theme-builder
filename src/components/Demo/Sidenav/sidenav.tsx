@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 const buttons: string[] = [
   "folder_open",
   "document",
-  "user",
+  "person",
   "wrench",
   "toys",
 ];

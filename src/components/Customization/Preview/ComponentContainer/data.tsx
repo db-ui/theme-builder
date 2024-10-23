@@ -41,7 +41,7 @@ export const components: ComponentList[] = [
           <Fragment key={`button-${variant}`}>
             <h6>{toUpperCase(variant)}:</h6>
             <DBButton variant={variant}>Default</DBButton>
-            <DBButton variant={variant} icon="user">
+            <DBButton variant={variant} icon="person">
               Icon
             </DBButton>
             <DBButton variant={variant} disabled>
@@ -157,7 +157,7 @@ export const components: ComponentList[] = [
         ))}
         <DBNotification
           variant="docked"
-          icon="user"
+          icon="person"
           headline="Type"
           linkVariant="inline"
           link={<a href="#">Link</a>}

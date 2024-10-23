@@ -47,7 +47,7 @@ const ColorPicker = ({
     if (isAddColor) {
       return undefined;
     } else if (!color.originDarkAccessible || !color.originLightAccessible) {
-      return "warning_triangle";
+      return "exclamation_mark_triangle";
     } else if (
       !color.onOriginDarkAccessible ||
       !color.onOriginLightAccessible

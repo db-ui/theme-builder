@@ -42,8 +42,8 @@ const NavigationScreen = () => {
           </div>
           <div className="flex gap-fix-md items-center">
             <span data-icon="schedule">{t("today")}, 00:00</span>
-            <span data-icon="user">1 Pers.</span>
-            <DBButton variant="ghost" icon="filter" className="ml-auto">
+            <span data-icon="person">1 Pers.</span>
+            <DBButton variant="ghost" icon="sliders_horizontal" className="ml-auto">
               {t("options")}
             </DBButton>
           </div>
