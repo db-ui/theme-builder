@@ -29,6 +29,14 @@ import {
 } from "./index.ts";
 import { generateCustomColorClass } from "./web/custom-color-class.ts";
 import { generateAndroidReadmeFile } from "./compose/readme.ts";
+import { generateSwiftUIColorFile, generateSwiftUIColorScheme } from "./swiftui/colors.ts";
+import { generateSwiftUIReadmeFile } from "./swiftui/readme.ts";
+import { generateSwiftUIDimensionsFile, generateSwiftUIDimensionsSchemeFile } from "./swiftui/dimensions.ts";
+import { generateSwiftUIDensityEnumFile } from "./swiftui/density.ts";
+import { generateSwiftUIDesignSystemThemeFile, generateSwiftUIThemeFile } from "./swiftui/theme.ts";
+import { designSystemName, generateStaticSwiftUIFiles } from "./swiftui/shared.ts";
+import { generateSwiftUIElevationsFile } from "./swiftui/elevation.ts";
+import { generateSwiftUIFontFamilyFile, generateSwiftUITypographyFile, generateSwiftUITypographySchemeFile } from "./swiftui/typography.ts";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -106,6 +114,64 @@ export const downloadTheme = async (
     generateComposeColorFile(allColors, luminanceSteps),
   );
   zip.file(`${androidDataFolder}/Density.kt`, generateDensityEnumFile());
+
+  // SwiftUI (iOS)
+  const iOSFileName = kebabCase(fileName);
+
+  const iOSFolder: string = "swiftui";
+  const iOSThemeBrandingName: string = kebabCase(theme.branding.name)
+  const iOSCoreFolder: string = `${iOSFolder}/core`;
+  const iOSThemeFolder: string = `${iOSFolder}/${iOSThemeBrandingName}`;
+  const iOSDataFolder: string = `${iOSThemeFolder}/data`;
+  zip.file(
+    `${iOSFolder}/README.md`,
+    generateSwiftUIReadmeFile(),
+  );
+  zip.file(
+    `${iOSFolder}/${designSystemName}ColorScheme.swift`,
+    generateSwiftUIColorScheme(iOSFileName, speakingNames, allColors),
+  );
+  zip.file(
+    `${iOSFolder}/${designSystemName}Dimensions.swift`,
+    generateSwiftUIDimensionsSchemeFile(iOSFileName),
+  );
+  zip.file(
+    `${iOSFolder}/${designSystemName}Typography.swift`,
+    generateSwiftUITypographySchemeFile(iOSFileName),
+  );
+  zip.file(
+    `${iOSFolder}/${designSystemName}Theme.swift`,
+    generateSwiftUIDesignSystemThemeFile(iOSThemeBrandingName),
+  );
+  // iOS - Theme
+  zip.file(
+    `${iOSThemeFolder}/${iOSFileName}.swift`,
+    generateSwiftUIThemeFile(iOSThemeBrandingName),
+  );
+  // iOS - Theme - Date
+  zip.file(
+    `${iOSDataFolder}/${iOSThemeBrandingName}Dimensions.swift`,
+    generateSwiftUIDimensionsFile(iOSThemeBrandingName, theme),
+  );
+  zip.file(
+    `${iOSDataFolder}/${iOSThemeBrandingName}Typography.swift`,
+    generateSwiftUITypographyFile(iOSThemeBrandingName, theme),
+  );
+  zip.file(
+    `${iOSDataFolder}/${iOSThemeBrandingName}Colors.swift`,
+    generateSwiftUIColorFile(iOSThemeBrandingName, allColors, luminanceSteps),
+  );
+  // iOS - Core
+  zip.file(
+    `${iOSCoreFolder}/AdaptiveColors+Descriptive.swift`,
+    generateStaticSwiftUIFiles()
+  );
+  zip.file(`${iOSCoreFolder}/Fonts.swift`, generateSwiftUIFontFamilyFile());
+  zip.file(
+    `${iOSCoreFolder}/Elevations.swift`,
+    generateSwiftUIElevationsFile(theme.elevation),
+  );
+  zip.file(`${iOSCoreFolder}/Density.swift`, generateSwiftUIDensityEnumFile());
 
   // Utils
   const utilsFolder: string = "Utils";
