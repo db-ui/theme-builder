@@ -1,4 +1,6 @@
 {
+  "claim": "Von allen, für alle.",
+  "product": "Design System Plattform",
   "action": "Action",
   "active": "Aktiv",
   "adaptColor": "Farbe anpassen",
@@ -60,6 +62,15 @@
   "import": "Import",
   "importDesc": "Importiere Theme",
   "keepLogin": "Angemeldet bleiben",
+  "landingHowItFeature1Desc": " – die Zugänglichkeit von Farben bis zu Komponenten ist garantiert.",
+  "landingHowItFeature1Strong": "Ein Ort für alle",
+  "landingHowItFeature1Title": "Barrierefrei",
+  "landingHowItFeature2Desc": " –  von verschiedenen Stilen über Farben bis hin zum responsiven Design.",
+  "landingHowItFeature2Strong": "Ein Token ändert alles",
+  "landingHowItFeature2Title": "Adaptiv",
+  "landingHowItFeature3Desc": " - das spart Zeit, Geld und Nerven für alle Stakeholder.",
+  "landingHowItFeature3Strong": "Ein übergreifendes System als Lösung",
+  "landingHowItFeature3Title": "Effizient",
   "landingDesignSystemText": "Wähle ein vorgefertigtes Theme aus oder erstelle ein eigenes:",
   "landingMoreTitle": "Entdecke unser Design System",
   "later": "Später",
@@ -109,7 +120,7 @@
   "transparency": "Transparenz",
   "tryIt": "Probiere unseren Playground",
   "uploadLogo": "Logo hochladen",
-  "user": "Benutzer",
+  "person": "Benutzer",
   "username": "Benutzername",
   "wrench": "Verwalten"
 }

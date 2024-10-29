@@ -1,4 +1,6 @@
 {
+  "claim": "By all, for all",
+  "product": "Design System Platform",
   "action": "Action",
   "active": "Active",
   "adaptColor": "Adapt color",
@@ -117,7 +119,7 @@
   "transparency": "Transparency",
   "tryIt": "Try Our Playground",
   "uploadLogo": "Upload logo",
-  "user": "Account",
+  "person": "Account",
   "username": "Username",
   "wrench": "Build"
 }
