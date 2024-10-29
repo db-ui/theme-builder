@@ -47,7 +47,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 ## Fonts
 
-[Download](https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-2/foundation/Typografie) fonts and use the \`.ttf\` files. 
+[Download](https://marketingportal.extranet.deutschebahn.com/marketingportal/Marke-und-Design/Basiselemente/Typografie/DB-Neo-Font-Downloads) fonts and use the \`.ttf\` files. 
 You might rename it based on the names in \`~/theme/core/Fonts.kt\` and move the \`.ttf\` files into \`~/src/main/res/font\` folder.  
 `;
 };
