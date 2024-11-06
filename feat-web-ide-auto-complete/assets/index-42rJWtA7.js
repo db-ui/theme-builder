@@ -2400,19 +2400,19 @@ enum class ${St}Elevation(internal val config: List<${St}ElevationShadowConfig>)
     ),
 `}),t+=`}
 `,t},k9=["emphasis-100","emphasis-90","emphasis-80","emphasis-70","emphasis-60","emphasis-50"],_9=["basic-level-1","basic-level-2","basic-level-3","basic-transparent-semi","basic-transparent-full"],fwe=["contrast-max","contrast-high","contrast-low"],pwe=["default","hovered","pressed"],KI=e=>{let t=`/* ${e.toUpperCase()} */
-`;return pwe.forEach(r=>{_9.forEach(n=>{t+=["-",tt,e,"bg",n,r].join("-")+`: "";
-`}),k9.forEach(n=>{t+=["-",tt,e,"on-bg",n,r].join("-")+`: "";
-`}),fwe.forEach(n=>{t+=["-",tt,e,"bg-inverted",n,r].join("-")+`: "";
-`}),t+=["-",tt,e,"on-bg","inverted",r].join("-")+`: "";
-`,t+=["-",tt,e,"origin",r].join("-")+`: "";
-`,t+=["-",tt,e,"on-origin",r].join("-")+`: "";
+`;return pwe.forEach(r=>{_9.forEach(n=>{t+=["-",tt,e,"bg",n,r].join("-")+`: "Change the background color level of the current element. Can be used on containers and components.";
+`}),k9.forEach(n=>{t+=["-",tt,e,"on-bg",n,r].join("-")+`: "Change the foreground color with another emphasis of the current element.";
+`}),fwe.forEach(n=>{t+=["-",tt,e,"bg-inverted",n,r].join("-")+`: "Change the background color of the current element. Should be used on single components only.";
+`}),t+=["-",tt,e,"on-bg","inverted",r].join("-")+`: "Change the foreground color of the current element. Only used with inverted background colors.";
+`,t+=["-",tt,e,"origin",r].join("-")+`: "Origin color can be used for background and foreground. Use this if you know what you are doing, it might not be accessible.";
+`,t+=["-",tt,e,"on-origin",r].join("-")+`: "Change the foreground color of the current element. Only used with origin as background color.";
 `}),t},Vf=["3xs","2xs","xs","sm","md","lg","xl","2xl","3xl"],gwe=["expressive","regular","functional"],mwe=["top","bottom","left","right"],ywe=["before","after"],vwe=()=>{const e=[];return ywe.forEach(t=>{mwe.forEach(r=>{e.push([r,t].join("-"))})}),e},bwe=[{name:"sizing",link:"https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-3/foundation/sizing",description:"Use sizing's for fixed heights/widths e.g. the db-button has always a fixed height.",sizes:Vf},{name:"spacing-fixed",description:"Use fixed spacings for all kind of distances (margin, padding, ...).",link:"https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-3/foundation/spacing",sizes:Vf},{name:"spacing-responsive",description:"The primary use-case for responsive spacings are paddings/gaps in an application e.g. the <main> should have a responsive padding.",link:"https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-3/foundation/spacing",sizes:Vf},{name:"elevation",description:"Changes elevation of element.",link:"https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-3/foundation/elevation",sizes:["sm","md","lg"]},{name:"border-height",description:"Changes border-height of element",link:"https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-3/foundation/border-height",sizes:Vf},{name:"border-radius",description:"Changes border-radius of element",link:"https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-3/foundation/border-radius",sizes:Vf}],xwe=[{name:"density",description:"Use this to change the density of the element.",sizes:gwe},{name:"focus",description:"Use this to set default focus outline.",sizes:["default"]},{name:"divider",description:"Use this to add a divider as :before or :after element.",sizes:vwe()},{name:"bg-color",description:"Change the background color level of the current element.",sizes:_9},{name:"on-bg-color",description:"Change the foreground color with another emphasis of the current element.",sizes:k9}],wwe=()=>{let e="";return bwe.forEach(t=>{t.link&&(e+=`/* ${t.link} */
 `),t.sizes.forEach(r=>{e+=["-",tt,t.name,r].join("-")+`: "${t.description}";`,e+=`
 `})}),e},Swe=e=>{let t=`/* NOTE: Most of the time you just need adaptive.*/
 `;return t+=`/* https://marketingportal.extranet.deutschebahn.com/marketingportal/Design-Anwendungen/db-ux-design-system/version-3/foundation/colors*/
 `,t+=KI("adaptive"),t+=`
 
-`,Object.keys(e).forEach(r=>{t+=KI(r)}),t},Dwe=e=>{const t=[...xwe,{name:"container-color",description:"",sizes:Object.keys(e)}];let r="";return t.forEach(n=>{n.sizes.forEach(i=>{r+=`.${[tt,n.name,i].join("-")}{
+`,Object.keys(e).forEach(r=>{t+=KI(r)}),t},Dwe=e=>{const t=[...xwe,{name:"container-color",description:"These classes define the monochromatic adaptive color scheme for a container. Texts, icons and backgrounds in it then automatically adapt to the color set.",sizes:Object.keys(e)}];let r="";return t.forEach(n=>{n.sizes.forEach(i=>{r+=`.${[tt,n.name,i].join("-")}{
 `,r+=`/* ${n.description} */
 `,r+=`}
 `})}),r},Ewe=e=>["/* DON'T USE THIS FILE IN PRODUCTION. */","/* THIS IS ONLY FOR YOUR IDES AUTO-COMPLETE. */","head {","/* DIMENSION */",wwe(),"/* COLORS */",Swe(e),"}",Dwe(e)].join(`
