@@ -24,22 +24,22 @@ export const generateColorProperties = (color: string): string => {
   colorStates.forEach((state) => {
     backgroundColors.forEach((bgColor) => {
       result +=
-        ["-", prefix, color, "bg", bgColor, state].join("-") + `: "";\n`;
+        ["-", prefix, color, "bg", bgColor, state].join("-") + `: "Change the background color level of the current element. Can be used on containers and components.";\n`;
     });
     onBackgroundColors.forEach((onBgColor) => {
       result +=
-        ["-", prefix, color, "on-bg", onBgColor, state].join("-") + `: "";\n`;
+        ["-", prefix, color, "on-bg", onBgColor, state].join("-") + `: "Change the foreground color with another emphasis of the current element.";\n`;
     });
     invertedColors.forEach((invertedColor) => {
       result +=
         ["-", prefix, color, "bg-inverted", invertedColor, state].join("-") +
-        `: "";\n`;
+        `: "Change the background color of the current element. Should be used on single components only.";\n`;
     });
 
     result +=
-      ["-", prefix, color, "on-bg", "inverted", state].join("-") + `: "";\n`;
-    result += ["-", prefix, color, "origin", state].join("-") + `: "";\n`;
-    result += ["-", prefix, color, "on-origin", state].join("-") + `: "";\n`;
+      ["-", prefix, color, "on-bg", "inverted", state].join("-") + `: "Change the foreground color of the current element. Only used with inverted background colors.";\n`;
+    result += ["-", prefix, color, "origin", state].join("-") + `: "Origin color can be used for background and foreground. Use this if you know what you are doing, it might not be accessible.";\n`;
+    result += ["-", prefix, color, "on-origin", state].join("-") + `: "Change the foreground color of the current element. Only used with origin as background color.";\n`;
   });
   return result;
 };
