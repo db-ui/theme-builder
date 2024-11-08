@@ -17,7 +17,7 @@ const DefaultPage = ({
 }: PropsWithChildren<DefaultPagePropsType>) => {
   const { t } = useTranslation();
   const { theme, darkMode, developerMode } = useThemeBuilderStore(
-    (state) => state
+    (state) => state,
   );
   const [drawerOpen, setDrawerOpen] = useState<boolean>();
 
@@ -43,7 +43,7 @@ const DefaultPage = ({
                     src={getThemeImage(
                       darkMode && theme.branding.image.dark
                         ? theme.branding.image.dark
-                        : theme.branding.image.light
+                        : theme.branding.image.light,
                     )}
                     alt="brand"
                   />

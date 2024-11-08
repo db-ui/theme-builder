@@ -1,5 +1,5 @@
 ---
-name: 'CodeQL'
+name: "CodeQL"
 on:
   workflow_call:
 
@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['javascript']
+        language: ["javascript"]
 
     steps:
       - name: ⬇ Checkout repo

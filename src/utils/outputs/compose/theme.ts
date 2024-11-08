@@ -1,7 +1,11 @@
-import { designSystemName, designSystemShortName, replacePackageName } from "./shared.ts";
+import {
+  designSystemName,
+  designSystemShortName,
+  replacePackageName,
+} from "./shared.ts";
 
 export const generateBrandThemeFile = (brandName: string): string => {
-    return `package ${replacePackageName}.${brandName.toLowerCase()}
+  return `package ${replacePackageName}.${brandName.toLowerCase()}
 
 import ${replacePackageName}.${designSystemShortName}Theme
 import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}ColorMap
@@ -14,9 +18,12 @@ object ${brandName}Theme : ${designSystemShortName}Theme {
     override val typographyMap = ${brandName}TypographyMap
 }
 `;
-}
+};
 
-export const generateThemeFile = (fileName: string, brandName: string): string => {
+export const generateThemeFile = (
+  fileName: string,
+  brandName: string,
+): string => {
   return `package ${replacePackageName}
 
 import android.app.Activity
