@@ -25,7 +25,11 @@ export const properties = [
     snippet: 'variant="outlined"',
     meta: "button-variant",
   },
-  { value: "solidVariant", snippet: 'variant="filled"', meta: "button-variant" },
+  {
+    value: "solidVariant",
+    snippet: 'variant="filled"',
+    meta: "button-variant",
+  },
   { value: "textVariant", snippet: 'variant="ghost"', meta: "button-variant" },
   {
     value: "adaptive",

@@ -4,7 +4,6 @@ import { designSystemShortName, replacePackageName } from "./shared.ts";
 export const generateComposeElevationFile = (
   allElevations: ThemeSizing,
 ): string => {
-
   let resolvedTokenFile = `package ${replacePackageName}.core
   
 import androidx.compose.ui.Modifier
@@ -81,22 +80,30 @@ enum class ${designSystemShortName}Elevation(internal val config: List<${designS
 `;
 
   Object.entries(allElevations).forEach(([name, elevationScheme]) => {
-    if (name == "_scale") return
+    if (name == "_scale") return;
 
-    const elevationStages = elevationScheme.toString().replaceAll("  ", " ").replaceAll("rgba(", "").replaceAll("), ", "#").replaceAll(")", "").replaceAll(",", "").replaceAll("px", "").split("#")
+    const elevationStages = elevationScheme
+      .toString()
+      .replaceAll("  ", " ")
+      .replaceAll("rgba(", "")
+      .replaceAll("), ", "#")
+      .replaceAll(")", "")
+      .replaceAll(",", "")
+      .replaceAll("px", "")
+      .split("#");
 
     resolvedTokenFile += `    ${name.toUpperCase()}(
         listOf(`;
     for (const elevationStage of elevationStages) {
-      const elevationValues = elevationStage.split(" ")
-      const horizontal = elevationValues[0]
-      const vertical = elevationValues[1]
-      const blur = elevationValues[2]
-      const spread = elevationValues[3]
-      const red = elevationValues[4]
-      const green = elevationValues[5]
-      const blue = elevationValues[6]
-      const alpha = elevationValues[7]
+      const elevationValues = elevationStage.split(" ");
+      const horizontal = elevationValues[0];
+      const vertical = elevationValues[1];
+      const blur = elevationValues[2];
+      const spread = elevationValues[3];
+      const red = elevationValues[4];
+      const green = elevationValues[5];
+      const blue = elevationValues[6];
+      const alpha = elevationValues[7];
 
       resolvedTokenFile += `
             ${designSystemShortName}ElevationShadowConfig(DpOffset(${horizontal}.dp, ${vertical}.dp), ${blur}.dp, ${spread.startsWith("-") ? "(" + spread + ")" : spread}.dp, Color(${red}f, ${green}f, ${blue}f, ${alpha}f)),`;
@@ -104,6 +111,6 @@ enum class ${designSystemShortName}Elevation(internal val config: List<${designS
     resolvedTokenFile += `\n        ),\n    ),\n`;
   });
 
-  resolvedTokenFile += "}\n"
+  resolvedTokenFile += "}\n";
   return resolvedTokenFile;
-}
+};

@@ -1,5 +1,4 @@
-import {FontType, ThemeType} from "../../data.ts";
-
+import { FontType, ThemeType } from "../../data.ts";
 
 export const getFontFaces = (theme: ThemeType): string => {
   let fontfaces: string = `@use "default.assets-paths" as assets-paths;`;

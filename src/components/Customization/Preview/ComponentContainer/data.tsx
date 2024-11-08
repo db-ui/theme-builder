@@ -195,7 +195,6 @@ export const components: ComponentList[] = [
           message="Required Message"
           required
         />
-
       </Fragment>
     ),
   },
@@ -289,7 +288,6 @@ export const components: ComponentList[] = [
           message="Required Message"
           required
         />
-
       </Fragment>
     ),
   },

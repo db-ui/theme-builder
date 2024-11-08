@@ -43,7 +43,11 @@ const NavigationScreen = () => {
           <div className="flex gap-fix-md items-center">
             <span data-icon="schedule">{t("today")}, 00:00</span>
             <span data-icon="person">1 Pers.</span>
-            <DBButton variant="ghost" icon="sliders_horizontal" className="ml-auto">
+            <DBButton
+              variant="ghost"
+              icon="sliders_horizontal"
+              className="ml-auto"
+            >
               {t("options")}
             </DBButton>
           </div>
@@ -59,7 +63,9 @@ const NavigationScreen = () => {
           <DBButton>{t("now")}</DBButton>
           <DBButton>{t("later")}</DBButton>
         </div>
-        <DBNotification semantic="informational">{t("iceInformation")}</DBNotification>
+        <DBNotification semantic="informational">
+          {t("iceInformation")}
+        </DBNotification>
 
         <div className="grid grid-cols-12 gap-fix-xs py-fix-sm px-fix-lg h-full items-center">
           <strong className="col-span-2 ml-auto">12:00</strong>

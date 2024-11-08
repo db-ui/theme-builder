@@ -1,4 +1,8 @@
-import { densities, designSystemShortName, replacePackageName } from "./shared.ts";
+import {
+  densities,
+  designSystemShortName,
+  replacePackageName,
+} from "./shared.ts";
 
 export const generateDensityEnumFile = (): string => {
   return `package ${replacePackageName}.core

@@ -62,7 +62,7 @@ const SelectColorDialog = ({
               >
                 <DBCard
                   data-interactive="elevation"
-                  style={{backgroundColor: "var(--db-adaptive-bg-default)"}}
+                  style={{ backgroundColor: "var(--db-adaptive-bg-default)" }}
                   className={`flex-row min-h-siz-lg gap-fix-md justify-between items-center db-${color}`}
                   spacing="small"
                 >

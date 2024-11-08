@@ -1,5 +1,5 @@
 ---
-name: 'Dependency Review'
+name: "Dependency Review"
 on:
   workflow_call:
 

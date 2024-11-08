@@ -82,7 +82,10 @@ const ColorPicker = ({
           >
             {t(label)}
             {!isAddColor && (
-              <DBTooltip placement="bottom" className="db-neutral-bg-basic-level-1">
+              <DBTooltip
+                placement="bottom"
+                className="db-neutral-bg-basic-level-1"
+              >
                 {t("adaptColor")}
               </DBTooltip>
             )}
