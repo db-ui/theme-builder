@@ -57,7 +57,7 @@ export const getAutoCompleteFile = (
 ) => {
   return [
     "/* DON'T USE THIS FILE IN PRODUCTION. */",
-    "/* THIS IS ONLY FOR YOUR IDES AUTO-COMPLETE. */",
+    "/* THIS IS ONLY FOR YOUR IDEs AUTO-COMPLETE. */",
     "head {",
     "/* DIMENSION */",
     getDimensionVariables(),
