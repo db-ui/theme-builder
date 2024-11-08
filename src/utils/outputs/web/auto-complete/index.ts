@@ -38,7 +38,7 @@ export const getColorVariables = (
 const getClasses = (allColors: Record<string, DefaultColorType>) => {
   const combinedClasses = [
     ...allClasses,
-    { name: `container-color`, description: "These classes define the monochromatic adaptive color scheme for a container. Texts, icons and backgrounds in it then automatically adapt to the color set.", sizes: Object.keys(allColors) },
+    { name: `container-color`, description: "These classes define the monochromatic adaptive color scheme for a container. Texts, icons and backgrounds in it than automatically adapt to the color set.", sizes: Object.keys(allColors) },
   ];
   let result = "";
   combinedClasses.forEach((classSet) => {
