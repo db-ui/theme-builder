@@ -26,7 +26,10 @@ internal object ${designSystemShortName}Font {
 `;
 };
 
-export const generateComposeTypographyFile = (brandName:string, theme: ThemeType): string => {
+export const generateComposeTypographyFile = (
+  brandName: string,
+  theme: ThemeType,
+): string => {
   let resolvedTokenFile: string = `package ${replacePackageName}.${brandName.toLowerCase()}.data
 
 import androidx.compose.ui.unit.sp
@@ -117,13 +120,13 @@ import ${replacePackageName}.core.${designSystemShortName}Font
 import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}TypographyMap
 `;
 
-    resolvedTokenFile += `\nclass ${designSystemShortName}Typography private constructor(\n`;
-    for (const size of shirtSizes) {
-      for (const type of typoTypes) {
-        resolvedTokenFile += `\tval ${kebabCase(`${type}-${size}`, true)}: TextUnit,\n`;
-      }
+  resolvedTokenFile += `\nclass ${designSystemShortName}Typography private constructor(\n`;
+  for (const size of shirtSizes) {
+    for (const type of typoTypes) {
+      resolvedTokenFile += `\tval ${kebabCase(`${type}-${size}`, true)}: TextUnit,\n`;
     }
-    resolvedTokenFile += `) {
+  }
+  resolvedTokenFile += `) {
     internal companion object {
         fun create(
             typographyMap: Map<String, TextUnit>,

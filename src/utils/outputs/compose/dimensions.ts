@@ -10,7 +10,10 @@ import {
   shirtSizes,
 } from "./shared.ts";
 
-export const generateComposeDimensionsFile = (brandName: string, theme: ThemeType): string => {
+export const generateComposeDimensionsFile = (
+  brandName: string,
+  theme: ThemeType,
+): string => {
   let resolvedTokenFile: string = `package ${replacePackageName}.${brandName.toLowerCase()}.data
   
 import androidx.compose.ui.unit.dp
@@ -59,14 +62,14 @@ export const generateDimensionsScheme = (
   density: string,
   device: string,
 ): string => {
-  const params = [density, device]
+  const params = [density, device];
 
   resolvedTokenFile += `\t\tfun getDimensions${density}${device}(
 \t\t\tdimensionsMap: Map<String, Dp>,
 \t\t): ${designSystemName}Dimensions = ${designSystemName}Dimensions(`;
   for (const type of Object.keys(dimensionTypes)) {
-    resolvedTokenFile += `\n\t\t\t${type} = ${designSystemShortName}${kebabCase(type)}Dimensions(dimensionsMap, ${params.map(param => `"${param}"`).join(", ")}),`;
-    params.pop()
+    resolvedTokenFile += `\n\t\t\t${type} = ${designSystemShortName}${kebabCase(type)}Dimensions(dimensionsMap, ${params.map((param) => `"${param}"`).join(", ")}),`;
+    params.pop();
   }
   resolvedTokenFile += `\n\t\t)\n\n`;
 
@@ -82,7 +85,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Dimensi
 
 `;
 
-  const params = ["density", "device"]
+  const params = ["density", "device"];
   for (const [type, values] of Object.entries(dimensionTypes)) {
     resolvedTokenFile += `class ${designSystemShortName}${kebabCase(type)}Dimensions private constructor(`;
     for (const value of values) {
@@ -92,15 +95,15 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Dimensi
       }
     }
     resolvedTokenFile += "\n) {";
-    resolvedTokenFile += `\n\tinternal constructor(dimensionsMap: Map<String, Dp>, ${params.map(param => `${param}: String`).join(", ")}) : this(`;
-    for(const value of values) {
-      for(const size of shirtSizes) {
+    resolvedTokenFile += `\n\tinternal constructor(dimensionsMap: Map<String, Dp>, ${params.map((param) => `${param}: String`).join(", ")}) : this(`;
+    for (const value of values) {
+      for (const size of shirtSizes) {
         const resolvedValue = value === "base" ? "" : `-${value}`;
-        const resolvedParams = params.map(param => `-\${${param}}`).join("")
+        const resolvedParams = params.map((param) => `-\${${param}}`).join("");
         resolvedTokenFile += `\n\t\tdimensionsMap.getValue("${kebabCase(`${type}${resolvedValue}${resolvedParams}-${size}`, true)}"),`;
       }
-      if(params.length == 2 || type == "sizing") {
-        params.pop()
+      if (params.length == 2 || type == "sizing") {
+        params.pop();
       }
     }
     resolvedTokenFile += "\n\t)\n}\n\n";
@@ -121,7 +124,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}Dimensi
       );
     }
   }
-  resolvedTokenFile +="\t}\n}\n\n"
+  resolvedTokenFile += "\t}\n}\n\n";
 
   resolvedTokenFile += `val LocalDimensions = staticCompositionLocalOf {
 \t${designSystemName}Dimensions.getDimensionsRegularMobile(

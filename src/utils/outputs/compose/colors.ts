@@ -1,6 +1,10 @@
 import { DefaultColorType, HeisslufType, SpeakingName } from "../../data.ts";
 import { kebabCase } from "../../index.ts";
-import { designSystemName, designSystemShortName, replacePackageName } from "./shared.ts";
+import {
+  designSystemName,
+  designSystemShortName,
+  replacePackageName,
+} from "./shared.ts";
 import { getPalette } from "../index.ts";
 import { FALLBACK_COLOR } from "../../../constants.ts";
 
@@ -92,7 +96,7 @@ import ${replacePackageName}.${brandName.toLowerCase()}.data.${brandName}ColorMa
 
 `;
 
-resolvedScheme += getInterfaceConstruct()
+  resolvedScheme += getInterfaceConstruct();
   // 1. Generate semantic color classes like 'NeutralColors'
   const allSpeakingNames = [...speakingNames, ...originAdditionalColors];
   resolvedScheme += `class ${designSystemShortName}ColorVariant private constructor(\n`;
@@ -101,19 +105,27 @@ resolvedScheme += getInterfaceConstruct()
     resolvedScheme += `\tval ${resolvedName}: Color,\n`;
   }
   resolvedScheme += `) {\n`;
-  resolvedScheme += getInterfaceImplConstruct()
+  resolvedScheme += getInterfaceImplConstruct();
 
-  resolvedScheme = generateConstructorsDarkLight(speakingNames, resolvedScheme)
+  resolvedScheme = generateConstructorsDarkLight(speakingNames, resolvedScheme);
 
   resolvedScheme += `class ${designSystemName}ColorScheme(\n`;
   for (const name of colorKeys) {
     resolvedScheme += `\tval ${name}: ${designSystemShortName}ColorVariant,\n`;
   }
   resolvedScheme += `) {\n\tinternal companion object {\n`;
-  resolvedScheme = generateColorSchemeDarkLightObjects(colorKeys, resolvedScheme, true)
-  resolvedScheme = generateColorSchemeDarkLightObjects(colorKeys, resolvedScheme, false)
+  resolvedScheme = generateColorSchemeDarkLightObjects(
+    colorKeys,
+    resolvedScheme,
+    true,
+  );
+  resolvedScheme = generateColorSchemeDarkLightObjects(
+    colorKeys,
+    resolvedScheme,
+    false,
+  );
   resolvedScheme += `\t}\n}\n\n`;
-  
+
   resolvedScheme += `val LocalColors =\n\tstaticCompositionLocalOf { ${designSystemName}ColorScheme.getColorSchemeLight(${brandName}ColorMap) }
 val LocalActiveColor =\n\tstaticCompositionLocalOf { ${designSystemName}ColorScheme.getColorSchemeLight(${brandName}ColorMap).neutral }
 `;
@@ -121,8 +133,10 @@ val LocalActiveColor =\n\tstaticCompositionLocalOf { ${designSystemName}ColorSch
   return resolvedScheme;
 };
 
-const generateConstructorsDarkLight = (speakingNames: SpeakingName[], resolvedScheme:string): string => {
-
+const generateConstructorsDarkLight = (
+  speakingNames: SpeakingName[],
+  resolvedScheme: string,
+): string => {
   const colorSchemes = ["dark", "light"];
   resolvedScheme += `\tinternal companion object {\n`;
 
@@ -130,9 +144,15 @@ const generateConstructorsDarkLight = (speakingNames: SpeakingName[], resolvedSc
     resolvedScheme += `\t\tfun ${colorScheme}(colorMap: Map<String, Color>, colorName: String) = ${designSystemShortName}ColorVariant(\n`;
     for (const speakingName of speakingNames) {
       let transparency = "";
-      if (colorScheme == "light" && speakingName.transparencyLight !== undefined) {
+      if (
+        colorScheme == "light" &&
+        speakingName.transparencyLight !== undefined
+      ) {
         transparency = `.copy(${(speakingName.transparencyLight || 0) / 100}f)`;
-      } else if (colorScheme == "dark" && speakingName.transparencyDark !== undefined) {
+      } else if (
+        colorScheme == "dark" &&
+        speakingName.transparencyDark !== undefined
+      ) {
         transparency = `.copy(${(speakingName.transparencyDark || 0) / 100}f)`;
       }
       resolvedScheme += `\t\t\tcolorMap.getValue(colorName + ${colorScheme == "dark" ? speakingName.dark : speakingName.light})${transparency},\n`;
@@ -149,7 +169,7 @@ const generateConstructorsDarkLight = (speakingNames: SpeakingName[], resolvedSc
   resolvedScheme += `\t}\n}\n\n`;
 
   return resolvedScheme;
-}
+};
 
 const getInterfaceConstruct = (): string => {
   return `interface IStateColor {
@@ -212,7 +232,7 @@ interface IInverted {
     val Background: IBackground
     val OnBackground: IStateColor
 }\n\n`;
-}
+};
 
 const getInterfaceImplConstruct = (): string => {
   return `    val Basic = object : IBasic {

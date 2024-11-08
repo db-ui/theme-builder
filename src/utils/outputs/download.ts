@@ -65,7 +65,7 @@ export const downloadTheme = async (
   const themeJsonString = JSON.stringify(theme);
   const themeProperties = getCssThemeProperties(theme);
 
-  const brandName = kebabCase(theme.branding.name)
+  const brandName = kebabCase(theme.branding.name);
   const composeFileName = kebabCase(fileName);
 
   const zip = new JSZip();
@@ -77,10 +77,7 @@ export const downloadTheme = async (
   const androidCoreFolder: string = `${androidThemeFolder}/core`;
   const androidBrandFolder: string = `${androidThemeFolder}/${kebabCase(theme.branding.name).toLowerCase()}`;
   const androidDataFolder: string = `${androidBrandFolder}/data`;
-  zip.file(
-    `${androidFolder}/README.md`,
-    generateAndroidReadmeFile(),
-  );
+  zip.file(`${androidFolder}/README.md`, generateAndroidReadmeFile());
   zip.file(
     `${androidThemeFolder}/${designSystemName}Theme.kt`,
     generateThemeFile(composeFileName, brandName),
@@ -97,7 +94,10 @@ export const downloadTheme = async (
     `${androidThemeFolder}/${designSystemName}Typography.kt`,
     generateTypographySchemeFile(brandName),
   );
-  zip.file(`${androidCoreFolder}/${designSystemShortName}Font.kt`, generateFontFamilyFile());
+  zip.file(
+    `${androidCoreFolder}/${designSystemShortName}Font.kt`,
+    generateFontFamilyFile(),
+  );
   zip.file(
     `${androidDataFolder}/${brandName}Dimensions.kt`,
     generateComposeDimensionsFile(brandName, theme),
@@ -105,7 +105,7 @@ export const downloadTheme = async (
   zip.file(
     `${androidCoreFolder}/${designSystemShortName}Elevations.kt`,
     generateComposeElevationFile(theme.elevation),
-  )
+  );
   zip.file(
     `${androidDataFolder}/${brandName}Typography.kt`,
     generateComposeTypographyFile(brandName, theme),
@@ -118,7 +118,10 @@ export const downloadTheme = async (
     `${androidBrandFolder}/${brandName}Theme.kt`,
     generateBrandThemeFile(brandName),
   );
-  zip.file(`${androidCoreFolder}/${designSystemShortName}Density.kt`, generateDensityEnumFile());
+  zip.file(
+    `${androidCoreFolder}/${designSystemShortName}Density.kt`,
+    generateDensityEnumFile(),
+  );
 
   // Utils
   const utilsFolder: string = "Utils";

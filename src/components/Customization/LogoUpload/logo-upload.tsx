@@ -52,8 +52,7 @@ const LogoUpload = memo(() => {
           <img
             className="h-siz-md mx-auto"
             src={getThemeImage(
-              theme.branding.image.dark ||
-                theme.branding.image.light,
+              theme.branding.image.dark || theme.branding.image.light,
             )}
             alt="logo"
           />

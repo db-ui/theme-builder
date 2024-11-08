@@ -3,25 +3,17 @@ import { useThemeBuilderStore } from "../../../store";
 import { useTranslation } from "react-i18next";
 import Upload from "../Upload";
 import { ThemeType } from "../../../utils/data.ts";
-import {downloadTheme} from "../../../utils/outputs/download.ts";
+import { downloadTheme } from "../../../utils/outputs/download.ts";
 
 const ActionBar = () => {
   const { t } = useTranslation();
-  const {
-    resetDefaults,
-    luminanceSteps,
-    theme,
-    speakingNames,
-    developerMode,
-  } = useThemeBuilderStore((state) => state);
+  const { resetDefaults, luminanceSteps, theme, speakingNames, developerMode } =
+    useThemeBuilderStore((state) => state);
 
   return (
     <>
       {developerMode && (
-        <DBButton
-          icon="undo"
-          onClick={() => resetDefaults()}
-        >
+        <DBButton icon="undo" onClick={() => resetDefaults()}>
           {t("reset")}
         </DBButton>
       )}
@@ -46,9 +38,7 @@ const ActionBar = () => {
       <DBButton
         variant="brand"
         icon="download"
-        onClick={() =>
-          downloadTheme(speakingNames, luminanceSteps, theme)
-        }
+        onClick={() => downloadTheme(speakingNames, luminanceSteps, theme)}
       >
         {t("export")}
       </DBButton>

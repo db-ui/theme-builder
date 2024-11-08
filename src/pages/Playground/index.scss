@@ -68,8 +68,8 @@ $selected-outline-height: 3px;
 }
 
 .hovered {
-  outline: $selected-outline-height colors.$db-neutral-on-bg-basic-emphasis-70-default
-    dashed;
+  outline: $selected-outline-height
+    colors.$db-neutral-on-bg-basic-emphasis-70-default dashed;
 }
 
 .selected {
