@@ -31,6 +31,7 @@ import { generateCustomColorClass } from "./web/custom-color-class.ts";
 import { generateAndroidReadmeFile } from "./compose/readme.ts";
 import { generateComposeElevationFile } from "./compose/elevation.ts";
 import { designSystemName, designSystemShortName } from "./compose/shared.ts";
+import { getAutoCompleteFile } from "./web/auto-complete";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -151,6 +152,10 @@ export const downloadTheme = async (
   zip.file(`${webFolder}/${fileName}-palette.css`, colorsPalette);
   zip.file(`${webFolder}/${fileName}-speaking-names.css`, colorSpeakingNames);
   zip.file(`${webFolder}/README.md`, generateReadmeFile(fileName));
+  zip.file(
+    `${webFolder}/auto-complete/${fileName}.ide.css`,
+    getAutoCompleteFile(allColors),
+  );
 
   // Custom Colors
   if (theme.customColors) {
