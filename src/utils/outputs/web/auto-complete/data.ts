@@ -1,12 +1,12 @@
 import { prefix } from "../../index.ts";
 
 export const onBackgroundColors = [
-  "emphasis-100",
-  "emphasis-90",
-  "emphasis-80",
-  "emphasis-70",
-  "emphasis-60",
-  "emphasis-50",
+  "basic-emphasis-100",
+  "basic-emphasis-90",
+  "basic-emphasis-80",
+  "basic-emphasis-70",
+  "basic-emphasis-60",
+  "basic-emphasis-50",
 ];
 
 export const backgroundColors = [
