@@ -27,7 +27,7 @@
     "@tiptap/extension-underline": "^2.9.1",
     "@tiptap/pm": "^2.10.0",
     "@tiptap/react": "^2.10.0",
-    "@tiptap/starter-kit": "^2.10.0",
+    "@tiptap/starter-kit": "^2.10.1",
     "@types/node": "^22.9.1",
     "ace-builds": "1.36.5",
     "apca-w3": "^0.1.9",
