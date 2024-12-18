@@ -72,5 +72,8 @@
     "tailwindcss": "^3.4.15",
     "typescript": "^5.7.2",
     "vite": "^6.0.2"
+  },
+  "overrides": {
+    "cross-spawn": "~7.0.5"
   }
 }
