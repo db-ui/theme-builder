@@ -173,7 +173,7 @@ export const downloadTheme = async (
 
     let allCustomColorClasses = "";
     for (const colorName of Object.keys(theme.customColors)) {
-      const colorClass = generateCustomColorClass(colorName);
+      const colorClass = generateCustomColorClass(colorName.toLowerCase());
       zip.file(
         `${webFolder}/${customColorsFolder}/classes/${colorName}.css`,
         colorClass,
