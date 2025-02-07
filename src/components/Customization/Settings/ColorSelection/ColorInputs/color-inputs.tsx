@@ -13,22 +13,27 @@ const ColorInputs = ({
   onColorChange,
   error,
   alternative,
-  contrast,
-  contrastMin,
+  contrasts,
 }: ColorInputsType) => {
   const { t } = useTranslation();
   return (
     <>
       <DBDivider />
       <p className="font-bold">{name}</p>
-      {contrast && (
-        <DBInfotext
-          semantic={contrast < (contrastMin ?? 3) ? "critical" : "successful"}
-          size="small"
-        >
-          {contrast.toFixed(2)}:1
-        </DBInfotext>
-      )}
+      <div className="flex flex-wrap gap-fix-sm">
+        {contrasts?.map((contrast, index) => (
+          <DBInfotext
+            key={`${name}-contrast-${index}`}
+            semantic={
+              contrast.value < (contrast.min ?? 3) ? "critical" : "successful"
+            }
+            size="small"
+          >
+            {contrast.name ? `${contrast.name}: ` : ""}
+            {contrast.value.toFixed(2)}:1
+          </DBInfotext>
+        ))}
+      </div>
       <div className="grid grid-cols-2 gap-fix-md">
         <DBInput
           label={t("colorInputPicker")}

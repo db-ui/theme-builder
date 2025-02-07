@@ -145,7 +145,7 @@ const ColorPicker = ({
               <>
                 <ColorInputs
                   name="origin-light"
-                  color={color.originLight ?? FALLBACK_COLOR}
+                  color={color.originLightDefault ?? FALLBACK_COLOR}
                   alternative={
                     color.originLightAccessible
                       ? undefined
@@ -154,17 +154,24 @@ const ColorPicker = ({
                   error={
                     color.originLightAccessible
                       ? undefined
-                      : "accessibilityCritical"
+                      : "accessibilityCriticalBgColor"
                   }
-                  contrast={getContrast(color.originLight, color.originBgLight)}
+                  contrasts={[
+                    {
+                      value: getContrast(
+                        color.originLightDefault,
+                        color.originHSLBgLight,
+                      ),
+                    },
+                  ]}
                   onColorChange={(col) => {
                     if (setOriginColor) {
                       const {
-                        originLight,
+                        originLightDefault,
                         originLightAccessible,
                         originLightPressed,
                         originLightHovered,
-                        onOriginLight,
+                        onOriginLightDefault,
                         onOriginLightHovered,
                         onOriginLightPressed,
                         onOriginLightAccessible,
@@ -179,12 +186,12 @@ const ColorPicker = ({
 
                       setOriginColor({
                         ...color,
-                        originLight,
+                        originLightDefault,
                         originLightAccessible,
                         originLightAlternative,
                         originLightPressed,
                         originLightHovered,
-                        onOriginLight,
+                        onOriginLightDefault,
                         onOriginLightHovered,
                         onOriginLightPressed,
                         onOriginLightAccessible,
@@ -195,35 +202,62 @@ const ColorPicker = ({
                 />
                 <ColorInputs
                   name="on-origin-light"
-                  color={color.onOriginLight ?? FALLBACK_COLOR}
+                  color={color.onOriginLightDefault ?? FALLBACK_COLOR}
                   alternative={
-                    color.onOriginLightAccessible
+                    color.onOriginLightAccessible ||
+                    color.onOriginLightAlternative === "#ffffff" ||
+                    color.onOriginLightAlternative === "#000000"
                       ? undefined
                       : color.onOriginLightAlternative
                   }
                   error={
                     color.onOriginLightAccessible
                       ? undefined
-                      : "accessibilityCritical"
+                      : "accessibilityCriticalOnColor"
                   }
-                  contrastMin={4.5}
-                  contrast={getContrast(color.originLight, color.onOriginLight)}
+                  contrasts={[
+                    {
+                      name: "On Default",
+                      min: 4.5,
+                      value: getContrast(
+                        color.originLightDefault,
+                        color.onOriginLightDefault,
+                      ),
+                    },
+                    {
+                      name: "On Hovered",
+                      min: 4.5,
+                      value: getContrast(
+                        color.originLightHovered,
+                        color.onOriginLightDefault,
+                      ),
+                    },
+                    {
+                      name: "On Pressed",
+                      min: 4.5,
+                      value: getContrast(
+                        color.originLightHovered,
+                        color.onOriginLightDefault,
+                      ),
+                    },
+                  ]}
                   onColorChange={(col) => {
                     if (setOriginColor) {
                       const {
-                        onOrigin: onOriginLight,
+                        onOrigin: onOriginLightDefault,
                         onOriginAccessible: onOriginLightAccessible,
                         onOriginAlternative: onOriginLightAlternative,
                         hoverColor: onOriginLightHovered,
                         pressedColor: onOriginLightPressed,
                       } = getOriginOnColors(
-                        color.originLight ?? FALLBACK_COLOR,
+                        color.originLightDefault ?? FALLBACK_COLOR,
+                        color.originLightPressed ?? FALLBACK_COLOR,
                         false,
                         col,
                       );
                       setOriginColor({
                         ...color,
-                        onOriginLight,
+                        onOriginLightDefault,
                         onOriginLightHovered,
                         onOriginLightPressed,
                         onOriginLightAccessible,
@@ -234,7 +268,7 @@ const ColorPicker = ({
                 />
                 <ColorInputs
                   name="origin-dark"
-                  color={color.originDark ?? FALLBACK_COLOR}
+                  color={color.originDarkDefault ?? FALLBACK_COLOR}
                   alternative={
                     color.originDarkAccessible
                       ? undefined
@@ -243,18 +277,25 @@ const ColorPicker = ({
                   error={
                     color.originDarkAccessible
                       ? undefined
-                      : "accessibilityCritical"
+                      : "accessibilityCriticalBgColor"
                   }
-                  contrast={getContrast(color.originDark, color.originBgDark)}
+                  contrasts={[
+                    {
+                      value: getContrast(
+                        color.originDarkDefault,
+                        color.originHSLBgDark,
+                      ),
+                    },
+                  ]}
                   onColorChange={(col) => {
                     if (setOriginColor) {
                       const {
-                        originDark,
+                        originDarkDefault,
                         originDarkAccessible,
                         originDarkAlternative,
                         originDarkPressed,
                         originDarkHovered,
-                        onOriginDark,
+                        onOriginDarkDefault,
                         onOriginDarkHovered,
                         onOriginDarkPressed,
                         onOriginDarkAccessible,
@@ -268,12 +309,12 @@ const ColorPicker = ({
 
                       setOriginColor({
                         ...color,
-                        originDark,
+                        originDarkDefault,
                         originDarkAccessible,
                         originDarkAlternative,
                         originDarkPressed,
                         originDarkHovered,
-                        onOriginDark,
+                        onOriginDarkDefault,
                         onOriginDarkHovered,
                         onOriginDarkPressed,
                         onOriginDarkAccessible,
@@ -284,35 +325,62 @@ const ColorPicker = ({
                 />
                 <ColorInputs
                   name="on-origin-dark"
-                  contrastMin={4.5}
-                  color={color.onOriginDark ?? FALLBACK_COLOR}
+                  color={color.onOriginDarkDefault ?? FALLBACK_COLOR}
                   alternative={
-                    color.onOriginDarkAccessible
+                    color.onOriginDarkAccessible ||
+                    color.onOriginDarkAlternative === "#ffffff" ||
+                    color.onOriginDarkAlternative === "#000000"
                       ? undefined
                       : color.onOriginDarkAlternative
                   }
                   error={
                     color.onOriginDarkAccessible
                       ? undefined
-                      : "accessibilityCritical"
+                      : "accessibilityCriticalOnColor"
                   }
-                  contrast={getContrast(color.originDark, color.onOriginDark)}
+                  contrasts={[
+                    {
+                      name: "On Default",
+                      min: 4.5,
+                      value: getContrast(
+                        color.originDarkDefault,
+                        color.onOriginDarkDefault,
+                      ),
+                    },
+                    {
+                      name: "On Hovered",
+                      min: 4.5,
+                      value: getContrast(
+                        color.originDarkHovered,
+                        color.onOriginDarkDefault,
+                      ),
+                    },
+                    {
+                      name: "On Pressed",
+                      min: 4.5,
+                      value: getContrast(
+                        color.originDarkHovered,
+                        color.onOriginDarkDefault,
+                      ),
+                    },
+                  ]}
                   onColorChange={(col) => {
                     if (setOriginColor) {
                       const {
-                        onOrigin: onOriginDark,
+                        onOrigin: onOriginDarkDefault,
                         onOriginAccessible: onOriginDarkAccessible,
                         onOriginAlternative: onOriginDarkAlternative,
                         hoverColor: onOriginDarkHovered,
                         pressedColor: onOriginDarkPressed,
                       } = getOriginOnColors(
-                        color.originDark ?? FALLBACK_COLOR,
+                        color.originDarkDefault ?? FALLBACK_COLOR,
+                        color.originDarkPressed ?? FALLBACK_COLOR,
                         true,
                         col,
                       );
                       setOriginColor({
                         ...color,
-                        onOriginDark,
+                        onOriginDarkDefault: onOriginDarkDefault,
                         onOriginDarkHovered,
                         onOriginDarkPressed,
                         onOriginDarkAccessible,

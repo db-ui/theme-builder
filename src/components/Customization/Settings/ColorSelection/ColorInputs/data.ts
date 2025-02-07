@@ -4,6 +4,5 @@ export type ColorInputsType = {
   onColorChange: (color: string) => void;
   error?: string;
   alternative?: string;
-  contrast?: number;
-  contrastMin?: number;
+  contrasts?: { value: number; min?: number; name?: string }[];
 };
