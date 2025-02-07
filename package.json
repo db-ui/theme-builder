@@ -24,7 +24,7 @@
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.10.3",
     "@tiptap/extension-text-style": "^2.10.3",
-    "@tiptap/extension-underline": "^2.10.3",
+    "@tiptap/extension-underline": "^2.11.5",
     "@tiptap/pm": "^2.10.3",
     "@tiptap/react": "^2.10.3",
     "@tiptap/starter-kit": "^2.11.0",
