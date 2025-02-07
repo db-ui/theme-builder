@@ -46,17 +46,17 @@ val ${brandName}ColorMap = mapOf (
 
     resolvedTokenFile += `\t"${name}Origin" to ${getComposeColorFromHex(color.origin)},\n`;
 
-    resolvedTokenFile += `\t"${name}OnOriginDefaultLight" to ${getComposeColorFromHex(color.onOriginLight)},\n`;
+    resolvedTokenFile += `\t"${name}OnOriginDefaultLight" to ${getComposeColorFromHex(color.onOriginLightDefault)},\n`;
     resolvedTokenFile += `\t"${name}OnOriginHoveredLight" to ${getComposeColorFromHex(color.onOriginLightHovered)},\n`;
     resolvedTokenFile += `\t"${name}OnOriginPressedLight" to ${getComposeColorFromHex(color.onOriginLightPressed)},\n`;
-    resolvedTokenFile += `\t"${name}OriginDefaultLight" to ${getComposeColorFromHex(color.originLight)},\n`;
+    resolvedTokenFile += `\t"${name}OriginDefaultLight" to ${getComposeColorFromHex(color.originLightDefault)},\n`;
     resolvedTokenFile += `\t"${name}OriginHoveredLight" to ${getComposeColorFromHex(color.originLightHovered)},\n`;
     resolvedTokenFile += `\t"${name}OriginPressedLight" to ${getComposeColorFromHex(color.originLightPressed)},\n`;
 
-    resolvedTokenFile += `\t"${name}OnOriginDefaultDark" to ${getComposeColorFromHex(color.onOriginDark)},\n`;
+    resolvedTokenFile += `\t"${name}OnOriginDefaultDark" to ${getComposeColorFromHex(color.onOriginDarkDefault)},\n`;
     resolvedTokenFile += `\t"${name}OnOriginHoveredDark" to ${getComposeColorFromHex(color.onOriginDarkHovered)},\n`;
     resolvedTokenFile += `\t"${name}OnOriginPressedDark" to ${getComposeColorFromHex(color.onOriginDarkPressed)},\n`;
-    resolvedTokenFile += `\t"${name}OriginDefaultDark" to ${getComposeColorFromHex(color.originDark)},\n`;
+    resolvedTokenFile += `\t"${name}OriginDefaultDark" to ${getComposeColorFromHex(color.originDarkDefault)},\n`;
     resolvedTokenFile += `\t"${name}OriginHoveredDark" to ${getComposeColorFromHex(color.originDarkHovered)},\n`;
     resolvedTokenFile += `\t"${name}OriginPressedDark" to ${getComposeColorFromHex(color.originDarkPressed)},\n`;
   });
