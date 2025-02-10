@@ -1,8 +1,16 @@
 @use "@db-ui/foundations/build/scss/variables";
 @use "@db-ui/foundations/build/scss/colors";
 @use "@db-ui/foundations/build/scss/screen-sizes";
+@use "@db-ui/components/build/styles/db-puls" as puls;
 @forward "@db-ui/components/build/styles/db-ui-42-rollup";
 @forward "font-face.css";
+
+[data-focus="true"] {
+  @extend %db-puls;
+  @include puls.set-db-puls-vertical();
+  @include puls.show-db-puls-vertical();
+  inset-inline-end: calc(-1 * #{variables.$db-spacing-fixed-xs});
+}
 
 :root {
   --db-drawer-max-height: 100%;
