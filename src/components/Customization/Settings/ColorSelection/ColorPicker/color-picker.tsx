@@ -236,7 +236,7 @@ const ColorPicker = ({
                       name: "On Pressed",
                       min: 4.5,
                       value: getContrast(
-                        color.originLightHovered,
+                        color.originLightPressed,
                         color.onOriginLightDefault,
                       ),
                     },
@@ -359,7 +359,7 @@ const ColorPicker = ({
                       name: "On Pressed",
                       min: 4.5,
                       value: getContrast(
-                        color.originDarkHovered,
+                        color.originDarkPressed,
                         color.onOriginDarkDefault,
                       ),
                     },
