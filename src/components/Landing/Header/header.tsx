@@ -18,7 +18,7 @@ const Header = () => {
           alt="brand"
         />
         <a
-          href="https://github.com/db-ui/theme-builder"
+          href="https://github.com/db-ux-design-system/theme-builder"
           target="_blank"
           referrerPolicy="no-referrer"
         >
