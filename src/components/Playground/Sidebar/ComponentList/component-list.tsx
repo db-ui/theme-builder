@@ -1,4 +1,4 @@
-import { DBInput } from "@db-ui/react-components";
+import { DBInput } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import { Components } from "./data.tsx";
 import { Fragment, useState } from "react";

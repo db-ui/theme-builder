@@ -3,7 +3,7 @@ import {
   DBTabList,
   DBTabPanel,
   DBTabs,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { TabsPropsType } from "./data.ts";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../store";

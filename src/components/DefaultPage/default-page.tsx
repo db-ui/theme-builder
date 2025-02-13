@@ -1,4 +1,4 @@
-import { DBButton, DBHeader, DBPage, DBTooltip } from "@db-ui/react-components";
+import { DBButton, DBHeader, DBPage, DBTooltip } from "@db-ux/react-core-components";
 import { useThemeBuilderStore } from "../../store";
 import { DefaultPagePropsType } from "./data.ts";
 import { PropsWithChildren, useState } from "react";

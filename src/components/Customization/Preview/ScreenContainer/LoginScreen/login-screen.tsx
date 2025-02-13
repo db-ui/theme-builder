@@ -7,7 +7,7 @@ import {
   DBIcon,
   DBInput,
   DBLink,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 
 const LoginScreen = () => {
   const { t } = useTranslation();

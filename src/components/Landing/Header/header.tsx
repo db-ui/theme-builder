@@ -1,7 +1,7 @@
 import { BASE_PATH } from "../../../constants.ts";
 import { getThemeImage } from "../../../utils";
 import { useThemeBuilderStore } from "../../../store";
-import { DBSection } from "@db-ui/react-components";
+import { DBSection } from "@db-ux/react-core-components";
 
 const Header = () => {
   const { theme, darkMode } = useThemeBuilderStore((state) => state);

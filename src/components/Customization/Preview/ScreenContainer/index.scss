@@ -1,7 +1,7 @@
-@use "@db-ui/foundations/build/scss/variables";
-@use "@db-ui/foundations/build/scss/colors";
-@use "@db-ui/components/build/styles/component";
-@use "@db-ui/components/build/styles/db-puls";
+@use "@db-ux/core-foundations/build/scss/variables";
+@use "@db-ux/core-foundations/build/scss/colors";
+@use "@db-ux/core-components/build/styles/component";
+@use "@db-ux/core-components/build/styles/db-puls";
 
 .navigator-image-container {
   @extend %db-base-component;

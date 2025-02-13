@@ -4,7 +4,7 @@ import {
   DBTabList,
   DBTabPanel,
   DBTabs,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { useEditor } from "@craftjs/core";
 import { useEffect, useRef } from "react";
 import Customize from "./Customize";

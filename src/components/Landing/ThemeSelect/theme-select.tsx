@@ -1,4 +1,4 @@
-import { DBCard, DBIcon, DBSection, DBTooltip } from "@db-ui/react-components";
+import { DBCard, DBIcon, DBSection, DBTooltip } from "@db-ux/react-core-components";
 import { useThemeBuilderStore } from "../../../store";
 import { Link } from "react-router-dom";
 import Demo from "../../../pages/Demo";

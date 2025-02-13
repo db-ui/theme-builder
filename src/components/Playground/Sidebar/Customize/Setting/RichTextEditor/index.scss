@@ -1,8 +1,8 @@
-@use "@db-ui/foundations/build/scss/colors";
-@use "@db-ui/foundations/build/scss/variables";
-@use "@db-ui/foundations/build/scss/fonts";
-@use "@db-ui/foundations/build/scss/helpers/focus";
-@use "@db-ui/components/build/styles/component";
+@use "@db-ux/core-foundations/build/scss/colors";
+@use "@db-ux/core-foundations/build/scss/variables";
+@use "@db-ux/core-foundations/build/scss/fonts";
+@use "@db-ux/core-foundations/build/scss/helpers/focus";
+@use "@db-ux/core-components/build/styles/component";
 
 .menu-bar {
   @extend %db-neutral-bg-basic-level-1;

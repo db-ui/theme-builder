@@ -1,4 +1,4 @@
-import { DBSection } from "@db-ui/react-components";
+import { DBSection } from "@db-ux/react-core-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 

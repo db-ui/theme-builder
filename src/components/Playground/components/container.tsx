@@ -4,7 +4,7 @@ import DropContainer from "./drop-container.tsx";
 import { getDragClassNames } from "./data/utils.ts";
 import Setting from "../Sidebar/Customize/Setting";
 import DragButton from "./DragButton";
-import { COLOR } from "@db-ui/react-components/dist/shared/constants";
+import { COLOR } from "@db-ux/react-core-components/dist/shared/constants";
 
 export type ContainerPropsType = {
   className?: string;

@@ -24,7 +24,7 @@ import {
   DBSelect,
   DBTextarea,
   DBTag,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 export const PARSER_OPTIONS: HTMLReactParserOptions = {
   transform: (reactNode: any) => {
     if (

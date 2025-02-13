@@ -1,4 +1,4 @@
-import { DBSection } from "@db-ui/react-components";
+import { DBSection } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 
 const cards: string[] = ["accessible", "adaptive", "efficient"];

@@ -1,5 +1,5 @@
 import { DEFAULT_SIZES } from "./index.tsx";
-import { DBInfotext } from "@db-ui/react-components";
+import { DBInfotext } from "@db-ux/react-core-components";
 
 const Sizing = () => (
   <div className="flex flex-wrap gap-fix-md">

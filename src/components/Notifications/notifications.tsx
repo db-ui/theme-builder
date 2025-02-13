@@ -1,6 +1,6 @@
 import { useThemeBuilderStore } from "../../store";
 import { useEffect, useState } from "react";
-import { DBNotification } from "@db-ui/react-components";
+import { DBNotification } from "@db-ux/react-core-components";
 
 import "./index.scss";
 

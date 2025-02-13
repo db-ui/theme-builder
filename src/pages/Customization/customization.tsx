@@ -4,7 +4,7 @@ import { TabItemType } from "./data.ts";
 import ComponentContainer from "../../components/Customization/Preview/ComponentContainer";
 import ColorPalettes from "../../components/Customization/Preview/ColorPalettes";
 import DefaultPage from "../../components/DefaultPage";
-import { DBDivider, DBInput } from "@db-ui/react-components";
+import { DBDivider, DBInput } from "@db-ux/react-core-components";
 import ActionBar from "../../components/Customization/ActionBar";
 import { useThemeBuilderStore } from "../../store";
 import SpeakingColors from "../../components/Customization/Preview/SpeakingColors";

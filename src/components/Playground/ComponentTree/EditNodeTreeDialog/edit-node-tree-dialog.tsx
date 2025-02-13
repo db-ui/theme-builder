@@ -3,11 +3,11 @@ import {
   DBDivider,
   DBDrawer,
   DBInput,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { useDragAndDropStore } from "../../../../store";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { uuid } from "@db-ui/react-components/dist/utils";
+import { uuid } from "@db-ux/react-core-components/dist/utils";
 import { EditNodeTreePropsType } from "./data.ts";
 import { useEditor } from "@craftjs/core";
 

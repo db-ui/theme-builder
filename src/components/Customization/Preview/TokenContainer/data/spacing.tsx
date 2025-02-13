@@ -1,4 +1,4 @@
-import { DBInfotext } from "@db-ui/react-components";
+import { DBInfotext } from "@db-ux/react-core-components";
 import { DEFAULT_SIZES } from "./index.tsx";
 
 const Sizing = () => (

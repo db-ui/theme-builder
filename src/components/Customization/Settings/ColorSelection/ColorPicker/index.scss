@@ -1,6 +1,6 @@
-@use "@db-ui/foundations/build/scss/variables";
-@use "@db-ui/foundations/build/scss/colors";
-@use "@db-ui/components/build/components/tag/tag";
+@use "@db-ux/core-foundations/build/scss/variables";
+@use "@db-ux/core-foundations/build/scss/colors";
+@use "@db-ux/core-components/build/components/tag/tag";
 
 .color-picker-container {
   display: flex;
