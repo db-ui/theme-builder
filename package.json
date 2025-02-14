@@ -33,7 +33,7 @@
     "ace-builds": "1.36.5",
     "apca-w3": "^0.1.9",
     "chroma-js": "^3.1.2",
-    "dompurify": "^3.2.3",
+    "dompurify": "^3.2.4",
     "hsluv": "^1.0.1",
     "html-react-parser": "^5.2.2",
     "husky": "9.1.7",
