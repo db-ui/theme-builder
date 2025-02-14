@@ -13,7 +13,7 @@ import {
   DBInput,
   DBTag,
   DBTooltip,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../../../store";
 import { DefaultColorType } from "../../../../../utils/data.ts";
@@ -104,7 +104,7 @@ const ColorPicker = ({
               required
               value={colorName}
               disabled={!customColor}
-              customValidity={
+              validation={
                 customColor &&
                 !!theme.customColors?.[colorName] &&
                 label !== colorName

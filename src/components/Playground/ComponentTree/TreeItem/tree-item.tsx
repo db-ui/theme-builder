@@ -1,9 +1,9 @@
 import { EditorState, Node, NodeTree, useEditor } from "@craftjs/core";
 import { Fragment, useState } from "react";
-import { DBButton, DBIcon } from "@db-ui/react-components";
+import { DBButton, DBIcon } from "@db-ux/react-core-components";
 import { TreeItemPropsType } from "./data.ts";
 import { WithoutPrivateActions } from "@craftjs/core/lib/hooks/useEditor";
-import { uuid } from "@db-ui/react-components/dist/utils";
+import { uuid } from "@db-ux/react-core-components/dist/utils";
 import { SerializedNode } from "@craftjs/core/lib/interfaces";
 
 const addCopy = (

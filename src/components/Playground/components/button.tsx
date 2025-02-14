@@ -1,5 +1,5 @@
-import { DBButton } from "@db-ui/react-components";
-import { DBButtonProps } from "@db-ui/react-components/dist/components/button/model";
+import { DBButton } from "@db-ux/react-core-components";
+import { DBButtonProps } from "@db-ux/react-core-components/dist/components/button/model";
 import Setting from "../Sidebar/Customize/Setting";
 import { useEditor, useNode } from "@craftjs/core";
 import { getDragClassNames } from "./data/utils.ts";

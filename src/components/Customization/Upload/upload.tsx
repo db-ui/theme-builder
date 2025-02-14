@@ -2,8 +2,8 @@ import { memo } from "react";
 import "./index.scss";
 import { useTranslation } from "react-i18next";
 import { UploadPropsType } from "./data.ts";
-import { DBButtonProps } from "@db-ui/react-components/dist/components/button/model";
-import { DBTooltip } from "@db-ui/react-components";
+import { DBButtonProps } from "@db-ux/react-core-components/dist/components/button/model";
+import { DBTooltip } from "@db-ux/react-core-components";
 
 const Upload = memo(
   ({

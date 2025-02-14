@@ -1,4 +1,4 @@
-import { ValueLabelType } from "@db-ui/react-components/dist/shared/model";
+import { ValueLabelType } from "@db-ux/react-core-components/dist/shared/model";
 
 export type SelectOptionType = {
   label?: string;

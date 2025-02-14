@@ -1,4 +1,4 @@
-import { DBSection } from "@db-ui/react-components";
+import { DBSection } from "@db-ux/react-core-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -8,9 +8,9 @@ const Footer = () => {
     <DBSection
       spacing="medium"
       width="large"
-      className="flex items-center db-brand-bg-basic-level-3"
+      className="flex db-color-brand db-bg-color-basic-level-3"
     >
-      <div className="flex flex-col gap-fix-xl items-center text-center text-balance">
+      <div className="flex flex-col w-full gap-fix-xl items-center text-center text-balance">
         <h2 data-icon-after="heart">{t("landingMoreTitle")}</h2>
         <div className="flex flex-col md:flex-row gap-fix-md mx-auto items-center">
           <Link

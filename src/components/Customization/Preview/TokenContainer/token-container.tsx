@@ -1,4 +1,4 @@
-import { DBCard, DBInput } from "@db-ui/react-components";
+import { DBCard, DBInput } from "@db-ux/react-core-components";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { tokenComponents, TokenComponentType } from "./data";

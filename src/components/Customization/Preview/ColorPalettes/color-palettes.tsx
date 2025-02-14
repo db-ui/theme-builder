@@ -2,7 +2,7 @@ import { useThemeBuilderStore } from "../../../../store";
 import { useEffect, useState } from "react";
 import { getHeissluftColors } from "../../../../utils/generate-colors.ts";
 import "./index.scss";
-import { DBInput } from "@db-ui/react-components";
+import { DBInput } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import chroma from "chroma-js";
 import PaletteBox from "./PaletteBox";

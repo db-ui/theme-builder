@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import Demo from "../../../../pages/Demo";
-import { DBSelect } from "@db-ui/react-components";
+import { DBSelect } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 
 const InteractiveDemo = memo(() => {

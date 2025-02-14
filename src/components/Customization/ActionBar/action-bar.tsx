@@ -1,4 +1,4 @@
-import { DBButton } from "@db-ui/react-components";
+import { DBButton } from "@db-ux/react-core-components";
 import { useThemeBuilderStore } from "../../../store";
 import { useTranslation } from "react-i18next";
 import Upload from "../Upload";

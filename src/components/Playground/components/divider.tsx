@@ -2,7 +2,7 @@ import { getDragClassNames } from "./data/utils.ts";
 import { useEditor, useNode } from "@craftjs/core";
 import Setting from "../Sidebar/Customize/Setting";
 import DragButton from "./DragButton";
-import { DBDividerProps } from "@db-ui/react-components/dist/components/divider/model";
+import { DBDividerProps } from "@db-ux/react-core-components/dist/components/divider/model";
 
 const Divider = (props: DBDividerProps) => {
   const {

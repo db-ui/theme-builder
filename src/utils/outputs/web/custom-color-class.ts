@@ -1,6 +1,6 @@
 export const generateCustomColorClass = (colorName: string): string => {
-  return `[data-container-color=${colorName}],
-.db-container-color-${colorName}, [data-color=${colorName}-bg-basic-level-3],
+  return `[data-color=${colorName}],
+.db-color-${colorName}, [data-color=${colorName}-bg-basic-level-3],
 .db-${colorName}-bg-basic-level-3, [data-color=${colorName}-bg-basic-level-2],
 .db-${colorName}-bg-basic-level-2, [data-color=${colorName}-bg-basic-level-1],
 .db-${colorName}-bg-basic-level-1 {
@@ -180,8 +180,8 @@ export const generateCustomColorClass = (colorName: string): string => {
   --db-icon-color: var(--db-${colorName}-on-bg-basic-emphasis-100-default);
 }
 
-[data-container-color=${colorName}],
-.db-container-color-${colorName} {
+[data-color=${colorName}],
+.db-color-${colorName} {
   color: var(--db-adaptive-on-bg-basic-emphasis-100-default);
   background-color: var(--db-adaptive-bg-basic-level-1-default);
 }
