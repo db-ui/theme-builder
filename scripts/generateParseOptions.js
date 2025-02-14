@@ -6,7 +6,7 @@ const generateParseOptions = () => {
   let file =
     'import { domToReact, HTMLReactParserOptions } from "html-react-parser";' +
     'import getAttributes from "./get-attributes.ts";' +
-    `import{${components.join(",")}} from "@db-ui/react-components";` +
+    `import{${components.join(",")}} from "@db-ux/react-core-components";` +
     `export const PARSER_OPTIONS: HTMLReactParserOptions = {
       transform: (reactNode: any) => {
         if (

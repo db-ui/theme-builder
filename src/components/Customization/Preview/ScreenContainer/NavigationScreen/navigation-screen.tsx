@@ -9,7 +9,7 @@ import {
   DBInput,
   DBLink,
   DBTag,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 
 const NavigationScreen = () => {
   const { t } = useTranslation();

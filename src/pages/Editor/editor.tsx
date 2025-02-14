@@ -15,7 +15,7 @@ import { getAceAutocomplete } from "./autocomplete";
 import { PARSER_OPTIONS } from "./options.tsx";
 import { useThemeBuilderStore } from "../../store";
 import { TEMPLATES } from "./templates.ts";
-import { DBButton, DBCard, DBDivider } from "@db-ui/react-components";
+import { DBButton, DBCard, DBDivider } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import DefaultPage from "../../components/DefaultPage";
 

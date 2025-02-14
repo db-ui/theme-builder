@@ -1,5 +1,5 @@
 import { components } from "./data.tsx";
-import { DBCard, DBInput } from "@db-ui/react-components";
+import { DBCard, DBInput } from "@db-ux/react-core-components";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

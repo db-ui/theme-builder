@@ -7,9 +7,9 @@ import {
   DBIcon,
   DBInput,
   DBTooltip,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
-import { COLORS } from "@db-ui/react-components/dist/shared/constants";
+import { COLORS } from "@db-ux/react-core-components/dist/shared/constants";
 
 const SelectColorDialog = ({
   className,

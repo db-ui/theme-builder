@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { DBIcon } from "@db-ui/react-components";
+import { DBIcon } from "@db-ux/react-core-components";
 
 const getLocalTime = (date: Date): string => {
   return `${date.getHours().toString().padStart(2, "0")}:${date

@@ -1,4 +1,4 @@
-import { DBNavigation, DBNavigationItem } from "@db-ui/react-components";
+import { DBNavigation, DBNavigationItem } from "@db-ux/react-core-components";
 import { useDragAndDropStore } from "../../../store";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";

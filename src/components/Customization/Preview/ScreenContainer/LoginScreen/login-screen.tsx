@@ -7,7 +7,7 @@ import {
   DBIcon,
   DBInput,
   DBLink,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 
 const LoginScreen = () => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ const LoginScreen = () => {
   return (
     <FakeDevice>
       <div
-        data-color-scheme="light"
+        data-mode="light"
         className="navigator-image-container min-h-[218px]  md:min-h-[282px] relative flex flex-col
         justify-between items-center p-fix-md border-none"
       >

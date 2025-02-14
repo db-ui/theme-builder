@@ -3,7 +3,7 @@ import {
   DBDivider,
   DBInfotext,
   DBInput,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { ColorInputsType } from "./data.ts";
 import { useTranslation } from "react-i18next";
 

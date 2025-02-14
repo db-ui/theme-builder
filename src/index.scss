@@ -1,8 +1,9 @@
-@use "@db-ui/foundations/build/scss/variables";
-@use "@db-ui/foundations/build/scss/colors";
-@use "@db-ui/foundations/build/scss/screen-sizes";
-@use "@db-ui/components/build/styles/db-puls" as puls;
-@forward "@db-ui/components/build/styles/db-ui-42-rollup";
+@use "@db-ux/core-foundations/build/styles/variables";
+@use "@db-ux/core-foundations/build/styles/colors";
+@use "@db-ux/core-foundations/build/styles/screen-sizes";
+@use "@db-ux/core-components/build/styles/internal/db-puls" as puls;
+@forward "@db-ux/core-components/build/styles/rollup.css";
+@forward "@db-ux/db-theme/build/styles/rollup.css";
 @forward "font-face.css";
 
 [data-focus="true"] {

@@ -1,4 +1,4 @@
-import { DBCard } from "@db-ui/react-components";
+import { DBCard } from "@db-ux/react-core-components";
 import { useEditor } from "@craftjs/core";
 import { ComponentCardPropsType } from "./data.ts";
 

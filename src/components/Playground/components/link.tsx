@@ -1,5 +1,5 @@
-import { DBLink } from "@db-ui/react-components";
-import { DBLinkProps } from "@db-ui/react-components/dist/components/link/model";
+import { DBLink } from "@db-ux/react-core-components";
+import { DBLinkProps } from "@db-ux/react-core-components/dist/components/link/model";
 import { getDragClassNames } from "./data/utils.ts";
 import { useEditor, useNode } from "@craftjs/core";
 import Setting from "../Sidebar/Customize/Setting";

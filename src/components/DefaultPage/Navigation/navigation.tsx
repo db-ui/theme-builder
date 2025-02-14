@@ -1,4 +1,4 @@
-import { DBNavigation, DBNavigationItem } from "@db-ui/react-components";
+import { DBNavigation, DBNavigationItem } from "@db-ux/react-core-components";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AppRoutes from "../../../utils/app-routes.tsx";

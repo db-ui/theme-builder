@@ -1,6 +1,6 @@
 import { getShirtValue, ShirtSelectionType } from "./data.ts";
 import { useThemeBuilderStore } from "../../../../store";
-import { DBSelect } from "@db-ui/react-components";
+import { DBSelect } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import traverse from "traverse";
 
