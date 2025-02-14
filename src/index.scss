@@ -2,9 +2,7 @@
 @use "@db-ux/core-foundations/build/styles/colors";
 @use "@db-ux/core-foundations/build/styles/screen-sizes";
 @use "@db-ux/core-components/build/styles/internal/db-puls" as puls;
-@forward "@db-ux/core-components/build/styles/rollup.css";
-@forward "@db-ux/db-theme/build/styles/rollup.css";
-@forward "font-face.css";
+
 
 [data-focus="true"] {
   @extend %db-puls;
