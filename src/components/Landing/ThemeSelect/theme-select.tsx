@@ -62,7 +62,7 @@ const ThemeSelect = () => {
                   spacing="small"
                   data-selected={selectedTheme === key}
                   elevationLevel="2"
-                  behaviour="interactive"
+                  behavior="interactive"
                 >
                   <img
                     className="logo m-auto"
@@ -83,7 +83,7 @@ const ThemeSelect = () => {
                 spacing="small"
                 data-selected="false"
                 elevationLevel="2"
-                behaviour="interactive"
+                behavior="interactive"
               >
                 <DBIcon icon="plus">Add custom theme</DBIcon>
               </DBCard>

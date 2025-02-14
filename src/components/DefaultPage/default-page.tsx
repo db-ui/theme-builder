@@ -25,7 +25,7 @@ const DefaultPage = ({
     <div
       className="contents"
       data-density={density || "regular"}
-      data-color-scheme={darkMode ? "dark" : "light"}
+      data-mode={darkMode ? "dark" : "light"}
     >
       <DBPage
         className={className}

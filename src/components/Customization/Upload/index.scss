@@ -1,5 +1,5 @@
 @use "@db-ux/core-components/build/components/button/button";
-@use "@db-ux/core-foundations/build/scss/colors";
+@use "@db-ux/core-foundations/build/styles/colors";
 
 .upload-button {
   @extend .db-button;

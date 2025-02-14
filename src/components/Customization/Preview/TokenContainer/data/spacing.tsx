@@ -9,7 +9,7 @@ const Sizing = () => (
         key={`spacing-${name}`}
       >
         <div
-          className="flex db-warning-bg-basic-level-1 items-center justify-center"
+          className="flex db-color-warning items-center justify-center"
           style={{
             width: `var(--db-spacing-fixed-${name})`,
             height: `var(--db-spacing-fixed-${name})`,

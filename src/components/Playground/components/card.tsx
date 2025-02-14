@@ -71,7 +71,7 @@ const CardSettings = () => (
 Card.craft = {
   props: {
     spacing: "small",
-    behaviour: "default",
+    behavior: "default",
     elevationLevel: "1",
   },
   related: {

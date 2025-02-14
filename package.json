@@ -20,7 +20,10 @@
   },
   "dependencies": {
     "@craftjs/core": "^0.2.11",
-    "@db-ux/react-core-components": "0.5.7",
+    "@db-ux/react-core-components": "1.0.0",
+    "@db-ux/db-theme": "1.0.0",
+    "@db-ux/db-theme-fonts": "1.0.0",
+    "@db-ux/db-theme-icons": "1.0.0",
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.11.5",
     "@tiptap/extension-text-style": "^2.10.3",

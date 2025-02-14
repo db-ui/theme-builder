@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 import tokens from "@db-ux/core-foundations/build/tailwind/tailwind-tokens.json";
 
 export default {
@@ -6,10 +7,10 @@ export default {
   theme: {
     ...tokens,
     gap: ({ theme }) => ({
-      ...theme("spacing"),
+      ...theme("spacing")
     }),
     space: ({ theme }) => ({
-      ...theme("spacing"),
-    }),
-  },
+      ...theme("spacing")
+    })
+  }
 };

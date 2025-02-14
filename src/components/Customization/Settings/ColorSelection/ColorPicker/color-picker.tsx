@@ -104,7 +104,7 @@ const ColorPicker = ({
               required
               value={colorName}
               disabled={!customColor}
-              customValidity={
+              validation={
                 customColor &&
                 !!theme.customColors?.[colorName] &&
                 label !== colorName

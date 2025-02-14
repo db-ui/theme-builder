@@ -9,7 +9,6 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import "@db-ux/core-foundations/build/css/colors/classes/all.css";
 
 import "./i18n";
 import { BASE_PATH } from "./constants.ts";

@@ -71,7 +71,7 @@ const EditNodeTreeDialog = ({
             placeholder={t("id")}
             variant="floating"
             value={nodeTreeId}
-            customValidity={
+            validation={
               nodeTreeId.length === 0 || (create && nodeTrees[nodeTreeId])
                 ? "invalid"
                 : "no-validation"

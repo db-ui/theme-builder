@@ -9,7 +9,7 @@ const Sizing = () => (
         key={`sizing-${name}`}
       >
         <div
-          className="flex db-informational-bg-basic-level-1 items-center justify-center"
+          className="flex db-color-informational items-center justify-center"
           style={{
             width: `var(--db-sizing-${name})`,
             height: `var(--db-sizing-${name})`,

@@ -1,5 +1,5 @@
-@use "@db-ux/core-foundations/build/scss/variables";
-@use "@db-ux/core-foundations/build/scss/colors";
+@use "@db-ux/core-foundations/build/styles/variables";
+@use "@db-ux/core-foundations/build/styles/colors";
 @use "@db-ux/core-components/build/components/tag/tag";
 
 .color-picker-container {
@@ -28,16 +28,20 @@
         }
 
         &::after {
-          --db-icon-font-family: "db-ux-filled";
+          --db-icon-font-family: "db-filled";
           margin-inline-start: 0;
         }
       }
 
       &[data-icon-after="exclamation_mark_triangle"] {
-        --db-icon-color: #{colors.$db-warning-on-bg-basic-emphasis-70-default};
+        &::after {
+          --db-icon-color: #{colors.$db-warning-on-bg-basic-emphasis-70-default} !important;
+        }
       }
       &[data-icon-after="exclamation_mark_circle"] {
-        --db-icon-color: #{colors.$db-critical-on-bg-basic-emphasis-70-default};
+        &::after {
+          --db-icon-color: #{colors.$db-critical-on-bg-basic-emphasis-70-default} !important;
+        }
       }
     }
 
