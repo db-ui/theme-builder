@@ -21,7 +21,7 @@
   "dependencies": {
     "@craftjs/core": "^0.2.11",
     "@db-ux/react-core-components": "1.0.0",
-    "@db-ux/db-theme": "1.0.1",
+    "@db-ux/db-theme": "1.0.2",
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.11.5",
     "@tiptap/extension-text-style": "^2.10.3",
@@ -49,7 +49,7 @@
     "react-i18next": "15.4.0",
     "react-router-dom": "7.1.5",
     "traverse": "^0.6.10",
-    "zustand": "^5.0.2"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@types/apca-w3": "^0.1.3",
