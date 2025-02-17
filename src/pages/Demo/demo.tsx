@@ -26,12 +26,13 @@ const Demo = ({ linkToDemo, density }: DemoPropsType) => {
     >
       <div className="flex flex-col md:flex-row h-full">
         <Sidenav />
-        <div className="flex flex-col gap-fix-md py-fix-md px-res-sm db-neutral-bg-basic-level-2 w-full h-full overflow-y-auto">
+        <div className="flex flex-col gap-fix-md py-fix-md px-res-sm
+        db-bg-color-basic-level-2 w-full h-full overflow-y-auto">
           <h1>{t("Dashboard")}</h1>
           <div className="demo-dashboard grid gap-fix-md h-full">
             <DBCard
               spacing="small"
-              className="dashboard-short1 db-neutral-bg-basic-level-1"
+              className="dashboard-short1 db-bg-color-basic-level-1"
             >
               <div className="flex flex-col gap-fix-md h-full">
                 <h5>Mobile Users</h5>
@@ -43,7 +44,7 @@ const Demo = ({ linkToDemo, density }: DemoPropsType) => {
             </DBCard>
             <DBCard
               spacing="small"
-              className="dashboard-short2 db-neutral-bg-basic-level-1"
+              className="dashboard-short2 db-bg-color-basic-level-1"
             >
               <div className="flex flex-col gap-fix-md h-full">
                 <h5>Tablet Users</h5>
@@ -67,7 +68,7 @@ const Demo = ({ linkToDemo, density }: DemoPropsType) => {
             </DBCard>
             <DBCard
               spacing="small"
-              className="dashboard-big db-neutral-bg-basic-level-1 flex-row justify-between"
+              className="dashboard-big db-bg-color-basic-level-1 flex-row justify-between"
             >
               <div className="flex flex-col gap-fix-md h-full">
                 <h5>Desktop Users</h5>
