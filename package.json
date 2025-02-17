@@ -37,7 +37,7 @@
     "hsluv": "^1.0.1",
     "html-react-parser": "^5.2.2",
     "husky": "9.1.7",
-    "i18next": "24.1.2",
+    "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.2",
     "i18next-http-backend": "3.0.1",
     "jszip": "^3.10.1",
