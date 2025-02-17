@@ -7,9 +7,9 @@ import {
   DBIcon,
   DBInput,
   DBTooltip,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
-import { ALL_ICONS } from "@db-ui/react-components/dist/shared/all-icons";
+import { ALL_ICONS } from "@db-ux/db-theme-icons";
 
 const SelectIconDialog = ({
   className,

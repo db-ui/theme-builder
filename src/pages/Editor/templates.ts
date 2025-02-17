@@ -30,7 +30,7 @@ slotHeader="
   {
     key: "components",
     label: "Components",
-    content: `<div className="db-ui-regular">
+    content: `<div className="db-ux-regular">
     <div className="flex flex-col p-fix-md gap-fix-md">
         <h4>Buttons:</h4>
         <div className="flex gap-fix-md">

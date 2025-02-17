@@ -7,7 +7,7 @@ import {
   DBSelect,
   DBSwitch,
   DBTextarea,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import { useNode } from "@craftjs/core";
 import SelectIconDialog from "./SelectIconDialog";

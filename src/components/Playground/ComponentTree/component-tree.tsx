@@ -1,6 +1,6 @@
 import { ComponentTreePropsType } from "./data.ts";
 import { EditorState, useEditor } from "@craftjs/core";
-import { DBButton } from "@db-ui/react-components";
+import { DBButton } from "@db-ux/react-core-components";
 import { useState } from "react";
 import { useDragAndDropStore } from "../../../store";
 import EditNodeTreeDialog from "./EditNodeTreeDialog";

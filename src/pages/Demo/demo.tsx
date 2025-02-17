@@ -1,5 +1,5 @@
 import DefaultPage from "../../components/DefaultPage";
-import { DBCard, DBInfotext } from "@db-ui/react-components";
+import { DBCard, DBInfotext } from "@db-ux/react-core-components";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { DemoPropsType } from "./data.ts";

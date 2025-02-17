@@ -121,11 +121,11 @@ export const getFullColorCss = (
   return `${colorsPalette}
       ${colorsSpeakingNames}
       
-[data-color-scheme="light"] {
+[data-mode="light"] {
 	color-scheme: light;
 }
 
-[data-color-scheme="dark"] {
+[data-mode="dark"] {
 	color-scheme: dark;
 }
       `;

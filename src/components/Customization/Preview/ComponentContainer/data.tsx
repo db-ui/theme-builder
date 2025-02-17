@@ -12,8 +12,8 @@ import {
   DBSelect,
   DBTag,
   DBTextarea,
-} from "@db-ui/react-components";
-import { SemanticType } from "@db-ui/react-components/dist/shared/model";
+} from "@db-ux/react-core-components";
+import { SemanticType } from "@db-ux/react-core-components/dist/shared/model";
 
 export type ComponentList = {
   title: string;

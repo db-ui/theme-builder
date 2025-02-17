@@ -1,7 +1,7 @@
 import { BASE_PATH } from "../../../constants.ts";
 import { getThemeImage } from "../../../utils";
 import { useThemeBuilderStore } from "../../../store";
-import { DBSection } from "@db-ui/react-components";
+import { DBSection } from "@db-ux/react-core-components";
 
 const Header = () => {
   const { theme, darkMode } = useThemeBuilderStore((state) => state);
@@ -18,7 +18,7 @@ const Header = () => {
           alt="brand"
         />
         <a
-          href="https://github.com/db-ui/theme-builder"
+          href="https://github.com/db-ux-design-system/theme-builder"
           target="_blank"
           referrerPolicy="no-referrer"
         >

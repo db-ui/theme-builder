@@ -9,11 +9,14 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import "@db-ui/foundations/build/css/colors/classes/all.css";
 
 import "./i18n";
 import { BASE_PATH } from "./constants.ts";
 import AppRoutes from "./utils/app-routes.tsx";
+
+import "@db-ux/core-components/build/styles/rollup.css";
+import "@db-ux/db-theme/build/styles/rollup.css";
+import "./font-face.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements([
