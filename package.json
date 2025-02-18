@@ -42,7 +42,7 @@
     "i18next-http-backend": "3.0.1",
     "jszip": "^3.10.1",
     "lz-string": "1.5.0",
-    "prettier": "3.4.2",
+    "prettier": "3.5.1",
     "react": "^18.3.0",
     "react-ace": "13.0.0",
     "react-dom": "^18.3.1",
