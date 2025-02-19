@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useCallback, useState } from "react";
-import {
-  ColorPickerType,
-  generateColorsByOrigin,
-  getOriginOnColors,
-} from "./data";
+import { useCallback, useEffect, useState } from "react";
+import { ColorPickerType, generateColorsByOrigin } from "./data";
 import "./index.scss";
 import {
   DBButton,
@@ -16,10 +12,11 @@ import {
 } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import { useThemeBuilderStore } from "../../../../../store";
-import { DefaultColorType } from "../../../../../utils/data.ts";
+import { DefaultColorType, HeisslufType } from "../../../../../utils/data.ts";
 import ColorInputs from "../ColorInputs";
 import { FALLBACK_COLOR } from "../../../../../constants.ts";
 import { getContrast } from "../../../../../utils";
+import { getHeissluftColors } from "../../../../../utils/generate-colors.ts";
 
 const ColorPicker = ({
   label,
@@ -35,6 +32,10 @@ const ColorPicker = ({
   const [open, setOpen] = useState<boolean>();
   const [valid, setValid] = useState<boolean>(true);
   const [colorName, setColorName] = useState<string>(isAddColor ? "" : label);
+  const [lightHeisluftColors, setLightHeisluftColors] =
+    useState<HeisslufType[]>();
+  const [darkHeisluftColors, setDarkHeisluftColors] =
+    useState<HeisslufType[]>();
   const { theme, setCustomColors, luminanceSteps } = useThemeBuilderStore(
     (state) => state,
   );
@@ -57,6 +58,25 @@ const ColorPicker = ({
       return undefined;
     }
   }, [isAddColor, color]);
+
+  useEffect(() => {
+    if (color) {
+      setLightHeisluftColors(
+        getHeissluftColors(
+          colorName,
+          color.originLightDefault || FALLBACK_COLOR,
+          luminanceSteps,
+        ),
+      );
+      setDarkHeisluftColors(
+        getHeissluftColors(
+          colorName,
+          color.originDarkDefault || FALLBACK_COLOR,
+          luminanceSteps,
+        ),
+      );
+    }
+  }, [colorName, color, luminanceSteps]);
 
   return (
     <div className="color-picker-container">
@@ -129,14 +149,14 @@ const ColorPicker = ({
               name="origin"
               color={getOriginColor()}
               onColorChange={(col) => {
+                const generatedOriginColors = {
+                  ...generateColorsByOrigin({ origin: col, darkMode: true }),
+                  ...generateColorsByOrigin({ origin: col, darkMode: false }),
+                };
                 if (isAddColor) {
-                  setAddColor(
-                    generateColorsByOrigin(colorName, col, luminanceSteps),
-                  );
+                  setAddColor(generatedOriginColors);
                 } else if (setOriginColor) {
-                  setOriginColor(
-                    generateColorsByOrigin(colorName, col, luminanceSteps),
-                  );
+                  setOriginColor(generatedOriginColors);
                 }
               }}
             />
@@ -146,22 +166,84 @@ const ColorPicker = ({
                 <ColorInputs
                   name="origin-light"
                   color={color.originLightDefault ?? FALLBACK_COLOR}
-                  alternative={
-                    color.originLightAccessible
-                      ? undefined
-                      : color.originLightAlternative
-                  }
-                  error={
-                    color.originLightAccessible
-                      ? undefined
-                      : "accessibilityCriticalBgColor"
-                  }
-                  contrasts={[
+                  contrastGroups={[
                     {
-                      value: getContrast(
-                        color.originLightDefault,
-                        color.originHSLBgLight,
-                      ),
+                      groupName: "Level-1",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          value: getContrast(
+                            color.originLightDefault,
+                            lightHeisluftColors?.at(-1)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          value: getContrast(
+                            color.originLightHovered,
+                            lightHeisluftColors?.at(-1)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          value: getContrast(
+                            color.originLightPressed,
+                            lightHeisluftColors?.at(-1)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                      ],
+                    },
+                    {
+                      groupName: "Level-2",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          value: getContrast(
+                            color.originLightDefault,
+                            lightHeisluftColors?.at(-2)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          value: getContrast(
+                            color.originLightHovered,
+                            lightHeisluftColors?.at(-2)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          value: getContrast(
+                            color.originLightPressed,
+                            lightHeisluftColors?.at(-2)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                      ],
+                    },
+                    {
+                      groupName: "Level-3",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          value: getContrast(
+                            color.originLightDefault,
+                            lightHeisluftColors?.at(-3)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          value: getContrast(
+                            color.originLightHovered,
+                            lightHeisluftColors?.at(-3)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          value: getContrast(
+                            color.originLightPressed,
+                            lightHeisluftColors?.at(-3)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                      ],
                     },
                   ]}
                   onColorChange={(col) => {
@@ -171,31 +253,18 @@ const ColorPicker = ({
                         originLightAccessible,
                         originLightPressed,
                         originLightHovered,
-                        onOriginLightDefault,
-                        onOriginLightHovered,
-                        onOriginLightPressed,
-                        onOriginLightAccessible,
-                        onOriginLightAlternative,
-                        originLightAlternative,
-                      } = generateColorsByOrigin(
-                        colorName,
-                        color.origin,
-                        luminanceSteps,
-                        col,
-                      );
+                      } = generateColorsByOrigin({
+                        origin: color.origin,
+                        darkMode: false,
+                        customBgColor: col,
+                      });
 
                       setOriginColor({
                         ...color,
                         originLightDefault,
                         originLightAccessible,
-                        originLightAlternative,
                         originLightPressed,
                         originLightHovered,
-                        onOriginLightDefault,
-                        onOriginLightHovered,
-                        onOriginLightPressed,
-                        onOriginLightAccessible,
-                        onOriginLightAlternative,
                       });
                     }
                   }}
@@ -203,65 +272,55 @@ const ColorPicker = ({
                 <ColorInputs
                   name="on-origin-light"
                   color={color.onOriginLightDefault ?? FALLBACK_COLOR}
-                  alternative={
-                    color.onOriginLightAccessible ||
-                    color.onOriginLightAlternative === "#ffffff" ||
-                    color.onOriginLightAlternative === "#000000"
-                      ? undefined
-                      : color.onOriginLightAlternative
-                  }
-                  error={
-                    color.onOriginLightAccessible
-                      ? undefined
-                      : "accessibilityCriticalOnColor"
-                  }
-                  contrasts={[
+                  contrastGroups={[
                     {
-                      name: "On Default",
-                      min: 4.5,
-                      value: getContrast(
-                        color.originLightDefault,
-                        color.onOriginLightDefault,
-                      ),
-                    },
-                    {
-                      name: "On Hovered",
-                      min: 4.5,
-                      value: getContrast(
-                        color.originLightHovered,
-                        color.onOriginLightDefault,
-                      ),
-                    },
-                    {
-                      name: "On Pressed",
-                      min: 4.5,
-                      value: getContrast(
-                        color.originLightPressed,
-                        color.onOriginLightDefault,
-                      ),
+                      groupName: "On Origin",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          min: 4.5,
+                          value: getContrast(
+                            color.originLightDefault,
+                            color.onOriginLightDefault,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          min: 4.5,
+                          value: getContrast(
+                            color.originLightHovered,
+                            color.onOriginLightDefault,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          min: 4.5,
+                          value: getContrast(
+                            color.originLightPressed,
+                            color.onOriginLightDefault,
+                          ),
+                        },
+                      ],
                     },
                   ]}
                   onColorChange={(col) => {
                     if (setOriginColor) {
                       const {
-                        onOrigin: onOriginLightDefault,
-                        onOriginAccessible: onOriginLightAccessible,
-                        onOriginAlternative: onOriginLightAlternative,
-                        hoverColor: onOriginLightHovered,
-                        pressedColor: onOriginLightPressed,
-                      } = getOriginOnColors(
-                        color.originLightDefault ?? FALLBACK_COLOR,
-                        color.originLightPressed ?? FALLBACK_COLOR,
-                        false,
-                        col,
-                      );
+                        onOriginLightDefault,
+                        onOriginLightAccessible,
+                        onOriginLightHovered,
+                        onOriginLightPressed,
+                      } = generateColorsByOrigin({
+                        origin: color.originLightDefault ?? FALLBACK_COLOR,
+                        darkMode: false,
+                        customFgColor: col,
+                      });
                       setOriginColor({
                         ...color,
                         onOriginLightDefault,
                         onOriginLightHovered,
                         onOriginLightPressed,
                         onOriginLightAccessible,
-                        onOriginLightAlternative,
                       });
                     }
                   }}
@@ -269,22 +328,84 @@ const ColorPicker = ({
                 <ColorInputs
                   name="origin-dark"
                   color={color.originDarkDefault ?? FALLBACK_COLOR}
-                  alternative={
-                    color.originDarkAccessible
-                      ? undefined
-                      : color.originDarkAlternative
-                  }
-                  error={
-                    color.originDarkAccessible
-                      ? undefined
-                      : "accessibilityCriticalBgColor"
-                  }
-                  contrasts={[
+                  contrastGroups={[
                     {
-                      value: getContrast(
-                        color.originDarkDefault,
-                        color.originHSLBgDark,
-                      ),
+                      groupName: "Level-1",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          value: getContrast(
+                            color.originDarkDefault,
+                            darkHeisluftColors?.at(2)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          value: getContrast(
+                            color.originDarkHovered,
+                            darkHeisluftColors?.at(2)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          value: getContrast(
+                            color.originDarkPressed,
+                            darkHeisluftColors?.at(2)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                      ],
+                    },
+                    {
+                      groupName: "Level-2",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          value: getContrast(
+                            color.originDarkDefault,
+                            darkHeisluftColors?.at(1)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          value: getContrast(
+                            color.originDarkHovered,
+                            darkHeisluftColors?.at(1)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          value: getContrast(
+                            color.originDarkPressed,
+                            darkHeisluftColors?.at(1)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                      ],
+                    },
+                    {
+                      groupName: "Level-3",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          value: getContrast(
+                            color.originDarkDefault,
+                            darkHeisluftColors?.at(0)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          value: getContrast(
+                            color.originDarkHovered,
+                            darkHeisluftColors?.at(0)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          value: getContrast(
+                            color.originDarkPressed,
+                            darkHeisluftColors?.at(0)?.hex ?? FALLBACK_COLOR,
+                          ),
+                        },
+                      ],
                     },
                   ]}
                   onColorChange={(col) => {
@@ -292,33 +413,20 @@ const ColorPicker = ({
                       const {
                         originDarkDefault,
                         originDarkAccessible,
-                        originDarkAlternative,
                         originDarkPressed,
                         originDarkHovered,
-                        onOriginDarkDefault,
-                        onOriginDarkHovered,
-                        onOriginDarkPressed,
-                        onOriginDarkAccessible,
-                        onOriginDarkAlternative,
-                      } = generateColorsByOrigin(
-                        colorName,
-                        color.origin,
-                        luminanceSteps,
-                        col,
-                      );
+                      } = generateColorsByOrigin({
+                        origin: color.origin,
+                        darkMode: true,
+                        customBgColor: col,
+                      });
 
                       setOriginColor({
                         ...color,
                         originDarkDefault,
                         originDarkAccessible,
-                        originDarkAlternative,
                         originDarkPressed,
                         originDarkHovered,
-                        onOriginDarkDefault,
-                        onOriginDarkHovered,
-                        onOriginDarkPressed,
-                        onOriginDarkAccessible,
-                        onOriginDarkAlternative,
                       });
                     }
                   }}
@@ -326,65 +434,55 @@ const ColorPicker = ({
                 <ColorInputs
                   name="on-origin-dark"
                   color={color.onOriginDarkDefault ?? FALLBACK_COLOR}
-                  alternative={
-                    color.onOriginDarkAccessible ||
-                    color.onOriginDarkAlternative === "#ffffff" ||
-                    color.onOriginDarkAlternative === "#000000"
-                      ? undefined
-                      : color.onOriginDarkAlternative
-                  }
-                  error={
-                    color.onOriginDarkAccessible
-                      ? undefined
-                      : "accessibilityCriticalOnColor"
-                  }
-                  contrasts={[
+                  contrastGroups={[
                     {
-                      name: "On Default",
-                      min: 4.5,
-                      value: getContrast(
-                        color.originDarkDefault,
-                        color.onOriginDarkDefault,
-                      ),
-                    },
-                    {
-                      name: "On Hovered",
-                      min: 4.5,
-                      value: getContrast(
-                        color.originDarkHovered,
-                        color.onOriginDarkDefault,
-                      ),
-                    },
-                    {
-                      name: "On Pressed",
-                      min: 4.5,
-                      value: getContrast(
-                        color.originDarkPressed,
-                        color.onOriginDarkDefault,
-                      ),
+                      groupName: "On Origin",
+                      contrasts: [
+                        {
+                          name: "Default",
+                          min: 4.5,
+                          value: getContrast(
+                            color.originDarkDefault,
+                            color.onOriginDarkDefault,
+                          ),
+                        },
+                        {
+                          name: "Hovered",
+                          min: 4.5,
+                          value: getContrast(
+                            color.originDarkHovered,
+                            color.onOriginDarkDefault,
+                          ),
+                        },
+                        {
+                          name: "Pressed",
+                          min: 4.5,
+                          value: getContrast(
+                            color.originDarkPressed,
+                            color.onOriginDarkDefault,
+                          ),
+                        },
+                      ],
                     },
                   ]}
                   onColorChange={(col) => {
                     if (setOriginColor) {
                       const {
-                        onOrigin: onOriginDarkDefault,
-                        onOriginAccessible: onOriginDarkAccessible,
-                        onOriginAlternative: onOriginDarkAlternative,
-                        hoverColor: onOriginDarkHovered,
-                        pressedColor: onOriginDarkPressed,
-                      } = getOriginOnColors(
-                        color.originDarkDefault ?? FALLBACK_COLOR,
-                        color.originDarkPressed ?? FALLBACK_COLOR,
-                        true,
-                        col,
-                      );
+                        onOriginDarkDefault,
+                        onOriginDarkAccessible,
+                        onOriginDarkHovered,
+                        onOriginDarkPressed,
+                      } = generateColorsByOrigin({
+                        origin: color.originDarkDefault ?? FALLBACK_COLOR,
+                        darkMode: false,
+                        customFgColor: col,
+                      });
                       setOriginColor({
                         ...color,
                         onOriginDarkDefault: onOriginDarkDefault,
                         onOriginDarkHovered,
                         onOriginDarkPressed,
                         onOriginDarkAccessible,
-                        onOriginDarkAlternative,
                       });
                     }
                   }}

@@ -1,27 +1,48 @@
 export type DefaultColorType = {
   origin: string;
-  originHSLBgDark?: string;
-  originHSLBgLight?: string;
-  originLightAlternative?: string;
   originLightAccessible?: boolean;
   originLightDefault?: string;
   originLightHovered?: string;
   originLightPressed?: string;
-  onOriginLightAlternative?: string;
   onOriginLightAccessible?: boolean;
   onOriginLightDefault?: string;
   onOriginLightHovered?: string;
   onOriginLightPressed?: string;
-  originDarkAlternative?: string;
   originDarkAccessible?: boolean;
   originDarkDefault?: string;
   originDarkHovered?: string;
   originDarkPressed?: string;
-  onOriginDarkAlternative?: string;
   onOriginDarkAccessible?: boolean;
   onOriginDarkDefault?: string;
   onOriginDarkHovered?: string;
   onOriginDarkPressed?: string;
+
+  /**
+   * @deprecated
+   */
+  originHSLBgDark?: string;
+
+  /**
+   * @deprecated
+   */
+  originHSLBgLight?: string;
+
+  /**
+   * @deprecated
+   */
+  onOriginLightAlternative?: string;
+  /**
+   * @deprecated
+   */
+  originDarkAlternative?: string;
+  /**
+   * @deprecated
+   */
+  onOriginDarkAlternative?: string;
+  /**
+   * @deprecated
+   */
+  originLightAlternative?: string;
 };
 
 export type DefaultColorMappingType = {
