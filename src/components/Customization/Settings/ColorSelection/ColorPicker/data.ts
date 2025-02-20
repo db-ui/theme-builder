@@ -169,7 +169,7 @@ const getOriginBackgroundColor = (
     pressedColor = pressedColorSc;
   } else {
     hoverColor = hoverColorPrio;
-    pressedColor = hoverColorPrio;
+    pressedColor = pressedColorPrio;
   }
 
   const backgroundColorsLight = {
