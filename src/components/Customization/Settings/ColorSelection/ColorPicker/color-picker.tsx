@@ -474,12 +474,12 @@ const ColorPicker = ({
                         onOriginDarkPressed,
                       } = generateColorsByOrigin({
                         origin: color.originDarkDefault ?? FALLBACK_COLOR,
-                        darkMode: false,
+                        darkMode: true,
                         customFgColor: col,
                       });
                       setOriginColor({
                         ...color,
-                        onOriginDarkDefault: onOriginDarkDefault,
+                        onOriginDarkDefault,
                         onOriginDarkHovered,
                         onOriginDarkPressed,
                         onOriginDarkAccessible,
