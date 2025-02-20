@@ -1,6 +1,7 @@
 import { defaultLuminances, HeisslufType } from "./data.ts";
 import { Hsluv } from "hsluv";
 import chroma from "chroma-js";
+import {FALLBACK_COLOR} from "../constants.ts";
 
 export const getValidPaletteColorAsHex = (
   brandColors: HeisslufType[],
@@ -13,11 +14,11 @@ export const getValidPaletteColorAsHex = (
     (brandColor) =>
       chroma.contrast(
         chroma.hex(brandColor.hex),
-        chroma.hex(neutralColor?.hex || "#ff69b4"),
+        chroma.hex(neutralColor?.hex || FALLBACK_COLOR),
       ) >= 3,
   );
 
-  return foundColor?.hex || "#ff69b4";
+  return foundColor?.hex || FALLBACK_COLOR;
 };
 
 export const getHeissluftColors = (
