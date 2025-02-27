@@ -2,12 +2,15 @@ import { Outlet } from "react-router-dom";
 import Notifications from "./components/Notifications";
 import { useThemeBuilderStore } from "./store";
 import { useEffect } from "react";
-import {
-  getNonColorCssProperties,
-  getPaletteOutput,
-  getSpeakingNames,
-} from "./utils/outputs";
 import { DefaultColorType } from "./utils/data.ts";
+import {
+  getSDColorPalette,
+  getSDSpeakingColors,
+} from "./utils/outputs/style-dictionary/colors.ts";
+import { mergeObjectsRecursive } from "./utils";
+import { runStyleDictionary } from "./utils/outputs/style-dictionary";
+import { appConfig } from "./utils/outputs/style-dictionary/config";
+import { getSDBaseIconProps } from "./utils/outputs/style-dictionary/typography.ts";
 
 const App = () => {
   const { speakingNames, luminanceSteps, theme } = useThemeBuilderStore(
@@ -21,20 +24,24 @@ const App = () => {
       ...theme.customColors,
     };
 
-    const cssProps: any = {
-      ...getPaletteOutput(allColors, luminanceSteps),
-      ...getSpeakingNames(speakingNames, allColors),
-      ...getNonColorCssProperties(theme),
+    const sdColorPalette = getSDColorPalette(allColors, luminanceSteps);
+    const sdSpeakingColors = getSDSpeakingColors(speakingNames, allColors);
+
+    const finalTheme = {
+      ...getSDBaseIconProps(theme),
+      ...theme,
+      ...mergeObjectsRecursive(sdColorPalette, sdSpeakingColors),
     };
 
-    const pages = document.getElementsByTagName("html");
-    Array.from(pages).forEach((page: Element) => {
-      page.setAttribute(
-        "style",
-        Object.entries(cssProps)
-          .map((value) => `${value[0]}:${value[1]};`)
-          .join(" "),
-      );
+    runStyleDictionary({
+      tokens: finalTheme,
+      ...appConfig,
+    }).then((result) => {
+      const page = document.querySelector("html");
+      const overwrites = result["/overwrites"];
+      if (page && overwrites) {
+        page.setAttribute("style", overwrites);
+      }
     });
   }, [speakingNames, theme, luminanceSteps]);
 

@@ -8,13 +8,9 @@ import {
 } from "./state.ts";
 import {
   defaultLuminances,
-  ThemeType,
   speakingNamesDefaultMapping,
 } from "../utils/data.ts";
-
-import DefaultTheme from "../data/default-theme.json";
-
-const defaultTheme = DefaultTheme as unknown as ThemeType;
+import { defaultTheme } from "./themes.ts";
 
 export const useThemeBuilderStore = create<ThemeBuilderState>()(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

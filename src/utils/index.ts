@@ -42,3 +42,19 @@ export const kebabCase = (
   }
   return "ERROR";
 };
+
+export const mergeObjectsRecursive = (obj1: any, obj2: any): any => {
+  const result: any = { ...obj1 };
+
+  for (const key in obj2) {
+    if (Object.prototype.hasOwnProperty.call(obj2, key)) {
+      if (obj1[key] && typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+        result[key] = mergeObjectsRecursive(obj1[key], obj2[key]);
+      } else {
+        result[key] = obj2[key];
+      }
+    }
+  }
+
+  return result;
+};

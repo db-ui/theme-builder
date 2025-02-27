@@ -1,0 +1,9 @@
+{
+  "branding": {
+    "name": "S-Bahn",
+    "image": {
+      "light": "sbahn_logo.svg",
+      "dark": "sbahn_logo.svg"
+    }
+  }
+}

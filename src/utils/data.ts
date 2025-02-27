@@ -66,22 +66,28 @@ export type AdditionalColorMappingType = {
   green: DefaultColorType;
 };
 
+export type ThemeValue<T> = {
+  value: T;
+  type?: string;
+};
+
 export type ThemeTypographyType = {
   lineHeight: number;
   fontSize: string;
+  fontFamily?: string;
 };
 
 export type ThemeSizing = {
-  _scale?: number;
-  "2xl"?: string | ThemeTypographyType;
-  "2xs"?: string | ThemeTypographyType;
-  "3xl"?: string | ThemeTypographyType;
-  "3xs"?: string | ThemeTypographyType;
-  lg?: string | ThemeTypographyType;
-  md?: string | ThemeTypographyType;
-  sm?: string | ThemeTypographyType;
-  xl?: string | ThemeTypographyType;
-  xs?: string | ThemeTypographyType;
+  _scale?: ThemeValue<string>;
+  "2xl"?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  "2xs"?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  "3xl"?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  "3xs"?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  lg?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  md?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  sm?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  xl?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
+  xs?: ThemeValue<string> | ThemeValue<ThemeTypographyType>;
 };
 
 export type ThemeTypography = {
@@ -109,21 +115,21 @@ export type ThemeBorder = {
 export type SizingFixedType = {
   fixed: {
     mobile: {
-      header: string;
+      header: ThemeValue<string>;
     };
   };
 };
 
 export type TransitionType = {
   duration: {
-    "x-slow": string;
-    slow: string;
-    medium: string;
-    fast: string;
-    "x-fast": string;
+    "x-slow": ThemeValue<string>;
+    slow: ThemeValue<string>;
+    medium: ThemeValue<string>;
+    fast: ThemeValue<string>;
+    "x-fast": ThemeValue<string>;
   };
-  timing: Record<string, string>;
-  straight: Record<string, string>;
+  timing: Record<string, ThemeValue<string>>;
+  straight: Record<string, ThemeValue<string>>;
 };
 
 export type FontType = {
@@ -136,8 +142,8 @@ export type FontType = {
 };
 export type FontsType = {
   family: {
-    sans: string;
-    head: string;
+    sans: ThemeValue<string>;
+    head: ThemeValue<string>;
   };
   sans: Record<string, FontType>;
   head: Record<string, FontType>;
@@ -151,6 +157,19 @@ export type BrandingType = {
   };
 };
 
+export type ElevationValueType = {
+  blur: number;
+  spread: number;
+  color: string;
+};
+
+export type ElevationType = {
+  _scale?: ThemeValue<string>;
+  md?: ThemeValue<ElevationValueType[]>;
+  sm?: ThemeValue<ElevationValueType[]>;
+  lg?: ThemeValue<ElevationValueType[]>;
+};
+
 export type ThemeType = {
   branding: BrandingType;
   spacing: {
@@ -159,8 +178,7 @@ export type ThemeType = {
   };
   sizing: ThemeTonalities & SizingFixedType;
   typography: ThemeTonalities;
-  opacity: ThemeSizing;
-  elevation: ThemeSizing;
+  elevation: ElevationType;
   border: ThemeBorder;
   colors: DefaultColorMappingType;
   additionalColors: AdditionalColorMappingType;
@@ -181,6 +199,8 @@ export type HeisslufType = {
   saturation: number;
   luminance: number;
 };
+
+export const SEMANTIC_COLOR = "semantic-color";
 
 export type SpeakingName = {
   name: string;

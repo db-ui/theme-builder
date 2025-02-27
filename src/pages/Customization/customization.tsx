@@ -72,8 +72,6 @@ const Customization = () => {
 
           <Scaling label="sizing" params={["sizing"]} />
 
-          <Scaling label="elevation" params={["elevation"]} />
-
           <Scaling label="borderHeight" params={["border", "height"]} />
 
           <Scaling label="borderRadius" params={["border", "radius"]} />

@@ -36,6 +36,7 @@ val ${brandName}DimensionsMap = mapOf(
       !this.path.includes("desktop") &&
       !this.path.includes("_scale")
     ) {
+      this.path.pop();
       const key = `${kebabCase(this.path.join("-"), true)}`;
       const finalValue =
         typeof value === "string" || value instanceof String

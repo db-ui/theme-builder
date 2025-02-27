@@ -1,4 +1,9 @@
-import { DBCard, DBIcon, DBSection, DBTooltip } from "@db-ux/react-core-components";
+import {
+  DBCard,
+  DBIcon,
+  DBSection,
+  DBTooltip,
+} from "@db-ux/react-core-components";
 import { useThemeBuilderStore } from "../../../store";
 import { Link } from "react-router-dom";
 import Demo from "../../../pages/Demo";
@@ -10,14 +15,8 @@ import {
   ThemeType,
   speakingNamesDefaultMapping,
 } from "../../../utils/data.ts";
-import DefaultTheme from "../../../data/default-theme.json";
-import DBTheme from "../../../data/db-theme.json";
-import SBahnTheme from "../../../data/sbahn-theme.json";
 import { getThemeImage } from "../../../utils";
-
-const defaultTheme = DefaultTheme as unknown as ThemeType;
-const sBahnTheme = SBahnTheme as unknown as ThemeType;
-const dbTheme = DBTheme as unknown as ThemeType;
+import { dbTheme, defaultTheme, sBahnTheme } from "../../../store/themes.ts";
 
 const themes: Record<string, ThemeType> = {
   neutralTheme: defaultTheme,
