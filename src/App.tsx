@@ -10,6 +10,7 @@ import {
 import { mergeObjectsRecursive } from "./utils";
 import { runStyleDictionary } from "./utils/outputs/style-dictionary";
 import { appConfig } from "./utils/outputs/style-dictionary/config";
+import { getSDBaseIconProps } from "./utils/outputs/style-dictionary/typography.ts";
 
 const App = () => {
   const { speakingNames, luminanceSteps, theme } = useThemeBuilderStore(
@@ -27,6 +28,7 @@ const App = () => {
     const sdSpeakingColors = getSDSpeakingColors(speakingNames, allColors);
 
     const finalTheme = {
+      ...getSDBaseIconProps(theme),
       ...theme,
       ...mergeObjectsRecursive(sdColorPalette, sdSpeakingColors),
     };

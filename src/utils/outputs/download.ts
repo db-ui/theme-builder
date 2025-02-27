@@ -32,6 +32,7 @@ import {
   getSDSpeakingColors,
 } from "./style-dictionary/colors.ts";
 import { platformsConfig } from "./style-dictionary/config";
+import { getSDBaseIconProps } from "./style-dictionary/typography.ts";
 
 const download = (fileName: string, file: Blob) => {
   const element = document.createElement("a");
@@ -77,6 +78,7 @@ export const downloadTheme = async (
   const sdSpeakingColors = getSDSpeakingColors(speakingNames, allColors);
 
   const finalTheme = {
+    ...getSDBaseIconProps(theme),
     ...theme,
     ...mergeObjectsRecursive(sdColorPalette, sdSpeakingColors),
   };
