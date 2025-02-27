@@ -1,6 +1,10 @@
-import { DefaultColorType, HeisslufType, SpeakingName } from "../../data.ts";
+import {
+  DefaultColorType,
+  HeisslufType,
+  SEMANTIC_COLOR,
+  SpeakingName,
+} from "../../data.ts";
 import { getPalette } from "../index.ts";
-import { setObjectByPath } from "./index.ts";
 
 export const getSDColorPalette = (
   allColors: Record<string, DefaultColorType>,
@@ -18,66 +22,77 @@ export const getSDColorPalette = (
     const colorValues: any = {};
 
     const hslType: HeisslufType[] = palette[unformattedName];
-    hslType.forEach((hsl) => {
-      colorValues[`${hsl.index ?? hsl.name}`] = { value: hsl.hex };
-    });
+    for (const hsl of hslType) {
+      colorValues[`${hsl.index ?? hsl.name}`] = {
+        value: hsl.hex,
+        type: "color",
+      };
+    }
 
     colorValues.origin = {
       base: {
         comment: "This is just to resolve the original origin color",
         value: color.origin,
+        type: "color",
       },
-    };
-
-    colorValues.light = {
-      origin: {
+      light: {
         default: {
           value: color.originLightDefault,
+          type: "color",
         },
         hovered: {
           value: color.originLightHovered,
+          type: "color",
         },
         pressed: {
           value: color.originLightPressed,
+          type: "color",
         },
       },
-      on: {
-        origin: {
-          default: {
-            value: color.onOriginLightDefault,
-          },
-          hovered: {
-            value: color.onOriginLightHovered,
-          },
-          pressed: {
-            value: color.onOriginLightPressed,
-          },
+      dark: {
+        default: {
+          value: color.originDarkDefault,
+          type: "color",
+        },
+        hovered: {
+          value: color.originDarkHovered,
+          type: "color",
+        },
+        pressed: {
+          value: color.originDarkPressed,
+          type: "color",
         },
       },
     };
 
-    colorValues.dark = {
+    colorValues.on = {
       origin: {
-        default: {
-          value: color.originDarkDefault,
+        light: {
+          default: {
+            value: color.onOriginLightDefault,
+            type: "color",
+          },
+          hovered: {
+            value: color.onOriginLightHovered,
+            type: "color",
+          },
+          pressed: {
+            value: color.onOriginLightPressed,
+            type: "color",
+          },
         },
-        hovered: {
-          value: color.originDarkHovered,
-        },
-        pressed: {
-          value: color.originDarkPressed,
-        },
-      },
-      on: {
-        origin: {
+        dark: {
           default: {
             value: color.onOriginDarkDefault,
+            type: "color",
           },
           hovered: {
             value: color.onOriginDarkHovered,
+            type: "color",
           },
           pressed: {
             value: color.onOriginDarkPressed,
+            type: "color",
           },
         },
       },
@@ -86,72 +101,106 @@ export const getSDColorPalette = (
     colors[name] = colorValues;
   });
 
-  return { colors };
+  return colors;
+};
+
+export const setObjectByPath = (
+  initObj: any,
+  path: string,
+  value: any,
+): any => {
+  if (path == "") return value;
+
+  const [k, next] = path.split({
+    [Symbol.split](s) {
+      const i = s.indexOf(".");
+      return i == -1 ? [s, ""] : [s.slice(0, i), s.slice(i + 1)];
+    },
+  });
+
+  if (initObj !== undefined && typeof initObj !== "object") {
+    console.error(`cannot set property ${k} of ${typeof initObj}`);
+  }
+
+  return Object.assign(initObj ?? {}, {
+    [k]: setObjectByPath(initObj?.[k], next, value),
+  });
 };
 
 export const getSDSpeakingColors = (
   speakingNames: SpeakingName[],
   allColors: Record<string, DefaultColorType>,
 ): any => {
-  const colors: any = { light: {}, dark: {} };
-  const colorTheme = ["light", "dark"];
+  const colors: any = {};
   for (const [unformattedName] of Object.entries(allColors)) {
     const name = unformattedName.toLowerCase();
 
-    for (const theme of colorTheme) {
-      const isDark = theme === "dark";
-      const themeObj: any = {
+    const themeObj: any = {
+      origin: {
+        default: {
+          type: SEMANTIC_COLOR,
+          value: {
+            light: [name, "origin", "light", "default"],
+            dark: [name, "origin", "dark", "default"],
+          },
+        },
+        hovered: {
+          type: SEMANTIC_COLOR,
+          value: {
+            light: [name, "origin", "light", "hovered"],
+            dark: [name, "origin", "dark", "hovered"],
+          },
+        },
+        pressed: {
+          type: SEMANTIC_COLOR,
+          value: {
+            light: [name, "origin", "light", "pressed"],
+            dark: [name, "origin", "dark", "pressed"],
+          },
+        },
+      },
+      on: {
         origin: {
           default: {
-            value: `{colors.${name}.${theme}.origin.default.value}`,
+            type: SEMANTIC_COLOR,
+            value: {
+              light: [name, "on", "origin", "light", "default"],
+              dark: [name, "on", "origin", "dark", "default"],
+            },
           },
           hovered: {
-            value: `{colors.${name}.${theme}.origin.hovered.value}`,
+            type: SEMANTIC_COLOR,
+            value: {
+              light: [name, "on", "origin", "light", "hovered"],
+              dark: [name, "on", "origin", "dark", "hovered"],
+            },
           },
           pressed: {
-            value: `{colors.${name}.${theme}.origin.pressed.value}`,
-          },
-        },
-        on: {
-          origin: {
-            default: {
-              value: `{colors.${name}.${theme}.on.origin.default.value}`,
-            },
-            hovered: {
-              value: `{colors.${name}.${theme}.on.origin.hovered.value}`,
-            },
-            pressed: {
-              value: `{colors.${name}.${theme}.on.origin.pressed.value}`,
+            type: SEMANTIC_COLOR,
+            value: {
+              light: [name, "on", "origin", "light", "pressed"],
+              dark: [name, "on", "origin", "dark", "pressed"],
             },
           },
         },
-      };
+      },
+    };
 
-      for (const speakingName of speakingNames) {
-        const dotName = speakingName.name.replaceAll("-", ".");
+    for (const speakingName of speakingNames) {
+      const dotName = speakingName.name.replaceAll("-", ".");
 
-        setObjectByPath(
-          themeObj,
-          `${dotName}.value`,
-          `{colors.${name}.${isDark ? speakingName.dark : speakingName.light}.value}`,
-        );
-
-        if (
-          speakingName.transparencyDark !== undefined ||
-          speakingName.transparencyLight !== undefined
-        ) {
-          setObjectByPath(
-            themeObj,
-            `${dotName}.transparent`,
-            isDark
-              ? speakingName.transparencyDark
-              : speakingName.transparencyLight,
-          );
-        }
-      }
-
-      colors[theme][name] = themeObj;
+      setObjectByPath(themeObj, `${dotName}`, {
+        type: SEMANTIC_COLOR,
+        value: {
+          light: [name, speakingName.light],
+          dark: [name, speakingName.dark],
+          transparencyDark: speakingName.transparencyDark,
+          transparencyLight: speakingName.transparencyLight,
+        },
+      });
     }
+
+    colors[name] = themeObj;
   }
-  return { colors };
+  return colors;
 };

@@ -1,49 +1,28 @@
-import { ThemeType } from "../../data.ts";
-import traverse from "traverse";
-import {
-  getTraverseKey,
-  isDimensionProperty,
-  nonRemProperties,
-} from "../index.ts";
+import { DirectoryJSON, Volume } from "@bundled-es-modules/memfs";
+import StyleDictionary, { type Config } from "style-dictionary";
+import { CustomCssTransFormGroup } from "./config/transform-groups.ts";
+import { CssAppOverwriteFormat, CssPropertyFormat } from "./config/formats.ts";
+import { SemanticColorsTransform } from "./config/transforms.ts";
 
-export const setObjectByPath = (
-  initObj: any,
-  path: string,
-  value: any,
-): any => {
-  if (path == "") return value;
+StyleDictionary.registerFormat(CssPropertyFormat);
+StyleDictionary.registerFormat(CssAppOverwriteFormat);
+StyleDictionary.registerTransform(SemanticColorsTransform);
+StyleDictionary.registerTransformGroup(CustomCssTransFormGroup);
 
-  const [k, next] = path.split({
-    [Symbol.split](s) {
-      const i = s.indexOf(".");
-      return i == -1 ? [s, ""] : [s.slice(0, i), s.slice(i + 1)];
-    },
-  });
+export const runStyleDictionary = async (config: Config) => {
+  const volume = new Volume();
+  const sd = new StyleDictionary(config, { volume });
+  await sd.buildAllPlatforms();
 
-  if (initObj !== undefined && typeof initObj !== "object") {
-    console.error(`cannot set property ${k} of ${typeof initObj}`);
-  }
-
-  return Object.assign(initObj ?? {}, {
-    [k]: setObjectByPath(initObj?.[k], next, value),
-  });
+  return volume.toJSON();
 };
 
-export const getDBNonColorToken = (theme: ThemeType) => {
-  const resolvedProperties: any = {};
-  traverse(theme).forEach(function (value) {
-    if (isDimensionProperty(this)) {
-      const key = getTraverseKey(this.path, ".");
-
-      const finalValue =
-        !nonRemProperties.includes(this.path[0]) &&
-        (typeof value === "string" || value instanceof String)
-          ? `${value}rem`
-          : value;
-
-      setObjectByPath(resolvedProperties, key, finalValue);
+export const convertDirectoryJsonToFiles = (
+  directoryJSON: DirectoryJSON<string | null>,
+) =>
+  Object.entries(directoryJSON).flatMap(([path, content]) => {
+    if (!content) {
+      return [];
     }
+    return new File([content], path);
   });
-
-  return resolvedProperties;
-};

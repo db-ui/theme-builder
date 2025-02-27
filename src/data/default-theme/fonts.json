@@ -1,0 +1,82 @@
+{
+  "font": {
+    "family": {
+      "sans": {
+        "type": "fontFamily",
+        "value": "'DB Screen Sans', Helvetica, Arial, sans-serif"
+      },
+      "head": {
+        "type": "fontFamily",
+        "value": "'DB Screen Head', Helvetica, Arial, sans-serif"
+      }
+    },
+    "sans": {
+      "digitalregular": {
+        "name": "DB Screen Sans Digital Regular",
+        "localName": "DB Screen Sans Digital",
+        "localShortName": "DB Sans Digital",
+        "family": "DB Screen Sans",
+        "weight": 300,
+        "woff2": "dbscreensans-digitalregular.woff2"
+      },
+      "regular": {
+        "name": "DB Screen Sans Regular",
+        "localName": "DB Screen Sans",
+        "localShortName": "DB Sans",
+        "family": "DB Screen Sans",
+        "weight": 400,
+        "woff2": "dbscreensans-regular.woff2"
+      },
+      "medium": {
+        "name": "DB Screen Sans Medium",
+        "localName": "DB Screen Sans Medium",
+        "localShortName": "DB Sans Medium",
+        "family": "DB Screen Sans",
+        "weight": 500,
+        "woff2": "dbscreensans-medium.woff2"
+      },
+      "semibold": {
+        "name": "DB Screen Sans SemiBold",
+        "localName": "DB Screen Sans SemiBold",
+        "localShortName": "DB Sans SemiBold",
+        "family": "DB Screen Sans",
+        "weight": 600,
+        "woff2": "dbscreensans-semibold.woff2"
+      },
+      "bold": {
+        "name": "DB Screen Sans Bold",
+        "localName": "DB Screen Sans Bold",
+        "localShortName": "DB Sans Bold",
+        "family": "DB Screen Sans",
+        "weight": 700,
+        "woff2": "dbscreensans-bold.woff2"
+      }
+    },
+    "head": {
+      "light": {
+        "name": "DB Screen Head Light",
+        "localName": "DB Screen Head Light",
+        "localShortName": "DB Head Light",
+        "family": "DB Screen Head",
+        "weight": 300,
+        "woff2": "dbscreenhead-light.woff2"
+      },
+      "regular": {
+        "name": "DB Screen Head",
+        "localName": "DB Screen Head",
+        "localShortName": "DB Head",
+        "family": "DB Screen Head",
+        "weight": 400,
+        "woff2": "dbscreenhead-regular.woff2"
+      },
+      "black": {
+        "name": "DB Screen Head Black",
+        "localName": "DB Screen Head Black",
+        "localShortName": "DB Head Black",
+        "family": "DB Screen Head",
+        "weight": 900,
+        "woff2": "dbscreenhead-black.woff2"
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "elevation": {
+    "_scale": { "value": "100%" },
+    "sm": {
+      "type": "shadow",
+      "value": [
+        {
+          "color": "#00000033",
+          "blur": 1,
+          "spread": -1
+        },
+        {
+          "color": "#0000001f",
+          "blur": 4,
+          "spread": 1
+        },
+        {
+          "color": "#00000024",
+          "blur": 2,
+          "spread": 0
+        }
+      ]
+    },
+    "md": {
+      "type": "shadow",
+      "value": [
+        {
+          "color": "#00000033",
+          "blur": 2,
+          "spread": -1
+        },
+        {
+          "color": "#0000001f",
+          "blur": 8,
+          "spread": 1
+        },
+        {
+          "color": "#00000024",
+          "blur": 4,
+          "spread": 0
+        }
+      ]
+    },
+    "lg": {
+      "type": "shadow",
+      "value": [
+        {
+          "color": "#00000033",
+          "blur": 4,
+          "spread": -3
+        },
+        {
+          "color": "#0000001f",
+          "blur": 16,
+          "spread": 3
+        },
+        {
+          "color": "#00000024",
+          "blur": 8,
+          "spread": 1
+        }
+      ]
+    }
+  }
+}

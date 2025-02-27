@@ -19,9 +19,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@bundled-es-modules/memfs": "^4.9.4",
     "@craftjs/core": "^0.2.11",
-    "@db-ux/react-core-components": "1.0.0",
     "@db-ux/db-theme": "1.0.2",
+    "@db-ux/react-core-components": "1.0.0",
     "@redux-devtools/extension": "^3.3.0",
     "@tiptap/extension-color": "^2.11.5",
     "@tiptap/extension-text-style": "^2.10.3",
@@ -48,6 +49,7 @@
     "react-dom": "^18.3.1",
     "react-i18next": "15.4.0",
     "react-router-dom": "7.1.5",
+    "style-dictionary": "^4.3.3",
     "traverse": "^0.6.10",
     "zustand": "^5.0.3"
   },
@@ -69,10 +71,10 @@
     "ncp": "^2.0.0",
     "npm-run-all2": "^7.0.2",
     "postcss": "^8.5.1",
+    "purgecss": "7.0.2",
     "sass": "^1.85.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
-    "purgecss": "7.0.2",
     "vite": "^6.1.0"
   }
 }

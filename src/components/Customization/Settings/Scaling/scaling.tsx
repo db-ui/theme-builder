@@ -7,9 +7,9 @@ import traverse from "traverse";
 const getFromJsonByArray = (params: string[], json: any): any => {
   try {
     let currentObject = json;
-    params.forEach((param) => {
+    for (const param of params) {
       currentObject = currentObject[param];
-    });
+    }
 
     return currentObject;
   } catch (error) {
@@ -29,7 +29,8 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
       if (
         this.isLeaf &&
         this.path.length > 0 &&
-        path.every((value, index) => value === this.path[index])
+        path.every((value, index) => value === this.path[index]) &&
+        this.path.at(-1) === "value"
       ) {
         this.update(getShirtValue(scale, this.path) || value);
       }
@@ -46,7 +47,7 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
       <DBSelect
         label={`${t(label)} ${t("scale")}`}
         variant="floating"
-        value={getFromJsonByArray([...params, "_scale"], theme)}
+        value={getFromJsonByArray([...params, "_scale", "value"], theme)}
         onChange={(event) => {
           setDetfaultTheme(event.target.value);
         }}
@@ -75,7 +76,7 @@ const Scaling = ({ label, params }: ShirtSelectionType) => {
             <option>120%</option>
           </>
         )}
-        {(params.includes("elevation") || params.includes("radius")) && (
+        {params.includes("radius") && (
           <>
             <option>none</option>
             <option>50%</option>

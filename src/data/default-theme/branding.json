@@ -1,0 +1,9 @@
+{
+  "branding": {
+    "name": "Whitelabel",
+    "image": {
+      "light": "peace-in-a-box.svg",
+      "dark": "peace-in-a-box-white.svg"
+    }
+  }
+}

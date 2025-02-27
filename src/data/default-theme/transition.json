@@ -1,0 +1,23 @@
+{
+  "transition": {
+    "duration": {
+      "x-slow": { "value": "0.5s" },
+      "slow": { "value": "0.4s" },
+      "medium": { "value": "0.3s" },
+      "fast": { "value": "0.15s" },
+      "x-fast": { "value": "0.075s" }
+    },
+    "timing": {
+      "show": { "value": "cubic-bezier(0.49, 0.1, 0.16, 1) normal both" },
+      "hide": { "value": "cubic-bezier(0.49, 0.1, 0.16, 1) normal both" },
+      "emotional": { "value": "cubic-bezier(0.27, 0.05, 0.4, 0.95)" },
+      "functional": { "value": "cubic-bezier(0.15, 0, 0.45, 1)" }
+    },
+    "straight": {
+      "show": { "value": "0.5s cubic-bezier(0.49, 0.1, 0.16, 1) normal both" },
+      "hide": { "value": "0.4s cubic-bezier(0.49, 0.1, 0.16, 1) normal both" },
+      "emotional": { "value": "0.3s cubic-bezier(0.27, 0.05, 0.4, 0.95)" },
+      "functional": { "value": "0.3s cubic-bezier(0.15, 0, 0.45, 1)" }
+    }
+  }
+}

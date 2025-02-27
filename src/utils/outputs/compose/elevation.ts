@@ -1,8 +1,8 @@
-import { ThemeSizing } from "../../data.ts";
+import { ElevationType, ElevationValueType, ThemeValue } from "../../data.ts";
 import { designSystemShortName, replacePackageName } from "./shared.ts";
 
 export const generateComposeElevationFile = (
-  allElevations: ThemeSizing,
+  allElevations: ElevationType,
 ): string => {
   let resolvedTokenFile = `package ${replacePackageName}.core
   
@@ -79,37 +79,19 @@ internal data class ${designSystemShortName}ElevationShadowConfig(
 enum class ${designSystemShortName}Elevation(internal val config: List<${designSystemShortName}ElevationShadowConfig>) {
 `;
 
-  Object.entries(allElevations).forEach(([name, elevationScheme]) => {
-    if (name == "_scale") return;
+  for (const [name, elevationScheme] of Object.entries(allElevations)) {
+    if (name == "_scale") continue;
 
-    const elevationStages = elevationScheme
-      .toString()
-      .replaceAll("  ", " ")
-      .replaceAll("rgba(", "")
-      .replaceAll("), ", "#")
-      .replaceAll(")", "")
-      .replaceAll(",", "")
-      .replaceAll("px", "")
-      .split("#");
+    const elevationLayer = elevationScheme as ThemeValue<ElevationValueType[]>;
 
     resolvedTokenFile += `    ${name.toUpperCase()}(
         listOf(`;
-    for (const elevationStage of elevationStages) {
-      const elevationValues = elevationStage.split(" ");
-      const horizontal = elevationValues[0];
-      const vertical = elevationValues[1];
-      const blur = elevationValues[2];
-      const spread = elevationValues[3];
-      const red = elevationValues[4];
-      const green = elevationValues[5];
-      const blue = elevationValues[6];
-      const alpha = elevationValues[7];
-
+    for (const { blur, spread, color } of elevationLayer.value) {
       resolvedTokenFile += `
-            ${designSystemShortName}ElevationShadowConfig(DpOffset(${horizontal}.dp, ${vertical}.dp), ${blur}.dp, ${spread.startsWith("-") ? "(" + spread + ")" : spread}.dp, Color(${red}f, ${green}f, ${blue}f, ${alpha}f)),`;
+            ${designSystemShortName}ElevationShadowConfig(DpOffset(0.dp, 0.dp), ${blur}.dp, ${spread < 0 ? "(" + spread + ")" : spread}.dp, Color(${color}f)),`;
     }
     resolvedTokenFile += `\n        ),\n    ),\n`;
-  });
+  }
 
   resolvedTokenFile += "}\n";
   return resolvedTokenFile;
