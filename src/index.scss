@@ -1,8 +1,15 @@
-@use "@db-ui/foundations/build/scss/variables";
-@use "@db-ui/foundations/build/scss/colors";
-@use "@db-ui/foundations/build/scss/screen-sizes";
-@forward "@db-ui/components/build/styles/db-ui-42-rollup";
-@forward "font-face.css";
+@use "@db-ux/core-foundations/build/styles/variables";
+@use "@db-ux/core-foundations/build/styles/colors";
+@use "@db-ux/core-foundations/build/styles/screen-sizes";
+@use "@db-ux/core-components/build/styles/internal/db-puls" as puls;
+
+
+[data-focus="true"] {
+  @extend %db-puls;
+  @include puls.set-db-puls-vertical();
+  @include puls.show-db-puls-vertical();
+  inset-inline-end: calc(-1 * #{variables.$db-spacing-fixed-xs});
+}
 
 :root {
   --db-drawer-max-height: 100%;
@@ -137,7 +144,7 @@ h6 {
   font-size: 0;
 }
 
-.db-tab-panel{
+.db-tab-panel {
   position: absolute;
-  inset-block-start:  variables.$db-spacing-fixed-3xl;
+  inset-block-start: variables.$db-spacing-fixed-3xl;
 }

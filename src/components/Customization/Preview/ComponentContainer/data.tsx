@@ -12,8 +12,8 @@ import {
   DBSelect,
   DBTag,
   DBTextarea,
-} from "@db-ui/react-components";
-import { SemanticType } from "@db-ui/react-components/dist/shared/model";
+} from "@db-ux/react-core-components";
+import { SemanticType } from "@db-ux/react-core-components/dist/shared/model";
 
 export type ComponentList = {
   title: string;
@@ -41,7 +41,7 @@ export const components: ComponentList[] = [
           <Fragment key={`button-${variant}`}>
             <h6>{toUpperCase(variant)}:</h6>
             <DBButton variant={variant}>Default</DBButton>
-            <DBButton variant={variant} icon="user">
+            <DBButton variant={variant} icon="person">
               Icon
             </DBButton>
             <DBButton variant={variant} disabled>
@@ -157,7 +157,7 @@ export const components: ComponentList[] = [
         ))}
         <DBNotification
           variant="docked"
-          icon="user"
+          icon="person"
           headline="Type"
           linkVariant="inline"
           link={<a href="#">Link</a>}
@@ -195,7 +195,6 @@ export const components: ComponentList[] = [
           message="Required Message"
           required
         />
-
       </Fragment>
     ),
   },
@@ -289,7 +288,6 @@ export const components: ComponentList[] = [
           message="Required Message"
           required
         />
-
       </Fragment>
     ),
   },

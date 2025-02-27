@@ -32,7 +32,7 @@ export const getSDColorPalette = (
     colorValues.light = {
       origin: {
         default: {
-          value: color.originLight,
+          value: color.originLightDefault,
         },
         hovered: {
           value: color.originLightHovered,
@@ -44,7 +44,7 @@ export const getSDColorPalette = (
       on: {
         origin: {
           default: {
-            value: color.onOriginLight,
+            value: color.onOriginLightDefault,
           },
           hovered: {
             value: color.onOriginLightHovered,
@@ -59,7 +59,7 @@ export const getSDColorPalette = (
     colorValues.dark = {
       origin: {
         default: {
-          value: color.originDark,
+          value: color.originDarkDefault,
         },
         hovered: {
           value: color.originDarkHovered,
@@ -71,7 +71,7 @@ export const getSDColorPalette = (
       on: {
         origin: {
           default: {
-            value: color.onOriginDark,
+            value: color.onOriginDarkDefault,
           },
           hovered: {
             value: color.onOriginDarkHovered,

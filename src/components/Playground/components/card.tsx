@@ -1,5 +1,5 @@
-import { DBCard } from "@db-ui/react-components";
-import { DBCardProps } from "@db-ui/react-components/dist/components/card/model";
+import { DBCard } from "@db-ux/react-core-components";
+import { DBCardProps } from "@db-ux/react-core-components/dist/components/card/model";
 import { Element, useEditor, useNode } from "@craftjs/core";
 import DropContainer from "./drop-container.tsx";
 import { getDragClassNames } from "./data/utils.ts";
@@ -71,7 +71,7 @@ const CardSettings = () => (
 Card.craft = {
   props: {
     spacing: "small",
-    behaviour: "default",
+    behavior: "default",
     elevationLevel: "1",
   },
   related: {

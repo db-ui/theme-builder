@@ -1,4 +1,4 @@
-import { DBButton, DBInfotext, DBInput } from "@db-ui/react-components";
+import { DBButton, DBInfotext, DBInput } from "@db-ux/react-core-components";
 import { createElement, useEffect, useState } from "react";
 import { useEditor } from "@craftjs/core";
 

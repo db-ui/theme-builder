@@ -10,7 +10,7 @@ import Strike from "@tiptap/extension-strike";
 import Text from "@tiptap/extension-text";
 import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
-import { DBButton } from "@db-ui/react-components";
+import { DBButton } from "@db-ux/react-core-components";
 
 type MenuBarType = {
   editor: Editor | null;

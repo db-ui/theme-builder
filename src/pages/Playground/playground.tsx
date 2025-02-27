@@ -1,6 +1,6 @@
 import { Editor } from "@craftjs/core";
 import "./index.scss";
-import { DBDivider } from "@db-ui/react-components";
+import { DBDivider } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import DefaultPage from "../../components/DefaultPage";
 import Button from "../../components/Playground/components/button.tsx";

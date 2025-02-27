@@ -21,7 +21,7 @@ To overwrite the default theme you need to copy the specific file to your asset 
 
 \`\`\`js
 // main.js
-import "@db-ui/components/build/styles/db-ui-42-rollup.css";
+import "@db-ux/core-components/build/styles/rollup.css";
 import "assets/${fileName}-theme.css"; // <-- after all other styles
 \`\`\`
 

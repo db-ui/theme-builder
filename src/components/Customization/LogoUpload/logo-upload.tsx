@@ -3,7 +3,7 @@ import { memo } from "react";
 import { getThemeImage } from "../../../utils";
 import Upload from "../Upload";
 import { useTranslation } from "react-i18next";
-import { DBDivider, DBInfotext } from "@db-ui/react-components";
+import { DBDivider, DBInfotext } from "@db-ux/react-core-components";
 
 const LogoUpload = memo(() => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ const LogoUpload = memo(() => {
       <div className="flex gap-fix-md">
         <div
           className="flex flex-col gap-fix-md p-fix-sm"
-          data-color-scheme="light"
+          data-mode="light"
         >
           <DBInfotext icon="sun">Light</DBInfotext>
           <img
@@ -46,14 +46,13 @@ const LogoUpload = memo(() => {
         <DBDivider margin="none" variant="vertical" />
         <div
           className="flex flex-col gap-fix-md p-fix-sm"
-          data-color-scheme="dark"
+          data-mode="dark"
         >
           <DBInfotext icon="moon">Dark</DBInfotext>
           <img
             className="h-siz-md mx-auto"
             src={getThemeImage(
-              theme.branding.image.dark ||
-                theme.branding.image.light,
+              theme.branding.image.dark || theme.branding.image.light,
             )}
             alt="logo"
           />

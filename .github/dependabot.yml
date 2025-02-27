@@ -1,15 +1,19 @@
 ---
 version: 2
 updates:
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: 'daily'
+      interval: "daily"
     pull-request-branch-name:
-      separator: '-'
-  - package-ecosystem: 'npm'
-    directory: '/'
+      separator: "-"
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: 'daily'
+      interval: "daily"
     pull-request-branch-name:
-      separator: '-'
+      separator: "-"
+    ignore:
+      # We currently need to ignore eslint@v9
+      - dependency-name: "eslint"
+        update-types: [ "version-update:semver-major" ]

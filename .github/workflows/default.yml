@@ -9,14 +9,16 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Use Ubuntu 24.04 explicitly
     steps:
       - name: ⬇ Checkout repo
         uses: actions/checkout@v4
 
       - name: 📥 Download deps default-npm-cache
-        if: steps.npm-cache.outputs.cache-hit != 'true'
         uses: bahmutov/npm-install@v1
+        env:
+          ASSET_INIT_VECTOR: ${{ secrets.ASSET_INIT_VECTOR }}
+          ASSET_PASSWORD: ${{ secrets.ASSET_PASSWORD }}
 
       - name: ⏬ Get branch name
         uses: actions/github-script@v7

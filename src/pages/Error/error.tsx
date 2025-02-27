@@ -1,7 +1,7 @@
-import {useTranslation} from "react-i18next";
-import {useThemeBuilderStore} from "../../store";
-import {DBButton, DBInfotext} from "@db-ui/react-components";
-import {useNavigate} from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useThemeBuilderStore } from "../../store";
+import { DBButton, DBInfotext } from "@db-ux/react-core-components";
+import { useNavigate } from "react-router-dom";
 
 const Error = () => {
   const { t } = useTranslation();

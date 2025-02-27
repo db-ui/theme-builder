@@ -1,4 +1,4 @@
-import { DBCard, DBIcon, DBSection, DBTooltip } from "@db-ui/react-components";
+import { DBCard, DBIcon, DBSection, DBTooltip } from "@db-ux/react-core-components";
 import { useThemeBuilderStore } from "../../../store";
 import { Link } from "react-router-dom";
 import Demo from "../../../pages/Demo";
@@ -40,9 +40,9 @@ const ThemeSelect = () => {
           <h1>
             <span className="brand-name">{theme.branding.name}</span>
             <br />
-            Design System Platform
+            {t("product")}
           </h1>
-          <h4 data-variant="light">By all, for all</h4>
+          <h4 data-variant="light">{t("claim")}</h4>
           <p>{t("landingDesignSystemText")}</p>
           <div className="grid grid-cols-4 gap-fix-md">
             {Object.entries(themes).map(([key, theme]) => (
@@ -62,7 +62,7 @@ const ThemeSelect = () => {
                   spacing="small"
                   data-selected={selectedTheme === key}
                   elevationLevel="2"
-                  behaviour="interactive"
+                  behavior="interactive"
                 >
                   <img
                     className="logo m-auto"
@@ -77,13 +77,13 @@ const ThemeSelect = () => {
                 </DBCard>
               </button>
             ))}
-            <Link className="no-underline" to="/customization" target="_blank">
+            <Link className="no-underline" to="/customization">
               <DBCard
                 className="items-center justify-center min-h-siz-xl"
                 spacing="small"
                 data-selected="false"
                 elevationLevel="2"
-                behaviour="interactive"
+                behavior="interactive"
               >
                 <DBIcon icon="plus">Add custom theme</DBIcon>
               </DBCard>

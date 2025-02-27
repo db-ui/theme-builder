@@ -1,5 +1,5 @@
-import {TabItemType} from "../../../pages/Customization/data.ts";
+import { TabItemType } from "../../../pages/Customization/data.ts";
 
 export type TabsPropsType = {
-    tabs: TabItemType[]
-}
+  tabs: TabItemType[];
+};

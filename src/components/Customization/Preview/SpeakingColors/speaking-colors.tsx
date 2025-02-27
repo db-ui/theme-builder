@@ -1,5 +1,5 @@
 import { useThemeBuilderStore } from "../../../../store";
-import { DBButton, DBInput } from "@db-ui/react-components";
+import { DBButton, DBInput } from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
 import { Fragment } from "react";
 import { SpeakingName } from "../../../../utils/data.ts";

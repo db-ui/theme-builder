@@ -7,7 +7,7 @@ import {
   DBIcon,
   DBInput,
   DBLink,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 
 const LoginScreen = () => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ const LoginScreen = () => {
   return (
     <FakeDevice>
       <div
-        data-color-scheme="light"
+        data-mode="light"
         className="navigator-image-container min-h-[218px]  md:min-h-[282px] relative flex flex-col
         justify-between items-center p-fix-md border-none"
       >
@@ -38,11 +38,7 @@ const LoginScreen = () => {
       <div className="flex flex-col p-fix-2xl justify-between h-full">
         <div className="flex flex-col gap-fix-md">
           <DBInput variant="floating" label={t("username")} />
-          <DBInput
-            variant="floating"
-            label={t("password")}
-            type="password"
-          />
+          <DBInput variant="floating" label={t("password")} type="password" />
           <DBLink href="">{t("forgotPassword")}</DBLink>
         </div>
         <div className="flex flex-col gap-fix-md">

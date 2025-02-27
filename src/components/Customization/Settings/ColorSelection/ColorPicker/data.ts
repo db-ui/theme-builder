@@ -1,10 +1,6 @@
-import { DefaultColorType, HeisslufType } from "../../../../../utils/data.ts";
-import {
-  getHeissluftColors,
-  getValidPaletteColorAsHex,
-} from "../../../../../utils/generate-colors.ts";
+import { DefaultColorType } from "../../../../../utils/data.ts";
 import { Hsluv } from "hsluv";
-import { getContrast, isValidColor } from "../../../../../utils";
+import { getContrast } from "../../../../../utils";
 import { FALLBACK_COLOR } from "../../../../../constants.ts";
 
 export type ColorPickerType = {
@@ -17,30 +13,10 @@ export type ColorPickerType = {
   onDelete?: () => void;
 };
 
-export const getAccessibleOriginColors = (
-  heissluftColors: HeisslufType[],
-  color: string,
-) => {
-  const origin = isValidColor(color) ? color : FALLBACK_COLOR;
-  const originBgDark = heissluftColors.at(0);
-  const originBgLight = heissluftColors.at(-3);
-  const lowContrastDark = getContrast(origin, originBgDark?.hex) < 3;
-  const lowContrastLight = getContrast(origin, originBgLight?.hex) < 3;
-
-  return {
-    originBgDark: originBgDark?.hex ?? FALLBACK_COLOR,
-    originBgLight: originBgLight?.hex ?? FALLBACK_COLOR,
-    originLightAlternative: lowContrastLight
-      ? getValidPaletteColorAsHex(heissluftColors, false, originBgLight)
-      : color,
-    originDarkAlternative: lowContrastDark
-      ? getValidPaletteColorAsHex(heissluftColors, true, originBgDark)
-      : color,
-  };
-};
-
 // We use this for hover/pressed
 const originLuminanceDifference: number = 10;
+const maxDarkLuminance = 2 * originLuminanceDifference;
+const maxLightLuminance = 100 - maxDarkLuminance;
 
 const getHoverPressedColors = (
   defaultColor: string,
@@ -58,24 +34,20 @@ const getHoverPressedColors = (
   let hoverColorLuminance: number;
   let pressedColorLuminance: number;
   if (darkMode) {
-    if (defaultColorLuminance <= 80) {
+    if (defaultColorLuminance <= maxLightLuminance) {
       hoverColorLuminance = defaultColorLuminance + originLuminanceDifference;
-      pressedColorLuminance =
-        defaultColorLuminance + originLuminanceDifference * 2;
+      pressedColorLuminance = defaultColorLuminance + maxDarkLuminance;
     } else {
       hoverColorLuminance = defaultColorLuminance - originLuminanceDifference;
-      pressedColorLuminance =
-        defaultColorLuminance - originLuminanceDifference * 2;
+      pressedColorLuminance = defaultColorLuminance - maxDarkLuminance;
     }
   } else {
-    if (defaultColorLuminance >= 20) {
+    if (defaultColorLuminance >= maxDarkLuminance) {
       hoverColorLuminance = defaultColorLuminance - originLuminanceDifference;
-      pressedColorLuminance =
-        defaultColorLuminance - originLuminanceDifference * 2;
+      pressedColorLuminance = defaultColorLuminance - maxDarkLuminance;
     } else {
       hoverColorLuminance = defaultColorLuminance + originLuminanceDifference;
-      pressedColorLuminance =
-        defaultColorLuminance + originLuminanceDifference * 2;
+      pressedColorLuminance = defaultColorLuminance + maxDarkLuminance;
     }
   }
 
@@ -93,145 +65,197 @@ const getHoverPressedColors = (
   return { hoverColor, pressedColor };
 };
 
-const onOriginLightLuminance = 98;
-const onOriginDarkLuminance = 2;
-
-const getValidColor = (
+const getColorWithLuminance = (
   originBgColor: string,
-  color: string,
-  fallbackLuminance: number,
-): string | undefined => {
-  if (getContrast(originBgColor, color) < 4.5) {
-    const hsluv = new Hsluv();
-    hsluv.hex = originBgColor;
-    hsluv.hexToHsluv();
-    hsluv.hsluv_l = fallbackLuminance;
-    hsluv.hsluvToHex();
-    return hsluv.hex;
+  luminance: number,
+): string => {
+  const hsluv = new Hsluv();
+  hsluv.hex = originBgColor;
+  hsluv.hexToHsluv();
+  hsluv.hsluv_l = luminance;
+  hsluv.hsluvToHex();
+  return hsluv.hex;
+};
+
+const getOnColorByContrast = (
+  originBgColor: string,
+  darkMode: boolean,
+): { onColor: string; accessible: boolean } => {
+  const luminance: number[] = darkMode ? [98, 99, 100] : [2, 1, 0];
+  for (const lum of luminance) {
+    const onBgColorPressed = getColorWithLuminance(originBgColor, lum);
+
+    const defaultContrast = getContrast(originBgColor, onBgColorPressed);
+
+    if (defaultContrast >= 4.5) {
+      return { onColor: onBgColorPressed, accessible: true };
+    }
   }
-  return undefined;
+
+  const onBgColorPressed = getColorWithLuminance(
+    originBgColor,
+    luminance.at(-1) || 0,
+  );
+
+  return { onColor: onBgColorPressed, accessible: false };
 };
 
 export const getOriginOnColors = (
   originBgColor: string,
   darkMode: boolean,
   customFgColor?: string,
-) => {
-  const primaryLuminance = darkMode
-    ? onOriginDarkLuminance
-    : onOriginLightLuminance;
-  const fallbackLuminance = darkMode
-    ? onOriginLightLuminance
-    : onOriginDarkLuminance;
-  const fallback2Luminance = darkMode ? 99 : 1;
-  const fallback3Luminance = darkMode ? 100 : 0;
-  // eslint-disable-next-line prefer-const
-  let hsluv = new Hsluv();
-  hsluv.hex = originBgColor;
-  hsluv.hexToHsluv();
-  hsluv.hsluv_l = primaryLuminance;
-  hsluv.hsluvToHex();
-  let color = hsluv.hex;
-  const fallbackColor1 = getValidColor(originBgColor, color, fallbackLuminance);
-  if (fallbackColor1) {
-    color = fallbackColor1;
-    const fallbackColor2 = getValidColor(
-      originBgColor,
-      color,
-      fallback2Luminance,
-    );
-    if (fallbackColor2) {
-      color = fallbackColor2;
-      const fallbackColor3 = getValidColor(
-        originBgColor,
-        color,
-        fallback3Luminance,
-      );
-      if (fallbackColor3) {
-        color = fallbackColor3;
-      }
+): {
+  onOrigin: string;
+  hoverColor: string;
+  pressedColor: string;
+} => {
+  const originLuminanceDark = getOriginLuminanceDark(origin);
+  let color: string;
+  const { onColor, accessible: accessibleOnColor } = getOnColorByContrast(
+    originBgColor,
+    originLuminanceDark,
+  );
+
+  color = onColor;
+
+  if (!accessibleOnColor) {
+    const { onColor: alternativeOnColor, accessible: alternativeAccessible } =
+      getOnColorByContrast(originBgColor, !originLuminanceDark) ??
+      FALLBACK_COLOR;
+    if (alternativeAccessible) {
+      color = alternativeOnColor;
     }
   }
 
   const fgColor = customFgColor ?? color;
-  const contrast = getContrast(originBgColor, fgColor);
+
+  const hoverPressedColors = getHoverPressedColors(fgColor, darkMode);
 
   return {
     onOrigin: fgColor,
-    onOriginAlternative: color,
-    onOriginAccessible: contrast === 1 || contrast >= 4.5,
-    ...getHoverPressedColors(fgColor, darkMode, originBgColor),
+    ...hoverPressedColors,
   };
+};
+
+const getOriginLuminanceDark = (origin: string): boolean => {
+  const hsluv = new Hsluv();
+  hsluv.hex = origin;
+  hsluv.hexToHsluv();
+
+  // We use one origin color as initial suggestion based on origin luminance
+  // The user can overwrite it in ui based on the a11y tested light alternative or with a custom value
+
+  return hsluv.hsluv_l < 42; // <- I found the question
 };
 
 const getOriginBackgroundColor = (
-  name: string,
   origin: string,
-  luminanceSteps: number[],
   color: string,
+  onOrigin: string,
+  darkMode: boolean,
 ): DefaultColorType => {
-  const heissluftColors = getHeissluftColors(name, origin, luminanceSteps);
-  const {
-    originLightAlternative,
-    originDarkAlternative,
-    originBgLight,
-    originBgDark,
-  } = getAccessibleOriginColors(heissluftColors, color);
-  const { hoverColor: originLightHovered, pressedColor: originLightPressed } =
-    getHoverPressedColors(color, false);
-  const { hoverColor: originDarkHovered, pressedColor: originDarkPressed } =
-    getHoverPressedColors(color, true);
+  let hoverColor;
+  let pressedColor;
+
+  const originLuminanceDark = getOriginLuminanceDark(origin);
+
+  const { hoverColor: hoverColorPrio, pressedColor: pressedColorPrio } =
+    getHoverPressedColors(color, originLuminanceDark);
+
+  if (getContrast(pressedColorPrio, onOrigin) < 4.5) {
+    const { hoverColor: hoverColorSec, pressedColor: pressedColorSc } =
+      getHoverPressedColors(color, !originLuminanceDark);
+    hoverColor = hoverColorSec;
+    pressedColor = pressedColorSc;
+  } else {
+    hoverColor = hoverColorPrio;
+    pressedColor = pressedColorPrio;
+  }
+
+  const backgroundColorsLight = {
+    originLightDefault: color,
+    originLightHovered: hoverColor,
+    originLightPressed: pressedColor,
+  };
+
+  const backgroundColorsDark = {
+    originDarkDefault: color,
+    originDarkHovered: hoverColor,
+    originDarkPressed: pressedColor,
+  };
 
   return {
     origin,
-    originBgLight,
-    originBgDark,
-    originLight: color,
-    originLightAlternative,
-    originLightAccessible: color === originLightAlternative,
-    originLightHovered,
-    originLightPressed,
-    originDark: color,
-    originDarkAlternative,
-    originDarkAccessible: color === originDarkAlternative,
-    originDarkHovered,
-    originDarkPressed,
+    ...(darkMode ? backgroundColorsDark : backgroundColorsLight),
   };
 };
 
-export const generateColorsByOrigin = (
-  name: string,
-  origin: string,
-  luminanceSteps: number[],
-  customBgColor?: string,
-): DefaultColorType => {
+export const generateColorsByOrigin = ({
+  origin,
+  customFgColor,
+  customBgColor,
+  darkMode,
+}: {
+  origin: string;
+  darkMode: boolean;
+  customBgColor?: string;
+  customFgColor?: string;
+}): DefaultColorType => {
   const color = customBgColor ?? origin;
-  const {
-    onOrigin: onOriginLight,
-    hoverColor: onOriginLightHover,
-    pressedColor: onOriginLightPressed,
-    onOriginAccessible: onOriginLightAccessible,
-    onOriginAlternative: onOriginLightAlternative,
-  } = getOriginOnColors(color, false);
-  const {
-    onOrigin: onOriginDark,
-    hoverColor: onOriginDarkHover,
-    pressedColor: onOriginDarkPressed,
-    onOriginAccessible: onOriginDarkAccessible,
-    onOriginAlternative: onOriginDarkAlternative,
-  } = getOriginOnColors(color, true);
+
+  const { onOrigin, hoverColor, pressedColor } = getOriginOnColors(
+    color,
+    darkMode,
+    customFgColor,
+  );
+
+  const backgroundColors = getOriginBackgroundColor(
+    origin,
+    color,
+    onOrigin,
+    darkMode,
+  );
+
+  const contrastOrigin = getContrast(
+    darkMode
+      ? backgroundColors.originDarkDefault
+      : backgroundColors.originLightDefault,
+    onOrigin,
+  );
+  const contrastOriginHovered = getContrast(
+    darkMode
+      ? backgroundColors.originDarkHovered
+      : backgroundColors.originLightHovered,
+    onOrigin,
+  );
+  const contrastOriginPressed = getContrast(
+    darkMode
+      ? backgroundColors.originDarkPressed
+      : backgroundColors.originLightPressed,
+    onOrigin,
+  );
+
+  const onOriginAccessible =
+    contrastOrigin === 1 ||
+    (contrastOrigin >= 4.5 &&
+      contrastOriginHovered >= 4.5 &&
+      contrastOriginPressed >= 4.5);
+
+  if (darkMode) {
+    return {
+      ...backgroundColors,
+      onOriginDarkDefault: onOrigin,
+      onOriginDarkHovered: hoverColor,
+      onOriginDarkPressed: pressedColor,
+      onOriginDarkAccessible: onOriginAccessible,
+    };
+  }
 
   return {
-    ...getOriginBackgroundColor(name, origin, luminanceSteps, color),
-    onOriginLight,
-    onOriginLightHovered: onOriginLightHover,
-    onOriginLightPressed,
-    onOriginLightAccessible,
-    onOriginLightAlternative,
-    onOriginDark,
-    onOriginDarkHovered: onOriginDarkHover,
-    onOriginDarkPressed,
-    onOriginDarkAccessible,
-    onOriginDarkAlternative,
+    ...backgroundColors,
+    onOriginLightDefault: onOrigin,
+    onOriginLightHovered: hoverColor,
+    onOriginLightPressed: pressedColor,
+    onOriginLightAccessible: onOriginAccessible,
   };
 };

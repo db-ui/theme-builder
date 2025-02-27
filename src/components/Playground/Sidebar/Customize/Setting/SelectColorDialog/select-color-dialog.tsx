@@ -7,9 +7,9 @@ import {
   DBIcon,
   DBInput,
   DBTooltip,
-} from "@db-ui/react-components";
+} from "@db-ux/react-core-components";
 import { useTranslation } from "react-i18next";
-import { COLORS } from "@db-ui/react-components/dist/shared/constants";
+import { COLORS } from "@db-ux/react-core-components/dist/shared/constants";
 
 const SelectColorDialog = ({
   className,
@@ -62,7 +62,7 @@ const SelectColorDialog = ({
               >
                 <DBCard
                   data-interactive="elevation"
-                  style={{backgroundColor: "var(--db-adaptive-bg-default)"}}
+                  style={{ backgroundColor: "var(--db-adaptive-bg-default)" }}
                   className={`flex-row min-h-siz-lg gap-fix-md justify-between items-center db-${color}`}
                   spacing="small"
                 >
